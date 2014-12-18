@@ -27,15 +27,15 @@ All other directories and files are MIT Licensed. Feel free to use the HTML and 
 1. 在_author目录下添加一个xxxx.html，其中xxxx为当前作者的唯一标示符，最好为全为英文
 2. 其中的内容如下:
 
-    //---
-    //layout: layout
-    //name: 姓名（小李）
-    //page_path: 路径名 （/authors/xiaoli/）
-    //image: 头像URL （/images/userpic.gif）
-    //page_tags: 标签 （不需要改）
-    //page_type: author （不需要改）
-    //no_content: 暂无
-    //description: 个人描述/简介
-    //---
+        //---
+        //layout: layout
+        //name: 姓名（小李）
+        //page_path: 路径名 （/authors/xiaoli/）
+        //image: 头像URL （/images/userpic.gif）
+        //page_tags: 标签 （不需要改）
+        //page_type: author （不需要改）
+        //no_content: 暂无
+        //description: 个人描述/简介
+        //---
 
-    //{% include authors_list.html %}
+        //{% include authors_list.html %}
