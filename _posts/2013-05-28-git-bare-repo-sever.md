@@ -22,7 +22,7 @@ git裸仓库，就是指没有工作目录的仓库。简单点说，裸仓库�
 	
 但是如果在本机，你已经有了一些代码，如何把这些代码部署到服务器上，并且仅仅部署成一个裸仓库呢？其实，也很简单，因为我们了解了 git 裸仓库实际上就是你工作目录下的 `.git` 子目录的内容，拷过去就行了。
 
-所以，下面有两个思路，都可以实现：
+所以，下面有三个思路，都可以实现：
 
 ###思路一：在本机生成裸仓库，把裸仓库部署到服务器上
 
@@ -71,12 +71,33 @@ git裸仓库，就是指没有工作目录的仓库。简单点说，裸仓库�
 
 		$ git clone user@git.example.com:/opt/git/my_project.git
 
+###思路三：git push 到远程仓库
+
+1. 先在远程主机上建个裸仓库
+
+    	$ mkdir my_project.git
+    	$ cd my_project.git
+    	$ git init --bare
+
+2. 给本地仓库添加一个远程仓库
+
+        # git remote add <远程仓库名字> <地址>
+        $ git remote add ball git@xxx.xxx.xxx.xxx:/path/to/my_project.git
+        
+3. 将本地仓库内容上传远程仓库
+        
+        $ git push ball master
+        
+**注意：**clone版本库的时候，所使用的远程主机自动被Git命名为origin。如果想用其他的主机名，需要用git clone命令的-o选项指定。
+
+    $ git clone -o jQuery https://github.com/jquery/jquery.git
+
+
 ###注意：
 
-裸仓库创建后，如果需要支持其他人`push`数据，需要修改裸仓库下配置文件`config`,添加如下内容：
+按思路一、思路二创建的远程仓库，如果需要支持其他人`push`数据，需要修改仓库下配置文件`config`,添加如下内容：
 
 	[receive]
         denyCurrentBranch = ignore
-
 
 否则，可能会遇到在客户端不被允许向裸仓库`push`数据。
