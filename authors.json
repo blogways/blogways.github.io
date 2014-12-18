@@ -1,0 +1,11 @@
+---
+layout: nil
+type: json
+---
+[{% for author in site.authors %}{% assign flag = true %}
+    {
+        "name"    : "{{ author.name }}",
+        "path"    : "{{ author.page_path }}",
+        "articles": [{% for post in site.posts %}{% if post.author == author.name %}{% if flag == true %}{% assign flag = false %}{% else %},{% endif %}"1"{% endif %}{% endfor %}]
+    }{% if forloop.last == false %},{% endif %}{% endfor %}
+]

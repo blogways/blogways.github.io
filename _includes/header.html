@@ -1,0 +1,63 @@
+    <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>{% if page.page_type == 'index' %}
+                    <li class='active'><a href='javascript:void(0)'>主页</a></li>{% else %}
+                    <li><a href='/'>主页</a></li>{% endif %}{% if page.pt_page_type == 'pt' %}
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>{% else %}{% endif %}
+                    <li class='divider visible-xs'></li>
+                    {% if page.category != null and page.pt_page_type == null %}
+                    <li class='dropdown visible-sm visible-xs active'>{% else %}
+                    <li class='dropdown visible-sm visible-xs'>{% endif %}
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>{% for cate in site.categories %}
+                            {% assign ca_name = cate | first %}{% if ca_name != page.category %}
+                            <li>
+                                <a href='/categories/{{ cate | first }}/'>{{ cate  | first }}
+                                    <span class='badge pull-right'>{{ cate | last | size }}</span>
+                                </a>
+                            </li>{% else %}
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>{{ cate | first }}
+                                    <span class='badge pull-right'>{{ cate | last | size }}</span>
+                                </a>
+                                </li>{% endif %}{% endfor %}
+                        </ul>
+                    </li>
+                    {% if page.page_type == 'author-all' or page.page_type == 'author'%}
+                    <li class='dropdown active'>{% else %}<li class='dropdown'>{% endif %}
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>{% if page.page_type == 'author-all' %}
+                            <li class='disabled active'><a href='javascript:void(0)'>所有信息</a></li>{% else %}
+                            <li><a href='/about.html'>所有信息</a></li>{% endif %}
+                            <li class='divider'></li>{% for author in site.authors %}{% if page.url == author.page_path %}
+                            <li class='disabled active'><a href='javascript:void(0)'>{{ author.name | remove: ' ' }}</a></li>{% else %}
+                            <li><a href='{{ author.page_path }}'>{{ author.name | remove: ' ' }}</a></li>{% endif %}{% endfor %}
+                        </ul>
+                    </li>
+                    <li class='disabled'><a href='javascript:void(0)'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>

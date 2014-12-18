@@ -1,0 +1,76 @@
+---
+layout: layout
+page_tags: 标签
+---
+
+    <div class='container'>
+        <div class='main-content row'>
+            <div class='mainbar col-md-9 col-sm-12 col-xs-12'>
+                <div class='panel panel-info'>
+                    <div class='category-title panel-heading'>
+                        <h2 class='category-name panel-title'>{{ page.category | capitalize }}</h2>
+                    </div>
+                </div>
+
+                <div class='category-list al-article-list visible-lg visible-md visible-sm hidden-xs'>
+                    {% for year in site.data.years %}
+                    {% assign flag = true %}
+                    {% for post in site.categories.[page.category] %}
+                    {% capture y %}{{ post.date | date: '%Y' }}{% endcapture %}
+                    {% if year.y == y %}
+                    {% if flag == true %}
+                    <div class='panel panel-default'>
+                        <div class='panel-body'>
+                            <h2 class='al-year'>{{ year.y }}</h2>
+                            <hr class='al-hr'>{% assign flag = false %}{% endif %}
+                            <div class='al-article'>
+                                <a href='{{ post.url }}' target='_blank' title='{{ post.title }}'>{{ post.title | truncate: 30 }}</a>
+                                <span class='al-article-date'>&nbsp;(发布于：{{ post.date | date: '%Y.%m.%d' }})</span>
+                            </div>{% endif %}{% endfor %}
+                            {% if flag == false %}
+                        </div>
+                    </div><!--end of panel-->{% endif %}{% endfor %}
+                </div><!--end of category-list-->
+
+                <div class='al-article-list-xs hidden-lg hidden-md hidden-sm visible-xs'>
+                    {% for year1 in site.data.years %}
+                    {% assign flag1 = true %}
+                    {% for post1 in site.categories.[page.category] %}
+                    {% capture y1 %}{{ post1.date | date: '%Y' }}{% endcapture %}
+                    {% if year1.y == y1 %}
+                    {% if flag1 == true %}
+                    <div class='panel panel-default'>
+                        <div class='panel-heading'>
+                            <h2 class='panel-title al-year'>{{ year1.y }}</h2>
+                        </div>
+                        <div class='list-group'>{% assign flag1 = false %}{% endif %}
+                            <a class='list-group-item list-group-item-default' href='{{ post1.url }}' target='_blank'>
+                                <h4 class='list-group-item-heading al-title-xs'>{{ post1.title | truncate: 30 }}</h4>
+                                <div class='list-group-item-text'>
+                                    <span class='al-article-date-xs pull-right'>({{ post1.date | date: '%m.%d' }})</span>
+                                    <span class='badge'>{{ post1.category }}</span>
+                                </div>
+                            </a>{% endif %}{% endfor %}
+                            {% if flag1 == false %}
+                        </div><!--end of list-group-->
+                    </div><!--end of panel-->{% endif %}{% endfor %}
+                </div><!--end of list-xs-->
+            </div><!--end of mainbar-->
+            <div class='sidebar col-md-3 hidden-sm hidden-xs'>
+                <div class='cate-ix-bar panel panel-default' id='categorybar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>热门分类</h4>
+                    </div>
+                    <div class='list-group'>{% for cate in site.categories %}
+                        {% assign cate_name = cate | first %}{% if cate_name != page.category %}
+                        <a class='list-group-item' href='/categories/{{ cate | first }}'>{{ cate | first }}
+                            <span class='badge pull-right'>{{ cate | last | size }}</span>
+                        </a>{% else %}
+                        <a class='list-group-item disabled'>{{ cate | first }}
+                            <span class='badge pull-right'>{{ cate | last | size }}</span>
+                        </a>{% endif %}{% endfor %}
+                    </div>
+                </div><!--end of cateixbar-->
+            </div><!--end of sidebar-->
+        </div><!--end of main-content-->
+    </div><!--end of container-->

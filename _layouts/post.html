@@ -1,0 +1,131 @@
+---
+layout: layout
+pt_page_type: pt
+---
+
+    <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "{{ page.author }}".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                {% assign p = page.previous %}{% if p %}
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='{{ p.url }}' title='{{ p.title }}'>{{ p.title }}</a>
+                                    </span>
+                                </div>
+                                {% endif %}
+                                {% assign n = page.next %}{% if n %}
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='{{ n.url }}' title='{{ n.title }}'>{{ n.title }}</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='{{ n.url }}' title='{{ n.title }}'>{{ n.title }}</a>
+                                    </span>
+                                </div>
+                                {% endif %}
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>{{ page.title }}
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>{{ page.date | date: "%Y-%m-%d"  }}
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>{% assign limnum = 8 %}
+                                    <div class='col-xs-12 post-tags'>{% if page.tags == null %}
+                                        <span class='glyphicon glyphicon-tag'></span>{{ 暂无 }}{% else %}
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;{% for tag in page.tags %}
+                                        {% if limnum > 0 %}
+                                        <a class='label label-info' href='#'>{{ tag }}</a>
+                                        {% assign limnum = limnum | minus: 1 %}{% endif %}
+                                        {% if forloop.last == false and limnum > 0 %}、{% endif %}{% endfor %}{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    {{ content }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>{% for auth in site.authors %}
+                            {% if page.author == auth.name %}
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='{{ auth.page_path }}'>{{ page.author }}</a>{% endif %}{% endfor %}
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                {% if site.related_post != empty %}
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        {% for post in site.related_posts limit: 5 %}
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='{{ post.url }}' title='{{ post.title }}'>{{ post.title }}</a>
+                            </h5>
+                            <span class='desc'>{{ post.description | truncate: 40 }}</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>{{ page.posted_on }}&nbsp;:&nbsp;</span>
+                                    {{ post.date | date: "%Y-%m-%d"  }}
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>{{ page.posted_by }}&nbsp;:&nbsp;</span>
+                                    {% for author in site.authors %}{% if post.author == author.name %}
+                                    <a href='{{ author.page_path }}'>{{ post.author | remove: ' '}}</a>{% endif %}{% endfor %}
+                                </span>
+                            </div>
+                        </div>{% endfor %}
+                    </div>
+                </div><!--end of newestbar-->{% endif %}
+            </div>
+        </div>
+    </div>

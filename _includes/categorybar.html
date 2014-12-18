@@ -1,0 +1,10 @@
+<div class='categorybar panel panel-default' id='categorybar'>
+    <div class='panel-heading'>
+        <h4 class='panel-title'>热门分类</h4>
+    </div>
+    <div class='list-group'>{% for cate in site.categories %}
+        <a class='list-group-item list-group-item-default' href='/categories/{{ cate | first }}/'>{{ cate | first }}
+            <span class="badge pull-right">{{ cate | last | size }}</span>
+        </a>{% endfor %}
+    </div>
+</div>

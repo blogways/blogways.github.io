@@ -1,0 +1,82 @@
+<ul class='pagination pull-right'>{% if paginator.page == 1 %}
+    <li class='disabled'>
+        <a>
+            <span class='glyphicon glyphicon-fast-backward'></span>
+            <span class='sr-only'>首页</span>
+        </a>
+    </li>
+    <li class='disabled'>
+        <a>
+            <span class='glyphicon glyphicon-chevron-left'></span>
+            <span class='sr-only'>前一页</span>
+        </a>
+    </li>{% else %}
+    <li>
+        <a href='/' title='首页'>
+            <span class='glyphicon glyphicon-fast-backward'></span>
+            <span class='sr-only'>首页</span>
+        </a>
+    </li>
+    <li>
+        <a href='{{ paginator.previous_page_path }}' title='前一页'>
+            <span class='glyphicon glyphicon-chevron-left'></span>
+            <span class='sr-only'>前一页</span>
+        </a>
+    </li>{% endif %}
+    {% assign minus1 = paginator.total_pages | minus: 1%}
+    {% assign minus2 = paginator.total_pages | minus: 2%}
+    {% assign minus4 = paginator.total_pages | minus: 4%}
+    {% assign plus1 = paginator.page | plus: 1 %}
+    {% assign plus3 = paginator.page | plus: 3 %}
+    {% assign plus4 = paginator.page | plus: 4 %}
+    {% assign sub2 = paginator.page | minus: 2 %}
+    {% if paginator.page == 2 %}
+    <li><a href='/'>1</a></li>{% endif %}
+    {% if paginator.page >= 3 and paginator.page <= minus2 %}{% if sub2 == 1 %}
+    <li><a href='/'>1</a></li>{% else %}
+    <li><a href='/page{{ paginator.page | minus: 2 }}'>{{ paginator.page | minus: 2 }}</a></li>{% endif %}
+    <li><a href='/page{{ paginator.page | minus: 1 }}'>{{ paginator.page | minus: 1 }}</a></li>{% endif %}
+    {% if paginator.page == minus1 %}{% for ix1 in (minus4...minus2) %}
+    <li><a href='/page{{ ix1 }}'>{{ ix1 }}</a></li>{% endfor %}{% endif %}
+    {% if paginator.page == paginator.total_pages %}{% for ix4 in (minus4..minus1) %}
+    <li><a href='/page{{ ix4 }}'>{{ ix4 }}</a></li>{% endfor %}{% endif %}
+    
+    <li class='active'><a>{{ paginator.page }}</a></li>
+    
+    <!-- after current page -->
+    {% if paginator.page == 1 %}{% for ix2 in (plus1..plus4) %}
+    <li><a href='/page{{ ix2 }}'>{{ ix2 }}</a></li>{% endfor %}{% endif %}
+    {% if paginator.page == 2 %}{% for ix3 in (plus1..plus3) %}
+    <li><a href='/page{{ ix3 }}'>{{ ix3 }}</a></li>{% endfor %}{% endif %}
+    {% if paginator.page >=3 and paginator.page <= minus2 %}
+    <li><a href='/page{{ paginator.page | plus: 1 }}'>{{ paginator.page | plus: 1 }}</a></li>
+    <li><a href='/page{{ paginator.page | plus: 2 }}'>{{ paginator.page | plus: 2 }}</a></li>{% endif %}
+    {% if paginator.page == minus1 %}
+    <li><a href='/page{{ paginator.total_pages }}'>{{ paginator.total_pages }}</a></li>{% endif %}
+
+    {% if paginator.page == paginator.total_pages %}
+    <li class='disabled'>
+        <a>
+            <span class='glyphicon glyphicon-chevron-right'></span>
+            <span class='sr-only'>后一页</span>
+        </a>
+    </li>
+    <li class='disabled'>
+        <a>
+            <span class='glyphicon glyphicon-fast-forward'></span>
+            <span class='sr-only'>末页</span>
+        </a>
+    </li>{% else %}
+    <li>
+        <a href='{{ paginator.next_page_path }}' title='后一页'>
+            <span class='glyphicon glyphicon-chevron-right'></span>
+            <span class='sr-only'>后一页</span>
+        </a>
+    </li>
+    <li>
+        <a href='/page{{ paginator.total_pages }}' title='末页'>
+            <span class='glyphicon glyphicon-fast-forward'></span>
+            <span class='sr-only'>末页</span>
+        </a>
+    </li>{% endif %}
+</ul>
