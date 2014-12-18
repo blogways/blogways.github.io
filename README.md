@@ -13,16 +13,20 @@ The following directories and their contents are Copyright www.blogways.net . Yo
 
 All other directories and files are MIT Licensed. Feel free to use the HTML and CSS as you please. If you do use them, a link back to http://github.com/mojombo/jekyll would be appreciated, but is not required.
 
-#博客添加
+##博客添加
+将编写号的`*.md`文件添加到根目录下的`_post/`目录下，`.md`文件命名格式：YYYY-MM-DD-XXXX.md（如：2014-01-02-jekyll-introduction.md，则访问路径为www.blogways.net/blog/2014/01/02/jekyll-introduction.html）
 在新添加一篇博客之后需要的操作：
-    （1）删除本地categories文件夹：rm -r categories
-    （2）本地编译工程：jekyll serve --detach
-    （3）将categories添加到根目录：cp -r _site/categories .
 
-#作者添加
+1. 删除本地categories文件夹：`rm -r categories`
+2. 本地编译工程：`jekyll build` （或者`jekyll serve`）
+3. 将categories添加到根目录：`cp -r _site/categories .`
+
+##作者添加
 在新增加作者之后，需要进行如下的后续操作：
-    （1）在_author目录下添加一个xxxx.html，其中xxxx为访问url后缀，如添加spdev.html，则为www.blogways.net/spdev
-    （2）其中的内容如下
+
+1. 在_author目录下添加一个xxxx.html，其中xxxx为当前作者的唯一标示符，最好为全为英文
+2. 其中的内容如下:
+
     //---
     //layout: layout
     //name: 姓名（小李）
