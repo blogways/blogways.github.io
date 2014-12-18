@@ -69,10 +69,21 @@ description: Jenkins能够集成git，在jekyll环境下，实现博客集成系
 
 1、jenkins任务创建，详情可以参考前面给出的网站。
 
-* 新建一个jenkins任务，按如下设置，并确定！![](/images/post/blogtest.png)
-* 设置源码管理，第一个框中填仓库路径(远程仓库和本地仓库都可以)，如：`/home/git/blogtestgit`；第二个框填构建的分支，一般为`master`，可以直接填master也可以像下图所示填写：![](/images/post/jkgit.png)
-* 填写触发条件，此处为每天的12时和20时触发，![](/images/post/blog-trigger.png)
-* 编写构建步骤，![](/images/post/blog-build.png)
+* 新建一个jenkins任务，按如下设置，并确定！
+
+![](/images/post/blogtest.png)
+
+* 设置源码管理，第一个框中填仓库路径(远程仓库和本地仓库都可以)，如：`/home/git/blogtestgit`；第二个框填构建的分支，一般为`master`，可以直接填master也可以像下图所示填写：
+
+![](/images/post/jkgit.png)
+
+* 填写触发条件，此处为每天的12时和20时触发，
+
+![](/images/post/blog-trigger.png)
+
+* 编写构建步骤，
+
+![](/images/post/blog-build.png)
 	
 
 2、最主要的就是通过`Execute shell`来实现博客系统的创建和发布：
