@@ -50,7 +50,7 @@ All other directories and files are MIT Licensed. Feel free to use the HTML and 
 
 1. 删除本地categories文件夹：`rm -r categories`
 2. 本地编译工程：`jekyll build` （或者`jekyll serve`）
-3. 将categories添加到根目录：`cp -r _site/categories .`
+3. 将_site目录下的categories子目录，添加到根目录下(以便上传github page后生效)：`cp -r _site/categories .`
 
 ##四、作者添加
 在新增加作者之后，需要进行如下的后续操作：
