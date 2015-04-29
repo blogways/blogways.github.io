@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Apache Commons
+category: Apache
 title: Apache Commons 系列简介 之 CLI
 tags: ['Apache Commons', 'cli']
 author: 唐 治

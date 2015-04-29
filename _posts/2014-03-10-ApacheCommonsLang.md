@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Apache Commons
+category: Apache
 title: Apache Commons 系列简介 之 Lang
 tags: ['Apache Commons', 'Lang', 'Builder', 'Time']
 author: 万洲

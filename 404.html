@@ -1,0 +1,54 @@
+---
+layout: layout
+page_type: author-all
+authorlist: 作者列表
+no_content: 暂无
+desc: 描述
+page_num: 篇文章
+---
+
+    <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.replace(" ","") || "";                        
+                        var num = item.articles.length || 0;
+                        $("#"+name).html( num + "<span>{{ page.page_num }}</span>" );
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='main-content row'>
+            <div class='mainbar col-md-9 col-sm-12 col-xs-12'>
+                <div class='ab-author-list'>{% for author in site.authors %}
+                    <div class='panel panel-default'>
+                        <div class='panel-body'>
+                            <div class='ab-author row'>
+                                <div class='ab-author-img col-lg-3 col-md-4 col-sm-4 col-xs-4'>
+                                    <a class='thumbnail' href='{{ author.page_path }}'>
+                                        <img src='{{ author.image }}' width='160' height='160' alt='...'>
+                                    </a>
+                                </div>
+                                <div class='ab-author-info col-lg-9 col-md-8 col-sm-8 col-xs-8'>
+                                    <div class='ab-author-name'>
+                                        <a href='{{ author.page_path }}'>{{ author.name | remove: ' ' }}</a>
+                                    </div>
+                                    <div class='ab-article-num' id='{{ author.name | remove: " "}}'>{{ page.no_content }}</div>
+                                    <div class='ab-desc'>
+                                        <p>{{ page.desc }}:  {{ author.description }}</p>
+                                    </div>
+                                </div><!--end of author-info-->
+                            </div><!--end of author-->
+                        </div><!--end of panel-body-->
+                    </div><!--end of panel-->{% endfor %}
+                </div><!--end of author-list-->
+            </div><!--end of mainbar-->
+            <div class='sidebar col-md-3 hidden-sm hidden-xs'>
+                {% include categorybar.html %}
+            </div>
+        </div>
+    </div>

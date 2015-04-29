@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Apache Commons
+category: Apache
 title: Apache Commons 系列简介 之 Pool
 tags: ['Apache Commons', 'Pool']
 author: 唐 治
