@@ -1,6 +1,6 @@
 ---
 layout: post
-category: 杂记
+category: java
 title: Java项目代码编写规范
 tags: ['java代码规范', 'checkStyle', 'Eclipse', 'Checkclipse']
 author: 汤仕忠
