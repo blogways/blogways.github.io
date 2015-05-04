@@ -2,7 +2,7 @@
 layout: post
 category: Java
 title: javax.xml.parsers使用简介及源码探究
-tags: ['javax.xml.parsers', 'DocumentBuilder', 'DocumentBuilderFactory','SAXParser' 'SAXParserFactory', 'FactoryFinder']
+tags: [ 'javax xml parsers', 'DocumentBuilder', 'DocumentBuilderFactory', 'SAXParser', 'SAXParserFactory', 'FactoryFinder' ]
 author: 唐 治
 description: Java SE 平台提供的 XML 处理主要包括两个功能：JAXP（XML 处理，Java Architecture XML Processing）和 JAXB（XML 绑定，Java Architecture XML Binding）。JDK中`javax.xml.parsers`包下是SAX和DOM的实现。本文，我们将简单介绍该包的使用及部分源码探究。
 
