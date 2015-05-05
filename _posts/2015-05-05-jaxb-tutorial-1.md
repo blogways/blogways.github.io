@@ -26,11 +26,14 @@ JAXB在Java SE平台上，对应版本分别为：
 
 其实，JAXB不能直接拿来和Dom/SAX/Dom4j进行比较。他们的设计理念不同。后者提供的API都是解析XML的底层API，而前者设计的目的是将XML文件中的元素及属性和JAVA对象建立绑定关系，可以自动相互转换。
 
-JAXB没有提供解析XML的新方法，它是调用后者(Dom/SAX/JDOM/Dom4J)来解析XML的。JAXB是通过调用JAXP来实现XML解析的。
+JAXB没有提供解析XML的新方法，它是调用后者(Dom/SAX/JDOM/Dom4J)来解析XML的。（JAXB默认是调用SAX来实现XML解析的）
 
 如果，你仅仅是想把XML的内容转换成Java对象，那么JAXB比起后者更容易实现，它可以让你少些一些代码。特别是，当XML的结构非常复杂时，他的代码量比后者要少很多。
 
 当然，他们之间的取舍，主要还是以你的使用目的所决定。
+
+
+ *另外，关于DOM和SAX的更多信息，可以看看我的另一篇博文:[javax.xml.parsers使用简介及源码探究:DOM与SAX](javax-xml-parsers.html)*
 
 ---
 
