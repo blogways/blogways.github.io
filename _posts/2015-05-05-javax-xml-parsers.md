@@ -1,8 +1,8 @@
 ---
 layout: post
 category: Java
-title: javax.xml.parsers使用简介及源码探究
-tags: [ 'javax xml parsers', 'DocumentBuilder', 'DocumentBuilderFactory', 'SAXParser', 'SAXParserFactory', 'FactoryFinder' ]
+title: javax.xml.parsers使用简介及源码探究:DOM 与 SAX
+tags: [ 'javax.xml.parsers', 'DocumentBuilder', 'DocumentBuilderFactory', 'SAXParser', 'SAXParserFactory', 'FactoryFinder', 'DOM', 'SAX', 'JAXP' ]
 author: 唐 治
 description: Java SE 平台提供的 XML 处理主要包括两个功能：JAXP（XML 处理，Java Architecture XML Processing）和 JAXB（XML 绑定，Java Architecture XML Binding）。JDK中`javax.xml.parsers`包下是SAX和DOM的实现。本文，我们将简单介绍该包的使用及部分源码探究。
 
@@ -37,6 +37,7 @@ JAXP 包括 SAX 框架 —— 遍历元素，做出处理；DOM 框架 —— �
 
   一般来说 XML 文件格式被认为是一种很好的数据交换格式。于是 Java SE 6 SDK 基于以上介绍的三种 XML 处理机制，提供了一个 XML 转换框架。XSLT 框架负责进行转换 —— 包括将 XML 文件转换成其他形式如 HTML，和将其他形式的文件转换成 XML 文件。更进一步说，这个框架可以接受 DOM 作为其输入和输出；可以接受 SAX 解析器作为输入或者产生 SAX 事件作为输出；可以接受 I/O Stream 作为输入和输出；当然也支持用户自定义形式的输入和输出。
 
+===
 
 JDK中`javax.xml.parsers`包下是SAX和DOM的实现。下面，我们将简单介绍该包的使用。
 
@@ -283,7 +284,7 @@ SAX的使用，在于需要自定义一个`org.xml.sax.ContentHandler`处理器�
 1. 查找定位工厂类
 2. 根据查到的工厂类，生成最终实例
 
-如何查找定位工厂类？按下面顺序：
+如何查找定位工厂类？按下面顺序，使用找到的第一个：
 
 1. 使用系统属性。对DocumentBuilderFactory而言，是`javax.xml.parsers.DocumentBuilderFactory`；对SAXParserFactory而言，是`javax.xml.parsers.SAXParserFactory`。所以，你可以在启动java时，使用`-Djavax.xml.parsers.DocumentBuilderFactory=...`来设置DocmentBuilder的工厂类，SAXParser类似。
 2. 读取JRE目录下的属性文件 "lib/jaxp.properties"，其中属性名分别为`javax.xml.parsers.DocumentBuilderFactory`和`javax.xml.parsers.SAXParserFactory`。
