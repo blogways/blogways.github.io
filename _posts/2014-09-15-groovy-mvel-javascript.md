@@ -1,6 +1,6 @@
 ---
 layout: post
-category: 杂记
+category: java
 title: java 动态脚本之groovy、mvel and javascript
 tags: ['java动态脚本', 'groovy', 'mvel', 'javascript']
 author: 汤仕忠
