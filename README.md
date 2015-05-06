@@ -33,9 +33,9 @@ All other directories and files are MIT Licensed. Feel free to use the HTML and 
 	---
 	
 #### 内容标题规范
-内容当中的分类标题用`<h2></h2>`、`##`表示，如下所示的**“一、 概述”**和**“二、 ruby、gem安装”**：
+内容当中的分类标题用`<h2></h2>`、`##`表示，如下所示的“**一、 概述**”和“**二、 ruby、gem安装**”：
 
-![](/images/post/titlt-2-1.png)
+![](https://github.com/blogways/blogways.github.io/blob/master/images/post/title-2-1.png)
 
 其它的标题逐级递减。
 
