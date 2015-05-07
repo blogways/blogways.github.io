@@ -22,10 +22,11 @@ limit_tags: 8
 ---
 
 <div class='container'>
+    <div class='bdsharebar'>
+        {% include bdshare.html %}
+        <br/>
+    </div>
     <div class='row main-content'>
-        <div class='hidden-lg hidden-md hidden-sm hidden-xs bdsharebar'>
-            {% include bdshare.html %}
-        </div>
         <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
             <div class='ix-article-list'>{% for post in paginator.posts %}
                 <div class='ix-article panel'>
