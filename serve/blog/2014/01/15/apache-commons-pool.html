@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Apache Commons 系列简介 之 Pool_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Apache Commons, Pool">
+    
+    <meta name=description content="介绍Apache Commons 系列中的 Pool 库">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "唐 治".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2014/01/15/apache-commons-cli.html' title='Apache Commons 系列简介 之 CLI'>Apache Commons 系列简介 之 CLI</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2014/03/10/ApacheCommonsLang.html' title='Apache Commons 系列简介 之 Lang'>Apache Commons 系列简介 之 Lang</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2014/03/10/ApacheCommonsLang.html' title='Apache Commons 系列简介 之 Lang'>Apache Commons 系列简介 之 Lang</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Apache Commons 系列简介 之 Pool
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2014-01-15
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Apache Commons</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Pool</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h3>一、概述</h3>
+
+<p><code>Apache Commons Pool</code>库提供了一整套用于实现对象池化的API，以及若干种各具特色的对象池实现。2.0版本，并非是对1.x的简单升级，而是一个完全重写的对象池的实现，显著的提升了性能和可伸缩性，并且包含可靠的实例跟踪和池监控。第二版要求JDK1.6+。</p>
+
+<h3>二、下载</h3>
+
+<p>官方下载页:</p>
+
+<pre><code>http://commons.apache.org/proper/commons-pool/download_pool.cgi
+</code></pre>
+
+<p>源码：</p>
+
+<pre><code>svn checkout http://svn.apache.org/repos/asf/commons/proper/pool/trunk commons-pool2
+</code></pre>
+
+<p>Maven工程依赖</p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;
+    &lt;version&gt;2.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h3>三、使用说明</h3>
+
+<h4>3.1 创建池化对象</h4>
+
+<p>创建池化对象很简单，只要实现<code>commons-pool</code>的<code>PooledObjectFactory</code>工厂接口就行了。</p>
+
+<p><code>PooledObjectFactory</code>是一个池化对象工厂接口，定义了生成对象、激活对象、钝化对象、销毁对象的方法，如下：</p>
+
+<p>```
+public interface PooledObjectFactory<T> {</p>
+
+<pre><code>PooledObject&lt;T&gt; makeObject();
+void activateObject(PooledObject&lt;T&gt; obj);
+void passivateObject(PooledObject&lt;T&gt; obj);
+boolean validateObject(PooledObject&lt;T&gt; obj);
+void destroyObject(PooledObject&lt;T&gt; obj);
+</code></pre>
+
+<p>}
+<code>``
+它创建并管理</code>PooledObject<code>。</code>PooledObject`包含了池化的对象实例，以及这些实例的池化属性，比如创建时间、最后使用时间等等。</p>
+
+<p>如果需要使用<code>Commons-Pool</code>，那么你就需要提供一个<code>PooledObjectFactory</code>接口的具体实现。一个比较简单的办法就是，继承<code>BasePooledObjectFactory</code>这个抽象类。而继承这个抽象类，只需要实现两个方法:<code>create()</code>和<code>wrap(T obj)</code>。</p>
+
+<p>实现<code>create()</code>方法很简单，而实现<code>wrap(T obj)</code>也有捷径，可以使用类<code>DefaultPooledObject</code>，代码可以参考如下：</p>
+
+<p>```
+@Override
+public PooledObject<Foo> wrap(Foo foo) {</p>
+
+<pre><code>return new DefaultPooledObject&lt;Foo&gt;(foo);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>比如，一个完整的例子：</p>
+
+<p>```
+package test.test;</p>
+
+<p>import org.apache.commons.pool2.BasePooledObjectFactory;
+import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.impl.DefaultPooledObject;</p>
+
+<p>public class StringBufferFactory extends BasePooledObjectFactory<StringBuffer> {</p>
+
+<pre><code>@Override
+public StringBuffer create() throws Exception {
+    return new StringBuffer();
+}
+
+@Override
+public PooledObject&lt;StringBuffer&gt; wrap(StringBuffer obj) {
+    return new DefaultPooledObject&lt;StringBuffer&gt;(obj);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>有时候，单用对池内所有对象一视同仁的对象池，并不能解决问题。例如，有时需要通过key来获取不同的对象，这样，就有可能取出不合用的对象的麻烦。当然，可以通过为每一组参数相同的同类对象建立一个单独的对象池来解决这个问题。但是，如果使用普通的<code>ObjectPool</code>来实施这个计策的话，因为普通的<code>PooledObjectFactory</code>只能生产出大批设置完全一致的对象，就需要为每一组参数相同的对象编写一个单独的<code>PooledObjectFactory</code>，工作量相当可观。这种时候就可以使用<code>BaseKeyedPooledObjectFactory</code>来替代<code>BasePooledObjectFactory</code>.这个类，实现的是<code>KeyedPooledObjectFactory</code>接口，和<code>PooledObjectFactory</code>接口类似，只是在相关的方法中多了<code>Key</code>参数,定义如下：</p>
+
+<p>```
+public interface KeyedPoolableObjectFactory&lt;K,V> {</p>
+
+<pre><code>PooledObject&lt;V&gt; makeObject(K key);
+void activateObject(K key, PooledObject&lt;V&gt; obj);
+void passivateObject(K key, PooledObject&lt;V&gt; obj);
+boolean validateObject(K key, PooledObject&lt;V&gt; obj);
+void destroyObject(K key, PooledObject&lt;V&gt; obj);
+</code></pre>
+
+<p>}
+```</p>
+
+<h4>3.2 创建对象池</h4>
+
+<p>在<code>org.apache.commons.pool2.impl</code>中预设了三个可以直接使用的对象池：<code>GenericObjectPool</code>、<code>GenericKeyedObjectPool</code>和<code>SoftReferenceObjectPool</code>。</p>
+
+<p>通常使用<code>GenericObjectPool</code>来创建对象池，如果是对象池是<code>Keyed</code>的，那么可以使用<code>GenericKeyedObjectPool</code>来创建对象池。这两个类都提供了丰富的配置选项。这两个对象池的特点是可以设置对象池中的对象特征，包括LIFO方式、最大空闲数、最小空闲数、是否有效性检查等等。两者的区别如前面所述，后者支持<code>Keyed</code>。</p>
+
+<p>而<code>SoftReferenceObjectPool</code>对象池，它利用一个<code>java.util.ArrayList</code>对象来保存对象池里的对象。不过它并不在对象池里直接保存对象本身，而是保存它们的“软引用”（<code>Soft Reference</code>）。这种对象池的特色是：可以保存任意多个对象，不会有容量已满的情况发生;在对象池已空的时候，调用它的<code>borrowObject</code>方法，会自动返回新创建的实例;可以在初始化同时，在池内预先创建一定量的对象;当内存不足的时候，池中的对象可以被Java虚拟机回收。</p>
+
+<p>举个例子:</p>
+
+<p><code>
+new GenericObjectPool&lt;StringBuffer&gt;(new StringBufferFactory());
+</code></p>
+
+<p>我们也可以使用<code>GenericObjectPoolConfig</code>来对上面创建的对象池进行一些参数配置，创建的Config参数，可以使用<code>setConfig</code>方法传给对象池，也可以在对象池的构造方法中作为参数传入。</p>
+
+<p>举个例子：</p>
+
+<p>```
+GenericObjectPoolConfig conf = new GenericObjectPoolConfig();
+conf.setMaxTotal(20);
+conf.setMaxIdle(10);
+...
+GenericObjectPool<StringBuffer> pool = new GenericObjectPool<StringBuffer>(new StringBufferFactory(), conf);</p>
+
+<p>```</p>
+
+<h4>3.3 使用对象池</h4>
+
+<p>对象池使用起来很方便，简单一点就是使用<code>borrowObject</code>和<code>returnObject</code>两个方法，直接给参考代码吧：</p>
+
+<p>```
+StringBuffer buf = null;
+try {</p>
+
+<pre><code>buf = pool.borrowObject();
+...         
+</code></pre>
+
+<p>} catch(IOException e) {</p>
+
+<pre><code>throw e; 
+</code></pre>
+
+<p>} catch(Exception e) {</p>
+
+<pre><code>throw new RuntimeException("Unable to borrow buffer from pool" + 
+      e.toString());
+</code></pre>
+
+<p>} finally {</p>
+
+<pre><code>try {
+    if(null != buf) {
+        pool.returnObject(buf);
+    }
+} catch(Exception e) {
+    // ignored
+}
+</code></pre>
+
+<p>}
+```</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

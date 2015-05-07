@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>首页 - Blogway_关注软件开发/互联网技术/大数据技术/敏捷开发/..._博汇网_www.blogways.net</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li class='active'><a href='javascript:void(0)'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+    <div class='container'>
+    <div class='row main-content'>
+        <div class='hidden-lg hidden-md hidden-sm hidden-xs bdsharebar'>
+            <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+        </div>
+        <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+            <div class='ix-article-list'>
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/06/02/junit-test-execution-order.html' target='_blank' title='Junit4测试类中测试方法的执行顺序'>Junit4测试类中测试方法的执行顺序</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/06/02/junit-test-execution-order.html' target='_blank' title='Junit4测试类中测试方法的执行顺序'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-06-02
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>我正在使用的Junit的版本为4.11,其中测试类的执行顺序有三种指定方式：默认、按方法名顺序和JVM顺序</p>
+                                <p class='ix-description col-xs-12 visible-md'>我正在使用的Junit的版本为4.11,其中测试类的执行顺序有三种指定方式：默认、按方法名顺序和JVM顺序</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Junit4</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>测试顺序</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/06/02/junit-test-execution-order.html' target='_blank' title='Junit4测试类中测试方法的执行顺序'>Junit4测试类中测试方法的执行顺序
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-06-02
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/06/02/junit-test-execution-order.html' title='Junit4测试类中测试方法的执行顺序' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                我正在使用的Junit的版本为4.11,其中测试类的执行顺序有三种指定方式：默认、按方法名顺序和JVM顺序
+                            </div>
+                        </div>
+                        <a href='/blog/2013/06/02/junit-test-execution-order.html' class='btn btn-default btn-block' title='Junit4测试类中测试方法的执行顺序'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/06/02/jedis-demo.html' target='_blank' title='Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍'>Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/06/02/jedis-demo.html' target='_blank' title='Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-06-02
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>redis是一个著名的key-value存储系统，而作为其官方推荐的java版客户端jedis也非常强大和稳定，支持事务、管道及有jedis自身实现的分布式。本文对jedis关于事务、管道和分布式的调用方式做一个简单的介绍和对比。</p>
+                                <p class='ix-description col-xs-12 visible-md'>redis是一个著名的key-value存储系统，而作为其官方推荐的java版客户端jedis也非常强大和稳定，支持事务、管道及有jedis自身实现的分布式。本文对jedis关于事务、管道和分布式的调用方式做一个简单的介绍和对比。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>redis</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>jedis</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>事务</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>管道</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>分布式</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>连接池</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/06/02/jedis-demo.html' target='_blank' title='Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍'>Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-06-02
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/06/02/jedis-demo.html' title='Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                redis是一个著名的key-value存储系统，而作为其官方推荐的java版客户端jedis也非常强大和稳定，支持事务、管道及有jedis自身实现的分布式。本文对jedis关于事务、管道和分布式的调用方式做一个简单的介绍和对比。
+                            </div>
+                        </div>
+                        <a href='/blog/2013/06/02/jedis-demo.html' class='btn btn-default btn-block' title='Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/05/28/git-bare-repo-sever.html' target='_blank' title='在服务器上创建 git 裸仓库'>在服务器上创建 git 裸仓库</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/05/28/git-bare-repo-sever.html' target='_blank' title='在服务器上创建 git 裸仓库'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-05-28
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>介绍如何在服务器上创建 git 裸仓库</p>
+                                <p class='ix-description col-xs-12 visible-md'>介绍如何在服务器上创建 git 裸仓库</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>git</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>裸仓库</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/05/28/git-bare-repo-sever.html' target='_blank' title='在服务器上创建 git 裸仓库'>在服务器上创建 git 裸仓库
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-05-28
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/05/28/git-bare-repo-sever.html' title='在服务器上创建 git 裸仓库' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                介绍如何在服务器上创建 git 裸仓库
+                            </div>
+                        </div>
+                        <a href='/blog/2013/05/28/git-bare-repo-sever.html' class='btn btn-default btn-block' title='在服务器上创建 git 裸仓库'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/05/13/maven-multi-modules-demo.html' target='_blank' title='在Eclipse中创建Maven多模块工程的例子[20150428更新]'>在Eclipse中创建Maven多模块工程的例子[20150428更新]</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/05/13/maven-multi-modules-demo.html' target='_blank' title='在Eclipse中创建Maven多模块工程的例子[20150428更新]'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-05-13
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>如果，你需要创建多个项目，项目之间即独立又有关系，那么创建一个Maven多模块项目是个非常好的选择，也非常cool！怎么在Eclipse里面创建多模块工程，以及需要注意哪些地方，我在这里做个简单的介绍</p>
+                                <p class='ix-description col-xs-12 visible-md'>如果，你需要创建多个项目，项目之间即独立又有关系，那么创建一个Maven多模块项目是个非常好的选择，也非常cool！怎么在Eclipse里面创建多模块工程，以及需要注意哪些地方，我在这里做个简单的介绍</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Maven</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>多模块</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>聚合</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/05/13/maven-multi-modules-demo.html' target='_blank' title='在Eclipse中创建Maven多模块工程的例子[20150428更新]'>在Eclipse中创建Maven多模块工程的例子[20150428更新]
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-05-13
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/05/13/maven-multi-modules-demo.html' title='在Eclipse中创建Maven多模块工程的例子[20150428更新]' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                如果，你需要创建多个项目，项目之间即独立又有关系，那么创建一个Maven多模块项目是个非常好的选择，也非常cool！怎么在Eclipse里面创建多模块工程，以及需要注意哪些地方，我在这里做个简单的介绍
+                            </div>
+                        </div>
+                        <a href='/blog/2013/05/13/maven-multi-modules-demo.html' class='btn btn-default btn-block' title='在Eclipse中创建Maven多模块工程的例子[20150428更新]'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/05/05/redis-usage-2.html' target='_blank' title='Redis Linux Pipeline && 分布式'>Redis Linux Pipeline && 分布式</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/05/05/redis-usage-2.html' target='_blank' title='Redis Linux Pipeline && 分布式'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-05-05
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>Redis 事务、Pipeline，持久化以及分布式应用。</p>
+                                <p class='ix-description col-xs-12 visible-md'>Redis 事务、Pipeline，持久化以及分布式应用。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Redis</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Linux</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Pipeline</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/05/05/redis-usage-2.html' target='_blank' title='Redis Linux Pipeline && 分布式'>Redis Linux Pipeline && 分布式
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-05-05
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/05/05/redis-usage-2.html' title='Redis Linux Pipeline && 分布式' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                Redis 事务、Pipeline，持久化以及分布式应用。
+                            </div>
+                        </div>
+                        <a href='/blog/2013/05/05/redis-usage-2.html' class='btn btn-default btn-block' title='Redis Linux Pipeline && 分布式'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/05/05/redis-usage.html' target='_blank' title='Redis Linux 数据类型'>Redis Linux 数据类型</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/05/05/redis-usage.html' target='_blank' title='Redis Linux 数据类型'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-05-05
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>Redis 的5种不同的数据类型： 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)。</p>
+                                <p class='ix-description col-xs-12 visible-md'>Redis 的5种不同的数据类型： 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Redis</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Linux</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Type</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/05/05/redis-usage.html' target='_blank' title='Redis Linux 数据类型'>Redis Linux 数据类型
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-05-05
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/05/05/redis-usage.html' title='Redis Linux 数据类型' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                Redis 的5种不同的数据类型： 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)。
+                            </div>
+                        </div>
+                        <a href='/blog/2013/05/05/redis-usage.html' class='btn btn-default btn-block' title='Redis Linux 数据类型'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/05/02/redis.html' target='_blank' title='Redis Linux 安装 && 测试'>Redis Linux 安装 && 测试</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/05/02/redis.html' target='_blank' title='Redis Linux 安装 && 测试'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-05-02
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>Redis 是完全开源免费的，遵守BSD协议的key-value持久化存储器。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)5种不同的数据类型。灵活运用这些数据类型来构建数据模型远比简单的使用key-value存储更具有实际意义。</p>
+                                <p class='ix-description col-xs-12 visible-md'>Redis 是完全开源免费的，遵守BSD协议的key-value持久化存储器。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(so...</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Redis</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Linux</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/05/02/redis.html' target='_blank' title='Redis Linux 安装 && 测试'>Redis Linux 安装 && 测试
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-05-02
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/05/02/redis.html' title='Redis Linux 安装 && 测试' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                Redis 是完全开源免费的，遵守BSD协议的key-value持久化存储器。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(so...
+                            </div>
+                        </div>
+                        <a href='/blog/2013/05/02/redis.html' class='btn btn-default btn-block' title='Redis Linux 安装 && 测试'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2013/05/01/demo-libmemcached-at-mac.html' target='_blank' title='MAC OSX 环境下搭建 memcached 环境'>MAC OSX 环境下搭建 memcached 环境</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2013/05/01/demo-libmemcached-at-mac.html' target='_blank' title='MAC OSX 环境下搭建 memcached 环境'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2013-05-01
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>MAC OSX 下搭建 memcached 环境及测试demo</p>
+                                <p class='ix-description col-xs-12 visible-md'>MAC OSX 下搭建 memcached 环境及测试demo</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>memcached</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>libmemcached</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2013/05/01/demo-libmemcached-at-mac.html' target='_blank' title='MAC OSX 环境下搭建 memcached 环境'>MAC OSX 环境下搭建 memcached 环境
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2013-05-01
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2013/05/01/demo-libmemcached-at-mac.html' title='MAC OSX 环境下搭建 memcached 环境' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                MAC OSX 下搭建 memcached 环境及测试demo
+                            </div>
+                        </div>
+                        <a href='/blog/2013/05/01/demo-libmemcached-at-mac.html' class='btn btn-default btn-block' title='MAC OSX 环境下搭建 memcached 环境'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+            </div><!--end of article-list -->
+            <div class='paginationbar'>
+                <label class='hidden-xs' style='color: #959595; margin-top: 25px;'>第9页 共12页</label>
+                <ul class='pagination pull-right'>
+    <li>
+        <a href='/' title='首页'>
+            <span class='glyphicon glyphicon-fast-backward'></span>
+            <span class='sr-only'>首页</span>
+        </a>
+    </li>
+    <li>
+        <a href='' title='前一页'>
+            <span class='glyphicon glyphicon-chevron-left'></span>
+            <span class='sr-only'>前一页</span>
+        </a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <li><a href='/page7'>7</a></li>
+    <li><a href='/page8'>8</a></li>
+    
+    
+    
+    <li class='active'><a>9</a></li>
+    
+    <!-- after current page -->
+    
+    
+    
+    <li><a href='/page10'>10</a></li>
+    <li><a href='/page11'>11</a></li>
+    
+
+    
+    <li>
+        <a href='' title='后一页'>
+            <span class='glyphicon glyphicon-chevron-right'></span>
+            <span class='sr-only'>后一页</span>
+        </a>
+    </li>
+    <li>
+        <a href='/page12' title='末页'>
+            <span class='glyphicon glyphicon-fast-forward'></span>
+            <span class='sr-only'>末页</span>
+        </a>
+    </li>
+</ul>
+
+            </div>
+        </div><!--end of mainbar-->
+        <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+            <div class='categorybar panel panel-default' id='categorybar'>
+    <div class='panel-heading'>
+        <h4 class='panel-title'>热门分类</h4>
+    </div>
+    <div class='list-group'>
+        <a class='list-group-item list-group-item-default' href='/categories/jekyll/'>jekyll
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/杂记/'>杂记
+            <span class="badge pull-right">16</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Jekyll/'>Jekyll
+            <span class="badge pull-right">2</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/JUnit/'>JUnit
+            <span class="badge pull-right">8</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Memcache/'>Memcache
+            <span class="badge pull-right">8</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Sencha/'>Sencha
+            <span class="badge pull-right">5</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Nginx/'>Nginx
+            <span class="badge pull-right">4</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Apache/'>Apache
+            <span class="badge pull-right">9</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Node/'>Node
+            <span class="badge pull-right">7</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/java/'>java
+            <span class="badge pull-right">2</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Redis/'>Redis
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Java/'>Java
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/JAXB/'>JAXB
+            <span class="badge pull-right">1</span>
+        </a>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>	

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>JUnit4 使用进阶五_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Junit4">
+    
+    <meta name=description content="在进阶二中，我们介绍了`@Rule`的两个用法，对异常进行检查和对超时时间的设定。其实，Rule还有很多用途，本文将做进一步介绍">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "唐 治".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/04/15/junit-usage-4.html' title='JUnit4 使用进阶四'>JUnit4 使用进阶四</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/04/17/jenkins-git-maven-junit.html' title='Jenkins+git+maven+junit 一'>Jenkins+git+maven+junit 一</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/04/17/jenkins-git-maven-junit.html' title='Jenkins+git+maven+junit 一'>Jenkins+git+maven+junit 一</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>JUnit4 使用进阶五
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-04-15
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Junit4</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <p>在<a href="junit-usage-2.html">进阶二</a>中，我们介绍了<code>@Rule</code>的两个用法，对异常进行检查和对超时时间的设定。其实，Rule还有很多用途，本文将做进一步介绍。</p>
+
+<h3>Rule的应用</h3>
+
+<p>Rule将在框架的很多方面提供解决方案。下面一一举例：</p>
+
+<ol>
+<li><p><strong>TemporaryFolder</strong></p>
+
+<p> <code>TemporaryFolder</code>作为Rule，可以运行在测试过程中创建临时文件或者临时目录，当测试结束后，框架会自动删除。</p>
+
+<p> 见实例：</p>
+
+<pre><code>   public static class HasTempFolder {
+   @Rule
+   public TemporaryFolder folder = new TemporaryFolder();
+
+   @Test
+   public void testUsingTempFolder() throws IOException {
+     File createdFile = folder.newFile("myfile.txt");
+     File createdFolder = folder.newFolder("subfolder");
+     // ...
+   }
+ } 
+</code></pre>
+
+<ul>
+<li><code>TemporaryFolder#newFolder(String... folderNames)</code>可以根据输入的参数创建目录。如果是多级目录，可以递归创建。</li>
+<li><code>TemporaryFolder#newFile()</code>可以创建一个随机名字的临时文件；</li>
+<li><code>TemporaryFolder##newFolder()</code> 可以创建一个随机名字的临时目录。</li>
+</ul>
+</li>
+<li><p><strong>ExternalResource</strong></p>
+
+<p> <code>ExternalResource</code>可以设置测试前后需要做的事情（比如：文件、socket、服务、数据库的连接与关闭）。这个我们在之前的<a href="junit-usage-2.html">进阶二</a>中稍有提及。</p>
+
+<p> 见实例：</p>
+
+<pre><code> public static class UsesExternalResource {
+   Server myServer = new Server();
+
+   @Rule
+   public ExternalResource resource = new ExternalResource() {
+     @Override
+     protected void before() throws Throwable {
+       myServer.connect();
+     };
+
+     @Override
+     protected void after() {
+       myServer.disconnect();
+     };
+   };
+
+   @Test
+   public void testFoo() {
+     new Client().run(myServer);
+   }
+ }
+</code></pre>
+
+<ul>
+<li><code>ExternalResource#before</code>会在每个测试之前处理；<code>#after</code>会在每个测试之后处理；</li>
+<li>关于<code>ExternalResource</code>与<code>@Before</code>已经<code>@After</code>等标记步骤的执行顺序，我们会在本文后面部分介绍。</li>
+</ul>
+</li>
+<li><p><strong>ErrorCollector</strong></p>
+
+<p> <code>ErrorCollector</code>这个Rule，在出现一个错误后，还可以让测试继续进行下去。</p>
+
+<p> 他提供三个方法：</p>
+
+<pre><code> checkThat(final T value, Matcher&lt;T&gt; matcher)
+ checkSucceeds(Callable&lt;Object&gt; callable)
+ addError(Throwable error)
+</code></pre>
+
+<p> 前面两个是用来处理断言的，最后一个是添加错误至错误列表中。</p>
+
+<p> 看下面例子：</p>
+
+<pre><code> package mytest;
+
+ import static org.hamcrest.CoreMatchers.is;
+ import static org.junit.Assert.assertThat;
+
+ import java.util.concurrent.Callable;
+
+ import org.junit.Rule;
+ import org.junit.Test;
+ import org.junit.rules.ErrorCollector;
+
+ public class JUnitCoreErrorControllerRuleTest {
+
+   private final int multiplesOf2[] = { 0, 2, 4, 7, 8, 11, 12 };
+
+   @Rule
+   public ErrorCollector errorCollector = new ErrorCollector();
+
+   /*
+    * 下面这个测试，会报告两个failures。这一点和下面的checkSucceeds测试不同
+    */
+   @Test
+   public void testMultiplesOf2() {
+     int multiple = 0;
+     for (int multipleOf2 : multiplesOf2) {
+       // Will count the number of issues in this list
+       // - 3*2 = 6 not 7, 5*2 = 10 not 11 : 2 Failures
+       errorCollector.checkThat(2 * multiple, is(multipleOf2));
+       multiple++;
+     }
+   }
+
+   /*
+    * 下面代码中有两个断言会失败，但每次运行JUnit框架只会报告一个。这一点和上面的checkThat测试不同，可以对比一下。
+    */
+   @Test
+   public void testCallableMultiples() {
+     errorCollector.checkSucceeds(new Callable&lt;Object&gt;() {
+       public Object call() throws Exception {
+         assertThat(2 * 2, is(5));
+         assertThat(2 * 3, is(6));
+         assertThat(2 * 4, is(8));
+         assertThat(2 * 5, is(9));
+         return null;
+       }
+     });
+   }
+
+   /*
+    * 下面运行时，会报告2个错误
+    */
+   @Test
+   public void testAddingAnError() {
+     assertThat(2 * 2, is(4));
+     errorCollector.addError(new Throwable("Error Collector added an error"));
+     assertThat(2 * 3, is(6));
+     errorCollector.addError(new Throwable(
+         "Error Collector added a second error"));
+   }
+
+ }
+</code></pre>
+
+<p> 运行结果，类似下面：</p>
+
+<pre><code> Failed tests: 
+
+ testCallableMultiples(mytest.JUnitCoreErrorControllerRuleTest): 
+ Expected: is &lt;5&gt;
+     but: was &lt;4&gt;
+
+ testMultiplesOf2(mytest.JUnitCoreErrorControllerRuleTest): 
+ Expected: is &lt;7&gt;
+     but: was &lt;6&gt;
+
+ testMultiplesOf2(mytest.JUnitCoreErrorControllerRuleTest): 
+ Expected: is &lt;11&gt;
+     but: was &lt;10&gt;
+
+ Tests in error: 
+ testAddingAnError(tangzhi.mytest.JUnitCoreErrorControllerRuleTest): Error Collector added an error
+
+ testAddingAnError(tangzhi.mytest.JUnitCoreErrorControllerRuleTest): Error Collector added a second error
+</code></pre>
+
+<p> 从这个例子，可以看出：</p>
+
+<ul>
+<li><code>ErrorCollector#checkThat</code> 会报告测试中的每一个failures</li>
+<li><code>ErrorCollector#checkSucceeds</code> 只会检查是否成功，如果不成功，只报告第一个导致不成功的failure</li>
+<li><code>ErrorCollector#addError</code> 是添加一个错误(error)。</li>
+</ul>
+</li>
+<li><p><strong>Verifier</strong></p>
+
+<p> 如果，你想在每个测试之后，甚至是在<code>@After</code>之后，想检查些什么，就可以使用<code>Verifier</code>这个Rule.</p>
+
+<p> 看例子：</p>
+
+<pre><code> private static String sequence;
+
+ public static class UsesVerifier {
+   @Rule
+   public Verifier collector = new Verifier() {
+       @Override
+       protected void verify() {
+           sequence += " verify ";
+       }
+   };
+
+   @Test
+   public void example() {
+       sequence += "test";
+   }
+
+   @Test
+   public void example2() {
+       sequence += "test2";
+   }
+
+   @After
+   public void after() {
+       sequence += " after";
+   }
+ }
+
+ @Test
+ public void verifierRunsAfterTest() {
+   sequence = "";
+   assertThat(testResult(UsesVerifier.class), isSuccessful());
+   assertEquals("test after verify test2 after verify ", sequence);
+ }
+</code></pre>
+
+<p> 从上面例子可以看出:<code>Verifier#verify</code>针对每个测试都会运行一次，并且运行在<code>@After</code>步骤之后。</p>
+
+<p> 需要说明：如果某测试出现失败(fail)，那么这个测试之后就不会做<code>verify</code>,这一点，可以结合下面的例子看出。</p></li>
+<li><p><strong>TestWatcher</strong></p>
+
+<p> 对测试的每个步骤进行监控。</p>
+
+<p> 看例子：</p>
+
+<pre><code> package tangzhi.mytest;
+
+ import static org.junit.Assert.*;  
+ import static org.hamcrest.CoreMatchers.*;
+
+ import org.junit.After;
+ import org.junit.Rule;
+ import org.junit.Test;
+ import org.junit.rules.TestRule;
+ import org.junit.rules.TestWatcher;
+ import org.junit.rules.Verifier;
+ import org.junit.runner.Description;
+ import org.junit.runners.model.Statement;
+
+ public class WatchmanTest {
+     private static String watchedLog;
+
+       @Rule
+       public TestRule watchman = new TestWatcher() {
+         @Override
+         public Statement apply(Statement base, Description description) {
+             Statement s = super.apply(base, description);
+             watchedLog="";
+             System.out.println("watch apply.");
+             return s;
+         }
+
+         @Override
+         protected void succeeded(Description description) {
+             watchedLog += description.getDisplayName() + " " + "success!";
+             System.out.println("watch succeed:"+watchedLog);
+
+         }
+
+         @Override
+         protected void failed(Throwable e, Description description) {
+             watchedLog += description.getDisplayName() + " " + e.getClass().getSimpleName();
+             System.out.println("watch failed:"+watchedLog);
+
+         }
+
+         @Override
+         protected void starting(Description description) {
+           super.starting(description);
+           System.out.println("watch starting.");
+         }
+
+         @Override
+         protected void finished(Description description) {
+           super.finished(description);
+           System.out.println("watch finished.");
+         }
+       };
+
+       @Rule
+       public Verifier collector = new Verifier() {
+           @Override
+           protected void verify() {
+               System.out.println("@Verify:"+watchedLog);
+           }
+       };
+
+       @Test
+       public void fails() {
+           System.out.println("in fails");
+           assertThat("ssss", is("sss"));
+       }
+
+       @Test
+       public void succeeds() {
+           System.out.println("in succeeds");
+       }
+
+       @After
+       public void after() {
+           System.out.println("@After");
+       }
+ }
+</code></pre>
+
+<p> 运行后，日志如下：</p>
+
+<pre><code> watch apply.
+ watch starting.
+ in succeeds
+ @After
+ watch succeed:succeeds(tangzhi.mytest.WatchmanTest) success!
+ watch finished.
+ @Verify:succeeds(tangzhi.mytest.WatchmanTest) success!
+ watch apply.
+ watch starting.
+ in fails
+ @After
+ watch failed:fails(tangzhi.mytest.WatchmanTest) AssertionError
+ watch finished.
+</code></pre></li>
+<li><p><strong>TestName</strong></p>
+
+<p> <code>TestName</code>可以获取当前测试方法的名字。</p>
+
+<p> 看例子：</p>
+
+<pre><code> public class NameRuleTest {
+   @Rule
+   public TestName name = new TestName();
+
+   @Test
+   public void testA() {
+     assertEquals("testA", name.getMethodName());
+   }
+
+   @Test
+   public void testB() {
+     assertEquals("testB", name.getMethodName());
+   }
+ }
+</code></pre>
+
+<p> 如果，是在参数化测试(Parameterized)中，使用了<code>@Parameters</code>，那么其<code>name</code>属性定义的方法名也将会被<code>TestName#getMethodName</code>获取。</p></li>
+<li><p><strong>Timeout</strong></p>
+
+<p> 这个我们在前面介绍过，可以设置某个测试类，所有测试方法的超时时间。详见<a href="junit-usage-2.html">进阶二</a>。</p></li>
+<li><p><strong>ExpectedException</strong></p>
+
+<p> 这个也在<a href="junit-usage-2.html">进阶二</a>中有介绍。</p></li>
+<li><p><strong>ClassRule</strong></p>
+
+<p> 注释<code>@ClassRule</code>是类级别的，而不是方法级别的。</p>
+
+<p> 见下面例子：</p>
+
+<pre><code> @RunWith(Suite.class)
+ @SuiteClasses({A.class, B.class, C.class})
+ public class UsesExternalResource {
+   public static Server myServer= new Server();
+
+   @ClassRule
+   public static ExternalResource resource= new ExternalResource() {
+     @Override
+     protected void before() throws Throwable {
+       myServer.connect();
+     };
+
+     @Override
+     protected void after() {
+       myServer.disconnect();
+     };
+   };
+ }
+</code></pre>
+
+<p> 在Suite所打包的几个类测试前后，会执行一遍<code>ClassRule</code>。</p></li>
+<li><p><strong>RuleChain</strong></p>
+
+<p>见例子：</p>
+
+<pre><code>public static class UseRuleChain {
+    @Rule
+    public TestRule chain= RuleChain
+                           .outerRule(new LoggingRule("outer rule")
+                           .around(new LoggingRule("middle rule")
+                           .around(new LoggingRule("inner rule");
+
+    @Test
+    public void example() {
+        assertTrue(true);
+    }
+}
+</code></pre>
+
+<p>执行后，日志如下：</p>
+
+<pre><code>starting outer rule
+starting middle rule
+starting inner rule
+finished inner rule
+finished middle rule
+finished outer rule
+</code></pre></li>
+</ol>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

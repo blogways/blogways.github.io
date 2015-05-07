@@ -7,7 +7,7 @@ email: shenyj5@asiainfo.com
 image:
 description: 对于 Java 开发的 web 项目，Spring 成了小伙伴们的首选，几乎成了 JavaEE 的标配，在开发、测试的过程中免不了会碰到很多相关的错误，其中比较常见的一个错误就是  NoSuchBeanDefinitionException，下面来讨论一下常见的几种情况， 本文着重介绍 bootstrap 项目注解实例化 Bean，至于 xml 配置部分逻辑性比较好查，应该更容易定位问题，在这里就不介绍了。
 ---
-
+对于 Java 开发的 web 项目，Spring 成了小伙伴们的首选，几乎成了 JavaEE 的标配，在开发、测试的过程中免不了会碰到很多相关的错误，其中比较常见的一个错误就是  NoSuchBeanDefinitionException，下面来讨论一下常见的几种情况， 本文着重介绍 bootstrap 项目注解实例化 Bean，至于 xml 配置部分逻辑性比较好查，应该更容易定位问题，在这里就不介绍了。
 ###1. 概述
 
 在这篇文章中，我们讨论一下 Spring `BeanFactory` 在试图创建一个未在 Spring 上下文中定义的 Bean 时抛出的常见的异常 `org.springframework.beans.factory.NoSuchBeanDefinitionException`。

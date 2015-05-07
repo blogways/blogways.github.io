@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>首页 - Blogway_关注软件开发/互联网技术/大数据技术/敏捷开发/..._博汇网_www.blogways.net</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li class='active'><a href='javascript:void(0)'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+    <div class='container'>
+    <div class='row main-content'>
+        <div class='hidden-lg hidden-md hidden-sm hidden-xs bdsharebar'>
+            <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+        </div>
+        <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+            <div class='ix-article-list'>
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/08/12/jQuery-source-analysis-dom-traversal.html' target='_blank' title='Jquery Source Analysis Dom Traversal'>Jquery Source Analysis Dom Traversal</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/08/12/jQuery-source-analysis-dom-traversal.html' target='_blank' title='Jquery Source Analysis Dom Traversal'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-08-12
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'></p>
+                                <p class='ix-description col-xs-12 visible-md'></p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/08/12/jQuery-source-analysis-dom-traversal.html' target='_blank' title='Jquery Source Analysis Dom Traversal'>Jquery Source Analysis Dom Traversal
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-08-12
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/08/12/jQuery-source-analysis-dom-traversal.html' title='Jquery Source Analysis Dom Traversal' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                
+                            </div>
+                        </div>
+                        <a href='/blog/2014/08/12/jQuery-source-analysis-dom-traversal.html' class='btn btn-default btn-block' title='Jquery Source Analysis Dom Traversal'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/08/10/jQuery-source-analysis-two.html' target='_blank' title='Jquery Source Analysis Two'>Jquery Source Analysis Two</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/08/10/jQuery-source-analysis-two.html' target='_blank' title='Jquery Source Analysis Two'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-08-10
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'></p>
+                                <p class='ix-description col-xs-12 visible-md'></p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/08/10/jQuery-source-analysis-two.html' target='_blank' title='Jquery Source Analysis Two'>Jquery Source Analysis Two
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-08-10
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/08/10/jQuery-source-analysis-two.html' title='Jquery Source Analysis Two' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                
+                            </div>
+                        </div>
+                        <a href='/blog/2014/08/10/jQuery-source-analysis-two.html' class='btn btn-default btn-block' title='Jquery Source Analysis Two'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/08/10/jQuery-source-analysis-one.html' target='_blank' title='Jquery Source Analysis One'>Jquery Source Analysis One</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/08/10/jQuery-source-analysis-one.html' target='_blank' title='Jquery Source Analysis One'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-08-10
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'></p>
+                                <p class='ix-description col-xs-12 visible-md'></p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/08/10/jQuery-source-analysis-one.html' target='_blank' title='Jquery Source Analysis One'>Jquery Source Analysis One
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-08-10
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/08/10/jQuery-source-analysis-one.html' title='Jquery Source Analysis One' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                
+                            </div>
+                        </div>
+                        <a href='/blog/2014/08/10/jQuery-source-analysis-one.html' class='btn btn-default btn-block' title='Jquery Source Analysis One'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/07/22/somethings-of-array-and-function.html' target='_blank' title='Somethings Of Array And Function'>Somethings Of Array And Function</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/07/22/somethings-of-array-and-function.html' target='_blank' title='Somethings Of Array And Function'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-07-22
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'></p>
+                                <p class='ix-description col-xs-12 visible-md'></p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/07/22/somethings-of-array-and-function.html' target='_blank' title='Somethings Of Array And Function'>Somethings Of Array And Function
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-07-22
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/07/22/somethings-of-array-and-function.html' title='Somethings Of Array And Function' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                
+                            </div>
+                        </div>
+                        <a href='/blog/2014/07/22/somethings-of-array-and-function.html' class='btn btn-default btn-block' title='Somethings Of Array And Function'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/16/node-express4.x-api-4.html' target='_blank' title='Express4.x API 翻译[4] -- Router'>Express4.x API 翻译[4] -- Router</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/16/node-express4.x-api-4.html' target='_blank' title='Express4.x API 翻译[4] -- Router'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-16
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>总算翻译完了，英文太差，很多借助于工具翻译的，如果有跟原文大相径庭的地方欢迎吐槽。</p>
+                                <p class='ix-description col-xs-12 visible-md'>总算翻译完了，英文太差，很多借助于工具翻译的，如果有跟原文大相径庭的地方欢迎吐槽。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Express</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>API</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/16/node-express4.x-api-4.html' target='_blank' title='Express4.x API 翻译[4] -- Router'>Express4.x API 翻译[4] -- Router
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-16
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/16/node-express4.x-api-4.html' title='Express4.x API 翻译[4] -- Router' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                总算翻译完了，英文太差，很多借助于工具翻译的，如果有跟原文大相径庭的地方欢迎吐槽。
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/16/node-express4.x-api-4.html' class='btn btn-default btn-block' title='Express4.x API 翻译[4] -- Router'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/13/node-express4.x-api-3.html' target='_blank' title='Express4.x API 翻译[3] -- Response'>Express4.x API 翻译[3] -- Response</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/13/node-express4.x-api-3.html' target='_blank' title='Express4.x API 翻译[3] -- Response'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-13
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。</p>
+                                <p class='ix-description col-xs-12 visible-md'>之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Express</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>API</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/13/node-express4.x-api-3.html' target='_blank' title='Express4.x API 翻译[3] -- Response'>Express4.x API 翻译[3] -- Response
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-13
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/13/node-express4.x-api-3.html' title='Express4.x API 翻译[3] -- Response' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/13/node-express4.x-api-3.html' class='btn btn-default btn-block' title='Express4.x API 翻译[3] -- Response'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/11/node-express4.x-api-2.html' target='_blank' title='Express4.x API 翻译[2] -- Request'>Express4.x API 翻译[2] -- Request</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/11/node-express4.x-api-2.html' target='_blank' title='Express4.x API 翻译[2] -- Request'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-11
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。</p>
+                                <p class='ix-description col-xs-12 visible-md'>之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Express</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>API</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/11/node-express4.x-api-2.html' target='_blank' title='Express4.x API 翻译[2] -- Request'>Express4.x API 翻译[2] -- Request
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-11
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/11/node-express4.x-api-2.html' title='Express4.x API 翻译[2] -- Request' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/11/node-express4.x-api-2.html' class='btn btn-default btn-block' title='Express4.x API 翻译[2] -- Request'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/10/node-plugin.html' target='_blank' title='Node Plugin'>Node Plugin</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/10/node-plugin.html' target='_blank' title='Node Plugin'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-10
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'></p>
+                                <p class='ix-description col-xs-12 visible-md'></p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/10/node-plugin.html' target='_blank' title='Node Plugin'>Node Plugin
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-10
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/10/node-plugin.html' title='Node Plugin' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/10/node-plugin.html' class='btn btn-default btn-block' title='Node Plugin'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+            </div><!--end of article-list -->
+            <div class='paginationbar'>
+                <label class='hidden-xs' style='color: #959595; margin-top: 25px;'>第5页 共12页</label>
+                <ul class='pagination pull-right'>
+    <li>
+        <a href='/' title='首页'>
+            <span class='glyphicon glyphicon-fast-backward'></span>
+            <span class='sr-only'>首页</span>
+        </a>
+    </li>
+    <li>
+        <a href='' title='前一页'>
+            <span class='glyphicon glyphicon-chevron-left'></span>
+            <span class='sr-only'>前一页</span>
+        </a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <li><a href='/page3'>3</a></li>
+    <li><a href='/page4'>4</a></li>
+    
+    
+    
+    <li class='active'><a>5</a></li>
+    
+    <!-- after current page -->
+    
+    
+    
+    <li><a href='/page6'>6</a></li>
+    <li><a href='/page7'>7</a></li>
+    
+
+    
+    <li>
+        <a href='' title='后一页'>
+            <span class='glyphicon glyphicon-chevron-right'></span>
+            <span class='sr-only'>后一页</span>
+        </a>
+    </li>
+    <li>
+        <a href='/page12' title='末页'>
+            <span class='glyphicon glyphicon-fast-forward'></span>
+            <span class='sr-only'>末页</span>
+        </a>
+    </li>
+</ul>
+
+            </div>
+        </div><!--end of mainbar-->
+        <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+            <div class='categorybar panel panel-default' id='categorybar'>
+    <div class='panel-heading'>
+        <h4 class='panel-title'>热门分类</h4>
+    </div>
+    <div class='list-group'>
+        <a class='list-group-item list-group-item-default' href='/categories/jekyll/'>jekyll
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/杂记/'>杂记
+            <span class="badge pull-right">16</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Jekyll/'>Jekyll
+            <span class="badge pull-right">2</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/JUnit/'>JUnit
+            <span class="badge pull-right">8</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Memcache/'>Memcache
+            <span class="badge pull-right">8</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Sencha/'>Sencha
+            <span class="badge pull-right">5</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Nginx/'>Nginx
+            <span class="badge pull-right">4</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Apache/'>Apache
+            <span class="badge pull-right">9</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Node/'>Node
+            <span class="badge pull-right">7</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/java/'>java
+            <span class="badge pull-right">2</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Redis/'>Redis
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Java/'>Java
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/JAXB/'>JAXB
+            <span class="badge pull-right">1</span>
+        </a>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>	

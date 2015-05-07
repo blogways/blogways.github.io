@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>MongoDB 分片介绍_博汇网_www.blogways.net</title>
+    <meta name=keywords content="MongoDB, Sharding, 分片, 分布式部署">
+    
+    <meta name=description content="MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql),其灵活的数据存储方式备受当前IT从业人员的青睐。Mongo DB很好的实现了面向对象的思想,在MongoDB中 每一条记录都是一个Document对象。Mongo DB最大的优势在于所有的数据持久操作都无需开发人员手动编写SQL语句,直接调用方法就可以轻松的实现CRUD操作。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "万洲".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2015/05/05/jaxb-tutorial-1.html' title='JAXB使用教程一:简介与基本用法'>JAXB使用教程一:简介与基本用法</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>MongoDB 分片介绍
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2015-05-05
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>MongoDB</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Sharding</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>分片</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>分布式部署</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2>一、分片介绍</h2>
+
+<p>分片是一个遍及多台机器存储数据的方法，MongoDB 使用分片来实现对大数据集合部署与高吞吐量操纵的支持。</p>
+
+<h3>分片的目的</h3>
+
+<p>对一个单一数据库系统服务来说，大数据集合和高吞吐量的应用程序将会是一个非常严峻的考验。高的查询速率会“吃光”服务器的所有CPU，更大的数据集合超出一个单一机器的存储空间。最后，工作集合的大小比系统内存容量( 磁盘驱动的I/O性能 )大。</p>
+
+<p>解决上诉问题的方式有两个：</p>
+
+<ol>
+<li>纵向扩展 ( vertical scaling )</li>
+<li>分片 ( sharding )</li>
+</ol>
+
+
+<p><strong>Vertical scaling</strong>，增加更多的CPU数和存储资源来增加容纳量，但是扩展存在限制：更多核心数的CPU和更多RAM的高性能系统比更小的系统昂贵，而且其 CPU 和 RAM 的增加与得到的性能不是曾比例的。另外，云服务提供商可能只允许用户提供更小的例子。因此，纵向扩展存在一个性能的最大极限。</p>
+
+<p><strong>Sharding</strong>，或者说是水平扩展，相反地将大数据集合拆分并将数据分布到多个服务器，或分片上。每个分片都是一个独立的数据库，所有的分片组成一个逻辑数据库。</p>
+
+<p><img src="/images/post/sharded-collection.png" alt="" /></p>
+
+<p>分片地址扩展到支持高吞吐率和大数据集合的难点：</p>
+
+<ul>
+<li>分片降低了每个分片处理操作的数量，随着集群的增长，每个分片将会处理更少的操作。其结果是，一个集群能够<em>水平地</em>增加容纳量和高吞吐量。例如：插入数据时，应用程序只需要访问负责该记录的碎片。</li>
+<li>分片减少了每个服务器需要存储的数据量，随着集群的增长，每个分片将会保存更少的数据。例如：一个数据库有 1TB 的数据，分4个分片后，每个分片只要保存 256GB 的数据；如果有40个分片的话，每个分片只需要保存 25GB 的数据。</li>
+</ul>
+
+
+<h2>二、MongoDB 分片</h2>
+
+<p>MongoDB 支持通过配置一个分片集群来支持分片。</p>
+
+<p><img src="/images/post/sharded-cluster-production-architecture.png" alt="" /></p>
+
+<p>分片集群由分片、查询路由和配置服务器三个组件构成：</p>
+
+<ul>
+<li><strong>Shards</strong> 用于保存数据。为了提供高可用性和数据一致性，在一个生产环境分片集群中，每个分片都有一个复制集( Replica Set )。关于复制集更多的信息，见<a href="http://docs.mongodb.org/manual/core/replication/" title="http://docs.mongodb.org/manual/core/replication/">Replica Sets</a></li>
+<li><strong>Query Routers</strong>，或者说<code>mongos</code>实例，客户端应用程序操作的接口，直接操作合适的分片或分片集。查询路由处理并将操作定位到分片，然后将结果返回给客户端。一个分片集群能够包含多个查询路由( Query Router )，用以分担客户端请求的负载。一个客户端和一个查询路由一一对应，更多的分片集群需要很多的查询路由。</li>
+<li><strong>Config Server</strong> 保存集群的元数据( metadata )，包含集群数据集到分片的映射，查询路由通过元数据将操作定位到指定的分片上。生产环境下，拥有确切的 <strong><em>3</em></strong>个配置服务器。</li>
+</ul>
+
+
+<h3>数据分割</h3>
+
+<p>MongoDB 在集合的水平上分割数据和分片，通过一个分片键( shard key )来分割分片。</p>
+
+<h4>分片键( Shard Keys )</h4>
+
+<p>为了将一个集合分片，需要选择一个分片关键字。一个分片关键字是一个索引字段，或存在于每个集合文档中的一个复合索引字段。MongoDB 按分片字段将集合划分为块( chunks )，然后讲所有的块均匀的分布到所有分片上。为了划分集合为区块，MongoDB 提供了<strong><em>范围分片(Range Based Sharding)</em></strong> 和 <strong><em>哈希分片(Hash Based Sharding)</em></strong>。</p>
+
+<h4>范围分片( Range Based Sharding )</h4>
+
+<p>在<em>范围分片</em>中，MongoDB 通过范围划分字段值提供的范围分割，将数据集合划分为不同的范围边界。就像一个数字分片字段：将负无穷到正无穷的所有数形象化为一条线，每个分片字段的值都落在该线上的某个点上。此线段被 MongoDB 划分为的更小的，没有重叠的范围叫做块( chunks )，一个块是某最小值到某最大值之间值的范围。</p>
+
+<p>已知的一个范围分割系统，文档中分片字段值为“close”的值在同一个块上，因此也在同一个分片上。</p>
+
+<p><img src="/images/post/sharding-range-based.png" alt="" /></p>
+
+<h4>哈希分片( Hash Based Sharding )</h4>
+
+<p>在<em>哈希分片</em>中，MongoDB 计算一个字段值的哈希值，然后使用此哈希值创建一个区块。</p>
+
+<p>如果使用哈希分割，分片字段值为“close”的两个文档可能不在同一个区块中，这确保了一个集合在集群中更大限度的随机分布。</p>
+
+<p><img src="/images/post/sharding-hash-based.png" alt="" /></p>
+
+<h4>范围分片和哈希分片的性能差异</h4>
+
+<p>基于范围的分片方式提供了更高效的范围查询，给定一个片键的范围，分发路由可以很简单地确定哪个数据块存储了请求需要的数据，并将请求转发到相应的分片中。</p>
+
+<p>不过，基于范围的分片会导致数据在不同分片上的不均衡，有时候，带来的消极作用会大于查询性能的积极作用。比如，如果片键所在的字段是线性增长的，一定时间内的所有请求都会落到某个固定的数据块中，最终导致分布在同一个分片中。在这种情况下，一小部分分片承载了集群大部分的数据，系统并不能很好地进行扩展。</p>
+
+<p>与此相比，基于哈希的分片方式以范围查询性能的损失为代价，保证了集群中数据的均衡。哈希值的随机性使数据随机分布在每个数据块中，因此也随机分布在不同分片中。但是也正由于随机性，一个范围查询很难确定应该请求哪些分片，通常为了返回需要的结果，需要请求所有分片。</p>
+
+<h4>使用标记自定义集群中数据的分布</h4>
+
+<p>MongoDB允许管理员使用 <strong>Tag Aware Sharding</strong> 直接决定集群的均衡策略。管理员使用标记与片键的范围做绑定，并将标记与分片直接绑定，之后，均衡器会将满足标记的数据直接分发到与之绑定的分片上，并且确保之后满足标记的数据一直存储在相应的分片上。</p>
+
+<p>标记是控制均衡器行为和数据块分布的首要条件，一般来讲，在拥有多个数据中心时，才会使用标记自定义集群中数据块的分布，以提高不同地域之间数据访问的效率。</p>
+
+<p>参考 <strong><a href="http://docs.mongodb.org/manual/core/tag-aware-sharding/" title="http://docs.mongodb.org/manual/core/tag-aware-sharding/">Tag Aware Sharding</a></strong> 获得更多相关信息。</p>
+
+<h4>数据分布均衡的维护</h4>
+
+<p>新数据的加入或者新分片的加入可能会导致集群中数据的不均衡，即表现为有些分片保存的数据块数目显著地大于其他分片保存的数据块数。</p>
+
+<p>MongoBD使用两个过程维护集群中数据的均衡：</p>
+
+<ol>
+<li><p>分裂；</p>
+
+<p> 分裂是防止某个数据块过大而进行的一个后台任务。当一个数据块的大小超过<a href="http://docs.mongodb.org/manual/core/sharding-chunk-splitting/#sharding-chunk-size" title="http://docs.mongodb.org/manual/core/sharding-chunk-splitting/#sharding-chunk-size">设定的数据块大小</a>时，MongoDB会将其一分为二，插入与更新触发分裂过程。分裂改变了元信息。但是效率很高，进行分裂时，MongoDB 不会迁移任何数据，对集群性能也没有影响。</p>
+
+<p> <img src="/images/post/sharding-splitting.png" alt="sharding-splitting" /></p></li>
+<li><p>均衡器。</p>
+
+<p> 均衡器是一个管理区块迁移的后台进程，均衡器在一个集群中所有的查询路由上运行。</p>
+
+<p> 当集群中数据的不均衡发生时，均衡器会将数据块从数据块数目最多的分片迁移到数据块最少的分片上，举例来讲：如果集合 <strong>users</strong> 在 <em>shard1</em> 上有100个数据块，在 <em>shard2</em> 上有50个数据块，均衡器会将数据块从 <em>shard1</em> 一直向 <em>shard2</em> 迁移，一直到数据均衡为止。</p>
+
+<p> 分片管理在后台管理从 <em>源分片</em> 到 <em>目标分片</em> 的数据块迁移，在迁移过程中，<em>目标分片</em>首先会接收源分片在迁移数据块上的所有数据，之后，目标分片应用在上一迁移步骤之间发生在源分片上的迁移数据块的更改，最后，存储在<em>配置服务器</em> 上的元信息被更新。</p>
+
+<p> 如果迁移中发生错误，源分片上的数据不会被修改，迁移会停止。在迁移成功结束之后MongoDB才会在源分片上将数据删除。</p>
+
+<p> <img src="/images/post/sharding-migrating.png" alt="sharding-migrating" /></p></li>
+</ol>
+
+
+<h4>在集群中增加或者删除分片</h4>
+
+<p>在集群中增加分片时，由于新的分片上并没有数据块，会造成数据的不均衡。此时MongoDB会立即开始向新分片迁移数据，集群达到数据均衡的状态需要花费一些时间。</p>
+
+<p>当删除一个分片时，均衡器需要将被删除的分片上的数据全部迁移到其他分片上，在全部迁移结束且元信息更新完毕之后，你可以安全地将这个分片移除。</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/jaxb-tutorial-1.html' title='JAXB使用教程一:简介与基本用法'>JAXB使用教程一:简介与基本用法</a>
+                            </h5>
+                            <span class='desc'>JAXB（Java Architecture for XML Bindin...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	
