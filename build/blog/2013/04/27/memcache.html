@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>memcache NOSQL服务器安装及使用_博汇网_www.blogways.net</title>
+    <meta name=keywords content="memcache, Libevent, magent, libmemcached, memcached client for java">
+    
+    <meta name=description content="Memcache是一个高性能的分布式的内存对象缓存系统，通过在内存里维护一个统一的巨大的hash表，它能够用来存储各种格式的数据，包括图像、视频、文件以及数据库检索的结果等。简单的说就是将数据调用到内存中，然后从内存中读取，从而大大提高读取速度.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "汤仕忠".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/04/25/2013-todo-list.html' title='2013年待研究学习事项'>2013年待研究学习事项</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/04/28/tdd-impression.html' title='TDD 读后心得'>TDD 读后心得</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/04/28/tdd-impression.html' title='TDD 读后心得'>TDD 读后心得</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>memcache NOSQL服务器安装及使用
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-04-27
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>memcache</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Libevent</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>magent</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>libmemcached</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>memcached client for java</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h3>一、概述</h3>
+
+<p>Memcache是danga的一个项目，最早是LiveJournal 服务的，最初为了加速 LiveJournal 访问速度而开发的，后来被很多大型的网站采用。Memcached是以守护程序方式运行于一个或多个服务器中，随时会接收客户端的连接和操作。</p>
+
+<p>在 Memcached中可以保存的item数据量是没有限制的，只要内存足够。Memcached单进程最大使用内存为2G，要使用更多内存，可以分多个端口开启多个Memcached进程，最大30天的数据过期时间,设置为永久的也会在这个时间过期，常量REALTIME_MAXDELTA
+60<em>60</em>24*30控制，最大键长为250字节，大于该长度无法存储，常量KEY_MAX_LENGTH 250控制，单个item最大数据是1MB，超过1MB数据不予存储，常量POWER_BLOCK 1048576进行控制（可以修改slabs.c：POWER_BLOCK的值，然后重新编译memcached），它是默认的slab大小，最大同时连接数是200，通过 conn_init()中的freetotal进行控制，最大软连接数是1024，通过settings.maxconns=1024 进行控制，跟空间占用相关的参数：settings.factor=1.25, settings.chunk_size=48,影响slab的数据占用和步进方式。memcached是一种无阻塞的socket通信方式服务，基于libevent库，由于无阻塞通信，对内存读写速度非常之快。memcached分服务器端和客户端，可以配置多个服务器端和客户端，应用于分布式的服务非常广泛。memcached作为小规模的数据分布式平台是十分有效果的。</p>
+
+<p>memcached是键值一一对应，key默认最大不能超过128个字 节，value默认大小是1M，也就是一个slabs，如果要存2M的值（连续的），不能用两个slabs，因为两个slabs不是连续的，无法在内存中 存储，故需要修改slabs的大小，多个key和value进行存储时，即使这个slabs没有利用完，那么也不会存放别的数据。</p>
+
+<p>目前memcached支持C/C++、Perl、PHP、Python、Ruby、Java、C#、Postgres、Chicken Scheme、Lua、MySQL和Protocol等语言客户端。</p>
+
+<h3>二、Memcache和memcached</h3>
+
+<p>其实Memcache是这个项目的名称，而memcached是它服务器端的主程序文件名，知道我的意思了吧。一个是项目名称，一个是主程序文件名，在网上看到了很多人不明白，于是混用了。</p>
+
+<h3>三、Memcached 安装</h3>
+
+<p>1.在Linux环境下应用Memcache时，Memcache用到了libevent这个库，用于Socket的处理，所以还需要安装libevent。这里用的libevent的版本是libevent-1.4.9。下载地址<a href="http://www.monkey.org/~provos/libevent/">http://www.monkey.org/~provos/libevent/</a>（如果你的系统已经安装了libevent，可以不用安装）。</p>
+
+<p>2.Memcached 下载地址<a href="https://code.google.com/p/memcached/">https://code.google.com/p/memcached/</a></p>
+
+<p>3.这里我运用了Magent作为Memcached代理服务器软件，它可以搭建高可用性的集群应用的Memcached服务，magent采用的是：Consistent Hashing原理，Consistent Hashing如下所示：首先求出memcached服务器（节点）的哈希值， 并将其配置到0～232的圆（continuum）上。然后用同样的方法求出存储数据的键的哈希值，并映射到圆上。然后从数据映射到的位置开始顺时针查找，将数据保存到找到的第一个服务器上。 如果超过232仍然找不到服务器，就会保存到第一台memcached服务器上，magent下载地址为：<a href="http://code.google.com/p/memagent/">http://code.google.com/p/memagent/</a>。</p>
+
+<p>4.编译安装libevent</p>
+
+<pre><code>tar zxvf libevent-1.4.9-stable.tar.gz
+cd libevent-1.4.9-stable/
+./configure --prefix=/usr
+make &amp;&amp; make install
+</code></pre>
+
+<p>5.编译安装Memcached</p>
+
+<pre><code>tar zxvf memcached-1[1].4.5.tar.gz
+cd memcached-1.4.5/
+./configure --with-libevent=/usr
+make &amp;&amp; make install
+</code></pre>
+
+<p>6.编译安装magent</p>
+
+<pre><code>mkdir magent
+cd magent/
+tar zxvf magent-0.5.tar.gz
+/sbin/ldconfig
+sed -i "s#LIBS = -levent#LIBS = -levent -lm#g" Makefile
+make
+cp magent /usr/bin/magent
+</code></pre>
+
+<p>在安装magent过程中可能遇到一些问题，下面列举几个可能出现的问题及解决方法：</p>
+
+<pre><code>gcc -Wall -g -O2 -I/usr/local/include -m64 -c -o magent.o magent.c
+magent.c: In function 'writev_list':
+magent.c:729: error: 'SSIZE_MAX' undeclared (first use in this function)
+magent.c:729: error: (Each undeclared identifier is reported only once
+magent.c:729: error: for each function it appears in.)
+make: *** [magent.o] Error 1
+
+解决办法：
+[spdev@slave2 magent]# vi ketama.h 
+#在开头加入
+#ifndef SSIZE_MAX
+#define SSIZE_MAX      32767
+#endif
+
+gcc -Wall -g -O2 -I/usr/local/include -m64 -c -o magent.o magent.c
+gcc -Wall -g -O2 -I/usr/local/include -m64 -c -o ketama.o ketama.c
+gcc -Wall -g -O2 -I/usr/local/include -m64 -o magent magent.o ketama.o
+/usr/lib64/libevent.a /usr/lib64/libm.a 
+gcc: /usr/lib64/libevent.a: No such file or directory
+gcc: /usr/lib64/libm.a: No such file or directory
+解决办法：
+[spdev@slave2 magent]#  ln -s /usr/lib/libevent*  /usr/lib64/
+
+gcc -Wall -g -O2 -I/usr/local/include -m64 -o magent magent.o ketama.o 
+/usr/lib64/libevent.a /usr/lib64/libm.a 
+gcc: /usr/lib64/libm.a: No such file or directory
+make: *** [magent] Error 1
+解决办法：
+[spdev@slave2 magent]# cp /usr/lib64/libm.so /usr/lib64/libm.a
+
+gcc -Wall -g -O2 -I/usr/local/include -m64 -o magent magent.o ketama.o 
+/usr/lib64/libevent.a /usr/lib64/libm.a 
+/usr/lib64/libevent.a(event.o): In function `detect_monotonic':
+event.c:(.text+0xc79): undefined reference to `clock_gettime'
+/usr/lib64/libevent.a(event.o): In function `gettime':
+event.c:(.text+0xd60): undefined reference to `clock_gettime'
+collect2: ld returned 1 exit status
+make: *** [magent] Error 1
+解决办法：
+[spdev@slave2 magent]#vi Makefile 
+CFLAGS = -Wall -g -O2 -I/usr/local/include $(M64)
+改为：    
+CFLAGS = -lrt -Wall -g -O2 -I/usr/local/include $(M64)
+</code></pre>
+
+<h3>四、启动和结束服务</h3>
+
+<p>1.启动一个Memcache的服务器端：</p>
+
+<pre><code>memcached -d -m 10 -u spdev -l 192.168.4.19 -p 11211 -c 256 -P /tmp/memcached.pid
+? -d 选项是启动一个守护进程，
+? -m 是分配给Memcache使用的内存数量，单位是MB，我这里是10MB，
+? -u 是运行Memcache的用户，我这里是spdev，
+? -l 是监听的服务器IP地址，我这里指定了服务器的IP地址192.168.4.19，
+? -p 是设置Memcache监听的端口，我这里设置了11211，最好是1024以上的端口，
+? -c 是最大运行的并发连接数，默认1024，这里设置了256，按照服务器的负载量来设定，
+? -P 是设置保存Memcache的pid文件，我这里是保存在/tmp/memcached.pid。
+</code></pre>
+
+<p>2.结束一个Memcache进程</p>
+
+<pre><code>如果要结束Memcache进程，执行：
+# kill `cat /tmp/memcached.pid`
+? 注意，上面命令中的符号是 `，不是单引号’
+</code></pre>
+
+<p>3.启动Magent代理</p>
+
+<pre><code>magent -u spdev -n 51200 -l 192.168.4.19 -p 12000 -s 192.168.4.19:11211 
+-s 192.168.4.19:11212 -b 192.168.4.19:11213 
+
+-h this message
+-u uid
+-g gid
+-p port, default is 11211. (0 to disable tcp support)
+-s ip:port, set memcached server ip and port
+-b ip:port, set backup memcached server ip and port
+-l ip, local bind ip address, default is 0.0.0.0
+-n number, set max connections, default is 4096
+-D don't go to background
+-k use ketama key allocation algorithm
+-f file, unix socket path to listen on. default is off
+-i number, max keep alive connections for one memcached server, default is 20
+-v verbose
+
+启动magent代理服务器，端口为12000.代理服务器ip端口192.168.4.19:11211、
+192.168.4.19:11212，备份主机ip端口为192.168.4.19:11213
+</code></pre>
+
+<h3>五、telnet memcache服务器及magent代理服务器测试</h3>
+
+<ol>
+<li><p>telnet memcache 192.168.4.19:11211服务器</p>
+
+<pre><code> C:\Users\Administrator&gt;telnet 192.168.4.19:11211
+ set key 0 0 8
+ 88888888
+ STORED
+ quit
+
+ 遗失对主机的连接。
+</code></pre></li>
+<li><p>telnet magent 192.168.4.19:12000代理服务器</p>
+
+<pre><code> C:\Users\Administrator&gt;telnet 192.168.4.19:12000
+ get key
+ VALUE key 0 8
+ 88888888
+ END
+ quit
+
+ 遗失对主机的连接。
+</code></pre></li>
+</ol>
+
+
+<p>这里可以发现在服务器上set的值，在代理服务器上可以取到。</p>
+
+<h3>六、运用libmemcached c++客户端编写客户端测试程序</h3>
+
+<p>libmemcached下载地址:</p>
+
+<p><a href="https://launchpad.net/libmemcached/+download/">https://launchpad.net/libmemcached/+download/</a></p>
+
+<p>此处要注意，libmemcached 1.0以上版本需要gcc4.2以上版本才能支持，这里我用的是最新版libmemcached-1.0.17，而16主机上gcc版本为4.12,所以我升级了gcc，升级gcc步骤这里就不做介绍</p>
+
+<ol>
+<li><p>libmemcached客户端程序连接magent代理服务器测试</p>
+
+<ul>
+<li><p>循环500000次向memcache服务器set 500000条值，本次测试是ip为
+192.168.4.16的主机调ip为192.168.4.19的memcache服务器，具体
+调用时间如下：</p>
+
+<pre><code>    Save data:begin
+    2013-04-29 15:39:32.129
+    2013-04-29 15:41:43.406
+    Save data:end
+</code></pre>
+
+<p>  从上面数据看出set 500000数据用了2分多钟</p>
+
+<ul>
+<li><p>循环10000次，每次随机取1-500000中任意一个随机数，然后从上面set的值中get对应
+数据，具体调用时间如下：</p>
+
+<pre><code>  2013-04-29 15:41:43.406
+  2013-04-29 15:41:45.899
+</code></pre>
+
+<p>由此看出随机取10000条数据用了两秒多的时间</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+
+<p>2.libmemcached客户端程序直接连接memcache服务器测试</p>
+
+<ul>
+<li><p>循环500000次向memcache服务器set 500000条值，本次测试是ip为
+192.168.4.16的主机调ip为192.168.4.19的memcache服务器，具体
+调用时间如下：</p>
+
+<pre><code>  Save data:begin
+  2013-04-29 20:28:42.439
+  2013-04-29 20:30:10.462
+  Save data:end
+</code></pre>
+
+<p>从上面数据看出set 500000数据用了1分多钟</p></li>
+<li><p>循环10000次，每次随机取1-500000中任意一个随机数，然后从上面set的值中get对应
+数据，具体调用时间如下：</p>
+
+<pre><code>  2013-04-29 20:30:10.462
+  2013-04-29 20:30:12.085
+</code></pre>
+
+<p>由此看出随机取10000条数据用了1秒多的时间</p></li>
+</ul>
+
+
+<h3>七、运用memcached client for java客户端编写客户端测试程序</h3>
+
+<p>memcached client for java下载地址为：</p>
+
+<p><a href="http://github.com/gwhalin/Memcached-Java-Client/">http://github.com/gwhalin/Memcached-Java-Client/</a></p>
+
+<ol>
+<li><p>java客户端程序连接magent代理服务器测试</p>
+
+<ul>
+<li><p>循环500000次向memcache服务器set 500000条值，本次测试是ip为
+192.168.4.16的主机调ip为192.168.4.19的memcache服务器，具体
+调用时间如下：</p>
+
+<pre><code>    save begin:2013-04-29 10:09:04:0790
+    save end:2013-04-29 10:13:11:0721
+</code></pre>
+
+<p>  从上面数据看出set 500000数据用了4分多钟</p>
+
+<ul>
+<li><p>循环10000次，每次随机取1-500000中任意一个随机数，然后从上面set的值中get对应
+数据，具体调用时间如下：</p>
+
+<pre><code>  get begin:2013-04-29 10:13:11:0722
+  get end:2013-04-29 10:13:16:0678
+</code></pre>
+
+<p>由此看出随机取10000条数据用了4秒多的时间</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+
+<p>2.java客户端程序直接连接memcache服务器测试</p>
+
+<ul>
+<li><p>循环500000次向memcache服务器set 500000条值，本次测试是ip为
+192.168.4.16的主机调ip为192.168.4.19的memcache服务器，具体
+调用时间如下：</p>
+
+<pre><code>  save begin:2013-04-29 20:21:46:0195
+  save end:2013-04-29 20:25:06:0365
+</code></pre>
+
+<p>从上面数据看出set 500000数据用了3分多钟</p></li>
+<li><p>循环10000次，每次随机取1-500000中任意一个随机数，然后从上面set的值中get对应
+数据，具体调用时间如下：</p>
+
+<pre><code>  get begin:2013-04-29 20:25:06:0366
+  get end:2013-04-29 20:25:10:0357
+</code></pre>
+
+<p>由此看出随机取10000条数据用了接近4秒的时间</p></li>
+</ul>
+
+
+<h3>八、说明</h3>
+
+<ol>
+<li><p>从步骤七中测试结果可以看出，c++客户端调用memcache服务器在性能上明显优于java客户端，同时运用magent代理服务器时性能上还是有所降低</p></li>
+<li><p>至于redis与memcache性能差异本文没有做对比，可参照redis文档中列出的测试数据加以对比，这里列下在网上看到一些大拿们列出的对比：</p>
+
+<ul>
+<li><p>性能对比：由于Redis只使用单核，而Memcached可以使用多核，所以平均每一个核上Redis在存储小数据时比Memcached性能更高。而在100k以上的数据中，Memcached性能要高于Redis，虽然Redis最近也在存储大数据的性能上进行优化，但是比起Memcached，还是稍有逊色</p></li>
+<li><p>内存使用效率对比：使用简单的key-value存储的话，Memcached的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于Memcached</p></li>
+<li><p>Redis支持服务器端的数据操作：Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里，你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的GET/SET一样高效。所以，如果需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择</p></li>
+</ul>
+</li>
+</ol>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

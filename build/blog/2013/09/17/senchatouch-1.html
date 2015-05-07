@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Sencha Touch 框架简介_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Sencha Touch, Mobile Web, Html5">
+    
+    <meta name=description content="Sencha Touch（下称ST） 框架是第一个基于 HTML5 的 Mobile App 框架，是 Ext 整合 JQTouch 和 Raphael 而推出的适用于最前沿 Touch Web 的框架，完全基于 HTML5+CSS3 的最新标准，全面兼容 Android 、 Apple IOS 和 BlackBerry 等设备。ST 继承了 Ext 的界面风格，可以让你的 Web App 看起来更像 Native App，其丰富的界面组件、强大的数据管理以及跨浏览器兼容的矢量图将 ST 打造成 Mobile 跨平台开发利器，易扩展，足够应付绝大部分开发需求。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "Jacky".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/08/24/debug-in-express.html' title='关于express用到的日志库debug的知识点滴'>关于express用到的日志库debug的知识点滴</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/09/18/senchatouch-2.html' title='Sencha Touch 体验'>Sencha Touch 体验</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/09/18/senchatouch-2.html' title='Sencha Touch 体验'>Sencha Touch 体验</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Sencha Touch 框架简介
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-09-17
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Sencha Touch</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Mobile Web</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Html5</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2>Sencha Touch 框架简介</h2>
+
+<p>Sencha Touch（下称ST） 框架是第一个基于 HTML5 的 Mobile App 框架，是 Ext 整合 JQTouch 和 Raphael 而推出的适用于最前沿 Touch Web 的框架，完全基于 HTML5+CSS3 的最新标准，全面兼容 Android 、 Apple IOS 和 BlackBerry 等设备。ST 继承了 Ext 的界面风格，可以让你的 Web App 看起来更像 Native App，其丰富的界面组件、强大的数据管理以及跨浏览器兼容的矢量图将 ST 打造成 Mobile 跨平台开发利器，易扩展，足够应付绝大部分开发需求。</p>
+
+<p>由于苹果对 Flash 的封杀，使得 Flash 无法进入 IOS 的平台，虽然 Flash 对 Android 系统支持得也不错，但对开发者来说还是有些遗憾，Flash 引以为豪的跨平台特性被中止，随着 Webkit 在移动设备上的流行，越来越多的人开始看好 Html5，后来居上的 ST 得到快速的发展。</p>
+
+<h3>下面是官方列出的几大特性：</h3>
+
+<h4>1、基于最新的 web 标准——HTML5，CSS3，JavaScript</h4>
+
+<p>整个库压缩和 gzip 后大约 120KB，通过禁用一些组件还会使它更小。</p>
+
+<h4>2、支持目前世界上最好的移动设备</h4>
+
+<p>Sencha Touch 目前支持 Apple iOS，Android 和 BlackBerry 等目前 3G 市场上最流行的移动设备，它为不同的设备定制了不同的主题，用户可以通过使用这些主题使 web 应用在移动设备上的展现更华丽。</p>
+
+<h4>3、增强的触摸事件</h4>
+
+<p>除了 touchstart，touchend 等标准事件基础外，Sencha Touch 增加了一组自定义触摸事件，如 tap、double tap、swipe、tap and hold、pinch、rotate 等。</p>
+
+<h4>4、数据集成</h4>
+
+<p>Sencha Touch 提供了强大的数据包，通过 Ajax、JSONP、YQL 等方式用户可以很容易的从各种各样的数据源拿到数据并绑定到组件模板，写入本地离线存储。</p>
+
+<h3>ST 功能模块介绍：</h3>
+
+<h4>1、用户界面组件，容器和布局组件</h4>
+
+<p>Sencha Touch 提供了丰富的用户界面组件，包括常用的按钮，单选框，复选框，文本框，日期选择控件，表格，列表等等，通过运用 Sencha Touch 定制的样式和主题，这些控件在移动设备上看起来和本地应用的 UI 组件没有什么区别。在容器和布局方面，Sencha Touch 也可以和 Adobe 的 Flex 相媲美，不仅提供了基础的 HBoxLayout，VBoxLayout 还提供了 DockLayout，CardLayout，FieldLayout 等更适合开发支持触屏设备的 Mobile web 应用的组件，关于每个组件详细的内容可以参考参考资源中列出的 Sencha Touch 的 API 文档。</p>
+
+<h4>2、WebKit/CSS3 样式技巧增强</h4>
+
+<p>Sencha Touch 充分运用了 CSS3 的新特性使基于 webKit 浏览器运行的 Sencha Touch 应用更炫更酷。它支持并增强了对 Animations（动画），Transitions（转换效果），Gradients（渐变），shadows（阴影效果），Font Face（用户自定义字库），Marquee（文字移动效果），Multiple Backgrounds（多背景），RGBA（高清色彩显示通道）等样式效果的展示。</p>
+
+<h4>3、数据包</h4>
+
+<p>Sencha Touch 的一个最大特性就是提供了功能强大的数据包。在 Ext.data 包中提供了丰富的 API 实现对 AJAX，JSONP，YQL 等数据访问方式的支持，并提供了 API 供用户更简单方便的操作和展现 JSON 数据， XML 数据等。用户还可以扩展基础接口实现对更复杂数据的操作和访问。Ext.data 数据包中最基础的是 Ext.data.Model，它就像 Java 的 Object 类一样是定义所有对象的基础类，代表应用程序中的数据类型：用户，产品，销售等任何东西。</p>
+
+<h4>4、数据验证和数据关联</h4>
+
+<p>Sencha Touch 提供了五种基本的数据验证方式，用户可以将验证方式的定义直接和对象的定义绑定，就像定义数据库表的列约束一样方便和简洁。这五种验证方式是：</p>
+
+<pre><code>Presence：验证数据不能为空值。
+Length：验证数据的长度，可以定义最大长度和最小长度。
+Format：Format验证数据的格式是否符合预定义的格式，比如定义某个时间属性的格式是“yyyy-mm-dd”，那么“20110324”这样的值就被认为是不合法的。
+Inclusion：验证数据是否属于某个预定义的范围，该范围可以是一个闭合区间，也可以是一些可能值的集合。
+Exclusion：验证数据是否不属于某个预定义的范围。 
+</code></pre>
+
+<h3>ST 的缺点：</h3>
+
+<pre><code>1、相比较而言入门门槛较高，有些习惯了 jquery 开发的人不太习惯 st 的编程方式；
+2、框架类库文件体积大；
+3、执行效率低；
+4、有些组件响应有延时；
+</code></pre>
+
+<p>总之，ST 开发简单、兼容性好、支持标准化，提供丰富的界面组件以及强大的数据操作 API，是目前 Mobile Web 开发最成熟的框架，虽然存在一些缺点，相信随着版本的升级会越来越好！</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

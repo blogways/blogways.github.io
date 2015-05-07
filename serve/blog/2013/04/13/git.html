@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>git服务器部署及使用_博汇网_www.blogways.net</title>
+    <meta name=keywords content="git, msysGit">
+    
+    <meta name=description content="git服务器部署及使用.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "汤仕忠".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/04/10/generating-ssh-keys-4-github.html' title='创建SSH密钥，并连接GitHub'>创建SSH密钥，并连接GitHub</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/04/13/jekyll-usage.html' title='jekyll 教程入门'>jekyll 教程入门</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/04/13/jekyll-usage.html' title='jekyll 教程入门'>jekyll 教程入门</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>git服务器部署及使用
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-04-13
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>git</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>msysGit</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h3>一、概述</h3>
+
+<p>Git是用于Linux内核开发的版本控制工具。与CVS、Subversion一类的集中式版本控制工具不同，它采用了分布式版本库的作法，不需要服务器端软件，就可以运作版本控制，使得源代码的发布和交流极其方便。Git的速度很快，这对于诸如Linux kernel这样的大项目来说自然很重要。Git最为出色的是它的合并追踪（merge tracing）能力。</p>
+
+<p>实际上内核开发团队决定开始开发和使用Git来作为内核开发的版本控制系统的时候，世界开源社群的反对声音不少，最大的理由是Git太艰涩难懂，从Git的内部工作机制来说，的确是这样。但是随着开发的深入，Git的正常使用都由一些友善的命令稿来执行，使Git变得非常好用。现在，越来越多的著名项目采用Git来管理项目开发。</p>
+
+<h3>二、实现原理</h3>
+
+<p>Git和其他版本控制系统（如CVS）有不少的差别，Git本身关心档案的整体性是否有改变，但多数的CVS，或Subversion系统则在乎档案内容的差异。因此Git更像一个档案系统，直接在本机上取得资料，不必连线到host端取资料回来。</p>
+
+<h3>三、安装git</h3>
+
+<ol>
+<li><p>linux上安装：</p>
+
+<p> linux上安装git可以源代码安装和预编译好的Git二进制安装包安装两种方式，
+ 本次安装是在redHat上采用源码安装的:</p>
+
+<ul>
+<li>主机上建立一个用户git</li>
+<li><p>root用户登录，修改/ect目录下sudoers文件，将git用户加入sudo列表</p></li>
+<li><p>下载源代码
+  <a href="http://git-scm.com/download">http://git-scm.com/download</a></p></li>
+<li><p>上传redHat主机解压编译并安装</p>
+
+<pre><code>  $tar -zxf git-1.7.2.2.tar.gz
+  $ cd git-1.7.2.2
+  $ make prefix=/usr/local all
+  $ sudo make prefix=/usr/local install
+</code></pre>
+
+<p>其中/usr/local为安装目录</p></li>
+<li><p>修改git用户下 ~/.bash_profile文件（没有新建），添加PATH=$PATH:/usr/local/bin</p></li>
+<li><p>修改git用户下.bashrc文件（没有新建），添加 PATH=$HOME/bin:$PATH</p></li>
+<li><p>$git --version，显示git版本git version 1.8.1.6，表示git安装成功</p></li>
+</ul>
+</li>
+<li><p>windows上安装</p>
+
+<ul>
+<li>下载msysGit安装包
+<a href="http://code.google.com/p/msysgit"> http://code.google.com/p/msysgit </a></li>
+<li>安装msysGit，右键运行git Bash，输入git --version，
+显示git version 1.7.11.msysgit.1，windows上git安装成功</li>
+</ul>
+</li>
+</ol>
+
+
+<h3>四、git配置</h3>
+
+<ol>
+<li><p>linux 上git服务器配置：</p>
+
+<p> 首先我们都需要先配置下自己的 Git 工作环境。配置工作只需一次，以后升级时还会沿用现在的配置。当然，如果需要，你随时可以用相同的命令修改已有的配置。
+ Git 提供了一个叫做 git config 的工具，专门用来配置或读取相应的工作环境变量。
+ 而正是由这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。
+ 这些变量可以存放在以下三个不同的地方：</p>
+
+<pre><code> • /etc/gitconfig 文件：系统中对所有用户都普遍适用的配置。若使用git config 时用
+   --system 选项，读写的就是这个文件
+ • ~/.gitconfig 文件：用户目录下的配置文件只适用于该用户。若使用git config 时用
+   --global 选项，读写的就是这个文件
+ • 当前项目的 git 目录中的配置文件（也就是工作目录中的 .git/config 文件）：所以
+   .git/config 里的配置会覆盖/etc/  gitconfig 中的同名变量
+</code></pre>
+
+<ul>
+<li><p>配置的是你个人的用户名称和电子邮件地址</p>
+
+<pre><code>  $ git config --global user.name "tangsz"
+  $ git config --global user.email "tangsz@asiainfo-linkage.com" 
+</code></pre></li>
+<li><p>文本编辑器</p>
+
+<pre><code>  $ git config --global core.editor vi
+</code></pre></li>
+<li><p>查看配置信息 git config --list</p></li>
+</ul>
+</li>
+<li><p>windows 上msysGit配置</p>
+
+<ul>
+<li><p>生成公钥
+      右键打开git Bash，输入ssh-keygen –C “你的email地址 “ –t rsa 就会为你生成一个 SSH Key，
+      然后会询问一些保存文件的位置，设置密码神马的，直接回车，回车，回车，默认的就可以了，SSH 公
+      钥默认储存在账户的主目录下的 ~/.ssh 目录something 和 something.pub 来命名的一对文件，
+      这个 something 通常就是 id_dsa 或 id_rsa，有 .pub 后缀的文件就是公钥</p></li>
+<li><p>将公钥文件放到主机git用户.ssh目录下（没有此目录就新建），将公钥文件内容追加到  文件authorized_keys文件（没有就新建）尾部即可：</p>
+
+<pre><code>  cat /tmp/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys 
+</code></pre>
+
+<p>  这样后面windows与服务器交互clone、pull等操作时就不用频繁输入密码了</p></li>
+</ul>
+</li>
+</ol>
+
+
+<h3>五、服务器上部署git</h3>
+
+<p>服务器上部署git仓库有很多种方式，这里简单介绍两种：</p>
+
+<ul>
+<li><p>直接在服务器上需建立仓库目录执行 git init，通常我们在服务器上建立的仓库都是裸仓库-即一个不含工作目录的仓库，所以我们这里执行git --bare init建立裸仓库，--bare表示建立的是裸仓库</p></li>
+<li><p>本机clone一个裸仓库移到服务器上，如下：</p>
+
+<pre><code>  $ git clone --bare my_project my_project.git
+  $ scp -r my_project.git user@192.168.4.19:/home/git
+</code></pre>
+
+<p>  user为服务器上建立的git用户，192.168.4.19为主机地址，/home/git为裸仓库存放目录，这样所有对该服务器有 SSH 访问权限，并可读取 /home/git 目录的用户都可以用下面的命令克隆该项目</p></li>
+</ul>
+
+
+<p>注：裸仓库建立完后，更改裸仓库目录下config文件添加</p>
+
+<pre><code>[receive]
+    denyCurrentBranch = ignore)
+</code></pre>
+
+<p>否则本机push操作会报master branch is currently checked out</p>
+
+<h3>六、git操作</h3>
+
+<p>git的操作需在实践中慢慢熟悉，这里简单介绍一些平时常用的：</p>
+
+<ol>
+<li><p>本地仓库操作</p>
+
+<p> windows下命令行操作仓库在安装msysGit后只需右键执行git Bash就可以操作了，
+ 也可以下载TortoiseGit通过可视化操作本地及远程仓库，此处就简单介绍命令行操作仓库，不做TortoiseGit操作介绍</p>
+
+<ul>
+<li><p>克隆一个仓库：git有git、ssh、http(s)几种协议，这里用的是ssh git clone git:192.168.4.19：/home/git/my_project.git git为服务器用户名、192.168.4.19为服务器地址、/home/git/my_project.git为服务器仓库目录</p></li>
+<li><p>git status  --检查文件</p></li>
+<li><p>git add 文件名   --新增文件</p></li>
+<li><p>git commit  --提交操作</p></li>
+<li><p>git log  --查看日志</p></li>
+<li><p>git commit --amend   --撤销提交</p></li>
+<li><p>git mv file_from file_to  --文件改名</p></li>
+<li><p>git diff  --查看working tree与index file的差别</p></li>
+<li><p>git rm  --删除文件</p></li>
+</ul>
+</li>
+<li><p>远程仓库操作</p>
+
+<ul>
+<li><p>git remote -v --查看远程仓库</p></li>
+<li><p>git fetch [remote-name]  --获取remote-name库数据不merge</p></li>
+<li><p>git push [remote-name] [branch-name]  --上传数据都remote-name库branch-name分支</p></li>
+<li><p>git remote show origin      -- 查看origin库信息</p></li>
+<li><p>git remote rename pb paul   ---把 pb 改成 paul</p></li>
+<li><p>git pull     --从远程获取最新版本并merge到本地,相当于git fetch 和 git merge</p></li>
+</ul>
+</li>
+</ol>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

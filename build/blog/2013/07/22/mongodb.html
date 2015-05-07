@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>MongoDB 应用架构之路_博汇网_www.blogways.net</title>
+    <meta name=keywords content="MongoDB, NoSQL">
+    
+    <meta name=description content="随着大数据时代的到来，传统的关系型数据库已经无法满足不同的存储需求，短短几年的时间NoSQL大行其道，大有后来居上之势。NoSQL根据不同的数据库类型又可以分为：文件存储、键值存储、列存储、图数据库、RTF存储等。本文我们一起来探索下基于文件存储最流行的NoSQL-MongoDB在实际架构中的应用。MongoDB是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库中功能最丰富、最像关系数据库的。他支持的数据库结构非常松散，是类似json的bjson格式，可以存储比较复杂的数据类型。Mongo完全遵循javascript语法，语法比较灵活，支持的查询功能非常强大，几乎可以实现关系数据单表查询的绝大部分功能，并且支持对表建立索引。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "Jacky".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/07/18/hp-ux-lua-64.html' title='hp-ux下编译64位Lua'>hp-ux下编译64位Lua</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/08/24/debug-in-express.html' title='关于express用到的日志库debug的知识点滴'>关于express用到的日志库debug的知识点滴</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/08/24/debug-in-express.html' title='关于express用到的日志库debug的知识点滴'>关于express用到的日志库debug的知识点滴</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>MongoDB 应用架构之路
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-07-22
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>MongoDB</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>NoSQL</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2>MongoDB 应用架构之路</h2>
+
+<p>随着大数据时代的到来，传统的关系型数据库已经无法满足不同的存储需求，短短几年的时间NoSQL大行其道，大有后来居上之势。NoSQL根据不同的数据库类型又可以分为：文件存储、键值存储、列存储、图数据库、RTF存储等。本文我们一起来探索下基于文件存储最流行的NoSQL-MongoDB在实际架构中的应用。</p>
+
+<p>MongoDB是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库中功能最丰富、最像关系数据库的。他支持的数据库结构非常松散，是类似json的bjson格式，可以存储比较复杂的数据类型。Mongo完全遵循javascript语法，语法比较灵活，支持的查询功能非常强大，几乎可以实现关系数据单表查询的绝大部分功能，并且支持对表建立索引。</p>
+
+<h3>安装部署</h3>
+
+<h4>下载</h4>
+
+<p>根据自己的操作系统从官网下载对应的MongoDB版本（32bit/64bit），32位的最大只能存放2G的数据，64位的则没有限制。下载后解压到安装目录。</p>
+
+<h4>启动</h4>
+
+<p>到bin目录下执行<code>mongod --dbpath=..\db</code>，其中dbpath参数为指定创建数据库文件的目录，该目录一定要存在，否则无法启动，如果嫌每次都输入参数太麻烦的话可以在bin目录下创建一个mongodb.config文件，将参数写到文件里面，下次启动的时候就可以直接执行<code>mongod --config mongodb.config</code>就可以了。</p>
+
+<p>在浏览器中输入<code>http://localhost:28017/</code>可以查看mongodb的管理信息。</p>
+
+<h4>基本数据操作</h4>
+
+<p>在bin目录下执行mongo打开mongodb的客户端，默认连接的是test数据库。注意操作都是js的语法，可以根据自己的习惯来写。</p>
+
+<h5>insert操作</h5>
+
+<p>db.user.insert({name:'Jack',age:30})</p>
+
+<h5>select操作</h5>
+
+<p>db.user.find({name:'Jack'})</p>
+
+<h5>update操作</h5>
+
+<p>db.user.update({name:'Jack'},{name:'Jack',age:20})</p>
+
+<h5>remove操作</h5>
+
+<p>db.user.remove({name:'Jack')}</p>
+
+<p>这些都是最基本的操作，千万别以为就操作就这么简单，要知道js的语法是非常灵活的，要不然怎么实现关系型数据库的单表的大部分功能，但灵活的代价就是语句写起来比较复杂，高级的增删改查、索引、聚合、分类统计、MapReduce、游标等功能就不逐一介绍了，需要大家自己去多实践。</p>
+
+<p>本文主要介绍MongoDB在应用架构中很重要的两个特性：主从复制、分片技术。</p>
+
+<h2>架构应用</h2>
+
+<p>既然是做应用数据库，我们肯定不希望把鸡蛋全放到一个篮子里面，单点部署是不应该被采用的，要知道如果碰到数据库宕机或者硬盘问题数据被永久破坏影响可想而知。幸好MongoDB可以做到读写分离、双机热备份和集群部署。下面来具体看下如何操作。</p>
+
+<h4>一、主从复制</h4>
+
+<h5>1、模型图</h5>
+
+<p><img src="/images/nosql-1.png" alt="主从复制模型" /></p>
+
+<h5>2、从上面的模型中我们可以分析出这种架构有如下好处：</h5>
+
+<p>1) 数据备份；</p>
+
+<p>2) 数据恢复；</p>
+
+<p>3) 读写分离；</p>
+
+<h5>3、实践</h5>
+
+<p>1) 我们把前面下载的安装文件再拷贝两份到其他的目录，模拟多服务器情况；</p>
+
+<p>2) 启动一个作为主服务的mongodb，启动主服务器命令<code>mongod --config mongodb.config --master</code>，原来单启服务加了一个master参数，其他都没有变化，包括端口；</p>
+
+<p>3) 启动另外一个mongodb服务作为从服务器，可以启多个，注意同一台机器需要换个端口，启动从服务器命令<code>mongod --config mongodb.config --port=8888 --slave --source=127.0.0.1:27017</code>；</p>
+
+<p>4) 下面可以在两个数据库随便做点操作，我们可以看到数据在两个服务器上是同步更新的；</p>
+
+<h5>4、读写分离</h5>
+
+<p>这种手段在大一点的架构中都有实现，在mongodb中其实很简单，在默认的情况下，从属数据库不支持数据的读取，但是没关系，在驱动中给我们提供了一个叫做“slaveOkay"来让我们可以显示的读取从属数据库来减轻主数据库的性能压力，这里就不演示了。</p>
+
+<h4>二、副本集</h4>
+
+<h5>1、这个也是很牛的主从集群，不过跟上面的主从集群还是有点区别：</h5>
+
+<p>1) 该集群没有特定的主数据库；</p>
+
+<p>2) 如果主数据库宕机了，集群中会推选出一个从属数据库作为主数据库顶上，这就具备了自动故障恢复功能；</p>
+
+<h5>2、实践</h5>
+
+<p>下面的操作模拟三个mongodb的服务器，为了方便描述，这边起三个名字A（端口2222）、B（端口3333）、C（端口4444），其中设计A为集群主服务器、B为从服务器，C为仲裁服务器，所有操作都是在当前安装路径bin目录下执行的，开始操作如下：</p>
+
+<p>1) 建立A服务器，<code>mongod --config mongodb.config --port 2222 --replSet ailk/127.0.0.1:3333</code>，replSet参数表示让服务器知道还有其他的数据库，指定端口3333的B服务器为下一个数据库；</p>
+
+<p>2) 建立B服务器，<code>mongod --config mongodb.config --port 3333 --replSet ailk/127.0.0.1:2222</code>，解释同上；</p>
+
+<p>3) 工作还没有完成，这个时候看下启动日志发现不停的在报<code>replSet can't get local.system.replSet ...</code>的错误，我们需要初始化一下“副本集”，随便连一个服务器，进入admin集合。</p>
+
+<pre><code>D:\Program Files\mongodb-win32-x86_64-2.4.5\bin&gt;mongo 127.0.0.1:2222/admin
+MongoDB shell version: 2.4.5
+connecting to: 127.0.0.1:2222/admin
+&gt; db.runCommand({replSetInitiate:{
+... _id:'ailk',
+... members:[
+... {
+... _id:1,
+... host:'127.0.0.1:2222'
+... },
+... {
+... _id:2,
+... host:'127.0.0.1:3333'
+... }
+... ]}})
+{
+        "info" : "Config now saved locally.  Should come online in about a minute.",
+        "ok" : 1
+}
+</code></pre>
+
+<p>这时候再看日志已经可以发现主从服务器都已经自动创建好了；</p>
+
+<p>4) 创建仲裁服务器 C，<code>mongod --config mongodb.config --port 4444 --replSet ailk/127.0.0.1:2222</code>，在A admin集合中执行rs.addArb()追加即可。这里面需要说明下，仲裁服务器只参与投票选举。</p>
+
+<pre><code>&gt; rs.addArb('127.0.0.1:4444')
+{ "ok" : 1 }
+</code></pre>
+
+<p>5) 现在我们使用rs.status()来看下集群服务器的状态</p>
+
+<pre><code>ailk:PRIMARY&gt; rs.status()
+{
+        "set" : "ailk",
+        "date" : ISODate("2013-07-23T08:29:54Z"),
+        "myState" : 1,
+        "members" : [
+                {
+                        "_id" : 1,
+                        "name" : "127.0.0.1:2222",
+                        "health" : 1,
+                        "state" : 1,
+                        "stateStr" : "PRIMARY",
+                        "uptime" : 1360,
+                        "optime" : Timestamp(1374568146, 1),
+                        "optimeDate" : ISODate("2013-07-23T08:29:06Z"),
+                        "self" : true
+                },
+                {
+                        "_id" : 2,
+                        "name" : "127.0.0.1:3333",
+                        "health" : 1,
+                        "state" : 2,
+                        "stateStr" : "SECONDARY",
+                        "uptime" : 189,
+                        "optime" : Timestamp(1374568146, 1),
+                        "optimeDate" : ISODate("2013-07-23T08:29:06Z"),
+                        "lastHeartbeat" : ISODate("2013-07-23T08:29:53Z"),
+                        "lastHeartbeatRecv" : ISODate("2013-07-23T08:29:52Z"),
+                        "pingMs" : 0,
+                        "syncingTo" : "127.0.0.1:2222"
+                },
+                {
+                        "_id" : 3,
+                        "name" : "127.0.0.1:4444",
+                        "health" : 1,
+                        "state" : 7,
+                        "stateStr" : "ARBITER",
+                        "uptime" : 48,
+                        "lastHeartbeat" : ISODate("2013-07-23T08:29:54Z"),
+                        "lastHeartbeatRecv" : ISODate("2013-07-23T08:29:53Z"),
+                        "pingMs" : 0
+                }
+        ],
+        "ok" : 1
+}
+</code></pre>
+
+<p>看下stateStr节点就可以看出谁是主服务器、谁是从服务器、谁是仲裁服务器。</p>
+
+<p>6) 最后来看下自动故障恢复功能，我们把主服务器 A 停掉，进入 B admin 集合执行 rs.status()，可以发现 B 服务器现在变成了主服务器了。</p>
+
+<h3>三、分片</h3>
+
+<p>有时候数据量比较大的时候我们需要把数据进行拆分，再把拆分后的数据分摊到每一个片上，这个地方有个“片键”的概念，也就是说拆分集合的依据是什么，按照什么键值进行拆分集合？</p>
+
+<h4>1、 模型图</h4>
+
+<p><img src="/images/nosql-2.png" alt="分片服务器模型" /></p>
+
+<p>说明下：</p>
+
+<p>mongos：就是一个路由服务器，它会根据管理员设置的“片键”将数据分摊到自己管理的mongod集群，数据和片的对应关系以及相应的配置信息保存在"config服务器"上；</p>
+
+<p>mongod：就是一个普通的数据库实例。</p>
+
+<h4>2、 实践</h4>
+
+<p>根据上图可以看出来，这里需要用到4个mongodb的服务器，mogos服务器、config服务器、两个mogod单服务器；</p>
+
+<p>1) 开启config服务器</p>
+
+<pre><code>mongod --config mongodb.config --port 2222
+</code></pre>
+
+<p>2) 开启mongos服务器</p>
+
+<pre><code>mongos --port 3333 --configdb=127.0.0.1:2222
+</code></pre>
+
+<p>3) 启动mogod服务器</p>
+
+<pre><code>mongod --config mongodb.config --port 4444
+mongod --config mongodb.config --port 5555
+</code></pre>
+
+<p>4) mogos服务器配置</p>
+
+<pre><code>E:\mongodb-win32-x86_64-2.4.5\bin&gt;mongo 127.0.0.1:3333/admin
+MongoDB shell version: 2.4.5
+connecting to: 127.0.0.1:3333/admin
+mongos&gt; db.runCommand({addshard : "localhost:4444", allowLocal : true})
+{ "shardAdded" : "shard0000", "ok" : 1 }
+mongos&gt; db.runCommand({addshard : "localhost:5555", allowLocal : true})
+{ "shardAdded" : "shard0001", "ok" : 1 }
+</code></pre>
+
+<p>这个时候已经为mongos服务器成功添加了两个mogod节点。</p>
+
+<p>5) 开启数据库分片功能，指定集合中分片的片键</p>
+
+<pre><code>mongos&gt; db.runCommand({enablesharding:'test'})
+{ "ok" : 1 }
+mongos&gt; db.runCommand({shardcollection:'test.person',key:{name:1}})
+{ "collectionsharded" : "test.person", "ok" : 1 }
+</code></pre>
+
+<p>6) 测试分片效果，插入10w条记录</p>
+
+<pre><code>mongos&gt; use  test
+switched to db test
+mongos&gt; for(var i = 0; i &lt; 100000; i++) {
+... db.person.insert({name:'jacky'+i,age:i})
+... }
+mongos&gt; db.printShardingStatus()
+--- Sharding Status ---
+  sharding version: {
+        "_id" : 1,
+        "version" : 3,
+        "minCompatibleVersion" : 3,
+        "currentVersion" : 4,
+        "clusterId" : ObjectId("51ee5bc0cdc1e6433d02a9a6")
+}
+  shards:
+        {  "_id" : "shard0000",  "host" : "localhost:4444" }
+        {  "_id" : "shard0001",  "host" : "localhost:5555" }
+  databases:
+        {  "_id" : "admin",  "partitioned" : false,  "primary" : "config" }
+        {  "_id" : "test",  "partitioned" : true,  "primary" : "shard0000" }
+                test.person
+                        shard key: { "name" : 1 }
+                        chunks:
+                                shard0000       2
+                                shard0001       1
+                        { "name" : { "$minKey" : 1 } } --&gt;&gt; { "name" : "jacky0" } on : shard0000 Timestamp(2, 1)
+                        { "name" : "jacky0" } --&gt;&gt; { "name" : "jacky9999" } on : shard0000 Timestamp(1, 3)
+                        { "name" : "jacky9999" } --&gt;&gt; { "name" : { "$maxKey" : 1 } } on : shard0001 Timestamp(2, 0)
+</code></pre>
+
+<p>可以看出shards已经是两个分片了，另外默认集合被分成了三段：无穷小->jacky0；jacky0-jacky9999；jacky9999-无穷大。但这个结果并不理想，因为他是按字母来排序的，也就是2库只分到了11条记录，绝大部分被分到了一库，不过分片的原理就是这样，具体的应用还是根据实际的需求来规划数据分键。</p>
+
+<h3>总结</h3>
+
+<p>大概也讲了不少了，NoSQL的强大也可见一斑，相比较以往关系型数据库而言NoSQL确实有很多优势，存储灵活、操作简单、性能高、易扩展等，但不是不要以为就可以完全替换关系型数据库，毕竟二者的应用场景不一样，没有最好的，只有最合适的。</p>
+
+<p>另外MongoDB也是有自身的缺点的，下面大概说下他几个主要的缺点：</p>
+
+<h4>1） mongodb占用存储空间大。</h4>
+
+<p>这主要是由三个因素决定的。第一，mongodb的空间预分配方式，这样会让mongodb最多浪费不超过2G+2G文件大小的空间。第二，mongodb的字段名占用，即使是相同的字段，mongodb也会在每一个文档中都存储，这里会浪费极大的空间。第三，mongodb删除数据并不会释放空间，而只是将空间记录为删除状态以便重用。</p>
+
+<h4>2） mongodb没有事务模式</h4>
+
+<p>所以事务要求严格的系统慎用。</p>
+
+<h4>3） mongodb没有join</h4>
+
+<p>毕竟数据都是有关联的，虽然也能通过一定的方式变向的实现一些简单的连接功能，但对于业务复杂的场景也不适合。</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

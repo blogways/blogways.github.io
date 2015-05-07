@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Solr 应用（三）－查询数据_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Solr5, query">
+    
+    <meta name=description content="前两节主要介绍了一些基本的概念以及简单的查询演示，大家可能有一些大概的印象了，这个时候想要进一步了解一下，尤其是那个 web 控制台查询操作的时候太混乱了，每个条件都代表什么意思都不知道，这节主要介绍查询数据相关的一些概念以及运算、语法。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    <li class='active'><a href='javascript:void(0)'>博文</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "Jacky".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2015/05/04/mongodb-install-and-distribution-deploy.html' title='MongoDB 安装与分布式部署'>MongoDB 安装与分布式部署</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2015/05/05/javax-xml-parsers.html' title='javax.xml.parsers使用简介及源码探究:DOM与SAX'>javax.xml.parsers使用简介及源码探究:DOM与SAX</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2015/05/05/javax-xml-parsers.html' title='javax.xml.parsers使用简介及源码探究:DOM与SAX'>javax.xml.parsers使用简介及源码探究:DOM与SAX</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->                            
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Solr 应用（三）－查询数据
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2015-05-04
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Solr5</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>query</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h3>常用查询参数说明</h3>
+
+<table class="table table-bordered table-striped table-condensed">
+    <thead>
+        <th width="20%">Field</td>
+        <th width="80%">Description</td>
+    </thead>
+    <tr>
+        <td>Request-handler(qt)</td>
+        <td>指定请求的查询处理。如果没有指定一个查询处理，Solr进程将以标准的查询处理响应。</td>
+    </tr>
+    <tr>
+        <td>q</td>
+        <td>查询字符串，这个是必须的。如果查询所有*:* ，根据指定字段查询（Name:张三 AND Address:北京）</td>
+    </tr>
+    <tr>
+        <td>fq</td>
+        <td>（filter query）过虑查询，作用：在q查询符合结果中同时是fq查询符合的，例如：q=Name:张三&fq=CreateDate:[20081001 TO 20091031],找关键字mm，并且CreateDate是20081001</td>
+    </tr>
+    <tr>
+        <td>fl</td>
+        <td>指定返回那些字段内容，用逗号或空格分隔多个。</td>
+    </tr>
+    <tr>
+        <td>start</td>
+        <td>返回第一条记录在完整找到结果中的偏移位置，0开始，一般分页用。</td>
+    </tr>
+    <tr>
+        <td>rows</td>
+        <td>指定返回结果最多有多少条记录，配合start来实现分页。</td>
+    </tr>
+    <tr>
+        <td>sort</td>
+        <td>排序，格式：sort=<field name>+<desc|asc>[,<field name>+<desc|asc>]… 。示例：（score desc, price asc）表示先 “score” 降序, 再 “price” 升序，默认是相关性降序。 </td>
+    </tr>
+    <tr>
+        <td>wt</td>
+        <td>(writer type)指定输出格式，可以有 xml, json, php, phps。 </td>
+    </tr>
+    <tr>
+        <td>indent</td>
+        <td>是否需要将请求响应的结果以缩进的方式显示出来，使结果更具可读性，类似格式化显示 xml、json 等功能</td>
+    </tr>
+    <tr>
+        <td>debugQuery</td>
+        <td>是否需要显示调试信息，包括每个文档返回的“解释信息”，以便理解和管理程序的执行过程</td>
+    </tr>
+    <tr>
+        <td>dismax</td>
+        <td>是否启用 Dismax 查询解析器</td>
+    </tr>
+    <tr>
+        <td>edismax</td>
+        <td>是否启用扩展查询解析器</td>
+    </tr>
+    <tr>
+        <td>fl</td>
+        <td>表示索引显示那些field( *表示所有field,如果想查询指定字段用逗号或空格隔开（如：Name,SKU,ShortDescription或Name SKU ShortDescription【注：字段是严格区分大小写的】）) </td>
+    </tr>
+    <tr>
+        <td>q.op</td>
+        <td>表示q 中 查询语句的 各条件的逻辑操作 AND(与) OR(或)</td>
+    </tr>
+    <tr>
+        <td>hl</td>
+        <td>是否高亮 ,如hl=true</td>
+    </tr>
+    <tr>
+        <td>hl.fl</td>
+        <td>高亮field ,hl.fl=Name,SKU</td>
+    </tr>
+    <tr>
+        <td>hl.snippets</td>
+        <td>默认是1,这里设置为3个片段</td>
+    </tr>
+    <tr>
+        <td>hl.simple.pre</td>
+        <td>高亮前面的格式</td>
+    </tr>
+    <tr>
+        <td>hl.simple.post</td>
+        <td>高亮后面的格式</td>
+    </tr>
+    <tr>
+        <td>facet</td>
+        <td>是否启动统计</td>
+    </tr>
+    <tr>
+        <td>facet.field</td>
+        <td>统计field</td>
+    </tr>
+    <tr>
+        <td>spatial</td>
+        <td>是否启用位置数据，该功能在地理或者空间搜索中使用</td>
+    </tr>
+    <tr>
+        <td>spellcheck</td>
+        <td>是否启用拼写检查，提供在线的模糊匹配或者专业术语匹配等建议</td>
+    </tr>
+</table>
+
+
+<h3>Solr运算符</h3>
+
+<pre><code>(1) “:” 指定字段查指定值，如返回所有值*:*
+
+(2) “?” 表示单个任意字符的通配
+
+(3) “*” 表示多个任意字符的通配（不能在检索的项开始使用*或者?符号）
+
+(4) “~” 表示模糊检索，如检索拼写类似于”roam”的项这样写：roam~将找到形如foam和roams的单词；roam~0.8，检索返回相似度在0.8以上的记录。
+
+(5) 邻近检索，如检索相隔10个单词的”apache”和”jakarta”，”jakarta apache”~10
+
+(6) “^” 控制相关度检索，如检索jakarta apache，同时希望去让”jakarta”的相关度更加好，那么在其后加上”^”符号和增量值，即jakarta^4 apache
+
+(7) 布尔操作符AND、||
+
+(8) 布尔操作符OR、&amp;&amp;
+
+(9) 布尔操作符NOT、!、- （排除操作符不能单独与项使用构成查询）
+
+(10) “+” 存在操作符，要求符号”+”后的项必须在文档相应的域中存在
+
+(11) ( ) 用于构成子查询
+
+(12) [] 包含范围检索，如检索某时间段记录，包含头尾，date:[200707 TO 200710]
+
+(13) {} 不包含范围检索，如检索某时间段记录，不包含头尾，date:{200707 TO 200710}
+
+(14) / 转义操作符，特殊字符包括+ - &amp;&amp; || ! ( ) { } [ ] ^ ” ~ * ? : /
+</code></pre>
+
+<p> <em>注：①“+”和”-“表示对单个查询单元的修饰，and 、or 、 not 是对两个查询单元是否做交集或者做差集还是取反的操作的符号</em></p>
+
+<p>　　 比如:AB:china +AB:america ,表示的是AB:china忽略不计可有可无，必须满足第二个条件才是对的,而不是你所认为的必须满足这两个搜索条件</p>
+
+<p>　　 如果输入:AB:china AND AB:america ,解析出来的结果是两个条件同时满足，即+AB:china AND +AB:america或+AB:china +AB:america</p>
+
+<p>　　 总而言之，查询语法：  修饰符 字段名:查询关键词 AND/OR/NOT 修饰符 字段名:查询关键词</p>
+
+<h3>Solr查询语法</h3>
+
+<pre><code>(1) 最普通的查询，比如查询姓张的人（ Name:张）,如果是精准性搜索相当于SQL SERVER中的LIKE搜索这需要带引号（""）,比如查询含有北京的（Address:"北京"）    
+
+(2) 多条件查询，注：如果是针对单个字段进行搜索的可以用（Name:搜索条件加运算符(OR、AND、NOT) Name：搜索条件）,比如模糊查询（ Name:张 OR Name:李 ）单个字段多条件搜索不建议这样写，一般建议是在单个字段里进行条件筛选，如（ Name:张 OR 李），多个字段查询（Name:张 + Address:北京 ）   
+
+(3) 排序，比如根据姓名升序（Name asc）,降序（Name desc）
+</code></pre>
+
+<p>本文参考了 <code>http://blog.csdn.net/cgddm/article/details/44303203</code> 这篇文章中的 <code>Solr查询数据</code> 部分来写的，参数部分增加了一些官方文档里面多出来参数</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/07/solr-usage-6.html' title='Solr 应用（六）－API 操作'>Solr 应用（六）－API 操作</a>
+                            </h5>
+                            <span class='desc'>前面几节我们对 Solr 的运行有了个大概的了解，本文将介绍如何通过操作 ...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-07
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/06/solr-usage-5.html' title='Solr 应用（五）－中文分词'>Solr 应用（五）－中文分词</a>
+                            </h5>
+                            <span class='desc'>上一节我们在演示查询的时候只使用一个 `title:step` 就查出了所...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-06
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/solr-usage-4.html' title='Solr 应用（四）－企业应用'>Solr 应用（四）－企业应用</a>
+                            </h5>
+                            <span class='desc'>通过前面几节的了解，我们对 solr 有了一些了解，对一些基本概念、语法也...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-io-rate.html' title='MongoDB 入库速度和分片的关系'>MongoDB 入库速度和分片的关系</a>
+                            </h5>
+                            <span class='desc'>针对特定的应用程序，单个MongoDB实例的入库速率极限是多少？分片的片数...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2015/05/05/mongodb-sharding-introduction-by-docs.html' title='MongoDB 分片介绍'>MongoDB 分片介绍</a>
+                            </h5>
+                            <span class='desc'>MongoDB 是目前在IT行业非常流行的一种非关系型数据库(NoSql)...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2015-05-05
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>	

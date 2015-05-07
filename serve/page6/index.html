@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>首页 - Blogway_关注软件开发/互联网技术/大数据技术/敏捷开发/..._博汇网_www.blogways.net</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='http://w.cnzz.com/q_stat.php?id=1253880472&l=3' type="text/javascript"></script>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li class='active'><a href='javascript:void(0)'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>jekyll
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>16</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Memcache/'>Memcache
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>9</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node/'>Node
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/java/'>java
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Redis/'>Redis
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JAXB/'>JAXB
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+    <div class='container'>
+    <div class='row main-content'>
+        <div class='hidden-lg hidden-md hidden-sm hidden-xs bdsharebar'>
+            <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+        </div>
+        <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+            <div class='ix-article-list'>
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/09/node-log4js.html' target='_blank' title='node 日志管理log4js'>node 日志管理log4js</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/09/node-log4js.html' target='_blank' title='node 日志管理log4js'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-09
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>在Nodejs中使用express框架并没有自带的日志模块，这样给日常开发及生产应用都带来不便，本章我们引入log4js来完成日志记录的功能。</p>
+                                <p class='ix-description col-xs-12 visible-md'>在Nodejs中使用express框架并没有自带的日志模块，这样给日常开发及生产应用都带来不便，本章我们引入log4js来完成日志记录的功能。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>log4js</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/09/node-log4js.html' target='_blank' title='node 日志管理log4js'>node 日志管理log4js
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-09
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/09/node-log4js.html' title='node 日志管理log4js' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                在Nodejs中使用express框架并没有自带的日志模块，这样给日常开发及生产应用都带来不便，本章我们引入log4js来完成日志记录的功能。
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/09/node-log4js.html' class='btn btn-default btn-block' title='node 日志管理log4js'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/09/node-express4.x-api-1.html' target='_blank' title='Express4.x API 翻译[1] -- Application'>Express4.x API 翻译[1] -- Application</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/09/node-express4.x-api-1.html' target='_blank' title='Express4.x API 翻译[1] -- Application'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-09
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。</p>
+                                <p class='ix-description col-xs-12 visible-md'>之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Express</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>API</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/09/node-express4.x-api-1.html' target='_blank' title='Express4.x API 翻译[1] -- Application'>Express4.x API 翻译[1] -- Application
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-09
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/09/node-express4.x-api-1.html' title='Express4.x API 翻译[1] -- Application' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/09/node-express4.x-api-1.html' class='btn btn-default btn-block' title='Express4.x API 翻译[1] -- Application'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/06/node-express.html' target='_blank' title='node Express 框架搭建'>node Express 框架搭建</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/06/node-express.html' target='_blank' title='node Express 框架搭建'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-06
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>Express 是一个简洁而灵活的 node.js Web应用框架, 提供一系列强大特性帮助你创建各种Web应用</p>
+                                <p class='ix-description col-xs-12 visible-md'>Express 是一个简洁而灵活的 node.js Web应用框架, 提供一系列强大特性帮助你创建各种Web应用</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Express</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/06/node-express.html' target='_blank' title='node Express 框架搭建'>node Express 框架搭建
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-06
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/06/node-express.html' title='node Express 框架搭建' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                Express 是一个简洁而灵活的 node.js Web应用框架, 提供一系列强大特性帮助你创建各种Web应用
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/06/node-express.html' class='btn btn-default btn-block' title='node Express 框架搭建'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/06/05/node-eventproxy.html' target='_blank' title='EventProxy在node的应用'>EventProxy在node的应用</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/06/05/node-eventproxy.html' target='_blank' title='EventProxy在node的应用'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-06-05
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>EventProxy是一个简单的事件侦听者模式的实现，由于底层实现跟Node.js的EventEmitter不同，无法合并进Node.js中。但是却提供了比EventEmitter更强大的功能，且API保持与EventEmitter一致，与Node.js的思路保持契合，并可以适用在前端中。</p>
+                                <p class='ix-description col-xs-12 visible-md'>EventProxy是一个简单的事件侦听者模式的实现，由于底层实现跟Node.js的EventEmitter不同，无法合并进Node.js中。但是却提供了比EventEmitter更强大的功能，且API保持与EventEmitter一...</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>node</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>EventProxy</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/06/05/node-eventproxy.html' target='_blank' title='EventProxy在node的应用'>EventProxy在node的应用
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-06-05
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/06/05/node-eventproxy.html' title='EventProxy在node的应用' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                EventProxy是一个简单的事件侦听者模式的实现，由于底层实现跟Node.js的EventEmitter不同，无法合并进Node.js中。但是却提供了比EventEmitter更强大的功能，且API保持与EventEmitter一...
+                            </div>
+                        </div>
+                        <a href='/blog/2014/06/05/node-eventproxy.html' class='btn btn-default btn-block' title='EventProxy在node的应用'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/03/10/ApacheCommonsLang.html' target='_blank' title='Apache Commons 系列简介 之 Lang'>Apache Commons 系列简介 之 Lang</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/03/10/ApacheCommonsLang.html' target='_blank' title='Apache Commons 系列简介 之 Lang'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-03-10
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>介绍Apache Commons 系列中的 Lang 库</p>
+                                <p class='ix-description col-xs-12 visible-md'>介绍Apache Commons 系列中的 Lang 库</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Apache Commons</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Lang</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Builder</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Time</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/03/10/ApacheCommonsLang.html' target='_blank' title='Apache Commons 系列简介 之 Lang'>Apache Commons 系列简介 之 Lang
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-03-10
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/03/10/ApacheCommonsLang.html' title='Apache Commons 系列简介 之 Lang' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                介绍Apache Commons 系列中的 Lang 库
+                            </div>
+                        </div>
+                        <a href='/blog/2014/03/10/ApacheCommonsLang.html' class='btn btn-default btn-block' title='Apache Commons 系列简介 之 Lang'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/01/15/apache-commons-pool.html' target='_blank' title='Apache Commons 系列简介 之 Pool'>Apache Commons 系列简介 之 Pool</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/01/15/apache-commons-pool.html' target='_blank' title='Apache Commons 系列简介 之 Pool'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-01-15
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>介绍Apache Commons 系列中的 Pool 库</p>
+                                <p class='ix-description col-xs-12 visible-md'>介绍Apache Commons 系列中的 Pool 库</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Apache Commons</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>Pool</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/01/15/apache-commons-pool.html' target='_blank' title='Apache Commons 系列简介 之 Pool'>Apache Commons 系列简介 之 Pool
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-01-15
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/01/15/apache-commons-pool.html' title='Apache Commons 系列简介 之 Pool' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                介绍Apache Commons 系列中的 Pool 库
+                            </div>
+                        </div>
+                        <a href='/blog/2014/01/15/apache-commons-pool.html' class='btn btn-default btn-block' title='Apache Commons 系列简介 之 Pool'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/01/15/apache-commons-cli.html' target='_blank' title='Apache Commons 系列简介 之 CLI'>Apache Commons 系列简介 之 CLI</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/01/15/apache-commons-cli.html' target='_blank' title='Apache Commons 系列简介 之 CLI'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-01-15
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>介绍Apache Commons 系列中的 CLI 库</p>
+                                <p class='ix-description col-xs-12 visible-md'>介绍Apache Commons 系列中的 CLI 库</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Apache Commons</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>cli</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/01/15/apache-commons-cli.html' target='_blank' title='Apache Commons 系列简介 之 CLI'>Apache Commons 系列简介 之 CLI
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-01-15
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/01/15/apache-commons-cli.html' title='Apache Commons 系列简介 之 CLI' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                介绍Apache Commons 系列中的 CLI 库
+                            </div>
+                        </div>
+                        <a href='/blog/2014/01/15/apache-commons-cli.html' class='btn btn-default btn-block' title='Apache Commons 系列简介 之 CLI'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+                <div class='ix-article panel'>
+                    <div class='panel-body hidden-sm hidden-xs'>
+                        
+                        <div class='ix-article-tags'></div>
+                        <h3 class='ix-article-title'>
+                            <a href='/blog/2014/01/15/apache-commons-beanutils.html' target='_blank' title='Apache Commons 系列简介 之 BeanUtils'>Apache Commons 系列简介 之 BeanUtils</a>
+                        </h3>
+                        <div class='row ix-article-content'>
+                            <div class='col-lg-4 col-md-5'>
+                                <a class='thumbnail' href='/blog/2014/01/15/apache-commons-beanutils.html' target='_blank' title='Apache Commons 系列简介 之 BeanUtils'>
+                                    
+                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
+                                    
+                                </a>
+                            </div>
+                            <div class='col-lg-8 col-md-7 row'>
+                                <div class='col-lg-12'>
+                                    <div class='ix-article-author'>
+                                        <span class='glyphicon glyphicon-user'></span>
+                                        <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                        
+                                    </div>
+                                    <div class='ix-article-date'>
+                                        <span class='glyphicon glyphicon-calendar'></span>
+                                        <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                        2014-01-15
+                                    </div>
+                                </div>
+                                <p class='ix-description col-xs-12 visible-lg'>介绍Apache Commons 系列中的 BeanUtils 库</p>
+                                <p class='ix-description col-xs-12 visible-md'>介绍Apache Commons 系列中的 BeanUtils 库</p>          
+                            </div>
+                        </div>
+                        <hr class='ix-hr'>
+                        <div class='row'>
+                            <div class='col-xs-12 post-tags'>
+                                <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                
+                                <a class='label label-info' href='#'>Apache Commons</a>
+                                
+                                、
+                                
+                                <a class='label label-info' href='#'>BeanUtils</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div><!--end of panel-body -->
+                    <div class='panel-body visible-sm visible-xs'>
+                        <div class='ix-article-title'>
+                            <h4>
+                                <a href='/blog/2014/01/15/apache-commons-beanutils.html' target='_blank' title='Apache Commons 系列简介 之 BeanUtils'>Apache Commons 系列简介 之 BeanUtils
+                                </a>
+                            </h4>
+                        </div>
+                        <p class='ix-article-info'>
+                            <span class='ix-article-date'>
+                                <span class='glyphicon glyphicon-calendar'></span>
+                                <span class='sr-only'>发布于&nbsp;:&nbsp;</span>
+                                2014-01-15
+                            </span>&nbsp;&nbsp;
+                            <span class='ix-article-author'>
+                                <span class='glyphicon glyphicon-user'></span>
+                                <span class='sr-only'>作者&nbsp;:&nbsp;</span>
+                                
+                            </span>
+                        </p>
+                        <div class='ix-article-content'>
+                            <a href='/blog/2014/01/15/apache-commons-beanutils.html' title='Apache Commons 系列简介 之 BeanUtils' target='_blank' class='thumbnail'>
+                                
+                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
+                                
+                            </a>
+                            <div class='well'>
+                                介绍Apache Commons 系列中的 BeanUtils 库
+                            </div>
+                        </div>
+                        <a href='/blog/2014/01/15/apache-commons-beanutils.html' class='btn btn-default btn-block' title='Apache Commons 系列简介 之 BeanUtils'>阅读全文</a>
+                    </div><!--end of panel-body -->
+                </div><!--end of article-->
+            </div><!--end of article-list -->
+            <div class='paginationbar'>
+                <label class='hidden-xs' style='color: #959595; margin-top: 25px;'>第6页 共12页</label>
+                <ul class='pagination pull-right'>
+    <li>
+        <a href='/' title='首页'>
+            <span class='glyphicon glyphicon-fast-backward'></span>
+            <span class='sr-only'>首页</span>
+        </a>
+    </li>
+    <li>
+        <a href='' title='前一页'>
+            <span class='glyphicon glyphicon-chevron-left'></span>
+            <span class='sr-only'>前一页</span>
+        </a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <li><a href='/page4'>4</a></li>
+    <li><a href='/page5'>5</a></li>
+    
+    
+    
+    <li class='active'><a>6</a></li>
+    
+    <!-- after current page -->
+    
+    
+    
+    <li><a href='/page7'>7</a></li>
+    <li><a href='/page8'>8</a></li>
+    
+
+    
+    <li>
+        <a href='' title='后一页'>
+            <span class='glyphicon glyphicon-chevron-right'></span>
+            <span class='sr-only'>后一页</span>
+        </a>
+    </li>
+    <li>
+        <a href='/page12' title='末页'>
+            <span class='glyphicon glyphicon-fast-forward'></span>
+            <span class='sr-only'>末页</span>
+        </a>
+    </li>
+</ul>
+
+            </div>
+        </div><!--end of mainbar-->
+        <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+            <div class='categorybar panel panel-default' id='categorybar'>
+    <div class='panel-heading'>
+        <h4 class='panel-title'>热门分类</h4>
+    </div>
+    <div class='list-group'>
+        <a class='list-group-item list-group-item-default' href='/categories/jekyll/'>jekyll
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/杂记/'>杂记
+            <span class="badge pull-right">16</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Jekyll/'>Jekyll
+            <span class="badge pull-right">2</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/JUnit/'>JUnit
+            <span class="badge pull-right">8</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Memcache/'>Memcache
+            <span class="badge pull-right">8</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Sencha/'>Sencha
+            <span class="badge pull-right">5</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Nginx/'>Nginx
+            <span class="badge pull-right">4</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Apache/'>Apache
+            <span class="badge pull-right">9</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Node/'>Node
+            <span class="badge pull-right">7</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/java/'>java
+            <span class="badge pull-right">2</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Redis/'>Redis
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/Java/'>Java
+            <span class="badge pull-right">1</span>
+        </a>
+        <a class='list-group-item list-group-item-default' href='/categories/JAXB/'>JAXB
+            <span class="badge pull-right">1</span>
+        </a>
+    </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>	
