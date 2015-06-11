@@ -110,6 +110,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 2. 用户spdoop添加pangu-la-web中dev开头的分支有读/写/强制更新的权限，test分支（严格匹配）具有读/写权限
 	
 	- 修改gitolite.conf
+	
 			repo pangu-la-web
 			    RW+     =   tangsz
 			    RW+     dev       =   spdoop
