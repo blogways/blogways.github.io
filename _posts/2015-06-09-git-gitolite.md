@@ -67,8 +67,10 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 1. clone 管理仓库gitolite-admin（我本机操作）：
 	
     - git clone git@server-host:gitolite-admin （如：git clone git@10.20.16.78:gitolite-admin.git）
-    - gitolite-admin有conf和keydir两个子文件夹，keydir文件夹就是管理用户公钥的地方，如果有一位新用户（spdoop）希望申请账户并申请一个新的代码仓库（代码仓库叫做test），那么让他提供他的账号、他用的电脑的公钥给git管理员（可以通过email/qq等方式），然后由git管理员在keydir下创建spdoop.pub文件并将公钥内容复制其中。
-    - conf/gitolite.conf设置权限文件：
+    
+	- gitolite-admin有conf和keydir两个子文件夹，keydir文件夹就是管理用户公钥的地方，如果有一位新用户（spdoop）希望申请账户并申请一个新的代码仓库（代码仓库叫做test），那么让他提供他的账号、他用的电脑的公钥给git管理员（可以通过email/qq等方式），然后由git管理员在keydir下创建spdoop.pub文件并将公钥内容复制其中。
+   
+	 - conf/gitolite.conf设置权限文件：
     
     		repo test
      			RW+ = spdoop
