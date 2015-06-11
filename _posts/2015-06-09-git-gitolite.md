@@ -57,7 +57,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 3. WARNING: Can't exec "/data/git/bin/triggers/post-compile/ssh-authkeys": No such file or directory at /data/git/bin/lib/Gitolite/Common.pm line 146, <DATA> line 1.
 		 
 		解决：dos2unix /data/git/bin/triggers/post-compile/*
-4. ssh git@127.0.0.1 报错：WARNING: Can't exec "/data/git/sbin/commands/info": No such file or directory 
+4. ssh git@10.20.16.78 报错：WARNING: Can't exec "/data/git/sbin/commands/info": No such file or directory 
 
 		解决：dos2unix /data/git/sbin/commands/info
 
