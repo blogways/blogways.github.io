@@ -38,7 +38,8 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 
 8.测试安装是否成功
 
-  主机git用户登录时执行ssh git@127.0.0.1显示如下：
+   本机(windows要到git Bash下执行)执行ssh git@10.20.16.78显示如下：
+
 		 hello git, this is git@slave2 running gitolite3 v3.6.3-10-g4be7ac5-dt on git 1.8.1.6
  
 		 R W    gitolite-admin
