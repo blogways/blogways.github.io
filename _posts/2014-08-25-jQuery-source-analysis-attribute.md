@@ -1,6 +1,6 @@
 ---
 layout: post
-category: ['jQuery']
+category: jQuery
 title: jQuery源码解读[12] -- 特性属性操作
 tags: ['$', 'jQuery', '源码', 'attr','特性操作','prop','属性操作']
 author: 万洲

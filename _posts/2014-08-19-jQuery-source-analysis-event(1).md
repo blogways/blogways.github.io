@@ -1,6 +1,6 @@
 ---
 layout: post
-category: ['jQuery']
+category: jQuery
 title: jQuery源码解读[7] -- Event事件处理（1）
 tags: ['$', 'jQuery', '源码', 'Event','事件处理']
 author: 万洲

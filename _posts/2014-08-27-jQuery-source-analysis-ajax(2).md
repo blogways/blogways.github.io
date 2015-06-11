@@ -1,6 +1,6 @@
 ---
 layout: post
-category: ['jQuery']
+category: jQuery
 title: jQuery源码解读[14] -- AJAX（2）
 tags: ['$', 'jQuery', '源码', 'ajax','异步js','xml', '应用']
 author: 万洲

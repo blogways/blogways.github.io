@@ -1,6 +1,6 @@
 ---
 layout: post
-category: ['jQuery']
+category: jQuery
 title: jQuery源码解读[11] -- 选择符表达式
 tags: ['$', 'jQuery', '源码', 'CSS选择符','表达式']
 author: 万洲

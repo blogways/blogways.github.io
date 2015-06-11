@@ -1,6 +1,6 @@
 ---
 layout: post
-category: ['jQuery']
+category: jQuery
 title: jQuery源码解读[9] -- DOM操作方法应用
 tags: ['$', 'jQuery', '源码', 'DOM','操作应用']
 author: 万洲

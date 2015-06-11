@@ -1,6 +1,6 @@
 ---
 layout: post
-category: ['jQuery']
+category: jQuery
 title: jQuery源码解读[10] -- CSS样式应用
 tags: ['$', 'jQuery', '源码', 'CSS','样式']
 author: 万洲
