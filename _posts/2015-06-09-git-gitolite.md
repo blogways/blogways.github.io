@@ -33,7 +33,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 3. 主机上执行git clone  https://github.com/sitaramc/gitolite.git（不能上网可上传实现）；
 4. mkdir -p /home/git/bin
 5. ./gitolite/install -to /home/git/bin/
-6. 选择一台机器作为client机器（我这里就选择主机本身），并将这台客户端机器的公钥上传并保存在主机的/home/git/YourName.pub（我这里用的我本机的，起名tangsz.pub）位置
+6. 选择一台机器作为client机器（我这里就选择本机），并将这台客户端机器的公钥上传并保存在主机的/home/git/YourName.pub（我这里用的我本机的，起名tangsz.pub）位置
 7. ~/bin/gitolite setup -pk ~/YourName.pub
 
 8.测试安装是否成功
