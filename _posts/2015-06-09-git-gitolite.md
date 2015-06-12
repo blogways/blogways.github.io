@@ -35,7 +35,6 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 5. ./gitolite/install -to /home/git/bin/
 6. 选择一台机器作为client机器（我这里就选择本机），并将这台客户端机器的公钥上传并保存在主机的/home/git/YourName.pub（我这里用的我本机的，起名tangsz.pub）位置
 7. ~/bin/gitolite setup -pk ~/YourName.pub
-
 8.测试安装是否成功
 
    本机(windows要到git Bash下执行)执行ssh git@10.20.16.78显示如下：
@@ -136,3 +135,16 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 
 			fatal: 'pangu-la-web' does not appear to be a git repository
 			fatal: Could not read from remote repository.	
+
+
+###五、外部人员参与现有项目开发条件
+
+	
+1. 保证本机电脑安装了git，windows下安装的是msysgit（windows安装后会生成git Bash命令窗口）；
+2. 命令窗口下生成用户公钥（windows下安装msysgit后在git Bash下生成），命令为：ssh-keygen，生成后在用户目录.ssh 下，文件名为id_rsa.pub；
+3. 向项目仓库管理员申请操作某项目权限，将id_rsa.pub文件发给管理员，如开发员tom需要开发项目pangu-la-web，则需要邮件或qq等方式将id_rsa.pub发给管理员tangsz，并申明需要有pangu-la-web项目开发权限；
+4. 管理员会根据tom的权限为其赋予pangu-la-web项目特定权限（如只能新建dev开头的分支进行开发，不允许tom操作master分支），然后通过tom可以进行clone代码开发了；
+5. tom接到通知后clone下pangu-la-web代码及可以进行开发了，clone命名为：git clone git@10.20.16.78:pangu-la-web  （windows下在git Bash 窗口执行）；
+6. tom clone完代码后可以自己新建个分支如dev-tom（git branch dev-tom）进行开发，然后git checkout dev-tom，待功能开发完后push到dev-tom分支（git push origin dev-tom)
+7. tom 在分支dev-tom上开发完后就可以通知管理员tom的功能点已经开发完了，申请合并到master分支；
+8. 管理员接到tom通知后做合并处理。
