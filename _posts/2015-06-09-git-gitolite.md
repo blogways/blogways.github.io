@@ -148,7 +148,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 
 4. 管理员会根据tom的权限为其赋予pangu-la-web项目特定权限（如只能新建dev开头的分支进行开发，不允许tom操作master分支），然后通过tom可以进行clone代码开发了；
 
-5. tom接到通知后clone下pangu-la-web代码及可以进行开发了，clone命名为：git clone git@10.20.16.78:pangu-la-web  （windows下在git Bash 窗口执行）；
+5. tom接到通知后clone下pangu-la-web代码及可以进行开发了，clone命令为：git clone git@10.20.16.78:pangu-la-web  （windows下在git Bash 窗口执行）；
 
 6. tom clone完代码后可以自己新建个分支如dev-tom（git branch dev-tom）进行开发，然后git checkout dev-tom，待功能开发完后push到dev-tom分支（git push origin dev-tom)
 
