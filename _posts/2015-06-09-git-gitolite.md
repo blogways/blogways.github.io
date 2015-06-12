@@ -140,7 +140,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 ###五、外部人员参与现有项目开发条件
 
 	
-1. 保证本机电脑安装了git，windows下安装的是msysgit（windows安装后会生成git Bash命令窗口）；
+1. 保证本机电脑安装了git，windows下安装的是msysgit（windows安装后会生成git Bash命令窗口），其中git安装可以参阅本博客git篇；
 
 2. 命令窗口下生成用户公钥（windows下安装msysgit后在git Bash下生成），命令为：ssh-keygen，生成后在用户目录.ssh 下，文件名为id_rsa.pub；
 
