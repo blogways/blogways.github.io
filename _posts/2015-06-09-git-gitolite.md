@@ -85,8 +85,13 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 注：push过程中可能出现的错误：
 
 	1. error: cannot run hooks/update: No such file or directory
-		 
-		解决： 此问题我是在windows机器传gitolite源码到linux机器上安装出现的，linux、mac不知道会不会出现，找了好久才发现要将update、post-update等文件dos2unix。
+解决方法： 此问题我是在windows机器传gitolite源码到linux机器上安装出现的，linux、mac不知道会不会出现，找了好久才发现要将update、post-update等文件dos2unix。具体命令，参考如下：
+
+    cd ~/.gitolite/hooks/common
+    dos2unix *
+    cd ~/.gitolite/hooks/gitolite-admin
+    dos2unix *
+		
 
 ###四、gitolite配置实例
 
