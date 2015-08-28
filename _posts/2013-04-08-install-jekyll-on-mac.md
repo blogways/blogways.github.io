@@ -74,6 +74,11 @@ Homebrew安装完成之后，通过她安装最新版ruby.命令如下：
 	
 说明：这里安装的jekyll、rdiscount、redcloth都安装在本机的`/usr/local/opt/ruby/bin`目录下面。
 
+另外，如果想和github提供的page环境保持相同的版本，可以安装`github-pages`，这个会保持与github的page版本一致。
+
+    gem install github-pages
+   
+
 ###五、运行例子——jekyll作者提供的例子tpw
 
 
