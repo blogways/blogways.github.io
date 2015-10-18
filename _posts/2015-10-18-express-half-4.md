@@ -1,11 +1,11 @@
 ---
 layout: post
 category: express
-title: express3.x中文翻译下半部[4]
+title: express3.x-调试和数据库
 tags: ['express', '翻译']
 author: 张可
 email: zhangke@asiainfo.com
-description: express3.x中文翻译下半部
+description: express3.x中文翻译
 ---
 #调试 Express
 	

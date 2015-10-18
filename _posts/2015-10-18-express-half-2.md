@@ -1,11 +1,11 @@
 ---
 layout: post
 category: express
-title: express3.x中文翻译下半部[2]
+title: express3.x-中间件
 tags: ['express', '翻译']
 author: 张可
 email: zhangke@asiainfo.com
-description: express3.x中文翻译下半部
+description: express3.x中文翻译
 ---
 #使用中间件
 
