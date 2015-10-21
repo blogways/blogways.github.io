@@ -7,6 +7,10 @@ author: 张可
 email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
+原文
+（http://expressjs.com/guide/debugging.html）
+（http://expressjs.com/guide/database-integration.html）
+
 #调试 Express
 	
 	Express 内部使用 debug 模块记录路由匹配、使用到的中间件、应用模式以及请求-响应循环。

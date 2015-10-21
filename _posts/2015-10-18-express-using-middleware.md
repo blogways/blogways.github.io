@@ -7,6 +7,7 @@ author: 张可
 email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
+原文 （http://expressjs.com/guide/using-middleware.html）
 #使用中间件
 
 Express 是一个自身功能极简，完全是由路由和中间件构成一个的 web 开发框架：从本质上来说，一个 Express 应用就是在调用各种中间件。

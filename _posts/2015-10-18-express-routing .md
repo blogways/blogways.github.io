@@ -7,7 +7,7 @@ author: 张可
 email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
-
+原文 （http://expressjs.com/guide/routing.html）
 ##路由
 
 路由是指如何定义应用的端点（URIs）以及如何响应客户端的请求。

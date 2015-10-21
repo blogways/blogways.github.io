@@ -7,6 +7,9 @@ author: 张可
 email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
+原文：
+（http://expressjs.com/guide/using-template-engines.html）
+（http://expressjs.com/guide/error-handling.html）
 #在 Express 中使用模板引擎
 
 需要在应用中进行如下设置才能让 Express 渲染模板文件：
