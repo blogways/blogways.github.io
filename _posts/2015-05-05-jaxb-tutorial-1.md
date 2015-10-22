@@ -1,6 +1,6 @@
 ---
 layout: post
-category: JAXB
+category: Java
 title: JAXB使用教程一:简介与基本用法
 tags: ['JAXB', '使用', '教程']
 author: 唐 治

@@ -1,6 +1,6 @@
 ---
 layout: post
-category: express
+category: node
 title: express3.x-调试和数据库
 tags: ['express', '翻译']
 author: 张可

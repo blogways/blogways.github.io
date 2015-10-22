@@ -1,6 +1,6 @@
 ---
 layout: post
-category: express
+category: node
 title: express3.x-模板引擎和错误处理
 tags: ['express', '翻译']
 author: 张可

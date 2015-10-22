@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Prototype.js
+category: jQuery
 title: Prototype.js  源码学习 
 tags: ['Prototype.js', '源码']
 author: 张可

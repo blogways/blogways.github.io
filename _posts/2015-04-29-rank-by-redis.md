@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Redis
+category: 杂记
 title: 使用Redis实现TOP500排行功能( 列表和有序集合 )
 tags: ['Redis', 'Lists', 'Sorted sets', 'rank', '排行榜', 'TOP500']
 author: 万洲
