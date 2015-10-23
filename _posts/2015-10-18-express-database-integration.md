@@ -8,30 +8,40 @@ email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
 原文
-（http://expressjs.com/guide/database-integration.html）
+<http://expressjs.com/guide/database-integration.html>
 
 #集成数据库
 
 为 Express 应用添加连接数据库的能力，只需要加载相应数据库的 Node.js 驱动即可。这里将会简要介绍如何为 Express 应用添加和使用一些常用的数据库 Node 模块。
 	
-	Cassandra
-	CouchDB
-	LevelDB
-	MySQL
-	MongoDB
-	Neo4j
-	PostgreSQL
-	Redis
-	SQLite
-	ElasticSearch
-这些数据库驱动只是其中一部分，可在 npm 官网 查找更多驱动。
+·Cassandra  
+
+·CouchDB  
+
+·LevelDB  
+
+·MySQL  
+
+·MongoDB  
+
+·Neo4j  
+
+·PostgreSQL  
+
+·Redis  
+
+·SQLite  
+
+·ElasticSearch  
+
+>这些数据库驱动只是其中一部分，可在 npm 官网 查找更多驱动。
 
 Cassandra
 模块: cassandra-driver
 安装
 
 	$ npm install cassandra-driver
-	示例
+示例
 	
 	var cassandra = require('cassandra-driver');
 	var client = new cassandra.Client({ contactPoints: ['localhost']});
@@ -69,7 +79,7 @@ Cassandra
 安装
 	
 	$ npm install level levelup leveldown
-	示例
+示例
 	
 	var levelup = require('levelup');
 	var db = levelup('./mydb');
@@ -89,7 +99,7 @@ Cassandra
 安装
 
 	$ npm install mysql
-	示例
+示例
 	
 	var mysql      = require('mysql');
 	var connection = mysql.createConnection({
@@ -112,7 +122,7 @@ Cassandra
 安装
 	
 	$ npm install mongoskin
-	示例
+示例
 	
 	var db = require('mongoskin').db('localhost:27017/animals');
 	
@@ -128,7 +138,7 @@ Cassandra
 安装
 	
 	$ npm install apoc
-	示例
+示例
 	
 	var apoc = require('apoc');
 	
@@ -146,7 +156,7 @@ Cassandra
 安装
 	
 	$ npm install pg
-	示例
+示例
 	
 	var pg = require('pg');
 	var conString = "postgres://username:password@localhost/database";
@@ -171,7 +181,7 @@ Cassandra
 安装
 	
 	$ npm install redis
-	示例
+示例
 	
 	var client = require('redis').createClient();
 	
@@ -199,7 +209,7 @@ Cassandra
 安装
 	
 	$ npm install sqlite3
-	示例
+示例
 	
 	var sqlite3 = require('sqlite3').verbose();
 	var db = new sqlite3.Database(':memory:');
@@ -227,7 +237,7 @@ Cassandra
 安装
 	
 	$ npm install elasticsearch
-	示例
+示例
 	
 	var elasticsearch = require('elasticsearch');
 	var client = elasticsearch.Client({

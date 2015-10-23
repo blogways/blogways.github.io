@@ -7,7 +7,8 @@ author: 张可
 email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
-原文 （http://expressjs.com/guide/routing.html）
+原文:
+ [http://expressjs.com/guide/routing.html](http://expressjs.com/guide/routing.html)
 #路由
 
 路由是指如何定义应用的端点（URIs）以及如何响应客户端的请求。
@@ -16,7 +17,7 @@ description: express3.x中文翻译
 
 下面是一个基本的路由示例：
 
-		var express = require('express');
+	var express = require('express');
 	var app = express();
 	
 	// respond with "hello world" when a GET request is made to the homepage
@@ -43,23 +44,28 @@ description: express3.x中文翻译
 Express 定义了如下和 HTTP 请求对应的路由方法： get, post, put, head, delete, options, trace, copy, lock, mkcol, move, purge, propfind, proppatch, unlock, report, mkactivity, checkout, merge, m-search, notify, subscribe, unsubscribe, patch, search, 和 connect。
 
 	
-	有些路由方法名不是合规的 JavaScript 变量名，此时使用括号记法，比如： app['m-search']('/', function ...
+>有些路由方法名不是合规的 JavaScript 变量名，此时使用括号记法，比如： app['m-search']('/', function ...
 
 app.all() 是一个特殊的路由方法，没有任何 HTTP 方法与其对应，它的作用是对于一个路径上的所有请求加载中间件。
 
 在下面的例子中，来自 “/secret” 的请求，不管使用 GET、POST、PUT、DELETE 或其他任何 http 模块支持的 HTTP 请求，句柄都会得到执行。
 
-		app.all('/secret', function (req, res, next) {
+	app.all('/secret', function (req, res, next) {
 	  console.log('Accessing the secret section ...');
 	  next(); // pass control to the next handler
 	});	
 
 #路由路径
 路由路径和请求方法一起定义了请求的端点，它可以是字符串、字符串模式或者正则表达式。
-	
-	Express 使用 path-to-regexp 匹配路由路径，请参考文档查阅所有定义路由路径的方法。 Express Route Tester 是测试基本 Express 路径的好工具，但不支持模式匹配。
 
-	查询	字符串不是路由路径的一部分。
+
+>Express 使用 path-to-regexp 匹配路由路径，请参考文档查阅所有定义路由路径的方法。 Express Route Tester 是测试基本 Express 路径的好工具，但不支持模式匹配.
+
+```
+
+>查询字符串不是路由路径的一部分。
+
+
 使用字符串的路由路径示例：
 	
 	// 匹配根路径的请求
@@ -97,8 +103,10 @@ app.all() 是一个特殊的路由方法，没有任何 HTTP 方法与其对应�
 	app.get('/ab(cd)?e', function(req, res) {
 	 res.send('ab(cd)?e');
 	});	
+···
 
-	字符 ?、+、* 和 () 是正则表达式的子集，- 和 . 在基于字符串的路径中按照字面值解释。
+>字符 ?、+、* 和 () 是正则表达式的子集，- 和 . 在基于字符串的路径中按照字面值解释。
+
 使用正则表达式的路由路径示例：
 
 		// 匹配任何路径中含有 a 的路径：
@@ -165,18 +173,56 @@ app.all() 是一个特殊的路由方法，没有任何 HTTP 方法与其对应�
 	});
 #响应方法
 下表中响应对象（res）的方法向客户端返回响应，终结请求响应的循环。如果在路由句柄中一个方法也不调用，来自客户端的请求会一直挂起。
+<table>
+  <thead>
+    <tr>
+      <th>方法</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>res.download</a></td>
+      <td>提示下载文件。</td>
+    </tr>
+    <tr>
+      <td>res.end</a></td>
+      <td>终结响应处理流程。</td>
+    </tr>
+    <tr>
+      <td>res.json</a></td>
+      <td>发送一个 JSON 格式的响应。</td>
+    </tr>
+    <tr>
+      <td>res.jsonp</a></td>
+      <td>发送一个支持 JSONP 的 JSON 格式的响应。</td>
+    </tr>
+    <tr>
+      <td>res.redirect</a></td>
+      <td>重定向请求。</td>
+    </tr>
+    <tr>
+      <td>res.render</a></td>
+      <td>渲染视图模板。</td>
+    </tr>
+    <tr>
+      <td>res.send</a></td>
+      <td>发送各种类型的响应。</td>
+    </tr>
+    <tr>
+      <td>res.sendFile</a></td>
+      <td>以八位字节流的形式发送文件。</td>
+    </tr>
+    <tr>
+      <td>res.sendStatus</a></td>
+      <td>设置响应状态代码，并将其以字符串形式作为响应体的一部分发送。</td>
+    </tr>
+  </tbody>
+</table>
 
-	res.download()	提示下载文件。
-	res.end()	终结响应处理流程。
-	res.json()	发送一个 JSON 格式的响应。
-	res.jsonp()	发送一个支持 JSONP 的 JSON 格式的响应。
-	res.redirect()	重定向请求。
-	res.render()	渲染视图模板。
-	res.send()	发送各种类型的响应。
-	res.sendFile	以八位字节流的形式发送文件。
-	res.sendStatus()	设置响应状态代码，并将其以字符串形式作为响应体的一部分发送。
 
-app.route()
+
+###app.route()  
 可使用 app.route() 创建路由路径的链式路由句柄。由于路径在一个地方指定，这样做有助于创建模块化的路由，而且减少了代码冗余和拼写错误。请参考 Router() 文档 了解更多有关路由的信息。
 
 下面这个示例程序使用 app.route() 定义了链式路由句柄。

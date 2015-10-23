@@ -7,14 +7,14 @@ author: 张可
 email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
-原文
-（http://expressjs.com/guide/debugging.html）
+原文：<http://expressjs.com/guide/debugging.html>
 
 #调试 Express
 	
-	Express 内部使用 debug 模块记录路由匹配、使用到的中间件、应用模式以及请求-响应循环。
+Express 内部使用 debug 模块记录路由匹配、使用到的中间件、应用模式以及请求-响应循环。
+	
+>debug 有点像改装过的 console.log，不同的是，您不需要在生产代码中注释掉 debug。它会默认关闭，而且使用一个名为 DEBUG 的环境变量还可以打开。
 
-debug 有点像改装过的 console.log，不同的是，您不需要在生产代码中注释掉 debug。它会默认关闭，而且使用一个名为 DEBUG 的环境变量还可以打开。
 在启动应用时，设置 DEBUG 环境变量为 express:*，可以查看 Express 中用到的所有内部日志。
 	
 	$ DEBUG=express:* node index.js
