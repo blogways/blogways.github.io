@@ -1,6 +1,6 @@
 ---
 layout: post
-category: node
+category: Node
 title: express3.x-数据库集成
 tags: ['express', '翻译']
 author: 张可

@@ -1,5 +1,5 @@
 markdown: rdiscount
-pygments: true
+highlighter: pygments
 paginate: 8
 #permalink: /blog/:categories/:year/:month/:day/:title.html
 permalink: /blog/:year/:month/:day/:title.html
@@ -12,3 +12,5 @@ collections:
     authors:
         output: true
         permalink: /authors/:path/
+gems:
+    - jekyll-paginate

@@ -1,6 +1,6 @@
 ---
 layout: post
-category: jekyll
+category: Jekyll
 title: MAC OS X 10.8 下安装jekyll
 tags: ['jekyll', '部署', 'MAC OSX']
 author: 唐 治
