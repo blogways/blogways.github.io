@@ -1,6 +1,6 @@
 ---              
 layout: post
-category: Node
+category: Express
 title: node Express 框架搭建
 tags: ['node', 'Express']
 author: 汤仕忠

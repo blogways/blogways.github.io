@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Node
+category: Express
 title: Express4.x API 翻译[2] -- Request
 tags: ['Node', 'Express', 'API']
 author: Jacky

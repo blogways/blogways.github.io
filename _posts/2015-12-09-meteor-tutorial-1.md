@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Javascript
+category: Node.js
 title: meteor入门学习笔记一
 tags: ['meteor','javascript', '入门', '学习笔记']
 author: 唐 治

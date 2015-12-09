@@ -65,7 +65,7 @@ page_tags: 标签
                         <h4 class='panel-title'>热门分类</h4>
                     </div>
                     <div class='list-group'>{% for cate in site.categories %}
-                        {% assign cate_name = cate | first %}{% if cate_name != page.category %}
+                        {% if cate != page.category %}
                         <a class='list-group-item' href='/categories/{{ cate | first }}'>{{ cate | first }}
                             <span class='badge pull-right'>{{ cate | last | size }}</span>
                         </a>{% else %}

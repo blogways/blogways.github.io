@@ -1,6 +1,6 @@
 ---
 layout: post
-category: 杂记
+category: NoSQL
 title: MongoDB 分片介绍
 tags: ['MongoDB', 'Sharding', '分片', '分布式部署']
 author: 万洲

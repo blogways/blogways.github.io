@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Memcache
+category: NoSQL
 title: Redis Linux 数据类型
 tags: ['Redis', 'Linux', 'Type']
 author: Jacky

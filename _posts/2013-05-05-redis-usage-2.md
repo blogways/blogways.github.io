@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Memcache
+category: NoSQL
 title: Redis Linux Pipeline && 分布式
 tags: ['Redis', 'Linux', 'Pipeline']
 author: Jacky

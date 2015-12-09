@@ -1,6 +1,6 @@
 ---
 layout: post
-category: 杂记
+category: NoSQL
 title: MongoDB 入库速度和分片的关系
 tags: ['MongoDB', 'Sharding', 'Speed', '分片', '入库速度']
 author: 万洲

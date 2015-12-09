@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Memcache
+category: NoSQL
 title: Redis的Java客户端Jedis的八种调用方式(事务、管道、分布式…)介绍
 tags: ['redis', 'jedis', '事务', '管道', '分布式', '连接池']
 author: 唐 治

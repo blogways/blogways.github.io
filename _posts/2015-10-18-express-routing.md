@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Node
+category: Express
 title: express3.x-路由
 tags: ['express', '翻译']
 author: 张可

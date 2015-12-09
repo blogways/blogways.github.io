@@ -1,6 +1,6 @@
 ---              
 layout: post
-category: Node
+category: Node.js
 title: EventProxy在node的应用
 tags: ['node', 'EventProxy']
 author: 汤仕忠

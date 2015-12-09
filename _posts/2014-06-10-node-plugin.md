@@ -1,6 +1,6 @@
 ---              
 layout: post
-category: Node
+category: Node.js
 title: node 插件化开发
 tags: ['node','express', 'plugin']
 author: 汤仕忠

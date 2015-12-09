@@ -66,6 +66,9 @@ pt_page_type: pt
                                     </div>
                                 </div>
                                 <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories/{{ page.category | downcase }}/'>{{ page.category }}</a>
+                                </div>
+                                <div class='pt-article-tags'>
                                     {% include bdshare.html %}
                                 </div>
                             </div>

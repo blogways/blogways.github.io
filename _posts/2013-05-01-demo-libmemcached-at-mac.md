@@ -1,6 +1,6 @@
 ---
 layout: post
-category: Memcache
+category: NoSQL
 title: MAC OSX 环境下搭建 memcached 环境
 tags: ['memcached', 'libmemcached']
 author: 唐 治

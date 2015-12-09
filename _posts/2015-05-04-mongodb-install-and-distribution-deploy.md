@@ -1,6 +1,6 @@
 ---
 layout: post
-category: 杂记
+category: NoSQL
 title: MongoDB 安装与分布式部署
 tags: ['MongoDB', 'Sharding', '分片', '分布式部署']
 author: 万洲
