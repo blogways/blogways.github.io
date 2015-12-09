@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     var documentHeight = 0;
-    var $cate = $("#categorybar").offset(), 
+    var $cate = null;//$("#categorybar").offset(), // categorybar too long, no scroll 
         $auth = $('#authorslistbar').offset(),
         $newbar = $('#newbar').offset();
     var offset = $cate != null ? $cate :
