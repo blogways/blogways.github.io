@@ -1,6 +1,6 @@
 ---
 layout: post
-category: node        
+category: express        
 title: Express 4.x的迁移
 tags: ['moving to express4.x']
 author: 付奎
