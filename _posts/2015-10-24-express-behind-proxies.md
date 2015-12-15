@@ -45,7 +45,7 @@ IP 地址、子网或 `IP` 地址数组和可信的子网。下面是预配置�
 	})
 以上就是 `trust proxy` 设置项  
 
-设置 `trust proxy` 为非假值会带来两个重要变化：  
+设置 `trust proxy` 为非假值会带来三个重要变化：  
 >* 反向代理可能设置 `X-Forwarded-Proto` 来告诉应用使用 `https` 或简单的 `http` 协议。请参考 `req.protocol`。  
 >* 无论是 `HTTP`、`HTTPS` 或者是无效的名称，都可以通过反向代理来设置 `X-Forwarded-For` 通知应用程序。这个值是通过 `req.protocol` 来反应的。
 >* `req.ip` 和 `req.ips` 的值将会由 `X-Forwarded-For` 中列出的 IP 地址构成。  
