@@ -6,7 +6,7 @@ tags: ['meteor','javascript', '入门', '学习笔记']
 author: 唐 治
 description: Meteor是一个Javascript应用框架。可以轻松构建高品质的实时Web应用程序或移动端App。
 ---
-
+{% raw %}
 这几天在学习Meteor，当前版本为:`1.2.1`。学习的主要资料来自官网，笔记如下.
 
 ##一、创建一个应用
@@ -59,7 +59,7 @@ meteor
       <h1>Todo List</h1>
     </header>
  
-    <ul>
+    <ul>  
       {{#each tasks}}
         {{> task}}
       {{/each}}
@@ -1107,3 +1107,5 @@ Meteor.methods({
 > “注意现在任何人都可以删除公共任务，代码再做一些微调，就可以实现仅任务的所有者才能删除他们”
 
 好了，我们完成了个人任务功能！现在我们的应用已经安全了，可以防止攻击者浏览或者修改他人的任务了！
+
+{% endraw %}
