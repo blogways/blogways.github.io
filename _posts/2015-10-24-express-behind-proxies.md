@@ -1,6 +1,6 @@
 ---
 layout: post
-category:  express        
+category:  Express        
 title: 为express设置代理
 tags: ['express behind proxies']
 author: 付奎
