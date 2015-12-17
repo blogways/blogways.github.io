@@ -1,12 +1,13 @@
 ---
 layout: post
-category: Express        
-title: Express 4.x的迁移
+category: express        
+title: express 4.x的迁移
 tags: ['moving to express4.x']
 author: 付奎
 email: fukui@asiainfo.com
 description: 迁移到 Express 4.x
 ---
+原文：<http://expressjs.com/en/guide/migrating-4.html>
 
 Express 4.x较Express 3.x进行了较大的改动，原来基于Express 3.x的项目无法直接升级到 4.x。本文对Express网站的内容进行了简单的总结，希望能够帮助大家更好的了解Express 4.x，同时方便大家迁移。  
 ##一、Express 4.x的主要变化
@@ -155,7 +156,7 @@ Express 4.x的理念是仅专注于最核心的routing功能，而将其他组�
 	</tr>  
 </table>
 
-##二、示例
+##二 、示例
 这里是一个从 Express 3 升级到 Express 4 的示例。
 ###Version 3 app
 ####app.js
@@ -300,7 +301,7 @@ package.json 如下所示
 	$ node app
 
 使用浏览器访问 http://localhost:3000，查看使用 Express 4 生成的页面。
-##三、升级到 Express 4 的应用生成器
+##升级到 Express 4 的应用生成器
 生成一个 Express 4 的命令行工具还是 express，但是，升级到新版本的话，需要先卸载 Express 3 的生成器，然后安装新的生成器。
 ###安装
 如果你已经安装过 Express 3 的生成器，必须先卸载
