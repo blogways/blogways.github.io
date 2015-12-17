@@ -1,7 +1,7 @@
 ---
 layout: post
 category: Node.js
-title: meteor入门学习笔记一
+title: meteor入门学习笔记一：开始
 tags: ['meteor','javascript', '入门', '学习笔记']
 author: 唐 治
 description: Meteor是一个Javascript应用框架。可以轻松构建高品质的实时Web应用程序或移动端App。
