@@ -1,16 +1,16 @@
 ---
-layout: post
+layout: post  
 category: jQuery        
-title: FormPlugin中文文档
-tags: ['FormPluginAPI']
-author: 付奎
-email: fukui@asiainfo.com
-description: 表单插件的中文文档
+title: jQuery Form Plugin中文使用说明  
+tags: ['FormPluginAPI']  
+author: 付奎  
+email: fukui@asiainfo.com  
+description: 表单插件的中文文档   
 ---
 
-##一、概述
+#jQuery插件--Form表单插件
 jQuery Form插件是一个优秀的Ajax表单插件，可以非常容易地、无侵入地升级HTML表单以支持Ajax。 插件里面主要的方法, ajaxForm 和 ajaxSubmit, 能够从form组件里采集信息确定如何处理表单的提交过程。两个方法都支持众多的可选参数，能够让你对表单里数据的提交做到完全的控制。这让采用AJAX方式提交一个表单的过程简单的不能再简单了！  
-##二、入门指导
+##一、入门指导
 1. 在你的页面里写一个简单的表单，不需要任何特殊标记  
 
 		<form id="myForm" action="comment.php" method="post">
@@ -35,8 +35,7 @@ jQuery Form插件是一个优秀的Ajax表单插件，可以非常容易地、�
 		    </script>
 		</head>
 这就行了！ 当表单提交后 `name`  和  `comment` 的值就会被提交给 `comment.php`. 如果服务器端返回成功的状态，用户将会看到一句提示信息  `"Thank you"` 。
-
-##三、Form Plugin API
+##二、Form Plugin API    
 Form Plugin API 里提供了很多有用的方法可以让你轻松的处理表单里的数据和表单的提交过程。  
 
 -  **ajaxForm**  
