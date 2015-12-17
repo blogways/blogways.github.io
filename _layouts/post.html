@@ -82,6 +82,25 @@ pt_page_type: pt
                                 </div>
                             </div>
                         </div>
+                        <div class='row'>
+                            {% assign p = page.previous %}{% if p %}
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='{{ p.url }}' title='{{ p.title }}'>{{ p.title }}</a>
+                                </span>
+                            </div>
+                            {% endif %}
+                            {% assign n = page.next %}{% if n %}
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='{{ n.url }}' title='{{ n.title }}'>{{ n.title }}</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='{{ n.url }}' title='{{ n.title }}'>{{ n.title }}</a>
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div><!--end row-->
                     </div>
                 </div>
             </div>
