@@ -18,6 +18,7 @@ jQuery Form插件是一个优秀的Ajax表单插件，可以非常容易地、�
 		    Comment: <textarea name="comment"></textarea>
 		    <input type="submit" value="Submit Comment" />
 		</form>
+
 2. 引入jQuery和Form Plugin Javascript脚本文件并且添加几句简单的代码让页面在DOM加载完成后初始化表单：  
 
 		<head>
