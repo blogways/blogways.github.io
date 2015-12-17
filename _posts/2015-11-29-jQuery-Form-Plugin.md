@@ -34,11 +34,14 @@ jQuery Form插件是一个优秀的Ajax表单插件，可以非常容易地、�
 		        });
 		    </script>
 		</head>
-这就行了！ 当表单提交后 `name`  和  `comment` 的值就会被提交给 `comment.php`. 如果服务器端返回成功的状态，用户将会看到一句提示信息  `"Thank you"` 。
-##二、Form Plugin API    
-Form Plugin API 里提供了很多有用的方法可以让你轻松的处理表单里的数据和表单的提交过程。  
+这就行了！ 当表单提交后 `name`  和  `comment` 的值就会被提交给 `comment.php`. 如果服务器端返回成功的状态，用户将会看到一句提示信息  `"Thank you"` 。  
 
--  **ajaxForm**  
+
+##二、Form Plugin API    
+Form Plugin API 里提供了很多有用的方法可以让你轻松的处理表单里的数据和表单的提交过程。 
+ 
+
+- **ajaxForm**  
 预处理将要使用 `AJAX` 方式提交的表单，将所有需要用到的事件监听器添加到其中。它不是提交这个表单。 在页面的 `ready` 函数里使用 `ajaxForm` 来给你页面上的表单做这些 `AJAX` 提交的准备工作。  `ajaxForm` 需要零个或一个参数。这唯一的一个参数可以是一个回调函数或者是一个可选参数对象。并支持***连环调用***  
 例子:  
 
