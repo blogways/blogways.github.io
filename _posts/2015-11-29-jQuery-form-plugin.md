@@ -1,7 +1,7 @@
 ---
 layout: post  
 category: jQuery        
-title: jQuery Form Plugin中文使用说明  
+title: jQuery form plugin中文使用说明  
 tags: ['FormPluginAPI']  
 author: 付奎  
 email: fukui@asiainfo.com  
