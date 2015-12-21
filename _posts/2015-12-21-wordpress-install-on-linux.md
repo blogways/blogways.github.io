@@ -10,7 +10,7 @@ description: WordPress 是一种使用 PHP语言和 MySQL数据库开发的开�
 ---
 #linux下安装Wordpress
 
-	<div class="code fl">
+<div class="code fl">
     <dl>
     <dt>目录</dt>
     <dd>
@@ -24,7 +24,7 @@ description: WordPress 是一种使用 PHP语言和 MySQL数据库开发的开�
     </ol>
     </dd>
     </dl>
-
+</div>
 ##一.<a name="1"></a>安装Apache服务器
 在linux终端输入<br>
 	
