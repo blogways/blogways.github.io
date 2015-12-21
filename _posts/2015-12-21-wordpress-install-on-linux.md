@@ -2,7 +2,7 @@
 layout: post
 category: Wordpress
 title: linux下搭建属于自己的博客
-tags: ['Wordpress', '部署', 'MAC OSX']
+tags: ['Wordpress', '部署', 'linux']
 author: 陈凡
 email: chenfan@asiainfo.com
 image: 
