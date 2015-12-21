@@ -4,14 +4,13 @@ category: Wordpress
 title: linux下搭建属于自己的博客
 tags: ['Wordpress', '部署', 'linux']
 author: 陈凡
-email: chenfan@asiainfo.com
-image: 
+email: chenfan@asiainfo.com 
 
 description: WordPress 是一种使用 PHP语言和 MySQL数据库开发的开源、免费的Blog（博客，网志）引擎，用户可以在支持 PHP 和 MySQL 数据库的服务器上建立自己的 Blog。WordPress 是一个功能非常强大的博客系统，插件众多，易于扩充功能。安装和使用都非常方便。目前 WordPress 已经成为主流的 Blog 搭建平台。
 ---
 #linux下安装Wordpress
 
-<div class="code fl">
+	<div class="code fl">
     <dl>
     <dt>目录</dt>
     <dd>
