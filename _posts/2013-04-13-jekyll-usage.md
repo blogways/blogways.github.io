@@ -11,8 +11,21 @@ description: Jekyll是一款简单的博客系统，也可以说是一个静态�
 
 
 ##jekyll 教程入门
-
-
+ 		 
+-<div class="code fl">		
+-    <dl>		
+-    <dt>目录</dt>		
+-    <dd>		
+-    <ol>		
+-        <li><a href="#1">安装jekyll</a></li>		
+-        <li><a href="#2">搭建网站框架</a></li>		
+-        <li><a href="#3">编写博文</a></li>		
+-        <li><a href="#4">一些Jekyll网站例子及源码</a></li>		
+-    </ol>		
+-    </dd>		
+-    </dl>		
+-</div>		
+ 
 [jekyll] 是一款简单的博客系统，也可以说是一个静态网站生成器。她有一个模版目录，存放整个静态网站的模版文件，可以通过[Liquid]处理模版文件，把使用标记语言[Textile]或[Markdown]编写的内容文件，按照模版格式，转换成最终的静态网站页面。大名鼎鼎的GitHub Pages就是通过她实现的。
 
 在这里，我们将告诉你如果使用jekyll搭建一个简单的博客网站。
