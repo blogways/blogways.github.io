@@ -21,7 +21,7 @@ description: WordPress 是一种使用 PHP语言和 MySQL数据库开发的开�
         <li><a href="#3">安装mysql</a></li>
         <li><a href="#4">安装phpMyAdmin</a></li>
         <li><a href="#5">安装Wordpress</a></li>
-        <li><a href="#5">常见错误</a></li>
+        <li><a href="#6">常见错误</a></li>
     </ol>
     </dd>
     </dl>
