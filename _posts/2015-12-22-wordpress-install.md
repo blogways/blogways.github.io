@@ -1,8 +1,8 @@
 ---
 layout: post
-category: wordpress
+category: WordPress
 title: linux下源码安装wordpress全过程
-tags: ['wordpress']
+tags: ['WordPress']
 author: 王栋
 #image: /images/xxx.jpg
 email: wangdong3@asiainfo.com
@@ -15,18 +15,18 @@ description: linux主机源码安装wordpress的全过程
 1. libxml2-2.6.30.tar.gz
 2. libmcrypt-2.5.8.tar.gz
 3. zlib-1.2.3.tar.gz  
-4. libpng-1.2.31.tar.gz 
-5. jpegsrc.v6b.tar.gz 
+4. libpng-1.2.31.tar.gz
+5. jpegsrc.v6b.tar.gz
 6. freetype-2.3.5.tar.gz  
 7. autoconf-2.61.tar.gz  
 8. gd-2.0.35.tar.gz  
-9. apr-1.4.6.tar.gz 
+9. apr-1.4.6.tar.gz
 10. apr-util-1.5.1.tar.gz
 
 #### 主要文件:
 1. httpd-2.2.9.tar.gz
 2. mysql-5.1.59.tar.gz  
-3. php-5.2.6.tar.gz 
+3. php-5.2.6.tar.gz
 4. phpMyAdmin-3.0.0
 
 #### 将安装包都上传到/usr/local/src目录
@@ -63,7 +63,7 @@ make install
 cd zlib-1.2.3  
 ./configure  
 make  
-make install 
+make install
 ```
 ##### 【安装libpng】
 ```
@@ -96,8 +96,8 @@ make install
 cd autoconf-2.61  
 ./configure  
 make  
-make install 
-``` 
+make install
+```
 ##### 【安装gd】  
 ```
 cd gd-2.0.35  
@@ -109,17 +109,17 @@ make install
 ```
 ./configure
 make
-make install 
+make install
 ```
 ##### 【安装apr-util】
 ```
 ./configure  --with-apr=/usr/local/apr/
 make
-make install 
+make install
 ```
 ### 三 安装apache
 #### apache安装与配置
-##### 【安装apache】 
+##### 【安装apache】
 ```
 cd httpd-2.2.9  
 ./configure --prefix=/usr/local/apache2/ --sysconfdir=/etc/httpd/ --with-included-apr --disable-userdir --enable-so --enable-deflate=shared --enable-expires=shared --enable-rewrite=shared --enable-static-support  
@@ -136,12 +136,12 @@ vi /etc/httpd/httpd.conf
 #查找ServerName,将注释去掉  
 ServerName 'www.example.com:80'
 ```
-######将apache添加到系统服务中 
+######将apache添加到系统服务中
 ```
 cp /usr/local/apache2/bin/apachectl /etc/init.d/httpd  
 vi /etc/rc.d/init.d/httpd  
 #在#!/bin/sh后添加下面两行(包含"#")  
-# chkconfig:2345 85 15 
+# chkconfig:2345 85 15
 # description:Apache
 #添加执行权限  
 chmod 755 /etc/init.d/httpd  
@@ -205,7 +205,7 @@ service mysqld restart
 cd php-5.2.6  
 ./configure --prefix=/usr/local/php/ --with-config-file-path=/usr/local/php/etc/ --with-apxs2=/usr/local/apache2/bin/apxs --with-mysql=/usr/local/mysql/ --with-libxml-dir=/usr/local/libxml2/ --with-jpeg-dir=/usr/local/jpeg6/ --with-freetype-dir=/usr/local/freetype/ --with-gd=/usr/local/gd2/ --with-mcrypt=/usr/local/libmcrypt/ --with-mysqli=/usr/local/mysql/bin/mysql_config --enable-soap --enable-mbstring=all --enable-sockets  
 make  
-make install 
+make install
 ```
 ######创建配置文件
 ```
@@ -221,7 +221,7 @@ Addtype application/x-httpd-php .php .phtml
 ```
 ######重启Apache
 ```
-# /usr/local/apache2/bin/apachectl restart 
+# /usr/local/apache2/bin/apachectl restart
 ```
 ##### 【apache配置】
 ######建立工作目录
@@ -234,12 +234,12 @@ vi /etc/httpd/httpd.conf
 #功能: 设置工作目录  
 #说明: 搜索DocumentRoot, 修改为  
 DocumentRoot "/var/www/html"  
-#功能: 设置目录选项 
+#功能: 设置目录选项
 搜索<Directory "/usr/local/apache2//htdocs">, 修改为  
 <Directory "/var/www/html">  
 #功能: 设置默认文档  
 搜索<IfModule dir_module>, 修改为  
-DirectoryIndex index.html index.php 
+DirectoryIndex index.html index.php
 #功能: 增加php类型  
 搜索 AddType application/x-gzip .gz .tgz在后面添加  
 AddType application/x-httpd-php .html .php  
@@ -250,8 +250,8 @@ AddType application/x-httpd-php .html .php
 ```
 ######重启apache
 ```
-service httpd restart 
-``` 
+service httpd restart
+```
 ##### 【添加PDO_MYSQL扩展】
 ```
 cd /lamp/src/php-5.2.6/ext/pdo_mysql  
@@ -267,14 +267,14 @@ make install
 ######修改php.ini
 ```
 vi /usr/local/php/etc/php.ini  
-#查找extension_dir,修改为 
+#查找extension_dir,修改为
 extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/"  
 #添加pdo_mysql
 extension = pdo_mysql.so  
 ```
 ######重启apache
 ```
-service httpd restart 
+service httpd restart
 ```
 ### 六 安装phpmyadmin
 #### phpmyadmin安装与配置

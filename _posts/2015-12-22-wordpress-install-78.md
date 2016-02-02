@@ -1,8 +1,8 @@
 ---
 layout: post
-category: Wordpress
+category: WordPress
 title: 公司主机装载apache+PHP+phpmyadmin+wordpress
-tags: ['wordpress', '安装', '公司主机']
+tags: ['WordPress', '安装', '公司主机']
 author: 陈凡
 email: chenfan@asiainfo.com
 description: 公司主机虽然也是基于linux系统，但是没有联网下载功能，只能通过下载好的安装包，公司主机中安装wordpress
@@ -133,14 +133,14 @@ Php版本：
 
 **分析**：这个问题是由于 gd 库中的 gd_png.c 源文件包含 png.h 时，png.h 没有找到导致的。
 
-**解决**：在编译文件里 `vi gd_png.c` 将 `include "png.h"` 改成 `include "/usr/local/libpng/include/png.h"` 
- 
+**解决**：在编译文件里 `vi gd_png.c` 将 `include "png.h"` 改成 `include "/usr/local/libpng/include/png.h"`
+
 **2)**　出现
 
 	X--tag=CC: command not found
 
 **解决**：修改 aclocal.m4 文件，将上面的 `LIBTOOL＝'$(SHELL) $(top _builddir)/libtool'` 改成 `LIBTOOL='$(SHELL)  /usr/bin/libtool' `后重新执行 `./configure`
-  
+
 **3)**　Invalid libtool wrapper script when make installing Apache
 
 **解决**：
@@ -173,7 +173,7 @@ Php版本：
 **解决**： 下载 api 和 api-util 安装到 apache 的 ./srclib/ 目录.
 
 **2)**　`./configure` 命令后在执行 make 命令的时候报如下错误：
-	
+
 	/usr/bin/ld: /usr/local/lib/libz.a(crc32.o): relocation RX86\_64\_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC  
 **解决**：下载 zlib-1.2.3.tar.gz 放在 /usr/local 目录执行以下命令：
 
@@ -192,8 +192,8 @@ Php版本：
 
 **关闭Apache**  
 
-/usr/local/apache2/bin/apachectl stop 
- 
+/usr/local/apache2/bin/apachectl stop
+
 **查看80端口是否开启**  
 
 netstat -tnl|grep 80  
@@ -204,22 +204,22 @@ netstat -tnl|grep 80
 >标红部分为需要需改的地方
 
 <font color=#DC143C>ServerRoot "/usr/local/apache2"</font>  
->你的apache软件安装的位置。其它指定的目录如果没有指定绝对路径，则目录是相对于该目录。 
+>你的apache软件安装的位置。其它指定的目录如果没有指定绝对路径，则目录是相对于该目录。
 
-PidFile logs/httpd.pid 
->第一个httpd进程(所有其他进程的父进程)的进程号文件位置。 
+PidFile logs/httpd.pid
+>第一个httpd进程(所有其他进程的父进程)的进程号文件位置。
 
 Listen 80
->服务器监听的端口号。 
+>服务器监听的端口号。
 
 <font color=#DC143C>ServerName 10.20.16.78:80</font><br>
->主站点名称（网站的主机名）。 
+>主站点名称（网站的主机名）。
 
 ServerAdmin admin@clusting.com
->管理员的邮件地址。 
+>管理员的邮件地址。
 
 DocumentRoot "/data/spdev/chenfan"
->主站点的网页存储位置。 
+>主站点的网页存储位置。
 
 	#变更路径
 	<Directory "/data/spdev/chenfan ">
@@ -230,7 +230,7 @@ DocumentRoot "/data/spdev/chenfan"
 		Allow from all
 	</Directory>
 
- 
+
 ##<a name="5"></a>五. 安装Mysql
 
 ###1. 添加一个mysql标准组
@@ -276,7 +276,7 @@ DocumentRoot "/data/spdev/chenfan"
 **测试**
 
 在 apache 的 htdocs 下建立一个 php 文件 test.php，里面的内容如下：
-  
+
 	<?php  
 		phpinfo();  
 	?>
