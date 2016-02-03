@@ -8,7 +8,7 @@ page_tags: 标签
             <div class='mainbar col-md-9 col-sm-12 col-xs-12'>
                 <div class='panel panel-info'>
                     <div class='category-title panel-heading'>
-                        <h2 class='category-name panel-title'>{{ page.category | capitalize }}</h2>
+                        <h2 class='category-name panel-title'>{{ page.category }}</h2>
                     </div>
                     <div class='panel bdsharebar'>
                         {% include bdshare.html %}
@@ -65,7 +65,8 @@ page_tags: 标签
                         <h4 class='panel-title'>热门分类</h4>
                     </div>
                     <div class='list-group'>{% for cate in site.categories %}
-                        {% if cate != page.category %}
+                        {% capture cateName %}{{ cate | first }}{% endcapture %}
+                        {% if cateName != page.category %}
                         <a class='list-group-item' href='/categories/{{ cate | first }}'>{{ cate | first }}
                             <span class='badge pull-right'>{{ cate | last | size }}</span>
                         </a>{% else %}
