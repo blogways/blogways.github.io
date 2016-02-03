@@ -44,7 +44,12 @@ page_tags: 标签
                 <div class='al-article-list-xs hidden-lg hidden-md hidden-sm visible-xs'>
                     {% for year1 in site.data.years %}
                     {% assign flag1 = true %}
-                    {% for post1 in site.categories.[page.category] %}
+                    {% for cate in site.categories %}
+                    {% capture c1 %}{{ cate[0] | downcase }}{% endcapture %}
+                    {% capture c2 %}{{ page.category | downcase }}{% endcapture %}
+                    {% capture c3 %}{{ cate[0] }}{% endcapture %}
+                    {% if c1 == c2 %}
+                    {% for post1 in site.categories.[c3] %}
                     {% capture y1 %}{{ post1.date | date: '%Y' }}{% endcapture %}
                     {% if year1.y == y1 %}
                     {% if flag1 == true %}
@@ -60,6 +65,7 @@ page_tags: 标签
                                     <span class='badge'>{{ post1.category }}</span>
                                 </div>
                             </a>{% endif %}{% endfor %}
+                            {% endif %}{% endfor %}
                             {% if flag1 == false %}
                         </div><!--end of list-group-->
                     </div><!--end of panel-->{% endif %}{% endfor %}
