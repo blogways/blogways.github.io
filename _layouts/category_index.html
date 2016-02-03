@@ -18,7 +18,12 @@ page_tags: 标签
                 <div class='category-list al-article-list visible-lg visible-md visible-sm hidden-xs'>
                     {% for year in site.data.years %}
                     {% assign flag = true %}
-                    {% for post in site.categories.[page.category] %}
+                    {% for cate in site.categories %}
+                    {% capture c1 %}{{ cate[0] | downcase }}{% endcapture %}
+                    {% capture c2 %}{{ page.category | downcase }}{% endcapture %}
+                    {% capture c3 %}{{ cate[0] }}{% endcapture %}
+                    {% if c1 == c2 %}
+                    {% for post in site.categories.[c3] %}
                     {% capture y %}{{ post.date | date: '%Y' }}{% endcapture %}
                     {% if year.y == y %}
                     {% if flag == true %}
@@ -30,6 +35,7 @@ page_tags: 标签
                                 <a href='{{ post.url }}' target='_blank' title='{{ post.title }}'>{{ post.title | truncate: 30 }}</a>
                                 <span class='al-article-date'>&nbsp;(发布于：{{ post.date | date: '%Y.%m.%d' }})</span>
                             </div>{% endif %}{% endfor %}
+                            {% endif %}{% endfor %}
                             {% if flag == false %}
                         </div>
                     </div><!--end of panel-->{% endif %}{% endfor %}
@@ -64,17 +70,30 @@ page_tags: 标签
                     <div class='panel-heading'>
                         <h4 class='panel-title'>热门分类</h4>
                     </div>
-                    <div class='list-group'>{% for cate in site.categories %}
-                        {% capture cateName %}{{ cate | first }}{% endcapture %}
-                        {% if cateName != page.category %}
-                        <a class='list-group-item' href='/categories/{{ cate | first }}'>{{ cate | first }}
-                            <span class='badge pull-right'>{{ cate | last | size }}</span>
-                        </a>{% else %}
-                        <a class='list-group-item disabled'>{{ cate | first }}
-                            <span class='badge pull-right'>{{ cate | last | size }}</span>
-                        </a>{% endif %}{% endfor %}
+                    <div class='list-group' id="categorybar-list">
                     </div>
                 </div><!--end of cateixbar-->
+                <script>
+                    $(document).ready(function(){
+                        (function(){
+                            $.getJSON("/categorycount.json",function(o){
+                                $.each( o, function( i , item ){
+                                    var currentCategory = "{{ page.category | downcase }}";
+
+                                    var content;
+                                    if (currentCategory !== item[0]) {
+                                      content ="<a class='list-group-item list-group-item-default' href='/categories/"+item[0]+"/'>"+item[1];
+                                    }else{
+                                      content ="<a class='list-group-item disabled' >"+item[1];
+                                    }
+                                    content += "<span class='badge pull-right'>"+item[2]+"</span>"+
+                                    "</a>"
+                                    $("#categorybar-list").append(content);
+                                });
+                            });
+                        })();
+                    });
+                </script>
             </div><!--end of sidebar-->
         </div><!--end of main-content-->
     </div><!--end of container-->

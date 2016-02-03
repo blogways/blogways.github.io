@@ -1,0 +1,10 @@
+---
+layout: nil
+type: json
+---
+[
+{% for category in page.categorycount %}
+  ["{{ category[0] }}" , "{{ category[1] | first }}" , {{ category[1] | last }}]
+  {% if forloop.last %} {% else %},{% endif %}
+{% endfor %}
+]

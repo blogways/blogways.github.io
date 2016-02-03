@@ -16,7 +16,7 @@
 	email: xiaoli@gmail.com   <==  联系邮箱
 	description: JUnit4 结合 Hamcrest 提供了一个全新的断言语法 —— assertThat。程序员可以只使用assertThat 一个断言语句，结合 Hamcrest 提供的匹配符，就可以表达全部的测试思想  <== 内容简述
 	---
-	
+
 ### 内容标题规范
 内容当中的分类标题用`<h2></h2>`、`##`表示，如下所示的“**一、 概述**”和“**二、 ruby、gem安装**”：
 
@@ -36,6 +36,7 @@
 1. 删除本地categories文件夹：`rm -r categories`
 2. 本地编译工程：`jekyll build` （或者`jekyll serve`）
 3. 将_site目录下的categories子目录，添加到根目录下(以便上传github page后生效)：`cp -r _site/categories .`
+4. 将_site目录下的categorycount.json文件，添加到根目录下面（一遍上传github page后生效):`cp -r _site/categorycount.json .`
 
 **便捷脚本**
 
@@ -79,4 +80,3 @@ The following directories and their contents are Copyright www.blogways.net . Yo
 * images/
 
 All other directories and files are MIT Licensed. Feel free to use the HTML and CSS as you please. If you do use them, a link back to http://github.com/mojombo/jekyll would be appreciated, but is not required.
-

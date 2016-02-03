@@ -2,9 +2,21 @@
     <div class='panel-heading'>
         <h4 class='panel-title'>热门分类</h4>
     </div>
-    <div class='list-group'>{% for cate in site.categories %}
-        <a class='list-group-item list-group-item-default' href='/categories/{{ cate | first }}/'>{{ cate | first }}
-            <span class="badge pull-right">{{ cate | last | size }}</span>
-        </a>{% endfor %}
+    <div class='list-group' id='categorybar-list'>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        (function(){
+            $.getJSON("/categorycount.json",function(o){
+                $.each( o, function( i , item ){
+                    var content =
+                    "<a class='list-group-item list-group-item-default' href='/categories/"+item[0]+"/'>"+item[1]+
+                        "<span class='badge pull-right'>"+item[2]+"</span>"+
+                    "</a>"
+                    $("#categorybar-list").append(content);
+                });
+            });
+        })();
+    });
+</script>
