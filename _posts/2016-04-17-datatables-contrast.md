@@ -1,7 +1,7 @@
 ---
 layout: post
 title: DataTables新旧版本对比
-category: ['jquery']
+category: ['jQuery']
 tags: ['DataTables', 'jQuery', 'JavaScript']
 author: 汪 回
 email: wanghui6@asiainfo.com
@@ -113,7 +113,8 @@ DataTables在被加载时，就向jQuery的原型$.fn添加了一个DataTable和
         if ( !oInit ){
            oInit = {};
         }
-        //DataTable.defaults是DataTables在加载时就定义好的默认初始化参数对象,而_fnExtend()类似于jQuery.extend(),
+        //DataTable.defaults是DataTables在加载时就定义好的默认初始化参数对象,
+        //而_fnExtend()类似于jQuery.extend(),
         //此方法就是将传入的初始化参数覆盖默认的初始化参数对象
         oInit = _fnExtend( $.extend(true, {}, DataTable.defaults), oInit );
         
