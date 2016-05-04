@@ -1,4 +1,4 @@
-markdown: rdiscount
+markdown: kramdown
 highlighter: pygments
 paginate: 8
 #permalink: /blog/:categories/:year/:month/:day/:title.html
