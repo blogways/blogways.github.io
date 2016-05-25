@@ -61,4 +61,7 @@ description: 如何使设计的网页看上去高大上有档次...
 ![Alt text](/images/06ccb6f63f20bd26b86550e99f198c15_b.jpg)
 
 ## 四、参考文献<a name="reference"></a>
-[https://www.zhihu.com/topic#设计/](https://www.datatables.net/)
+[破茧成蝶：用户体验设计师的成长之路](http://baike.baidu.com/link?url=3qsr0wpF6bpD1mZX8HV7ADuuxLHaxn-Ygxa7h0Rdnm9eBUt_or9Cq_uEn_6Z2A8Is4RkT1NcJ7O4ZspX3PvJIMUa4dCkYxaRGbPXrSAEbkq7Lrq0w49ZV-juQCtu341oihS8vkJ4ONYvQejmCBiYVC7GY_V6LB8xxaGXgRwczhARBTJFy3QmEeDCPAcDMLAB9W1AeCkCvllHYSec0ewflCkFD1-vfvn-1Eq1SxnYf8YmQyHULcRhLhYmadr8ww3E2vfOfliys4Rojt2fueux_a)
+
+[https://http://www.yixieshi.com/16085.html/](http://www.yixieshi.com/16085.html/)
+
