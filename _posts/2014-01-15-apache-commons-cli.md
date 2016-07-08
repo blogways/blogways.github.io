@@ -16,7 +16,7 @@ description: 介绍Apache Commons 系列中的 CLI 库
 本文将介绍Commons系列中的CLI组件库。
 
 
-###一、Commons CLI 概述
+### 一、Commons CLI 概述
 
 `Apache Commons CLI` 库提供API，可以帮助程序去解析传递给程序的命令行参数。他也可以打印帮助信息，来说明可以运用于命令行的有效参数。
 
@@ -44,7 +44,7 @@ usage: ls
  -C                       list entries by columns
 ```
 
-###二、Commons CLI 下载
+### 二、Commons CLI 下载
 
 截止本文撰写时，CLI的最新发布版本为`1.2`。
 
@@ -64,9 +64,9 @@ usage: ls
 		<version>1.2</version>
 	</dependency>
 	
-###三、使用场景
+### 三、使用场景
 
-###3.1 布尔选项
+### 3.1 布尔选项
 
 布尔选项是命令行最常见的选项，作为开关使用，不带参数。如果命令行中存在该选项，那么选项值就为`true`，否则其值为`false`。
 
@@ -91,7 +91,7 @@ options.addOption("t", false, "display current time");
 在这里，多了一个长选项参数，在后面的例子中，我们可以看到具体的使用。
 
 
-###3.2 解析命令行参数
+### 3.2 解析命令行参数
 
 `CommandLineParser`提供的方法`parse`，就是用来解析命令行中的参数。接口`CommandLineParser`存在多种实现类，比如`BasicParser`、`PosixParser`和`GnuParser`，可以根据实际需求选择使用.
 
@@ -115,7 +115,7 @@ else {
 }
 ```
 
-###3.2 带参数选项
+### 3.2 带参数选项
 
 除了布尔选项外，还有些选项是需要参数的。比如`c`选项需要参数，那么可以如下设置：
 
@@ -139,11 +139,11 @@ else {
 ```
 
 
-###3.3 Ant命令行实例
+### 3.3 Ant命令行实例
 
 在这里，我们使用一个被普遍使用的java应用程序Ant来解释如果使用CLI库的。
 
-####3.3.1 先看看Ant的命令帮助
+#### 3.3.1 先看看Ant的命令帮助
 
 ```
 ant [options] [target [target2 [target3] ...]]
@@ -164,7 +164,7 @@ ant [options] [target [target2 [target3] ...]]
                          filesystem and use it
 ```
 
-####3.3.2 创建布尔选项
+#### 3.3.2 创建布尔选项
 
 为了代码清晰，在这里我们使用`Option`的构造方法来创建。
 
@@ -179,7 +179,7 @@ Option emacs = new Option( "emacs",
                            "produce logging information without adornments" );
 ```
 
-####3.3.3 创建带参数的选项
+#### 3.3.3 创建带参数的选项
 
 我们使用`OptionBuilder`来创建：
 
@@ -213,7 +213,7 @@ Option find      = OptionBuilder.withArgName( "file" )
                                 .create( "find" );
 ```
 
-####3.3.4 创建java属性选项
+#### 3.3.4 创建java属性选项
 
 ```
 Option property  = OptionBuilder.withArgName( "property=value" )
@@ -223,7 +223,7 @@ Option property  = OptionBuilder.withArgName( "property=value" )
                                 .create( "D" );
 ```
 
-####3.3.5 创建Options
+#### 3.3.5 创建Options
 
 上面已经创建了每个选项，下面我们需要创建`Options`，然后继续使用`addOption`方法，向其中添加每个选项，代码如下：
 
@@ -247,7 +247,7 @@ options.addOption( property );
 
 **说明：可以通过`Option`的`setRequired`方法来设置，选项是否为必输项，默认不是必输项。 **             
 
-####3.3.6 解析命令行参数
+#### 3.3.6 解析命令行参数
 
 我们需要创建一个`CommandLineParser`，并用它根据之前设置的`Options`来解析命令行参数，代码如下：
 
@@ -266,7 +266,7 @@ public static void main( String[] args ) {
 }
 ```
 
-####3.3.7 获取命令行参数
+#### 3.3.7 获取命令行参数
 
 使用`hasOption`方法来检查命令行是否传入选项，使用`getOptionValue`来获取传入的参数值。
 
@@ -280,7 +280,7 @@ if( line.hasOption( "buildfile" ) ) {
 }
 ``` 
 
-####3.3.8 设置程序用例/帮助信息
+#### 3.3.8 设置程序用例/帮助信息
 
 CLI库还可以根据`Options`来自动显示程序的用例/帮助信息。代码如下：
 
@@ -310,7 +310,7 @@ usage: ant
 ```
 
 
-###3.4 再来一个`ls`实例
+### 3.4 再来一个`ls`实例
 
 下面是帮助信息：
 

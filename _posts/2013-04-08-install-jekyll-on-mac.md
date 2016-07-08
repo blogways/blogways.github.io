@@ -5,11 +5,11 @@ title: MAC OS X 10.8 下安装jekyll
 tags: ['jekyll', '部署', 'MAC OSX']
 author: 唐 治
 email: tangzhi@asiainfo-linkage.com
-#image:
+# image:
 description: 本想在本机Macbook pro上装个jekyll,可是本机xcode自动安装了ruby 1.8.7版，导致无法通过当前版本的gem安装jekyll。使用 gem update --system 命令对gem进行升级，可是貌似没有升级成功。所以，我先装了个brew，通过brew安装了最新的ruby，最后通过新版gem成功安装了jekyll.
 ---
 
-###一、概述
+### 一、概述
 [jekyll] 是一款简单的博客系统，静态网站生成器。她有一个模版目录，存放整个静态网站的模版文件，可以通过[Liquid]处理模版文件，把使用标记语言[Textile]或[Markdown]编写的内容文件，按照模版格式，转换成最终的静态网站页面。大名鼎鼎的GitHub Pages就是通过她实现的。
 
 本想在本机Macbook pro上装个jekyll,可是本机xcode自动安装了ruby 1.8.7版，导致无法通过当前版本的gem安装jekyll。使用 `gem update --system` 命令对gem进行升级，可是貌似没有升级成功。
@@ -21,7 +21,7 @@ description: 本想在本机Macbook pro上装个jekyll,可是本机xcode自动�
 [Textile]: http://en.wikipedia.org/wiki/Textile
 [Markdown]: http://en.wikipedia.org/wiki/Markdown
 
-###二、安装Homebrew
+### 二、安装Homebrew
 
 [Homebrew]落户于gitHub上，安装是否简单，如下：
 
@@ -34,7 +34,7 @@ description: 本想在本机Macbook pro上装个jekyll,可是本机xcode自动�
 [这里]: https://github.com/mxcl/homebrew/wiki/Installation
 
 
-###三、安装最新版ruby
+### 三、安装最新版ruby
 
 Homebrew安装完成之后，通过她安装最新版ruby.命令如下：
 
@@ -54,7 +54,7 @@ Homebrew安装完成之后，通过她安装最新版ruby.命令如下：
 
 如果，版本不对，就使用`which ruby`看看，当前生效的ruby是否在`/usr/local/opt/ruby/bin`下，不对，就修改环境变量PATH,如上。
 
-###四、安装jekyll
+### 四、安装jekyll
 
 有了最新版的ruby,安装jekyll就简单了。
 
@@ -79,7 +79,7 @@ Homebrew安装完成之后，通过她安装最新版ruby.命令如下：
     gem install github-pages
    
 
-###五、运行例子——jekyll作者提供的例子tpw
+### 五、运行例子——jekyll作者提供的例子tpw
 
 
 1. 获取源码，并运行jekyll，命令如下:

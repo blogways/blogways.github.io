@@ -9,19 +9,19 @@ description: 在ibm aix上编译安装cppunit全过程
 
 ---
 
-###一、下载
+### 一、下载
 
 从官网下载cppunit，笔者当前使用版本为1.12.1。
 
 下载地址为：[http://downloads.sourceforge.net/project/cppunit/cppunit/1.12.1/cppunit-1.12.1.tar.gz](http://downloads.sourceforge.net/project/cppunit/cppunit/1.12.1/cppunit-1.12.1.tar.gz)
 
 
-###二、解压
+### 二、解压
 
     gzip -d cppunit-1.12.1.tar.gz
     tar -xvf cppunit-1.12.1.tar
     
-###三、编译
+### 三、编译
 
 
     #进入解压后的源码目录

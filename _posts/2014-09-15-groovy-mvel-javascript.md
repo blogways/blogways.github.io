@@ -5,24 +5,24 @@ title: java 动态脚本之groovy、mvel and javascript
 tags: ['java动态脚本', 'groovy', 'mvel', 'javascript']
 author: 汤仕忠
 email: tangsz@asiainfo.com
-#image:
+# image:
 description: 从javaSE6开始，JSR 223中规范了在Java虚拟机上运行的脚本语言与Java程序之间的交互方式，目前Java虚拟机支持比较多的脚本语言，比较流行的有JavaScript、Scala、JRuby、Jython和Groovy等，另外基于java开源的动态表达式语言也很多，如：MVEL、ognl、JUEL，还有国人开发的Aviator、JSEL，本章对最近研究的groovy、mvel以及java中动态调用各动态脚本性能比较。
 
 ---
 
-##一、groovy
+## 一、groovy
 
-###. groovy介绍
+### . groovy介绍
 Groovy 是 用于Java虚拟机的一种敏捷的动态语言，它是一种成熟的面向对象编程语言，既可以用于面向对象编程，又可以用作纯粹的脚本语言。使用该种语言不必编写过多的代码，同时又具有闭包和动态语言中的其他特性。
 
 Groovy是JVM的一个替代语言（替代是指可以用 Groovy 在Java平台上进行 Java 编程），使用方式基本与使用 Java代码的方式相同，该语言特别适合与Spring的动态语言支持一起使用，设计时充分考虑了Java集成，这使 Groovy 与 Java 代码的互操作很容易。（注意：不是指Groovy替代java，而是指Groovy和java很好的结合编程。
 
-###. groovy语法
+### . groovy语法
 
 groovy语法和java语法类似，具体请参阅[http://beta.groovy-lang.org/docs/groovy-2.3.1/html/documentation/](http://beta.groovy-lang.org/docs/groovy-2.3.1/html/documentation/ "官方文档")，这里不做介绍。
 
 
-###. java中使用groovy
+### . java中使用groovy
 
 Java中调用Groovy情况：
 
@@ -143,18 +143,18 @@ GroovyShell支持简单脚本及Groovy文件的解析执行， GroovyShell支持
 注：虽然JSR 223调用方式性能大大提升，但是其性能与java相比还相差很多，以上简单的乘法运算，用java实现，100000次循环仅仅需5毫秒，所以对于实时性要求很高的功能，Groovy并不合适。
 
 
-##二、MVEL
+## 二、MVEL
 
-###. MVEL介绍
+### . MVEL介绍
 
 MVEL为 MVFLEX Expression Language（MVFLEX表达式语言）的缩写，它是一种动态/静态的可嵌入的表达式语言和为Java平台提供Runtime（运行时）的语言。最初是作为一个应用程序框架实用程序的语言开始，该项目现已发展完全独立。MVEL通常用于执行用户（程序员）通过配置XML文件或注释等定义的基本逻辑。它也可以用来解析简单的JavaBean表达式。Runtime（运行时）允许MVEL表达式通过解释执行或者预编译生成字节码后执行。
 
 
-###. MVEL语法
+### . MVEL语法
 
 MVEL语法具体请参阅 [http://mvel.codehaus.org/Language+Guide+for+2.0](http://mvel.codehaus.org/Language+Guide+for+2.0 "MVEL")，这里不做介绍。
 
-###. java中使用MVEL
+### . java中使用MVEL
 
 Java中调用MVEL情况：
 
@@ -201,7 +201,7 @@ Java中调用MVEL情况：
 以上执行结果看出，编译后执行效率明显高于解释执行。
 
 
-##三、Groovy、MVEL、javascript 调用性能分析
+## 三、Groovy、MVEL、javascript 调用性能分析
 
 1、java中调用javascript测试：
 
@@ -246,6 +246,6 @@ Java中调用MVEL情况：
 MVEL官网给出性能报告显示MVEL性能高于Groovy，不知道其什么数据测试场景，看官网报告测试的Groovy版本是1.5.7，低于本文测试的Groovy2.0版，从Groovy1.6开始才开始引入Cache功能，并且到了2.0才加入静态编译，所以MVEL官网的测试报告我觉得已经不能够正确说明Groovy的实际性能，至少从本文例子中看出Groovy2.0性能是明显优于MVEL2.2的。
 
 
-##四、总结
+## 四、总结
 
 动态语言给我们实际编程中带来很多方便，比如常用的规则引擎，然而性能与功能不能同时得到满足，从本文测试中看出无论是Groovy还是MVEL都是实现动态逻辑配置的不错选择，但是遇到高实时性需求时，可能两者就不是特别适合，因为两者的性能与Java本身相比还是有数倍的差距。

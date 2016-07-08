@@ -9,12 +9,12 @@ image:
 description: jBPM是目前市场上主流开源工作引擎之一，在创建者Tom Baeyens离开JBoss后，jBPM的下一个版本jBPM5完全放弃了jBPM4的基础代码，基于Drools Flow重头来过，目前官网已经推出了jBPM6的beta版本；Tom Baeyens加入Alfresco后很快推出了新的基于jBPM4的开源工作流系统Activiti。由此可以推测JBoss内部对jBPM未来版本的架构实现产生了严重的意见分歧。本文试着对二者做一些比较。
 ---
 
-##jBPM5 vs Actitivi
+## jBPM5 vs Actitivi
 jBPM是目前市场上主流开源工作引擎之一，在创建者Tom Baeyens离开JBoss后，jBPM的下一个版本jBPM5完全放弃了jBPM4的基础代码，基于Drools Flow重头来过，目前官网已经推出了jBPM6的beta版本；Tom Baeyens加入Alfresco后很快推出了新的基于jBPM4的开源工作流系统Activiti。由此可以推测JBoss内部对jBPM未来版本的架构实现产生了严重的意见分歧。本文试着对二者做一些比较。
 
 在比较之前先看下两者的安装部署过程：
 
-###jBPM5安装及开发环境配置
+### jBPM5安装及开发环境配置
 
 1、安装JBPM之前，要求本机已安装了`JDk1.5+`版本和`ANT1.7+`版本。
 
@@ -51,7 +51,7 @@ Drools Guvnor的访问地址为：http://localhost:8080/drools-guvnor。
 
 6、把eclipse目录下的features和plugins中的内容copy到eclipse的相应目录中。启动Eclipse之后，现在可以使用eclipse导入jbpm自带的一个流程。方法为依次点击File -> Import ，在General category下选择“Existing Projects into Workspace”，找到位于jbpm安装根目录/sample/evaluation文件夹，将该项目导入。
 
-###Activiti安装及开发环境配置
+### Activiti安装及开发环境配置
 1、 到`http://www.activiti.org/download.html`下载activiti-5.13.zip，解压到安装目录，页面上有个`The User Guide`，这个教程比较详细，如需要可深入学习下。
 
 2、 打开解压目录，\wars下面有两个war包，把`activiti-explorer.war`部署到应用服务器中，里面默认的数据源是h2的内存数据库，如需要改成自己的数据库；
@@ -66,8 +66,8 @@ Drools Guvnor的访问地址为：http://localhost:8080/drools-guvnor。
 
 流程开发跟部署就不在这边说了，都是界面化的开发工具，两个都可以保存成同样的格式，也可以用同一个插件来开发。
 
-###jBPM5与Activiti5比较
-####主要相似之处：
+### jBPM5与Activiti5比较
+#### 主要相似之处：
 
 	都是BPMN2过程建模和执行环境。
 	都是BPM系统（符合BPM规范）。
@@ -77,7 +77,7 @@ Drools Guvnor的访问地址为：http://localhost:8080/drools-guvnor。
 	都有对人工任务的生命周期管理。 Activiti5和jBPM5唯一的区别是jBPM5基于WebService - HumanTask标准来描述人工任务和管理生命周期。 如有兴趣了解这方面的标准及其优点，可参阅WS - HT规范介绍  。
 	都使用了不同风格的 Oryx 流程编辑器对BPMN2建模。 jBPM5采用的是 Intalio 维护的开源项目分支。 Activiti5则使用了Signavio维护的分支。
 
-####Activiti5与jBPM5技术组成对比
+#### Activiti5与jBPM5技术组成对比
 <table>
 <tbody>
 <tr><td><em>序号</em></td><td><em>技术组成</em></td><td><em>Activiti</em></td><td><em>jBPM5</em></td></tr>
@@ -100,13 +100,13 @@ Activiti5使用Spring进行引擎配置以及各个Bean的管理，综合使用I
 
 需要指出的是Activiti5是在jBPM3、jBPM4的基础上发展而来的，是原jBPM的延续，而jBPM5则与之前的jBPM3、jBPM4没有太大关联，且舍弃了备受推崇的PVM（流程虚拟机）思想，转而选择jBoss自身产品Drools Flow作为流程引擎的核心实现，工作流最为重要的“人机交互”任务（类似于审批活动）则由单独的一块“Human Task Service”附加到Drools Flow上实现，任务的查询、处理等行为通过Apache Mina异步通信机制完成。
 
-####优劣对比：
+#### 优劣对比：
 
 从技术组成来看，Activiti最大的优势是采用了PVM（流程虚拟机），支持除了BPMN2.0规范之外的流程格式，与外部服务有良好的集成能力，延续了jBPM3、jBPM4良好的社区支持，服务接口清晰，链式API更为优雅；劣势是持久化层没有遵循JPA规范。
 
 jBPM最大的优势是采用了Apache Mina异步通信技术，采用JPA/JTA持久化方面的标准，以功能齐全的Guvnor作为流程仓库，有RedHat(jBoss.org被红帽收购)的专业化支持；但其劣势也很明显，对自身技术依赖过紧且目前仅支持BPMN2。
 
-###总结
+### 总结
 虽然是比较，但不一定要有胜负，只有适合自己的才是最好的，要针对具体的项目区别对待。对我们自己的项目，其实我更关注的是流程引擎的执行效率以及性能，每小时几十万甚至上百万的流程需要执行，需要多少个服务，集群、负载的策略是什么，会不会有冲突？目前这方面的资料还是比较少的，很多问题只有实际遇用到的时候才会去想办法解决。不过就我个人的感觉而言，Activiti上手比较快，界面也比较简洁、直观，值得一试，不过jBPM6的beta版也已经出来了，不知道会有什么变化，有兴趣的也可以试下。
 
 参考|推荐文章：

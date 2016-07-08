@@ -9,7 +9,7 @@ description: 介绍Apache Commons 系列中的 Lang 库
 ---
 
 
-###一、概述###
+### 一、概述###
 `Apache Commons Lang`库提供了标准Java库函数里所没有提供的Java核心类的操作方法。`Apache Commons Lang`为java.lang API提供了大量的辅助工具，尤其是在String操作方法，基础数值方法，对象引用，并发行，创建及序列化，系统属性方面。
 
 Lang3.0及其后续版本使用的包名为`org.apache.commons.lang3`，而之前的版本为`org.apache.commons.lang`，允许其在被使用的同时作为一个较早的版本。
@@ -28,7 +28,7 @@ Lang3.0及其后续版本使用的包名为`org.apache.commons.lang3`，而之�
 >+  org.apache.commons.lang3.time
 >+  org.apache.commons.lang3.tuple
 
-###二、下载###
+### 二、下载###
 官方下载页:
 
 	http://http://commons.apache.org/proper/commons-lang/download_lang.cgi
@@ -44,8 +44,8 @@ Maven工程依赖：
   		<version>3.3</version>
 	</dependency>
 
-###三、使用说明###
-####3.1 org.apache.commons.lang3####
+### 三、使用说明###
+#### 3.1 org.apache.commons.lang3####
 此包提供了高度可重用静态的工具方法，主要是对`java.lang`类的一些补充。
 
 由于此包中方法绝大多数都为静态的，因此__不需要创建实例化相应的对象__，而是通过类名__直接调用__需要的方法。
@@ -113,7 +113,7 @@ __[StringUtils实例][]__！
 - __[其他类][OtherClass]__。
 [OtherClass]: http://commons.apache.org/proper/commons-lang/javadocs/api-release/index.html "Org.apache.commons.lang3类列表"
 
-####3.2 org.apache.commons.lang3.builder####
+#### 3.2 org.apache.commons.lang3.builder####
 辅助实现`equals(Object)`，`toString()`，`hashCode()`, 和 `compareTo(Object)`方法，
 在这个包里面一共有7个类：
 
@@ -150,7 +150,7 @@ __[StringUtils实例][]__！
 详细例子__[请参考][]__！
 [请参考]: http://www.blogjava.net/sean/archive/2005/07/30/8781.html "org.apache.commons.lang.builder"	
 
-####3.3 org.apache.commons.lang3.time####
+#### 3.3 org.apache.commons.lang3.time####
 用于提供操作时间（Date）和日期（Duration）的方法和类，在这个包里面一共有7个类：
 
 * `DateFormatUtils` ： 提供格式化日期和时间的功能及相关常量，

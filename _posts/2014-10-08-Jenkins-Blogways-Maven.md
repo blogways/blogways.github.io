@@ -5,11 +5,11 @@ title: 使用Jenkins搭建博客和Java源码管理的集成环境
 tags: ['Jenkins', 'git', 'maven', 'junit', '集成环境']
 author: 万洲
 email: wanzhou@asiainfo.com
-#image:
+# image:
 description: Jenkins能够集成git，在jekyll环境下，实现博客集成系统，完成提交最新代码，自动生成新的博客；同时Jenkins也能够集成git、maven和junit等，实现java源码的编译、测试、发布等功能的集成开发环境。
 ---
 
-##一、 概述
+## 一、 概述
 
 在搭建博客系统的集成环境时，需要用到的有Jenkins、git和jekyll运行环境，本博客有相关的安装教程：
 
@@ -28,7 +28,7 @@ description: Jenkins能够集成git，在jekyll环境下，实现博客集成系
 	
 上面是关于博客系统的运行环境搭建，由于我是在服务器上搭建集成环境，本身并没有ruby环境，需要自己去安装，因而说一下ruby和gem的安装。
 
-##二、 ruby、gem安装
+## 二、 ruby、gem安装
 
 因为jekyll是的ruby语言编写的，需要ruby运行环境！
 
@@ -65,7 +65,7 @@ description: Jenkins能够集成git，在jekyll环境下，实现博客集成系
 到此，ruby和gem安装完成了，后面需要安装jekyll时，只要运行命令`gem install jekyll`即可。
 
 
-##三、 博客集成系统核心实现
+## 三、 博客集成系统核心实现
 
 1、jenkins任务创建，详情可以参考前面给出的网站。
 
@@ -126,7 +126,7 @@ description: Jenkins能够集成git，在jekyll环境下，实现博客集成系
 
 3、最后，监听上条语句，即`jekyll serve --detach`执行成功与否，若执行成功，则说明此处生成并发布新博客成功，以`exit 0`正常退出，告诉jenkins此次构建成功；否则说明生成或发布失败，以`exit 1`异常退出，告诉jenkins此次构建失败。
 
-##四、 Java源码编译测试集成系统
+## 四、 Java源码编译测试集成系统
 
 java源码的编译、测试及发布等，都是通过maven来实现的，因此需要maven环境，关于maven的使用可以参考：
 

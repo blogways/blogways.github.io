@@ -9,9 +9,9 @@ image:
 description: Sencha Touch（下称ST） 框架第一个应用体验。
 ---
 
-##Sencha Touch 体验
+## Sencha Touch 体验
 
-###下载&&安装
+### 下载&&安装
 Sencha Touch 2 SDK ：
 http://www.sencha.com/products/touch/
 
@@ -22,7 +22,7 @@ http://www.sencha.com/products/sdk-tools/download
 
 安装好 SDK Tool，在命令窗口输入 sencha 可以查询到 st cmd 相关信息。
 
-###创建第一个 Sencha Touch 应用
+### 创建第一个 Sencha Touch 应用
 
 命令行格式：
 
@@ -98,7 +98,7 @@ http://www.sencha.com/products/sdk-tools/download
 
 ![第一个 Sencha Touch 应用](/images/st-1.png)
 
-###项目结构分析
+### 项目结构分析
 将生成的项目使用 IDE 打开
 
 ![Sencha Touch 项目结构](/images/st-2.png)
@@ -111,7 +111,7 @@ packager.json - 打包原生程序的配置文件
 resources - 目录，项目资源文件
 touch - Sencha Touch SDK的副本
 
-###编译打包
+### 编译打包
 这个时候的项目虽然都能正常运行，但项目明显太大了，因为整个 ST sdk 的东西都包含在里面，而且目录也很多，通过打包将代码都打到一个文件夹里面，去除不必要的项目文件，形成最简洁的项目文件。
 
 命令

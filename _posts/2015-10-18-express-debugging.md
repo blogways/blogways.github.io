@@ -9,7 +9,7 @@ description: express3.x中文翻译
 ---
 原文：<http://expressjs.com/guide/debugging.html>
 
-#调试 Express
+# 调试 Express
 	
 Express 内部使用 debug 模块记录路由匹配、使用到的中间件、应用模式以及请求-响应循环。
 	
@@ -83,7 +83,7 @@ Express 内部使用 debug 模块记录路由匹配、使用到的中间件、�
 	  express:view render "/projects/example/views/index.jade" +1ms
 设置 DEBUG 的值为 express:router，只查看路由部分的日志；设置 DEBUG 的值为 express:application，只查看应用部分的日志，依此类推。
 
-#通过 express 生成应用
+# 通过 express 生成应用
 通过 express 命令行生成的应用也使用了 debug 模块，它的命名空间限制在应用中。
 
 如果您通过下述命令生成应用：

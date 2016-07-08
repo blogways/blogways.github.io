@@ -26,7 +26,7 @@ description: JUnit4 结合 Hamcrest 提供了一个全新的断言语法 —— 
 
 [JUnit4 使用进阶一]: junit-usage-1.html
 
-###<a name="1"></a>一、不得不说的`assertThat`方法
+### <a name="1"></a>一、不得不说的`assertThat`方法
 
 JUnit4 结合 Hamcrest 提供了一个全新的断言语法——`assertThat`。程序员可以只使用 `assertThat` 一个断言语句，结合 Hamcrest 提供的匹配符，就可以表达全部的测试思想。
 
@@ -129,7 +129,7 @@ JUnit4 结合 Hamcrest 提供了一个全新的断言语法——`assertThat`。
 
 
 
-###<a name="1"></a>一、还有个`assumeThat`方法
+### <a name="1"></a>一、还有个`assumeThat`方法
 
 
 理想情况下，写测试用例的开发人员可以明确的知道所有导致他们所写的测试用例不通过的地方，但是有的时候，这些导致测试用例不通过的地方并不是很容易的被发现，可能隐藏得很深，从而导致开发人员在写测试用例时很难预测到这些因素，而且往往这些因素并不是开发人员当初设计测试用例时真正目的，他们的测试点是希望测试出被测代码中别的出错地方。

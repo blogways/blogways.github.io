@@ -5,15 +5,15 @@ title: Jenkins+git+maven+junit 二
 tags: ['Jenkins', 'git', 'maven', 'tomcat']
 author: 汤仕忠
 email: tangsz@asiainfo-linkage.com
-#image: 
+# image: 
 description: Jenkins 能够集成git、maven、tomcat对web项目实现定时更新代码并部署web工程
 ---
 
-###一、概述
+### 一、概述
 对于可持续集成描述及Jenkins介绍及安装在前面文档中有所介绍，本文就不做说明，本文只介绍如何实现Jenkins如何自动取git上web工程代码，maven实现编译及打包，最后Jenkins负责将war包发布到tomcat中
 
 
-###二、Jenkins配置及使用
+### 二、Jenkins配置及使用
 
 
 tomcat中tomcat-users.xml文件添加如下：

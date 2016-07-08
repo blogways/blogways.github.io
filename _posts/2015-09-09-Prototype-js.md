@@ -8,7 +8,7 @@ description: prototype.js主要给js原生的类扩展了很多实用的方法�
 
 ---
 
-##一、整体架构学习
+## 一、整体架构学习
 总的来说prototype.js主要给js原生的类扩展了各的方法，通过两种方式扩展，主要用到下面这个函数扩展。
 
 	Object.extend = function(destination, source) {

@@ -18,7 +18,7 @@ description: 使用webpack对原有web工程进行改造，遇到各种问题，
 
 下面，我们分情况讨论解决。
 
-##一、和jQuery相关的那些事儿
+## 一、和jQuery相关的那些事儿
 
 `jQuery`本身并没有问题，自身代码里兼容了`exports`和`define`方法。
 
@@ -36,7 +36,7 @@ if (typeof jQuery === 'undefined') {
 
 解决方法有三个：
 
-###1. 方法一：采用`import-loader`
+### 1. 方法一：采用`import-loader`
 
 **1.1 解决方法**
 
@@ -73,7 +73,7 @@ var jQuery = require("jquery");
 require("imports?$=jquery,jQuery=jquery,angular,config=>{size:50}!./file.js");
 ```
 
-###2. 方法二：采用`expose-loader`
+### 2. 方法二：采用`expose-loader`
 
 `expose-loader`的思路是将某个对象暴露成一个全局变量。
 
@@ -89,7 +89,7 @@ module: {
 }
 ```
 
-###3. 方法三：使用`webpack.ProvidePlugin`
+### 3. 方法三：使用`webpack.ProvidePlugin`
 
 具体做法，修改`webpack.config.js`文件：
 
@@ -103,11 +103,11 @@ plugins: [
 ]
 ```
 
-###4. 小节
+### 4. 小节
 
 从上面的介绍可以看出，三种解决方法的思路分两类：方法一，是修改调用者；方法二、三是修改提供者。
 
-##二、自定义的js文件
+## 二、自定义的js文件
 
 这里问题，属于模块提供方没有调用`export`导出模块，或者没有`define`定义模块。
 
@@ -132,7 +132,7 @@ exports["file"] = (file);
 exports["parse"] = (helpers.parse);
 ```
 
-##三、稍微复杂一点的情况
+## 三、稍微复杂一点的情况
 
 自定义的多个js模块直接存在相互调用的情况。
 
@@ -173,7 +173,7 @@ require([
 这里，会把`./a.js`直接作为脚本执行一次。在`node.js`环境下，`script-loader`什么都不做。
 
 
-##四、其他
+## 四、其他
 
 1. `file-loader` : 修改文件名，放在输出目录下，并返其对应的 url .
 	
@@ -270,7 +270,7 @@ require([
 	上例，是对后缀为`.min.js`或者`-min.js`结尾的文件，做`source-map`操作。不过，你要确保`min.js`文件中按规范指定了`//# sourceMappingURL=xxxx.map`才行！
 	
 	
-##五、总结
+## 五、总结
 
 我们讨论了常用的`loader`，包括：`imports-loader`、`exports-loader`、`expose-loader`、`script-loader`、`file-loader`、`url-loader`、`css-loader`、`style-loader`、`raw-loader`、`html-loader`、`source-map-loader`。
 

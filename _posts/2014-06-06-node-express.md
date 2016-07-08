@@ -10,13 +10,13 @@ description: Express 是一个简洁而灵活的 node.js Web应用框架, 提供
 
 
 ---
-##一、Express安装
+## 一、Express安装
 Express是一个node.js模块，采用npm全局模块。
 
 npm install -g express
 
 
-###二、新建项目
+### 二、新建项目
 
 创建一个项目express testExpress,会自动生成目录。
 
@@ -40,7 +40,7 @@ npm install -g express
 如果打开页面出错，可能你没有安装jade模块，那就输入npm install jade进行安装，在我们
 日志分析系统中没有用jade模板，用的ejs模板。
 
-###三、express项目目录文件介绍
+### 三、express项目目录文件介绍
 
 Express目录介绍：
 
@@ -66,7 +66,7 @@ Express目录介绍：
 
 
 
-###四、运行原理
+### 四、运行原理
 
 4.1　底层：http模块
 
@@ -188,7 +188,7 @@ use是express调用中间件的方法，它返回一个函数。下面是一个�
 
 
 
-###五、Express的方法
+### 五、Express的方法
 
 5.1　all方法和HTTP动词方法
 
@@ -290,7 +290,7 @@ request.files用于获取上传的文件。
 
 
 
-###六、日志系统部分配置
+### 六、日志系统部分配置
 
 	// should be placed before express.static
     app.use(express.compress({

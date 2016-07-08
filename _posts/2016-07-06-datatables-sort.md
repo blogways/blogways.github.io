@@ -35,7 +35,7 @@ description: dataTables 自带了string，date，numeric 的排序，但当遇�
 
 这里我主要使用第一种和第三种
 
-###（一）Type based column sorting 
+### （一）Type based column sorting 
 
 **主要思路**：主要思路就是将单元格内容转成可排序的 int 类型
 
@@ -53,7 +53,7 @@ description: dataTables 自带了string，date，numeric 的排序，但当遇�
 	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
 	    },
 
-	    "html-percent-desc": function (a, b) {                //倒序排序引用方法
+	    "MM-SS-desc": function (a, b) {                //倒序排序引用方法
 	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 	    }
 	});
@@ -66,7 +66,7 @@ description: dataTables 自带了string，date，numeric 的排序，但当遇�
 
 	"aoColumnDefs": [{ "sType": "html-percent", "aTargets": [8] }]
 
-###(二)在服务端添加排序
+### (二)在服务端添加排序
 
 因为表里数据为Number格式，存的是秒，可以直接进行排序
 

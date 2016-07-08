@@ -9,7 +9,7 @@ description: express3.x中文翻译
 ---
 原文：<http://expressjs.com/guide/error-handling.html>
 
-##错误处理
+## 错误处理
 
 定义错误处理中间件和定义其他中间件一样，除了需要 4 个参数，而不是 3 个，其格式如下 (err, req, res, next)。例如：
 	
@@ -82,7 +82,7 @@ errorHandler 能捕获所有错误，其定义如下：
 	
 >next() 和 next(err) 类似于 Promise.resolve() 和 Promise.reject()。它们让您可以向 Express 发信号，告诉它当前句柄执行结束并且处于什么状态。next(err) 会跳过后续句柄，除了那些用来处理错误的句柄。
 
-##缺省错误处理句柄
+## 缺省错误处理句柄
 
 Express 内置了一个错误处理句柄，它可以捕获应用中可能出现的任意错误。这个缺省的错误处理中间件将被添加到中间件堆栈的底部。
 

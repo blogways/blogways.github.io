@@ -10,7 +10,7 @@ description: Jekyll是一款简单的博客系统，也可以说是一个静态�
 ---
 
 
-##jekyll 教程入门
+## jekyll 教程入门
 
 <div class="code fl">
     <dl>
@@ -37,7 +37,7 @@ description: Jekyll是一款简单的博客系统，也可以说是一个静态�
 [Markdown]: http://en.wikipedia.org/wiki/Markdown
 
 
-###<a name="1"></a>一、安装jekyll
+### <a name="1"></a>一、安装jekyll
 
 ---
 
@@ -67,7 +67,7 @@ description: Jekyll是一款简单的博客系统，也可以说是一个静态�
 
 [RubyGems]: http://rubygems.org/
 
-###<a name="2"></a>二、搭建博客网站框架
+### <a name="2"></a>二、搭建博客网站框架
 
 jekyll 的内核实际上就是一个格式文本转换引擎，她允许你使用标记语言Markdown或者Textile再或者原始的html语言，编写内容。她通过模版文件，将这些内容转换成最终的静态网页。
 
@@ -132,7 +132,7 @@ jekyll 的内核实际上就是一个格式文本转换引擎，她允许你使�
 	
 [默认值]: https://github.com/mojombo/jekyll/wiki/Configuration
 
-###<a name="3"></a>三、编写博文
+### <a name="3"></a>三、编写博文
 
 从上一小节的内容，我们知道`_posts`目录下面存放的是我们的博文，这些博文必须满足一定的规则。这里，我将告诉大家相关的规则。
 
@@ -174,7 +174,7 @@ jekyll 的内核实际上就是一个格式文本转换引擎，她允许你使�
 1. 到此，基本内容已经讲完了。
 
 
-###<a name="4"></a>四、运行jekyll生成网站
+### <a name="4"></a>四、运行jekyll生成网站
 
 在网站根目录下，运行`jekyll`命令，就可以生成最终的静态网站内容目录`_site`。如果，你还想通过浏览器访问，可以运行下面命令。
 
@@ -187,7 +187,7 @@ jekyll 的内核实际上就是一个格式文本转换引擎，她允许你使�
 	jekyll --base-url '/blog' --server
 
 
-###<a name="5"></a>五、一些Jekyll网站例子及源码
+### <a name="5"></a>五、一些Jekyll网站例子及源码
 
 下面给一些建在GitHub上面的jekyll博客，及其源码。
 

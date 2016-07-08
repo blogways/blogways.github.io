@@ -10,7 +10,7 @@ description: 介绍Apache Commons 系列中的 BeanUtils 库
 ---
 
 
-###一、概述
+### 一、概述
 
 大部分Java开发人员都会安装JavaBeans的命名规范为属性创建getter和setter方法，我们可以直接通过getXxx和setXxx方法直接进行调用。但是，也有一些场合我们必须动态访问java对象的属性，比如：
 
@@ -23,7 +23,7 @@ Java语言提供了反射(`Reflection`)和内省(`Introspection`[^1])API（见`j
 
 [^1]: Java程序可以在运行是加载Class，获取其构造方法的定义，并生成其对象实体、或对其fields设值、或唤起其methods。这种“透视Class”的能力（`the ability of the program to examine itself`），被称为`Introspection`
 
-###二、下载及源码
+### 二、下载及源码
 
 下载地址：
 
@@ -47,7 +47,7 @@ Maven依赖：
 </dependency>
 ```
 
-###三、使用说明
+### 三、使用说明
 
 自从`1.7.0`版开始，BeanUtils发布三个jar包，供应用调用：
 
@@ -65,7 +65,7 @@ Maven依赖：
  * `org.apache.commons.beanutils.BeanPropertyValueEqualsPredicate`
  * `org.apache.commons.beanutils.BeanToPropertyValueTransformer`
  
-####3.1 标准JavaBeans
+#### 3.1 标准JavaBeans
 
 在介绍之前，我们先给一个对象的定义，后面的实例将结合这个对象给出。
 
@@ -82,7 +82,7 @@ public class Employee {
 }
 ```
 
-####3.1.1 基本属性读写
+#### 3.1.1 基本属性读写
 
 首先，我们介绍`PropertyUtils`类，其作用：
 
@@ -199,7 +199,7 @@ public class Employee {
         PropertyUtils.setMappedProperty(employee, "address", "home", address);
         ```
 
-####3.1.2 嵌套属性读写
+#### 3.1.2 嵌套属性读写
 
 结合上面的例子，如果我们要访问雇员家庭地址中的城市信息，按常规编程方式，代码如下：
 
@@ -235,7 +235,7 @@ String city = (String) PropertyUtils.getProperty(employee,
        "subordinate[3].address(home).city");
 ```
 
-####3.2 动态 Beans
+#### 3.2 动态 Beans
 
 上面介绍的`PropertyUtils`类，可以轻松地对已经存在的JavaBean的属性进行访问。但是，有些场合，你需要通过动态计算出来的属性集，来确定一个JavaBean，而不必实际编写某个确定的JavaBean。
 
@@ -252,7 +252,7 @@ Object subordinate = employee.get("subordinate", 2);
 
 由于`DynaBean`和`DynaClass`仅仅是接口，所以可以有不同的实现。可以根据不同的场景，开发不同的实现。下面我们来介绍几个`BeanUtils`内置的实现，你也可以根据你的具体需求，来定制自己的实现。
 
-####3.2.1 `BasicDynaBean`和`BasicDynaClass`
+#### 3.2.1 `BasicDynaBean`和`BasicDynaClass`
 
 我们结合前面的`Employee`例子，来介绍`BasicDynaBean`和`BasicDynaClass`的使用步骤及实例代码如下：
 
@@ -286,7 +286,7 @@ Object subordinate = employee.get("subordinate", 2);
     
     这里，`dynaClass.newInstance()`的返回值的类型为`DynaBean`而不是上文中设置的`BasicDynaBean`,这是因为，一般情况下，程序是不关心具体实现，而只需要根据`BynaBean`的接口进行访问就行了。
     
-####3.2.2 `ResultSetDynaClass`（使用`DynaBeans`去包装`ResultSet`）
+#### 3.2.2 `ResultSetDynaClass`（使用`DynaBeans`去包装`ResultSet`）
 
 将一系列有关系的，但自身又不是JavaBean的数据集合，包装起来，是`DynaBean`API的一个最普遍的使用方式。这其中一个经典应用就是，使用`DynaBean`去包装，用`JDBC`执行一个`SELECT`语句返还的结果`java.sql.ResultSet`对象。
 
@@ -308,7 +308,7 @@ rs.close();
 stmt.close();
 ```
 
-####3.2.3 `RowSetDynaClass`(将离线的`ResultSet`包装成`DynaBeans`)
+#### 3.2.3 `RowSetDynaClass`(将离线的`ResultSet`包装成`DynaBeans`)
 
 尽管使用`ResultSetDynaClass`很方便，但是它要求查询的结果集在数据整个处理过程中一直保持`open`状态。然而，有时我们需要先将结果集关闭后，再去处理查询结果的内容。不过这种方式的缺点是，我们需要足够的内存存储查询结果，以及存储过程中所需的性能损耗。如果，你能接受这点，那就可以使用`RowSetDynaClass`.
 
@@ -328,7 +328,7 @@ List rows = rsdc.getRows();
 
 使用`RowSetDynaClass`有个额外的好处，由于`RowSetDynaClass`实现了`java.io.Serializable`，所以可以很容易的序列化和反序列化。这样，使用`RowSetDynaClass`就可以很容易地将SQL语句查询结果传输给远程的java端应用。
 
-####3.2.4 `WrapDynaBean`和`WrapDynaClass`
+#### 3.2.4 `WrapDynaBean`和`WrapDynaClass`
 
 如果，你习惯使用`DynaBeans`去通过`set`和`get`方法去对`DynaBeans`进行存取属性。而标准的JavaBean肯定不具备这样的方法。没关系，你可以使用`WrapDynaBean`让现有的标准JavaBean也可以变得这样更易访问。
 
@@ -340,7 +340,7 @@ DynaBean wrapper = new WrapDynaBean(bean);
 String firstName = wrapper.get("firstName");
 ```
 
-####3.2.5 `Lazy DynaBeans`
+#### 3.2.5 `Lazy DynaBeans`
 
 包含有下面几个类：
 
@@ -478,7 +478,7 @@ String firstName = wrapper.get("firstName");
     dynaClass.add("myMap", java.util.TreeMapp.class);    // add mapped property
     ```
 
-####3.3 数据类型转换
+#### 3.3 数据类型转换
 
 BeanUtils包提供了一系列API和设计模式来解决数据类型转换问题。
 
@@ -526,7 +526,7 @@ BeanUtils.setProperty(person, "birthday", bd);
 
 在上面的例子中，如果不定制转换器，那么生日的属性设置会报错。
 
-####3.4 集合
+#### 3.4 集合
 
 与`Apache Commons Collections`包配合，去实现一些对集合的操作。比如：
 

@@ -16,9 +16,9 @@ RequireJS，谁用谁知道。
 
 要想解决这个问题，有两个方案。
 
-##方案一：使用cajon替代requirejs
+## 方案一：使用cajon替代requirejs
 
-###1. 关于cajon的简介
+### 1. 关于cajon的简介
 
 [cajon](https://github.com/requirejs/cajon)和`RequireJS`是相同的[作者](https://github.com/jrburke).
 
@@ -27,7 +27,7 @@ cajon的工作原理：基于`RequireJS`，而重写了`requirejs.load`方法。
 cajon还支持自定义哪种规则的依赖文件，需要采用`XHR+eval`方式加载。
 
 
-###2. 具体解决方案
+### 2. 具体解决方案
 
 直接将原来`require.js`文件替换为`cajon.js`文件。
 
@@ -43,13 +43,13 @@ cajon还支持自定义哪种规则的依赖文件，需要采用`XHR+eval`方�
 
 Ok了，是不是很简单？！
 
-##方案二：设置content security policy参数
+## 方案二：设置content security policy参数
 
-###1. 关于content security policy的简介
+### 1. 关于content security policy的简介
 
 这个，可以看看我的另外一篇博文，原文见：www.blogways.net。
 
-###2. 具体解决方案
+### 2. 具体解决方案
 
 在`manifest.json`文件中添加如下代码：
 

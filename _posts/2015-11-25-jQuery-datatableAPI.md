@@ -8,9 +8,9 @@ email: fukui@asiainfo.com
 description: datatable中文API
 ---
 
-##一、Datatable中文API---实例及基本参数  
+## 一、Datatable中文API---实例及基本参数  
 
-###一、实例 
+### 一、实例 
  
 1. **前端JS：**  
  
@@ -87,7 +87,7 @@ description: datatable中文API
 		$("#example").dataTable().fnClearTable();
 		$("#example").dataTable().fnDestroy();
 
-###二、参数说明
+### 二、参数说明
 
 
 - **bAutoWidth:**  

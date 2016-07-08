@@ -24,7 +24,7 @@ description: JUnit4 使用进阶一，对JUnit4的下载安装、基本测试方
     </dl>
 </div>
 
-###<a name="1"></a>一、简介
+### <a name="1"></a>一、简介
 
 JUnit是一个Java语言的单元测试框架。它由Kent Beck和Erich Gamma建立，逐渐成为源于Kent Beck的sUnit的xUnit家族中为最成功的一个。来自JUnit的体验对测试驱动开发是很重要的，所以一些 JUnit知识经常 和测试驱动开发的讨论融合在一起。可以参考Kent Beck的 [《Test-Driven Development: By Example》][0]一书（有中文版和影印版）。
 
@@ -33,7 +33,7 @@ JUnit是一个Java语言的单元测试框架。它由Kent Beck和Erich Gamma建
 [0]: http://book.douban.com/subject/1771049/
 
 
-###<a name="2"></a>二、下载安装
+### <a name="2"></a>二、下载安装
 
 JUnit当前版本是4.11，如果，你的工程是使用Maven进行管理构建，那么只需要在工程的pom.xml文件中添加如下依赖信息：
 
@@ -46,7 +46,7 @@ JUnit当前版本是4.11，如果，你的工程是使用Maven进行管理构建
 	
 否则，在你的测试classpath中放置下面两个jar:`junit.jar`和`hamcrest-core.jar`，这两个jar可以在[这里](http://search.maven.org/)找到并下载。
 
-###<a name="3"></a>三、一个简单的模版
+### <a name="3"></a>三、一个简单的模版
 
 	package com.example.foo;
 
@@ -83,7 +83,7 @@ JUnit当前版本是4.11，如果，你的工程是使用Maven进行管理构建
 
 当然了，JUnit4还提供了很多特色功能，后面我们会一一介绍。
 
-###<a name="4"></a>四、运行测试
+### <a name="4"></a>四、运行测试
 	
 * 在命令行，对写好的测试类，进行测试很简单，只需要下面一个命令就ok了：	
 
@@ -94,7 +94,7 @@ JUnit当前版本是4.11，如果，你的工程是使用Maven进行管理构建
 测试类如何运行，是由`@RunWith`注释来决定。JUnit4当前版本的默认基本测试方式是`JUnit4.class`。除此之外，还有一些其他特殊的，我们将在[JUnit4 使用进阶四][3]中进行介绍。
 
 
-###<a name="5"></a>五、JUnit4的核心之一是断言
+### <a name="5"></a>五、JUnit4的核心之一是断言
 
 JUnit4框架主要是通过断言来判断运行结果正确与否，针对Java的原生类型(long,boolean,float...)或者Objects或者数组，JUnit都提供了对应的断言方法。
 
@@ -304,7 +304,7 @@ JUnit4框架主要是通过断言来判断运行结果正确与否，针对Java�
 
 这个`assertThat`方法是断言中的神器，后面我们会在[进阶三][2]介绍！敬请期待吧！
 
-###<a name="6"></a>六、小结
+### <a name="6"></a>六、小结
 
 前面我们介绍了JUnit4的基本知识。至此，你已经可以使用JUnit4进行代码测试了。如果你想知道更多信息，可以继续看看[JUnit 使用进阶二][1]。
 

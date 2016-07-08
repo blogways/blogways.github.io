@@ -5,11 +5,11 @@ title: Java项目代码编写规范
 tags: ['java代码规范', 'checkStyle', 'Eclipse', 'Checkclipse']
 author: 汤仕忠
 email: tangsz@asiainfo.com
-#image:
+# image:
 description: Checkstyle是一款检查java程序代码样式的工具，可以有效的帮助我们检视代码以便更好的遵循代码编写标准，特别适用于小组开发时彼此间的样式规范和统一,通过将CheckStyle的检查引入到项目构建中，可以强制让项目中的所有的开发者遵循制定规范，不是仅仅停留在纸面上。Checkstyle提供了高可配置性，以便适用于各种代码规范，所以除了可以使用它提供的sun的代码标准外，你也可以定制自己的标准。
 ---
 
-##一、Checkclipse插件安装
+## 一、Checkclipse插件安装
 
 Checkclipse是一个Eclipse插件，它集成了Checkstyle的样式检查器的编码准则到Eclipse中。所有的Java风格的违规行为将被立即报告错误标记。可以为每个项目单独配置编码准则。
 
@@ -23,7 +23,7 @@ Checkclipse是一个Eclipse插件，它集成了Checkstyle的样式检查器的�
 ![](/images/checkclipse.jpg)
 
 
-##二、 配置eclipse-java-google-style.xml
+## 二、 配置eclipse-java-google-style.xml
 
 这里eclipse-java-google-style.xml对Google原始Eclipse Formatter文件进行了部分修改，所以大家不要下载Google原始文件，就用本文提供的eclipse-java-google-style.xml。
 
@@ -37,7 +37,7 @@ Checkclipse是一个Eclipse插件，它集成了Checkstyle的样式检查器的�
 
 
 
-##三、 配置Java默认生成模板
+## 三、 配置Java默认生成模板
 
 1、在Windows->preferences->Java->Code Style->Code Templates下新增文件默认生成模板：
 
@@ -50,14 +50,14 @@ Checkclipse是一个Eclipse插件，它集成了Checkstyle的样式检查器的�
 
 
 
-##四、 checkStyle文件编写及配置
+## 四、 checkStyle文件编写及配置
 
-###1、checkStyle文件编写
+### 1、checkStyle文件编写
 
 这里提供已经编写好的文件，内容[checkstyle.xml](/xml/checkstyle.xml "checkstyle.xml")
 
 
-###2、checkStyle文件配置
+### 2、checkStyle文件配置
    
 a、Checkclipse配置
 
@@ -77,13 +77,13 @@ c、ok，可以进行Java代码编写了，此时如果没有按照checkStyle.xm
 
 
 
-##四、 checkStyle Maven 插件使用
+## 四、 checkStyle Maven 插件使用
 
 checkStyle的maven插件名为maven-checkstyle-plugin，用于执行CheckStyle task，以下列出具体使用方法：
 
 
 
-###1、maven pom 文件配置
+### 1、maven pom 文件配置
 
 	<build>
 	  <plugins>
@@ -112,11 +112,11 @@ checkStyle的maven插件名为maven-checkstyle-plugin，用于执行CheckStyle t
 
 其中D:\codingStandards\checkstyle.xml即为上面我们编写的checkstyle规范文件
 
-###2、运行checkstyle检查
+### 2、运行checkstyle检查
 
 命令行下执行mvn checkstyle:checkstyle 或直接通过Eclipse插件中 Maven test等执行方法，我用的Maven test
 
-###3、检查checkstyle结果
+### 3、检查checkstyle结果
 
 运行maven命令后可以在console里查看checkstyle运行结果。
 
@@ -157,7 +157,7 @@ checkstye的详细结果信息被存放在target/checkstyle-result.xml中。下�
 从中我们可以看出 Test1.java 22行有一个行字符数超过120的错误，MvelTest.java 9行有个提示。
 
 
-###4、对指定文件不检查
+### 4、对指定文件不检查
 
 对上面例子中行超过了120字符。如果我们不想修复这个错误怎么办那？可以将其suppress掉。
 方法是建立一个checkstyle-suppressions.xml文件。其中加入下述内容：

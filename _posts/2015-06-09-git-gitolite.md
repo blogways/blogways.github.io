@@ -9,7 +9,7 @@ email: tangsz@asiainfo.com
 description: 本章将通过实例方式介绍如何使用gitolite对git仓库进行权限管理.
 ---
 
-###一、gitolite实现功能
+### 一、gitolite实现功能
 
 1.通过远程连接能够对服务器上仓库进行读写操作；
 
@@ -18,7 +18,7 @@ description: 本章将通过实例方式介绍如何使用gitolite对git仓库�
 3.权限控制不只作用于仓库，而同样于仓库中的每个branch和tag name。
 
 
-###二、gitolite安装
+### 二、gitolite安装
 Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，以下为安装前提条件：
 	
 		UNIX/LINUX操作系统
@@ -62,7 +62,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 
 	
 
-###三、gitolite添加用户和仓库
+### 三、gitolite添加用户和仓库
 1. clone 管理仓库gitolite-admin（我本机操作）：
 	
     - git clone git@server-host:gitolite-admin （如：git clone git@10.20.16.78:gitolite-admin.git）
@@ -93,7 +93,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
     dos2unix *
 		
 
-###四、gitolite配置实例
+### 四、gitolite配置实例
 
 这里对gitolite详细的权限配置就不做说明，通过一个简单的实例介绍下gitolite的使用：
 
@@ -142,7 +142,7 @@ Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对
 			fatal: Could not read from remote repository.	
 
 
-###五、外部人员参与现有项目开发条件
+### 五、外部人员参与现有项目开发条件
 
 	
 1. 保证本机电脑安装了git，windows下安装的是msysgit（windows安装后会生成git Bash命令窗口），其中git安装可以参阅本博客git篇；

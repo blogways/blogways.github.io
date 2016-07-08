@@ -7,7 +7,7 @@ author: 陈凡
 email: chenfan@asiainfo.com
 description: 公司主机虽然也是基于linux系统，但是没有联网下载功能，只能通过下载好的安装包，公司主机中安装wordpress
 ---
-#wordpress 公司主机安装教程
+# wordpress 公司主机安装教程
 
 <div class="code fl">
     <dl>
@@ -27,11 +27,11 @@ description: 公司主机虽然也是基于linux系统，但是没有联网下�
     </dl>
 </div>
 
-##一.<a name="1"></a> 介绍
+## 一.<a name="1"></a> 介绍
 
 　　WordPress是一个注重美学、易用性和网络标准的个人信息发布平台。WordPress虽为免费的开源软件，但其价值无法用金钱来衡量。当前WordPress插件数据库中有超过18000个插件，包括SEO、控件等等。个人可以根据它的核心程序提供的规则自己开发模板和插件。这些插件可以快速地把你的博客改变成cms、forums、门户等各种类型的站点。
 
-##二. <a name="2"></a>安装前准备
+## 二. <a name="2"></a>安装前准备
 
 Apache版本：
 
@@ -57,33 +57,33 @@ Php版本：
 - zlib-1.2.3.tar.gz
 - phpMyAdmin-4.5.2-rc1-all-languages.tar.gz
 
-##三. <a name="3"></a>配置变量环境
+## 三. <a name="3"></a>配置变量环境
 
-###1. 安装libxml2
+### 1. 安装libxml2
 
 	$cd /usr/local/src/libxml2-2.6.30
 	$./configure --prefix=/usr/local/libxml2
 	$make && make install
 
-###2. 安装libmcrypt
+### 2. 安装libmcrypt
 
 	$cd /usr/local/src/libmcrypt-2.5.8
 	$./configure --prefix=/usr/local/libmcrypt
 	$make && make install
 
-###3. 安装zlib
+### 3. 安装zlib
 
 	$cd /usr/local/src/zlib-1.2.3
 	$./configure
 	$make && make install
 
-###4. 安装libpng
+### 4. 安装libpng
 
 	$cd /usr/local/src/libpng-1.2.31
 	$./configure --prefix=/usr/local/libpng
 	$make && make install
 
-###5. 安装jpeg6
+### 5. 安装jpeg6
 
 	$mkdir /usr/local/jpeg6
 	$mkdir /usr/local/jpeg6/bin
@@ -97,20 +97,20 @@ Php版本：
 	$./configure --prefix=/usr/local/jpeg6/ --enable-shared --enable-static
 	$make && make install
 
-###6. 安装freetype
+### 6. 安装freetype
 
 	$cd /usr/local/src/freetype-2.3.5
 	$./configure --prefix=/usr/local/freetype
 	$make
 	$make install
 
-###7. 安装autoconf
+### 7. 安装autoconf
 
 	$cd /usr/local/src/autoconf-2.61
 	$./configure
 	$make && make install
 
-###8. 安装GD库
+### 8. 安装GD库
 
 	$cd /usr/local/src/gd-2.1.1
 	$./configure \
@@ -148,7 +148,7 @@ Php版本：
 	make clean
 	--with-pcre=/usr/local/pcre
 
-##<a name="4"></a>四. 安装Apache
+## <a name="4"></a>四. 安装Apache
 
 	$cd /usr/local/src/httpd-2.2.9
 	$./configure \
@@ -221,7 +221,7 @@ ServerAdmin admin@clusting.com
 DocumentRoot "/data/spdev/chenfan"
 >主站点的网页存储位置。
 
-	#变更路径
+	# 变更路径
 	<Directory "/data/spdev/chenfan ">
 		Options FollowSymLinks
 		AllowOverride None
@@ -231,19 +231,19 @@ DocumentRoot "/data/spdev/chenfan"
 	</Directory>
 
 
-##<a name="5"></a>五. 安装Mysql
+## <a name="5"></a>五. 安装Mysql
 
-###1. 添加一个mysql标准组
+### 1. 添加一个mysql标准组
 	$groupadd mysql
 
-###2. 添加mysql用户并加到mysql组中
+### 2. 添加mysql用户并加到mysql组中
 	&useradd -g mysql mysql
 	&cd /usr/local/src/mysql-5.0.41
 	&./configure \
 	--prefix=/usr/local/mysql/ \
 	--with-extra-charsets=all
 
-##<a name="6"></a>六. 安装PHP
+## <a name="6"></a>六. 安装PHP
 	$./configure \
 	--prefix=/usr/local/php \
 	--with-config-file-path=/usr/local/php/etc \
@@ -283,7 +283,7 @@ DocumentRoot "/data/spdev/chenfan"
 
 然后在浏览器里输入 [http://10.20.16.78/test.php](http://10.20.16.78/test.php)，出现 php 信息则为安装正确。
 
-##<a name="7"></a>七. 装载phpmyadmin
+## <a name="7"></a>七. 装载phpmyadmin
 
 	$tar -zxvf phpMyAdmin-7.0.0-all-languages.tar.gz
 >此时路径 /data/spdev/chenfan/phpMyAdmin-7.0.0-all-languages.tar.gz
@@ -309,7 +309,7 @@ DocumentRoot "/data/spdev/chenfan"
 
 **解决**：修改 `$cfg['PmaAbsoluteUri'] = 'http://10.20.16.78/phpmyadmin/';`
 
-##<a name="8"></a>八.装载wordpress
+## <a name="8"></a>八.装载wordpress
 
 解压 wordpress
 

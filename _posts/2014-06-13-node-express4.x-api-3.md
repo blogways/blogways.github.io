@@ -9,13 +9,13 @@ image:
 description: 之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。
 ---
 
-##Express4.x API 翻译[3] -- Response
+## Express4.x API 翻译[3] -- Response
 
-###res.status(code)
+### res.status(code)
 node `res.statusCode=`可链接的别名
 
 	res.status(404).sendfile('path/to/404.png');
-###res.set(field, [value])
+### res.set(field, [value])
 设置响应头内字段值，或者通过一个对象一次设置多个字段。
 
 	res.set('Content-Type', 'text/plain');
@@ -28,12 +28,12 @@ node `res.statusCode=`可链接的别名
 
 res.header(field, [value])别名。
 
-###res.get(field)
+### res.get(field)
 获取响应头内字段值，不区分大小写。
 
 	res.get('Content-Type');
 	// => "text/plain"
-###res.cookie(name, value, [options])
+### res.cookie(name, value, [options])
 设置cookie名称和值，可以是字符串或者对象转换成的JSON。路径选项默认为"/"。
 
 	res.cookie('name', 'tobi', { domain: '.example.com', path: '/admin', secure: true });
@@ -54,12 +54,12 @@ maxAge选项可以很方便的设置从当前时间开始以毫秒为单位的�
 
 然后你可以使用req.signedCookie来访问这个值。
 
-###res.clearCookie(name, [options])
+### res.clearCookie(name, [options])
 删除cookie里面值。默认路径为"/"。
 
 	res.cookie('name', 'tobi', { path: '/admin' });
 	res.clearCookie('name', { path: '/admin' });
-###res.redirect([status], url)
+### res.redirect([status], url)
 
 重定向到给定的url，可选状态编码默认为302"Found"。
 
@@ -88,7 +88,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 
 	res.redirect('back');
 
-###res.location
+### res.location
 设置location头。
 
 	res.location('/foo/bar');
@@ -102,7 +102,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 例如你的应用挂载在/blog下，使用下面的代码设置location头为/blog/admin：
 
 	res.location('admin')
-###res.send([body|status], [body])
+### res.send([body|status], [body])
 发送一个响应。
 
 	res.send(new Buffer('whoop'));
@@ -141,14 +141,14 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	res.send(200)
 	res.send(404)
 	res.send(500)
-###res.json([status|body], [body])
+### res.json([status|body], [body])
 
 发送一个JSON返回。当返回对象或者数组时该方法与res.send()相同，然而它可以用来将非对象(null, undefined, 等等)转换成精准的JSON，尽管严格来说这些并不是有效的JSON。
 
 	res.json(null)
 	res.json({ user: 'tobi' })
 	res.json(500, { error: 'message' })
-###res.jsonp([status|body], [body])
+### res.jsonp([status|body], [body])
 
 使用JSONP发送JSON响应。该方法与res.json()相同，但多了对JSONP回调的支持。
 
@@ -172,7 +172,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	// ?cb=foo
 	res.jsonp(500, { error: 'message' })
 	// => foo({ "error": "message" })
-###res.type(type)
+### res.type(type)
 
 设置Content-Type类型为mime的类型，或者当"/"存在时Content-Type被简单的设置成该类型。
 
@@ -181,7 +181,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	res.type('json');
 	res.type('application/json');
 	res.type('png');
-###res.format(object)
+### res.format(object)
 
 执行请求时存在请求Accept头上下文转换。该方法使用req.accepted，这是一个按可接受类型重要性排序的数组，否则第一个回调函数被调用。当没有匹配的回调函数执行时服务器返回406 "Not Acceptable"，或者调用默认的回调函数。
 
@@ -225,7 +225,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	    res.send({ message: 'hey' });
 	  }
 	});
-###res.attachment([filename])
+### res.attachment([filename])
 
 设置Content-Disposition头字段为"attachment"。如果给定一个文件名，那么Content-Type将会通过res.type()自动设置成基于扩展名的类型，Content-Disposition的"filename="参数同时也被设置。
 
@@ -235,7 +235,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	res.attachment('path/to/logo.png');
 	// Content-Disposition: attachment; filename="logo.png"
 	// Content-Type: image/png
-###res.sendfile(path, [options], [fn]])
+### res.sendfile(path, [options], [fn]])
 
 传输文件到给定的路径。
 
@@ -263,7 +263,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 
 如有任何问题或者疑问请参阅send附加文档。
 
-###res.download(path, [filename], [fn])
+### res.download(path, [filename], [fn])
 
 传输路径中的文件作为附件，通常浏览器会提醒用户下载。Content-Disposition "filename="参数，也就是显示在浏览器对话框的默认文件名，你也可以提供一个自定义文件名。
 
@@ -281,7 +281,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	    // decrement a download credit etc
 	  }
 	});
-###res.links(links)
+### res.links(links)
 加入给定的链接来填充"Link"响应头字段。
 
 	res.links({
@@ -292,7 +292,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 
 	Link: <http://api.example.com/users?page=2>; rel="next", 
 	      <http://api.example.com/users?page=5>; rel="last"
-###res.locals
+### res.locals
 
 响应本地化变量作用域为request，因此只适用于在该request/response周期内呈现的视图，如果有的话。其实该API跟app.locals是等同的。
 
@@ -303,7 +303,7 @@ Express支持几种形式的重定向，首先一个完整合格的URI重定向�
 	  res.locals.authenticated = ! req.user.anonymous;
 	  next();
 	});
-###res.render(view, [locals], callback)
+### res.render(view, [locals], callback)
 
 渲染一个视图，同时向回调函数传递渲染后的字符串。发生错误时内部调用next(err)。回调函数传入可能发生的错误以及渲染后的页面，这样就不会自动执行响应了。
 
