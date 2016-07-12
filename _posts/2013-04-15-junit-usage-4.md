@@ -36,7 +36,7 @@ description: 本文，我们将向大家介绍JUnit4框架提供的几个非常�
 
 [进阶一]: junit-usage-1.html
 
-###<a name="1"></a>一、Suite测试
+### <a name="1"></a>一、Suite测试
 
 进行`Suite`测试可以将多个待测试的类，打包(Suite)一起测试。在入口测试类上加两个注释:
 
@@ -64,7 +64,7 @@ description: 本文，我们将向大家介绍JUnit4框架提供的几个非常�
 框架运行那些待测试的类，是按他们在`@Suite.SuiteClasses`中罗列的顺序开始测试。
 
 
-###<a name="2"></a>二、Parameterized测试
+### <a name="2"></a>二、Parameterized测试
 
 很多时候，需要用很多测试数据进行多次测试。怎么办？通过复制粘贴代码来实现？累...
 
@@ -185,7 +185,7 @@ description: 本文，我们将向大家介绍JUnit4框架提供的几个非常�
 	...
 	{n} 表示第n+1个参数
 
-###<a name="3"></a>三、Categories测试
+### <a name="3"></a>三、Categories测试
 
 一个测试类里面包含很多待测试的方法，很多时候，我们需要把这些待测试的方法分类，某些时候测试某类方法，那么需要怎么做呢？
 
@@ -236,7 +236,7 @@ description: 本文，我们将向大家介绍JUnit4框架提供的几个非常�
 这次，只会运行`A.b`，而不会运行`A.a`和`B.c`。
 
 
-###<a name="4"></a>四、Theories测试
+### <a name="4"></a>四、Theories测试
 
 结合前面[进阶三][3]中介绍的假设(assumeThat)，我们可以对大量的测试数据做一些理论测试。
 
@@ -268,7 +268,7 @@ description: 本文，我们将向大家介绍JUnit4框架提供的几个非常�
 
 [3]: junit-usage-3.html
 
-###<a name="5"></a>五、第三方的Runner
+### <a name="5"></a>五、第三方的Runner
 
 我们也可以使用`@RunWith`来标注一些第三方的Runner，比如：
 
@@ -280,7 +280,7 @@ description: 本文，我们将向大家介绍JUnit4框架提供的几个非常�
 	* [http://docs.mockito.googlecode.com/hg/latest/org/mockito/runners/MockitoJUnitRunner.html](http://docs.mockito.googlecode.com/hg/latest/org/mockito/runners/MockitoJUnitRunner.html)
 
 
-###<a name="6"></a>六、小结
+### <a name="6"></a>六、小结
 
 让我们回顾一下，本文介绍了JUnit4里面内置的几个特色运行器（Runner），包括：将多个测试类打包一起测试的Suite、可以实现参数化测试的Parameterized、可以实现分类测试的Categories、可以实现理论测试的Theories，还有网络上的一些第三方Runner。
 

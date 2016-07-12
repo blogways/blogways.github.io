@@ -10,7 +10,7 @@ description: EventProxy是一个简单的事件侦听者模式的实现，由于
 
 
 ---
-##一、EventProxy简介
+## 一、EventProxy简介
 EventProxy作者 田永强，新浪微博@朴灵，前端工程师，曾就职于SAP，现就职于淘宝，花名朴灵，致力于NodeJS和Mobile Web App方面的研发工作。EventProxy 仅仅是一个很轻量的工具，但是能够带来一种事件式编程的思维变化。有以下几个特点：
 
 1.利用事件机制解耦复杂业务逻辑；
@@ -26,14 +26,14 @@ EventProxy作者 田永强，新浪微博@朴灵，前端工程师，曾就职�
 6.兼容CMD，AMD以及CommonJS模块环境。
 
 
-###二、安装
+### 二、安装
 
 通过NPM安装即可使用：$ npm install eventproxy
 
 调用:var EventProxy = require('eventproxy');
 
 
-###三、使用
+### 三、使用
 
 这里只简单介绍EventProxy在node环境中的应用，至于前端及其他环境使用见：https://github.com/JacksonTian/eventproxy。
 

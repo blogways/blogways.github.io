@@ -14,7 +14,7 @@ description: MAC OSX 下搭建 memcached 环境及测试demo
 我是使用 brew 来安装的，让我们再回顾一下整个过程吧。如果你没有装 brew ,先看步骤一，否则直接看步骤二。
 
 
-###步骤一：安装 Homebrew
+### 步骤一：安装 Homebrew
 
 先看看是否满足下面条件：
 
@@ -28,7 +28,7 @@ description: MAC OSX 下搭建 memcached 环境及测试demo
 	
 打开Terminal, 粘贴上面的语句.该脚本首先将会解释它要做什么, 然后暂停下来, 直到您确认继续. 更多的安装选项在[这里](https://github.com/mxcl/homebrew/wiki/Installation)可以看到 .
 
-###步骤二：安装 memcached
+### 步骤二：安装 memcached
 
 安装前，可以先查找一下，看看有没有：
 
@@ -85,7 +85,7 @@ description: MAC OSX 下搭建 memcached 环境及测试demo
 	...
 
 
-###步骤二：安装 libmemcached
+### 步骤二：安装 libmemcached
 
 继续安装客户端库：
 
@@ -96,13 +96,13 @@ description: MAC OSX 下搭建 memcached 环境及测试demo
     ==> make install
     🍺  /usr/local/Cellar/libmemcached/1.0.16: 110 files, 1.4M, built in 108 seconds
       
-###步骤三：启动服务器
+### 步骤三：启动服务器
 
 先默认参数启动吧：
 
 	$ /usr/local/bin/memcached -d
 	
-###步骤四：编写客户端测试程序并运行
+### 步骤四：编写客户端测试程序并运行
 
 编写程序文件 `example.cpp` :
 

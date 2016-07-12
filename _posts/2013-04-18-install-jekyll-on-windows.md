@@ -5,11 +5,11 @@ title: windows 下安装jekyll
 tags: ['jekyll', '部署', 'Windows']
 author: 汤仕忠
 email: tangsz@asiainfo-linkage.com
-#image:
+# image:
 description: 前面已有文章介绍在mac下安装jekyll，本文中只简单介绍Windows上装jekyll,其中ruby安装的版本是ruby 1.9.1p430，对于其他ruby版本安装jekyll中出现问题此处不做说明
 ---
 
-###一、ruby安装
+### 一、ruby安装
 1. 下载 [ruby]
 2. 配置环境变量，path中添加ruby安装环境变量
 3. 执行 ruby --version 检查ruby是否安装成功
@@ -19,14 +19,14 @@ description: 前面已有文章介绍在mac下安装jekyll，本文中只简单�
 
 
 
-###二、DevKit
+### 二、DevKit
 1.  下载 [DevKit]
 3.  解压DevKit，命令行下到DevKit目录，执行ruby dk.rb init    ruby dk.rb install
 
 [DevKit]: https://github.com/oneclick/rubyinstaller/downloads/
 
 
-###三、安装jekyll
+### 三、安装jekyll
 1. 执行gem install jekyll
 2. 执行gem install rdiscount
 3. 打开命令窗口到博客工程根目录下执行jekyll --server，如果此处报字符集错误，请先设置环境变量执行

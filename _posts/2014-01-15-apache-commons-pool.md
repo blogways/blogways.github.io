@@ -10,12 +10,12 @@ description: 介绍Apache Commons 系列中的 Pool 库
 ---
 
 
-###一、概述
+### 一、概述
 
 `Apache Commons Pool`库提供了一整套用于实现对象池化的API，以及若干种各具特色的对象池实现。2.0版本，并非是对1.x的简单升级，而是一个完全重写的对象池的实现，显著的提升了性能和可伸缩性，并且包含可靠的实例跟踪和池监控。第二版要求JDK1.6+。
 
 
-###二、下载
+### 二、下载
 
 官方下载页:
 
@@ -33,9 +33,9 @@ Maven工程依赖
 	    <version>2.0</version>
 	</dependency>
 	
-###三、使用说明
+### 三、使用说明
 
-####3.1 创建池化对象
+#### 3.1 创建池化对象
 
 创建池化对象很简单，只要实现`commons-pool`的`PooledObjectFactory`工厂接口就行了。
 
@@ -100,7 +100,7 @@ public interface KeyedPoolableObjectFactory<K,V> {
 ```
 
 
-####3.2 创建对象池
+#### 3.2 创建对象池
 
 在`org.apache.commons.pool2.impl`中预设了三个可以直接使用的对象池：`GenericObjectPool`、`GenericKeyedObjectPool`和`SoftReferenceObjectPool`。
 
@@ -127,7 +127,7 @@ GenericObjectPool<StringBuffer> pool = new GenericObjectPool<StringBuffer>(new S
 
 ```
 
-####3.3 使用对象池
+#### 3.3 使用对象池
 
 对象池使用起来很方便，简单一点就是使用`borrowObject`和`returnObject`两个方法，直接给参考代码吧：
 

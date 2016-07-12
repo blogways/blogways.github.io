@@ -4,7 +4,7 @@ category: WordPress
 title: linux下源码安装wordpress全过程
 tags: ['WordPress']
 author: 王栋
-#image: /images/xxx.jpg
+# image: /images/xxx.jpg
 email: wangdong3@asiainfo.com
 description: linux主机源码安装wordpress的全过程
 ---
@@ -126,17 +126,17 @@ cd httpd-2.2.9
 make  
 make install  
 ```
-######启动apache
+###### 启动apache
 ```
 /usr/local/apache2/bin/apachectl start  
 ```
-######修改配置文件  
+###### 修改配置文件  
 ```
 vi /etc/httpd/httpd.conf
 #查找ServerName,将注释去掉  
 ServerName 'www.example.com:80'
 ```
-######将apache添加到系统服务中
+###### 将apache添加到系统服务中
 ```
 cp /usr/local/apache2/bin/apachectl /etc/init.d/httpd  
 vi /etc/rc.d/init.d/httpd  
@@ -148,7 +148,7 @@ chmod 755 /etc/init.d/httpd
 #添加到系统服务中  
 chkconfig --add httpd  
 ```
-######开启apache  
+###### 开启apache  
 ```
 service httpd start
 ```  
@@ -194,7 +194,7 @@ DELETE FROM user WHERE host='localhsot.localdomain'
 DELETE FROM user WHERE host='10.20.16.79';  
 UPDATE user SET host='%' WHERE user='root';  
 ```
-######重启mysql  
+###### 重启mysql  
 ```
 service mysqld restart
 ```  
@@ -207,11 +207,11 @@ cd php-5.2.6
 make  
 make install
 ```
-######创建配置文件
+###### 创建配置文件
 ```
 # cp php.ini-dist /usr/local/php/etc/php.ini
 ```
-######使用vi编辑apache配置文件
+###### 使用vi编辑apache配置文件
 ```
 # vi /etc/httpd/httpd.conf
 ```
@@ -219,7 +219,7 @@ make install
 ```
 Addtype application/x-httpd-php .php .phtml
 ```
-######重启Apache
+###### 重启Apache
 ```
 # /usr/local/apache2/bin/apachectl restart
 ```
@@ -228,7 +228,7 @@ Addtype application/x-httpd-php .php .phtml
 ```
 mkdir -p /var/www/html  
 ```
-######修改httpd.conf
+###### 修改httpd.conf
 ```
 vi /etc/httpd/httpd.conf  
 #功能: 设置工作目录  
@@ -248,7 +248,7 @@ AddType application/x-httpd-php .html .php
 #Options Indexes FollowSymLinks   
 #注意: 修改配置文件后, 重启apache才能生效  
 ```
-######重启apache
+###### 重启apache
 ```
 service httpd restart
 ```
@@ -260,11 +260,11 @@ cd /lamp/src/php-5.2.6/ext/pdo_mysql
 make  
 make install  
 ```
-######执行完make install后会生成
+###### 执行完make install后会生成
 ```
 #Installing shared extensions: /usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/  
 ```
-######修改php.ini
+###### 修改php.ini
 ```
 vi /usr/local/php/etc/php.ini  
 #查找extension_dir,修改为
@@ -279,7 +279,7 @@ service httpd restart
 ### 六 安装phpmyadmin
 #### phpmyadmin安装与配置
 ##### 【安装phpmyadmin】
-######拷贝目录到指定位置并改名为phpmyadmin
+###### 拷贝目录到指定位置并改名为phpmyadmin
 ```
 #cp -a  phpMyAdmin-3.0.0-rc1-all-languages /var/www/html/phpmyadmin
 #cd /var/www/html/phpmyadmin/
@@ -295,7 +295,7 @@ $cfg['Servers'][$i]['auth_type'] = 'http';
 ```
 
 ##### 测试
-######编写info.php文件，查看php配置详细
+###### 编写info.php文件，查看php配置详细
 ```
  vi /var/www/html/info.php
 ```

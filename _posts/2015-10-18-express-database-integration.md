@@ -10,7 +10,7 @@ description: express3.x中文翻译
 原文
 <http://expressjs.com/guide/database-integration.html>
 
-#集成数据库
+# 集成数据库
 
 为 Express 应用添加连接数据库的能力，只需要加载相应数据库的 Node.js 驱动即可。这里将会简要介绍如何为 Express 应用添加和使用一些常用的数据库 Node 模块。
 	
@@ -51,7 +51,7 @@ Cassandra
 	  console.log(result.rows[0]);
 	});
 
-###CouchDB
+### CouchDB
 模块: nano
 安装
 	
@@ -74,7 +74,7 @@ Cassandra
 	  console.log(body.rows);
 	}
 
-###LevelDB
+### LevelDB
 模块: levelup
 安装
 	
@@ -94,7 +94,7 @@ Cassandra
 	
 	});
 
-###MySQL
+### MySQL
 模块: mysql
 安装
 
@@ -117,7 +117,7 @@ Cassandra
 	
 	connection.end();
 
-###MongoDB
+### MongoDB
 模块: mongoskin
 安装
 	
@@ -133,7 +133,7 @@ Cassandra
 	If you want a object model driver for MongoDB, checkout Mongoose.
 	
 
-###Neo4j
+### Neo4j
 模块: apoc
 安装
 	
@@ -151,7 +151,7 @@ Cassandra
 	  }
 	);
 
-###PostgreSQL
+### PostgreSQL
 模块: pg
 安装
 	
@@ -176,7 +176,7 @@ Cassandra
 	
 	});
 
-###Redis
+### Redis
 模块: redis
 安装
 	
@@ -204,7 +204,7 @@ Cassandra
 	
 	});
 
-###SQLite
+### SQLite
 模块: sqlite3
 安装
 	
@@ -232,7 +232,7 @@ Cassandra
 
 	db.close();
 
-###ElasticSearch
+### ElasticSearch
 模块: elasticsearch
 安装
 	

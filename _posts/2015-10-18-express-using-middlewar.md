@@ -8,7 +8,7 @@ email: zhangke@asiainfo.com
 description: express3.x中文翻译
 ---
 原文 <http://expressjs.com/guide/using-middleware.html>
-#使用中间件
+# 使用中间件
 
 Express 是一个自身功能极简，完全是由路由和中间件构成一个的 web 开发框架：从本质上来说，一个 Express 应用就是在调用各种中间件。
 
@@ -40,7 +40,7 @@ Express 应用可使用如下几种中间件：
 
 使用可选则挂载路径，可在应用级别或路由级别装载中间件。另外，你还可以同时装在一系列中间件函数，从而在一个挂载点上创建一个子中间件栈。
 
-#应用级中间件
+# 应用级中间件
 应用级中间件绑定到 app 对象 使用 app.use() 和 app.METHOD()， 其中， METHOD 是需要处理的 HTTP 请求的方法，例如 GET, PUT, POST 等等，全部小写。例如：
 	
 	var app = express();
@@ -102,7 +102,7 @@ Express 应用可使用如下几种中间件：
 	app.get('/user/:id', function (req, res, next) {
 	  res.render('special');
 	});
-#路由级中间件
+# 路由级中间件
 路由级中间件和应用级中间件一样，只是它绑定的对象为 
 express.Router()。
 
@@ -148,7 +148,7 @@ express.Router()。
 	
 	// 将路由挂载至应用
 	app.use('/', router);
-#错误处理中间件
+# 错误处理中间件
 
 >错误处理中间件有 4 个参数，定义错误处理中间件时必须使用这 4 个参数。即使不需要 next 对象，也必须在签名中声明它，否则中间件会被识别为一个常规中间件，不能处理错误。
 
@@ -161,10 +161,10 @@ express.Router()。
 	});
 请参考 错误处理 一章了解更多关于错误处理中间件的内容。
 
-#内置中间件
+# 内置中间件
 从 4.x 版本开始，, Express 已经不再依赖 Connect 了。除了 express.static, Express 以前内置的中间件现在已经全部单独作为模块安装使用了。请参考 中间件列表。
 
-####express.static(root, [options])
+#### express.static(root, [options])
 
 express.static 是 Express 唯一内置的中间件。它基于 serve-static，负责在 Express 应用中提托管静态资源。
 

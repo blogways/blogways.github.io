@@ -44,16 +44,16 @@ description: 在JavaScript中，内置对象Array和Function本身提供了不�
 
 
 <a name="1"></a>
-###一、概述
+### 一、概述
 
 在JavaScript中，内置对象Array和Function本身提供了不少方法，有些方法为人所熟知，有些方法则不被注意。而有些方法虽然被人所熟悉，却又有不被重视的使用场景，去实现一些妙用。
 
 本文结合当下自己的使用心得，一方面做个分享，一方面也是个备忘，哈哈！
 
 <a name="2"></a>
-###二、Function的那些事儿
+### 二、Function的那些事儿
 
-####2.1 arguments不是Array！
+#### 2.1 arguments不是Array！
 
 `arguments`是函数被执行时，传入的实参集合。他直接在函数里面被类似于一个数组进行访问。
 
@@ -152,7 +152,7 @@ var testFunc = function() {
 ```
 
 
-####2.2 相同功能，不同参数形式的两方法——apply和call
+#### 2.2 相同功能，不同参数形式的两方法——apply和call
 
 这两个方法的功能相同，只是定义参数方式不同：
 它们的作用都是将函数绑定到另外一个对象上去运行，两者仅在定义参数方式有所区别：
@@ -174,7 +174,7 @@ var testFunc = function() {
 但是，它存在一个缺点：当函数的参数个数是动态的，只能在运行过程中才能确定下来，那么使用`Function.call`就不合适了，就只能使用`Function.apply`了。在运行过程中，将动态的参数都放到数组中去，然后把数组作为一个参数，传给`Function.apply`。这样就完美的解决问题了！
 
 
-####2.3 去优雅地使用apply和call吧
+#### 2.3 去优雅地使用apply和call吧
 
 有一个动态数组:
 
@@ -210,7 +210,7 @@ var min = Math.min.apply(null, numbers);
 当然，就解决这个题目而言，还有更快的方案，有兴趣地话，可以看看笔者的测试：[`http://jsperf.com/apply-vs-loop-for-max/2`](http://jsperf.com/apply-vs-loop-for-max/2)。这个测试的结果，可能会颠覆你的认知，让你惊讶的。^_^
 
 
-####2.4 使用bind方法，定制函数！
+#### 2.4 使用bind方法，定制函数！
 
 先看定义：
 
@@ -278,7 +278,7 @@ boundGetX(); // 81
 ```
 是的，如上使用`bind`就可以了！
 
-####2.5 uncurryThis，你知道吗？
+#### 2.5 uncurryThis，你知道吗？
 
 `uncurryThis`话题，来自于`Brendan Eich`(`JavaScript`之父)的一个[tweet](http://twitter.com/BrendanEich/status/128975787448741891).
 
@@ -338,12 +338,12 @@ var toUpperCase = uncurryThis(String.prototype.toUpperCase);
 [ 'FOO', 'BAR', 'BAZ' ]
     ```
 <a name="3"></a>
-###三、Array的那些事儿
+### 三、Array的那些事儿
 
 Array是个很常用的内置对象，在Javascript规范的逐步完善中，其内置方法在不知不觉中已经提供了很多了。本文仅介绍一些常用的方法。
 
 
-####3.1 可以浅度复制数组的slice方法
+#### 3.1 可以浅度复制数组的slice方法
 
 定义：
 
@@ -388,7 +388,7 @@ console.log(z);          // ["hello", "world"]
 ```
 
 
-####3.2 不仅仅作用于数组的堆栈操作，四方法：push/pop/shift/unshift
+#### 3.2 不仅仅作用于数组的堆栈操作，四方法：push/pop/shift/unshift
 
 先看定义：
 
@@ -477,7 +477,7 @@ console.log(Array.prototype.slice.call(tz));  //["hello"]
 
 
 
-####3.3 可删可插入的splice方法
+#### 3.3 可删可插入的splice方法
 
 先看定义：
 
@@ -593,7 +593,7 @@ Array.prototype.unshift = function() {
 笔者做了下性能对比测试：原生的最快，原型形式模拟的次之，函数形式模拟的最慢。性能测试见：[http://jsperf.com/splice-vs-push-pop-shift-unshift](http://jsperf.com/splice-vs-push-pop-shift-unshift)
 
 
-####3.4 forEach/map/reduce的实现与效率！
+#### 3.4 forEach/map/reduce的实现与效率！
 
 先看定义：
 
@@ -637,7 +637,7 @@ numbers.slice(1,4).map(function(item){return Math.pow(item,2)});  //[1, 4, 9]
 * 无论`forEach`还是`map`，其中的`callback`都是同步执行的，`async.js`框架中提供了对应的异步实现。
 
 
-####3.5 其他：join/concat/sort/reverse/every/some...
+#### 3.5 其他：join/concat/sort/reverse/every/some...
 
 Array内置了很多方法，下面在给出几个使用较多的方法的定义及使用示例。
 
@@ -696,6 +696,6 @@ passed = [12, 5, 8, 1, 4].some(isBigEnough);  //true
 **<span style="color:red">注意</span>：`concat`是浅层复制，从上面例子中也可以看出来。**，如果想实现深层复制，可以参考`underscore.js`框架中的`_.flatten`,或者参考`prototype.js`框架中的`Array#flatten()`。
 
 <a name="4"></a>
-###四、结束
+### 四、结束
 
 非常高兴，你能耐心看完这篇文章，希望能给你带来帮助！欢迎讨论！

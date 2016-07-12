@@ -8,13 +8,13 @@ email: chenfan@asiainfo.com
 description: 该篇日志介绍了三种在drupal部署主题的方式
 ---
 
-#在Drupal上部署主题
+# 在Drupal上部署主题
 
-##一.简单粗暴法（profile文件）
+## 一.简单粗暴法（profile文件）
 
 以Avira主题为例
 
-####1.系统需求
+#### 1.系统需求
 
 * Drupal 7
 
@@ -26,7 +26,7 @@ description: 该篇日志介绍了三种在drupal部署主题的方式
 
 * MySQL 5.0.15 or higher
 
-####2.主题安装
+#### 2.主题安装
 
 将主题文件解压到服务器目录下，用浏览器打开该目录，接下来的步骤和安装drupal的步骤类似，可根据视频所示安装即可。
 
@@ -34,7 +34,7 @@ description: 该篇日志介绍了三种在drupal部署主题的方式
 
 >该视屏在youtobe上，可能需要翻墙观看
 
-##二.修改数据库法
+## 二.修改数据库法
 
 1. 进入phpmyadmin，新建数据库，当然也可以使用命令新建数据库。
 
@@ -55,7 +55,7 @@ description: 该篇日志介绍了三种在drupal部署主题的方式
 
 ![database](\images\post\database.jpg)
 
-##三.在已有drupal中安装主题
+## 三.在已有drupal中安装主题
 
 1. 下载主题文件
 
@@ -67,13 +67,13 @@ description: 该篇日志介绍了三种在drupal部署主题的方式
 
 5. 点击Theme settings，可以设置一些主题的基本操作
 
-##四.在已有的drupal中部署主题
+## 四.在已有的drupal中部署主题
 
 在三中安装后的主题，是没有任何内容，这时我们需要加载一些模块来充实内容，使用这种方式也可以比较自由的设计自己心目当中想要的模块
 
 因为这里的内容较多，我只对常用的几大模块做些介绍
 
-####1.slider（幻灯片模块）
+#### 1.slider（幻灯片模块）
 
 在[drupal官网](http://your-site.com/admin/modules)下载 jquery_update、imce、Layer slider，并将其解压放到`sites/all/modules/`中
 
@@ -89,7 +89,7 @@ description: 该篇日志介绍了三种在drupal部署主题的方式
 
 便可以在主页前端看到出现该幻灯片
 
-####2.菜单栏
+#### 2.菜单栏
 
 在[drupal官网](http://your-site.com/admin/modules)下载 Superfish 模块在设计菜单栏，并将其解压放到`sites/all/modules/`中
 
@@ -105,11 +105,11 @@ description: 该篇日志介绍了三种在drupal部署主题的方式
 
 * 拉到底部点击"save block"
 
-####3.主页模块
+#### 3.主页模块
 
 打开 drupal admin toolbar ，点击Content，然后add content，选择Basic page在这里你可以添加自己的页面，然后在settings里连接到想到链接的页面
 
-####4.blog
+#### 4.blog
 
 在[drupal官网](http://your-site.com/admin/modules)下载 blog page 模块在设计菜单栏，并将其解压放到`sites/all/modules/`中
 

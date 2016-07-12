@@ -27,11 +27,11 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 
 <div class="clr"></div>
 
-###<a name="1"></a>一、Windows环境下生成SSH key且连接GitHub
+### <a name="1"></a>一、Windows环境下生成SSH key且连接GitHub
 
 ---
 
-####第一步、看看是否存在SSH密钥(keys)
+#### 第一步、看看是否存在SSH密钥(keys)
 
 首先，我们需要看看是否看看本机是否存在SSH keys,打开Git Bash,并运行:
 
@@ -41,12 +41,12 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 如果，不存在此目录，则进行第二步操作，否则，你本机已经存在ssh公钥和私钥，可以略过第二步，直接进入第三步操作。
 
 
-####第二步、创建一对新的SSH密钥(keys)
+#### 第二步、创建一对新的SSH密钥(keys)
 
 输入如下命令：
 
 	$ssh-keygen -t rsa -C "your_email@example.com"
-	#这将按照你提供的邮箱地址，创建一对密钥
+	# 这将按照你提供的邮箱地址，创建一对密钥
 	Generating public/private rsa key pair.
 	Enter file in which to save the key (/c/Users/you/.ssh/id_rsa): [Press enter]
 
@@ -64,7 +64,7 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 	The key fingerprint is:
 	01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com
 
-####第三步、在GitHub账户中添加你的公钥
+#### 第三步、在GitHub账户中添加你的公钥
 
 运行如下命令，将公钥的内容复制到系统粘贴板(clipboard)中。
 
@@ -80,7 +80,7 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 4. 再弹出窗口，输入你的GitHub密码，点击确认按钮。
 5. 到此，大功告成了！
 
-####第四步、测试
+#### 第四步、测试
 
 为了确认我们可以通过SSH连接GitHub，我们输入下面命令。输入后，会要求我们提供验证密码，输入之前创建的密码就ok了。
 
@@ -99,11 +99,11 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 	Hi username! You've successfully authenticated, but GitHub does not provide shell access.
 
 
-###<a name="2"></a>二、Mac环境下生成SSH key且连接GitHub
+### <a name="2"></a>二、Mac环境下生成SSH key且连接GitHub
 
 ---	
 	
-####第一步、看看是否存在SSH密钥(keys)
+#### 第一步、看看是否存在SSH密钥(keys)
 
 首先，我们需要看看是否看看本机是否存在SSH keys,打开终端(Terminal),并运行:
 
@@ -113,12 +113,12 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 如果，不存在此目录，则进行第二步操作，否则，你本机已经存在ssh公钥和私钥，可以略过第二步，直接进入第三步操作。
 
 
-####第二步、创建一对新的SSH密钥(keys)
+#### 第二步、创建一对新的SSH密钥(keys)
 
 输入如下命令：
 
 	$ssh-keygen -t rsa -C "your_email@example.com"
-	#这将按照你提供的邮箱地址，创建一对密钥
+	# 这将按照你提供的邮箱地址，创建一对密钥
 	Generating public/private rsa key pair.
 	Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
 
@@ -136,7 +136,7 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 	The key fingerprint is:
 	01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com
 
-####第三步、在GitHub账户中添加你的公钥
+#### 第三步、在GitHub账户中添加你的公钥
 
 运行如下命令，将公钥的内容复制到系统粘贴板(clipboard)中。
 
@@ -152,7 +152,7 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 4. 再弹出窗口，输入你的GitHub密码，点击确认按钮。
 5. 到此，大功告成了！
 
-####第四步、测试
+#### 第四步、测试
 
 为了确认我们可以通过SSH连接GitHub，我们输入下面命令。输入后，会要求我们提供验证密码，输入之前创建的密码就ok了。
 
@@ -179,7 +179,7 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 	
 
 
-###<a name="3"></a>三、单机如何控制不同的SSH Keys连不同的Git环境?
+### <a name="3"></a>三、单机如何控制不同的SSH Keys连不同的Git环境?
 
 ---
 
@@ -187,17 +187,17 @@ description: 我们可以使用SSH Keys在本机和GitHub之间建立一个安�
 
 但是如果由于某种要求，需要用不同的SSH密钥连接不同的Git环境。假设具体场景是，已经建了密钥github_rsa，还需要创建work_rsa连接工作环境git仓库，那么，可以按下面操作进行：
 
-####1. 创建另一对密钥work_rsa.
+#### 1. 创建另一对密钥work_rsa.
 
 	$ssh-keygen -t rsa -C "work@mail.com"
 	#保存密钥为work_rsa
 	
-####2. 添加新身份信息
+#### 2. 添加新身份信息
 
 	$ssh-add ～/.ssh/work_rsa
 
 
-####3. 配置.ssh/config
+#### 3. 配置.ssh/config
 
 我们需要通过Host别名，将不同的账号区分开来。
 

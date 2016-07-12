@@ -10,12 +10,12 @@ description: 在Linux上安装oracle client
 
 
 
-##一、资源
+## 一、资源
 
 登录Oracle官网 [http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html](http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html) 。
 
 
-##二、选择
+## 二、选择
 
 首先，选择你所需要的版本。
 
@@ -40,7 +40,7 @@ description: 在Linux上安装oracle client
 如果仅仅需要运行环境，下载第一个就可以了。如果还需要开发编译环境，还需要下载第二个。想用sqlplus，要下第三个。
 
 
-##三、安装
+## 三、安装
 
 把三个zip包传到要安装的目录下，比如`/home/oracle`。执行下面命令：
 
@@ -70,7 +70,7 @@ description: 在Linux上安装oracle client
 在编译oci/occi程序时，编译命令需要添加 `-I$ORACLE_HOME/sdk/include` ,链接命令需要添加 `-L$ORACLE_HOME`
 
 
-##四、测试
+## 四、测试
 
 在命令行输入：
 
@@ -78,7 +78,7 @@ description: 在Linux上安装oracle client
     
 可以看到熟悉的提示，就表示大功告成了！
 
-##五、回顾
+## 五、回顾
 
 我当时按上面步骤安装后，运行`sqlplus`会报一个`ORA-21561`错误。后来在`/etc/hosts`文件中配置上的主机的名字，问题就解决了。
 

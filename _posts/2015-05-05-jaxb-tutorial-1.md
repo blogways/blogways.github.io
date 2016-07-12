@@ -8,7 +8,7 @@ description: JAXB（Java Architecture for XML Binding简称JAXB）允许Java开�
 
 ---
 
-##一、简介
+## 一、简介
 
 JAXB（Java Architecture for XML Binding简称JAXB）允许Java开发人员将Java类映射为XML表示方式。JAXB提供两种主要特性：将一个Java对象序列化为XML，以及反向操作，将XML解析成Java对象。换句话说，JAXB允许以XML格式存储和读取数据，而不需要程序的类结构实现特定的读取XML和保存XML的代码！
 
@@ -22,7 +22,7 @@ JAXB在Java SE平台上，对应版本分别为：
 
 * Java SE 6: JAXB 2.0 (JSR 222)
 
-##二、JAXB和Dom/SAX/JDOM/Dom4J对比
+## 二、JAXB和Dom/SAX/JDOM/Dom4J对比
 
 其实，JAXB不能直接拿来和Dom/SAX/Dom4j进行比较。他们的设计理念不同。后者提供的API都是解析XML的底层API，而前者设计的目的是将XML文件中的元素及属性和JAVA对象建立绑定关系，可以自动相互转换。
 
@@ -39,7 +39,7 @@ JAXB没有提供解析XML的新方法，它是调用后者(Dom/SAX/JDOM/Dom4J)�
 
 下面，我们就来看看，如何在xml文件和java对象间，使用JAXB进行转换。
 
-##三、编组(marshal)
+## 三、编组(marshal)
 
 将Java对象，转换为Xml文件，我们称之为编组(marshal).
 
@@ -149,7 +149,7 @@ JAXB没有提供解析XML的新方法，它是调用后者(Dom/SAX/JDOM/Dom4J)�
 * 在一个复杂的项目中，XML文件结构可能很复杂。这时，不需要手工编写对应的Java类文件，我们可以通过工具从xml schema文件获得java类文件，甚至可以从xml文件中转换得到java类文件。这些我们在后续的文章中介绍。
 
 
-##四、反编组(Un-marshal)
+## 四、反编组(Un-marshal)
 
 将Xml文件的内容，转换为Java对象，我们称之为反编组(un-marshal).
 
@@ -232,7 +232,7 @@ list.xml内容如下：
 
 <a name="5"></a>
 
-##五、注释
+## 五、注释
 
 在本文前面部分，为了简化示例。我们仅使用了JAXB中的`@XmlRootElement`注解来编组和反编组XML。
 
@@ -264,7 +264,7 @@ list.xml内容如下：
 这是一个很长的列表，但是并不是所有的JAXB的注解。要查看JAXB的所有注解的列表，请查看package 的 [summary](https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/package-summary.html).
 
 
-##六、适配器(Adapters)
+## 六、适配器(Adapters)
 
 细心的读者，可能发现在前面编组的例子中，`birthday`是`LocalDate`类型，作为复杂类型，不能很好地被编组和反编组。这时需要一个适配器。
 
@@ -310,7 +310,7 @@ list.xml内容如下：
 
 完美了，日期也可以显示出来了！
 
-##七、总结
+## 七、总结
 
 好了，至此，你已经掌握了基本的JAXB的使用方法。可以编组、反编组、编写适配器，并且对相关注释也有了一个基本的了解，至少，你知道可以去哪查询都有哪些注释了。：）
 
@@ -324,7 +324,7 @@ list.xml内容如下：
 
 本文，所使用的示例完整代码，可以在本系列文章完结时提供。
 
-##八、参考文献
+## 八、参考文献
 
 1. [http://zh.wikipedia.org/zh/JAXB](http://zh.wikipedia.org/zh/JAXB)
 2. [http://en.wikipedia.org/wiki/Java_Architecture_for_XML_Binding](http://en.wikipedia.org/wiki/Java_Architecture_for_XML_Binding)

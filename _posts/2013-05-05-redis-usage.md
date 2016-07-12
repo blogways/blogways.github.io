@@ -9,8 +9,8 @@ image:
 description: Redis 的5种不同的数据类型： 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)。
 ---
 
-##数据类型
-###keys
+## 数据类型
+### keys
 redis本质上还是一个key-value db，所以我们首先来看看他的key。
 
 相关命令
@@ -74,7 +74,7 @@ redis本质上还是一个key-value db，所以我们首先来看看他的key。
 	OK
 	redis 127.0.0.1:6479[10]> 
 
-###string
+### string
 string 是 redis 最基本的类型，而且 string 类型是二进制安全的，可以包含任何数据，包括图片和序列化的对象，最大可存1G字节。
 
 相关命令
@@ -121,7 +121,7 @@ string 是 redis 最基本的类型，而且 string 类型是二进制安全的�
 	redis 127.0.0.1:6479> substr k1 2 8
 	"llo wor"
 
-###list
+### list
 redis的list类型其实就是一个每个子元素都是string类型的双向链表。所以[lr]push和[lr]pop命令的算法时间复杂度都是O(1)
 另外list会记录链表的长度。所以llen操作也是O(1).链表的最大长度是(2的32次方-1)。我们可以通过push,pop操作从链表的头部
 或者尾部添加删除元素。这使得list既可以用作栈，也可以用作队列。有意思的是list的pop操作还有阻塞版本的。当我们[lr]pop一个
@@ -173,7 +173,7 @@ list对象是，如果list是空，或者不存在，会立即返回nil。但是
 	redis 127.0.0.1:6479> rpop list1
 	"aaa"
 
-###set
+### set
 redis的set是string类型的无序集合。set元素最大可以包含(2的32次方-1)个元素。set的是通过hash table实现的，所以添加，删除，查找的复杂度都是O(1)。hash table会随着添加或者删除自动的调整大小。需要注意的是调整hash table大小时候需要同步（获取写锁）会阻塞其他读写操作。可能不久后就会改用跳表（skip list）来实现
 跳表已经在sorted set中使用了。关于set集合类型除了基本的添加删除操作，其他有用的操作还包含集合的取并集(union)，交集(intersection)，
 差集(difference)。通过这些操作可以很容易的实现sns中的好友推荐和blog的tag功能。
@@ -222,7 +222,7 @@ redis的set是string类型的无序集合。set元素最大可以包含(2的32�
 	redis 127.0.0.1:6479> smembers set3
 	1) "ccc"
 
-###sorted set
+### sorted set
 和set一样sorted set也是string类型元素的集合，不同的是每个元素都会关联一个double类型的score。sorted set的实现是skip list和hash table的混合体
 当元素被添加到集合中时，一个元素到score的映射被添加到hash table中，所以给定一个元素获取score的开销是O(1),另一个score到元素的映射被添加到skip list
 并按照score排序，所以就可以有序的获取集合中的元素。添加，删除操作开销都是O(log(N))和skip list的开销一致,redis的skip list实现用的是双向链表,这样就
@@ -265,7 +265,7 @@ redis的set是string类型的无序集合。set元素最大可以包含(2的32�
 	2) "ccc"
 
 
-###hash
+### hash
 redis hash是一个string类型的field和value的映射表.它的添加，删除操作都是O(1)（平均）.hash特别适合用于存储对象。相较于将对象的每个字段存成
 单个string类型。将一个对象存储在hash类型中会占用更少的内存，并且可以更方便的存取整个对象。省内存的原因是新建一个hash对象时开始是用zipmap（又称为small hash）来存储的。这个zipmap其实并不是hash table，但是zipmap相比正常的hash实现可以节省不少hash本身需要的一些元数据存储开销。尽管zipmap的添加，删除，查找都是O(n)，但是由于一般对象的field数量都不太多。所以使用zipmap也是很快的,也就是说添加删除平均还是O(1)。如果field或者value的大小超出一定限制后，redis会在内部自动将zipmap替换成正常的hash实现. 这个限制可以在配置文件中指定
 hash-max-zipmap-entries 64 #配置字段最多64个

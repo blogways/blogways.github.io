@@ -8,13 +8,13 @@ image:
 description: 对于 Java 开发的 web 项目，Spring 成了小伙伴们的首选，几乎成了 JavaEE 的标配，在开发、测试的过程中免不了会碰到很多相关的错误，其中比较常见的一个错误就是  NoSuchBeanDefinitionException，下面来讨论一下常见的几种情况， 本文着重介绍 bootstrap 项目注解实例化 Bean，至于 xml 配置部分逻辑性比较好查，应该更容易定位问题，在这里就不介绍了。
 ---
 对于 Java 开发的 web 项目，Spring 成了小伙伴们的首选，几乎成了 JavaEE 的标配，在开发、测试的过程中免不了会碰到很多相关的错误，其中比较常见的一个错误就是  NoSuchBeanDefinitionException，下面来讨论一下常见的几种情况， 本文着重介绍 bootstrap 项目注解实例化 Bean，至于 xml 配置部分逻辑性比较好查，应该更容易定位问题，在这里就不介绍了。
-###1. 概述
+### 1. 概述
 
 在这篇文章中，我们讨论一下 Spring `BeanFactory` 在试图创建一个未在 Spring 上下文中定义的 Bean 时抛出的常见的异常 `org.springframework.beans.factory.NoSuchBeanDefinitionException`。
 
 我们将在这里讨论下导致这个问题的可能的原因以及可用的解决方案。
 
-###2. Cause: No qualifying bean of type […] found for dependency
+### 2. Cause: No qualifying bean of type […] found for dependency
 
 导致这个异常的最常见的原因是企图注入一个未被定义的 bean。例如－在 BeanA 中注入 BeanB：
 	@Component
@@ -49,7 +49,7 @@ Spring 已经明确指出：“至少需要一个 bean 作为 autowire 依赖注
 
 如果 bean 所在的目录没有配置扫描，那么 BeanB 也就不会定义在当前的 Spring 上下文中。
 
-###3. Cause: No qualifying bean of type […] is defined
+### 3. Cause: No qualifying bean of type […] is defined
 
 另外一种情况就是上下文中存在重复的 bean 定义，不唯一。例如，假如有一个接口 `IBeanB` 被两个 bean (`BeanB1`和`BeanB2`) 实现：
 
@@ -101,7 +101,7 @@ Spring 已经明确指出：“至少需要一个 bean 作为 autowire 依赖注
 
 通过指定 `Qualifier` 具体的注入 bean，Spring 将能决定使用哪个实现类来注入。
 
-###4. Cause: No Bean Named […] is defined
+### 4. Cause: No Bean Named […] is defined
 
 当 Spring 的上下文中不存在指定名称的 bean 时同样会抛出 `NoSuchBeanDefinitionException` 异常：
 
@@ -123,7 +123,7 @@ Spring 已经明确指出：“至少需要一个 bean 作为 autowire 依赖注
 	No bean named 'someBeanName' is defined
 	Again, Spring clearly and concisely indicates the reason for the failure: “No bean named X is defined“.
 
-###5. Cause: Proxied Beans
+### 5. Cause: Proxied Beans
 
 当上下文中一个 bean 使用 JDK 的动态代理机制代理时，那么这个代理类不需要扩展目标 bean （然而它将实现相同的接口）
 
@@ -165,6 +165,6 @@ Spring 已经明确指出：“至少需要一个 bean 作为 autowire 依赖注
 	    ...
 	}
 
-###6. 结论
+### 6. 结论
 
 本文讨论了几种可能导致 `NoSuchBeanDefinitionException` 的情况，重点是如何在实践中解决这些异常。

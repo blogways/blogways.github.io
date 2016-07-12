@@ -9,11 +9,11 @@ image:
 description: 之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。
 ---
 
-##Express4.x API 翻译[1] -- Application
+## Express4.x API 翻译[1] -- Application
 
 之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。刚开始写几个例子就发现问题了，以前用的是3.5的版本，可以很好的集成在webstorm工具里面使用，到4.x版本的时候就一堆问题，工具已经无法创建新的项目，单独用命令生成，发现启动方法也跟以前不一样，4.x是用npm去启动bin下面的www文件，一些以前的写法现在也用不了，本想回到之前的版本，但看4.x的版本更新很快，应该也是以后的趋势，而且专注高性能，有必要直接学习之。从哪下手比较好呢，网上4.x的例子跟文档都很少，索性还是从API看起吧，刚好英文比较差，算是一起学了。
 
-###express()
+### express()
 创建一个 express 应用。
 
 	var express = require('express');
@@ -25,8 +25,8 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	
 	app.listen(3000);
 
-##Application
-###settings
+## Application
+### settings
 
 提供以下设置用来改变Express行为：
 
@@ -41,14 +41,14 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 - `views` 视图目录路径，默认"process.cwd()+'/views'"
 - `x-powered-by` 启用X-Powered-By: Express HTTP header，默认enabled
 
-###app.set(name, value)
+### app.set(name, value)
 设置指定name的值
 
 	app.set('title', 'My Site');
 	app.get('title');
 	// => "My Site"
 
-###app.get(name)
+### app.get(name)
 获取对应name的值
 
 	app.get('title');
@@ -58,19 +58,19 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	app.get('title');
 	// => "My Site"
 
-###app.enable(name)
+### app.enable(name)
 设置name值为true
 
 	app.enable('trust proxy');
 	app.get('trust proxy');
 	// => true
-###app.disable(name)
+### app.disable(name)
 设置name值为false
 
 	app.disable('trust proxy');
 	app.get('trust proxy');
 	// => false
-###app.enabled(name)
+### app.enabled(name)
 检查name对应的值是否为true
 
 	app.enabled('trust proxy');
@@ -79,7 +79,7 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	app.enable('trust proxy');
 	app.enabled('trust proxy');
 	// => true
-###app.disabled(name)
+### app.disabled(name)
 检查name对应的值是否为false
 
 	app.disabled('trust proxy');
@@ -88,7 +88,7 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	app.enable('trust proxy');
 	app.disabled('trust proxy');
 	// => false
-###app.use([path], function)
+### app.use([path], function)
 使用给定的中间件function，可选择挂载path，默认"/"
 
 	var express = require('express');
@@ -146,7 +146,7 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	app.use(express.static(__dirname + '/public'));
 	app.use(express.static(__dirname + '/files'));
 	app.use(express.static(__dirname + '/uploads'));
-###app.engine(ext, callback)
+### app.engine(ext, callback)
 
 注册给定的模板引擎的callback默认用来处理扩展名为ext的文件。例如，如果你试图渲染一个"foo.jade"文件，Express将在内部调用以下代码，并缓存require()给后续调用以提高性能。
 
@@ -163,7 +163,7 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	var engines = require('consolidate');
 	app.engine('haml', engines.haml);
 	app.engine('html', engines.hogan);
-###app.param([name], callback)
+### app.param([name], callback)
 
 映射路由参数规则。例如当:user存在于一个路由路径中，你需要自动提供req.user给路由映射启动逻辑，或者执行输入参数验证。
 
@@ -214,7 +214,7 @@ description: 之前参与过一个node的项目，使用express框架，感觉�
 	  var range = req.params.range;
 	  res.send('from ' + range[1] + ' to ' + range[2]);
 	});
-###app.VERB(path, [callback...], callback)
+### app.VERB(path, [callback...], callback)
 
 Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作，跟app.post()类似。可提供多个回调函数，都是一视同仁，表现跟中间件一样，唯一不一样的是通过调用next(‘route’)来继续其余的路由回调。这个机制可以用来执行路由的前提条件，然后将控制权传递给随后的路由，没有理由进行路由的匹配。
 
@@ -250,7 +250,7 @@ Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作�
 
 两个中间件将用来处理GET和POST请求。
 
-###app.all(path, [callback...], callback)
+### app.all(path, [callback...], callback)
 
 此方法功能就像app.VERB()方法，但它匹配所有HTTP的动作。
 该方法用于映射具体的路径前缀的"global"逻辑或者任意匹配非常有用。例如如果你将下面的路由放在其他路由前面定义，这将导致从这个规则起所有的请求都需要身份验证，并自动加载一个用户。请记住这些回调函数不应该被当作终点，loadUser可以当作一个任务，然后调用next()继续匹配随后的路由。
@@ -264,7 +264,7 @@ Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作�
 另一个很好的例子是白名单"global"功能。下面的例子跟之前很像，但只限制"/api"为前缀的路径：
 
 	app.all('/api/*', requireAuthentication);
-###app.route(path)
+### app.route(path)
 
 返回一个路由的实例用来处理可选的中间件HTTP动作。推荐使用app.route()方法用来避免路由重复命名以及由此导致的错误。
 
@@ -281,7 +281,7 @@ Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作�
 	.post(function(req, res, next) {
 	  // maybe add a new event...
 	})
-###app.locals
+### app.locals
 
 应用本地变量提供给所有在这个应用程序内渲染的模板。这是一个非常有用的模板函数，就像应用程序级别数据一样。
 
@@ -302,7 +302,7 @@ Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作�
 
 	app.set('title', 'My App');
 	// use settings.title in a view
-###app.render(view, [options], callback)
+### app.render(view, [options], callback)
 
 使用回调函数返回的渲染字符串渲染视图。这是res.render()的应用程序级别的版本，它们的行为是一样的。
 
@@ -313,7 +313,7 @@ Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作�
 	app.render('email', { name: 'Tobi' }, function(err, html){
 	  // ...
 	});
-###app.listen()
+### app.listen()
 
 绑定并监听给定主机和端口的连接，该方法和node的http.Server#listener()方法是一致的。
 
