@@ -54,7 +54,7 @@
   ["keepalived" , "keepalived" , 1]
   ,
 
-  ["iot-web&iot-server&zookeeper" , "iot-web&iot-server&zookeeper" , 1]
+  ["iot" , "iot" , 1]
    
 
 ]
