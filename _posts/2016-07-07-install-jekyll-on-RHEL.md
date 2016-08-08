@@ -6,7 +6,7 @@ tags: ['jekyll', '部署', 'RHEL']
 author: 徐万年
 email: xuwn@asiainfo.com
 #image:
-description: 本想在本机RHEL5.5上装个jekyll
+description: 在VMware虚拟机RHEL5.5上安装jekyll。
 ---
 
 ### 一、概述
