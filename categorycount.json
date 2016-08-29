@@ -27,7 +27,7 @@
   ["express" , "Express" , 14]
   ,
 
-  ["jquery" , "jQuery" , 20]
+  ["jquery" , "jQuery" , 21]
   ,
 
   ["java" , "Java" , 6]
@@ -48,7 +48,7 @@
   ["design" , "design" , 1]
   ,
 
-  ["web前端" , "Web前端" , 1]
+  ["web前端" , "web前端" , 4]
   ,
 
   ["keepalived" , "keepalived" , 1]
