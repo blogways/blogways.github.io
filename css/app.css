@@ -80,3 +80,6 @@ h2.category-name.panel-title { font-size: 25px; text-align: center; font-weight:
 #pt-article-num { font-family: Georgia, serif; font-size: 13px; margin-left: 13px; }
 #pt-author-url { color: black; }
 #pt-author-url:hover { color: #31b0d5; }
+
+h4{padding:5px 0 !important;line-height:25px;text-indent:2em}
+h3{padding:10px 0 !important;}
