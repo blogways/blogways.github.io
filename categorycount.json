@@ -1,6 +1,6 @@
 [
 
-  ["jekyll" , "Jekyll" , 3]
+  ["jekyll" , "Jekyll" , 4]
   ,
 
   ["杂记" , "杂记" , 21]
@@ -27,7 +27,7 @@
   ["express" , "Express" , 14]
   ,
 
-  ["jquery" , "jQuery" , 20]
+  ["jquery" , "jQuery" , 21]
   ,
 
   ["java" , "Java" , 6]
@@ -46,6 +46,18 @@
   ,
 
   ["design" , "design" , 1]
+  ,
+
+  ["web前端" , "web前端" , 4]
+  ,
+
+  ["keepalived" , "keepalived" , 1]
+  ,
+
+  ["iot" , "iot" , 1]
+  ,
+
+  ["交互设计" , "交互设计" , 1]
    
 
 ]
