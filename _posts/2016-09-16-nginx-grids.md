@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Ngnix+Mongodb 文件存储方案
+title: Nginx+Mongodb 文件存储方案
 category: ['web后端']
-tags: ['ngnix', 'mongodb', 'Web']
+tags: ['nginx', 'mongodb', 'Web']
 author: 赵家君
 email: zhaojj5@asiainfo.com
-description: 本文主要介绍Ngnix-gridfs的配置及对Mongodb的访问
+description: 本文主要介绍Nginx-gridfs的配置及对Mongodb的访问
 ---
 
 |  |  *目 录* |
