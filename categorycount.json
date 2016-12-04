@@ -48,7 +48,7 @@
   ["design" , "design" , 1]
   ,
 
-  ["web前端" , "web前端" , 9]
+  ["web前端" , "web前端" , 11]
   ,
 
   ["keepalived" , "keepalived" , 1]
@@ -67,6 +67,12 @@
   ,
 
   ["git" , "git" , 1]
+  ,
+
+  ["索引" , "索引" , 1]
+  ,
+
+  ["storm" , "storm" , 2]
    
 
 ]
