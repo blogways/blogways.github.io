@@ -73,6 +73,9 @@
   ,
 
   ["storm" , "storm" , 2]
+  ,
+
+  ["python" , "Python" , 1]
    
 
 ]
