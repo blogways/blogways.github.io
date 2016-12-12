@@ -1,26 +1,26 @@
 ---
 layout: post
+category: Apache
 title: apache tiles布局框架的简单使用
-category: [布局框架]
-tags: ['aappach', 'tiles']
+tags: ['apache', 'tiles']
 author: 张少勇
-email: zhangsy10@asiainfo.com
-description: appache tiles布局框架的简单使用
+description: apache tiles布局框架的简单使用
+
 ---
 
 |  |  *目 录* |
 | --- | --- |
-| 1 | [appache tiles简介](#1st) |
-| 2 | [appache tiles的优势](#2st) |
-| 3 | [appache tiles的简单使用](#3st) |
+| 1 | [apache tiles简介](#1st) |
+| 2 | [apache tiles的优势](#2st) |
+| 3 | [apache tiles的简单使用](#3st) |
 
 <a id="1st"></a>
 
-## 一、appache tiles的简介
+## 一、apache tiles的简介
 
 ####Apache Tiles是一个JavaEE应用的页面布局框架。Tiles框架提供了一种模板机制，可以为某一类页面定义一个通用的模板，该模板定义了页面的整体布局。布局由可以复用的多个块组成，每个页面可以有选择性的重新定义块而达到组件的复用。
 
-####appache tiles一开始是appache Struts框架的组件之一，后来才被appache独立为一个独立项目。
+####apache tiles一开始是apache Struts框架的组件之一，后来才被apache独立为一个独立项目。
 
 #### tiles主要有以下几个特点：
 * 1.模板机制的页面布局功能。
@@ -29,7 +29,7 @@ description: appache tiles布局框架的简单使用
 
 
 
-## 二、appache tiles的优势
+## 二、apache tiles的优势
 ####大家都知道，在web开发中、我们可以通过include标签来动态的插入其它的jsp页面，这样能够让多个jsp页面共用一个jsp界面的内容，这个功能能够让我们在开发中节省很多时间，并且实用。
 
 ####如果有一天、我们需要把这个界面删除掉的话（或者说添加/修改一个界面），需要在每个jsp的引入位置把引入删除掉（添加/修改一个jsp界面），当然、这个处理听起来比较方便，但是如果有几百，几千个界面，估计人就想吐了，当然时间久了还是可以把他实现，
@@ -37,7 +37,7 @@ description: appache tiles布局框架的简单使用
 ####而tiles则很方便的就可以让我们去实现这个操作，下面就一起来去看看这个tiles怎么去简单的实现，
 
 
-## 二、appache tiles的简单使用
+## 二、apache tiles的简单使用
 
 ####在这里我使用的是SpringMVC+Tiles+Eclipse+Maven;
 ####非maven环境需要手动导入tiles和springmvc的互相依赖的包
