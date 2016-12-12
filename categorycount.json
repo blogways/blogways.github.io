@@ -18,7 +18,7 @@
   ["nginx" , "Nginx" , 4]
   ,
 
-  ["apache" , "Apache" , 9]
+  ["apache" , "Apache" , 10]
   ,
 
   ["node.js" , "Node.js" , 6]
@@ -30,7 +30,7 @@
   ["jquery" , "jQuery" , 21]
   ,
 
-  ["java" , "Java" , 6]
+  ["java" , "Java" , 7]
   ,
 
   ["solr" , "Solr" , 6]
