@@ -30,6 +30,7 @@ description: apache tiles布局框架的简单使用
 
 
 ## 二、apache tiles的优势
+
 ###  大家都知道，在web开发中、我们可以通过include标签来动态的插入其它的jsp页面，这样能够让多个jsp页面共用一个jsp界面的内容，这个功能能够让我们在开发中节省很多时间，并且实用。
 
 ###  如果有一天、我们需要把这个界面删除掉的话（或者说添加/修改一个界面），需要在每个jsp的引入位置把引入删除掉（添加/修改一个jsp界面），当然、这个处理听起来比较方便，但是如果有几百，几千个界面，估计人就想吐了，当然时间久了还是可以把他实现，
@@ -40,6 +41,7 @@ description: apache tiles布局框架的简单使用
 ## 二、apache tiles的简单使用
 
 ###  在这里我使用的是SpringMVC+Tiles+Eclipse+Maven;
+
 ###  非maven环境需要手动导入tiles和springmvc的互相依赖的包
 
 ###  首先新建一个maven工程并且使用pom.xml导入包
