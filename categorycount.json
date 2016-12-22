@@ -3,7 +3,7 @@
   ["jekyll" , "Jekyll" , 4]
   ,
 
-  ["杂记" , "杂记" , 25]
+  ["杂记" , "杂记" , 27]
   ,
 
   ["junit" , "JUnit" , 8]
@@ -48,7 +48,7 @@
   ["design" , "design" , 5]
   ,
 
-  ["web前端" , "web前端" , 13]
+  ["web前端" , "web前端" , 16]
   ,
 
   ["keepalived" , "keepalived" , 1]
