@@ -41,7 +41,7 @@ PATH=.......;D:\software\mysql-5.7\bin;(注意是追加,不是覆盖)。
 
 
 
-    以管理员身份运行cmd（一定要用管理员身份运行，不然权限不够），键入 cd D:\software\mysql-5.7\bin,回车。再键入mysqld -install，若前面操作正确系统会提示安装成功。
+    以管理员身份运行cmd（必须要用管理员身份运行，不然权限不够），键入 cd D:\software\mysql-5.7\bin,回车。再键入mysqld -install，若前面操作正确系统会提示安装成功。
 
 
     安装成功后就要启动服务了，继续在cmd中输入:net start mysql。
