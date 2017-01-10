@@ -1,5 +1,5 @@
 ---
-layout: nil
+layout: null
 type: json
 ---
 [{% for author in site.authors %}{% assign flag = true %}
