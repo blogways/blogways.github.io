@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Express4.x API 翻译[2] -- Request_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Node, Express, API">
+    
+    <meta name=description content="之前参与过一个node的项目，使用express框架，感觉这种异步IO以及事件驱动的架构设计用在一些高并发的场景还是大有可为的，决定深入学习一下。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "Jacky".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2014/06/10/node-plugin.html' title='node 插件化开发'>node 插件化开发</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2014/06/13/node-express4.x-api-3.html' title='Express4.x API 翻译[3] -- Response'>Express4.x API 翻译[3] -- Response</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2014/06/13/node-express4.x-api-3.html' title='Express4.x API 翻译[3] -- Response'>Express4.x API 翻译[3] -- Response</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Express4.x API 翻译[2] -- Request
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2014-06-11
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Node</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Express</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>API</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>Express</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="express4x-api-翻译2--request">Express4.x API 翻译[2] – Request</h2>
+
+<h3 id="reqparams">req.params</h3>
+
+<p>此属性是一个包含映射路由”parameters”的对象。例如你使用/user/:name路由，那么”name”属性对你来说就是一个req.params.name变量。该对象默认为{}。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// GET /user/tj
+req.params.name
+// =&gt; "tj"
+</code></pre>
+</div>
+
+<p>当在定义路由规则时使用了正则表达式，使用req.params[N]获取所有参数匹配数组，其中N表示数组的第几个。此规则适用于包含未定义的通配符的路由字符串，例如<code class="highlighter-rouge">/file/*</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// GET /file/javascripts/jquery.js
+req.params[0]
+// =&gt; "javascripts/jquery.js" ### req.query
+</code></pre>
+</div>
+
+<p>此属性是一个包含解析查询字符串的对象，默认为{}。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// GET /search?q=tobi+ferret
+req.query.q
+// =&gt; "tobi ferret"
+
+// GET /shoes?order=desc&amp;shoe[color]=blue&amp;shoe[type]=converse
+req.query.order
+// =&gt; "desc"
+
+req.query.shoe.color
+// =&gt; "blue"
+
+req.query.shoe.type
+// =&gt; "converse" ### req.param(name)
+</code></pre>
+</div>
+
+<p>返回当前name参数的值。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// ?name=tobi
+req.param('name')
+// =&gt; "tobi"
+
+// POST name=tobi
+req.param('name')
+// =&gt; "tobi"
+
+// /user/tobi for /user/:name 
+req.param('name')
+// =&gt; "tobi"
+</code></pre>
+</div>
+
+<p>查找优先级如下：</p>
+
+<ul>
+  <li>req.params</li>
+  <li>req.body</li>
+  <li>req.query</li>
+</ul>
+
+<p>直接使用req.body，req.params，和req.query应该更新清晰，除非你确实需要接收每个对象的输入。</p>
+
+<h3 id="reqroute">req.route</h3>
+
+<p>当前匹配的路由包含多个属性，如路由的原始路径字符串以及转换后的正则表达式等。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>app.get('/user/:id?', function(req, res){
+  console.log(req.route);
+});
+</code></pre>
+</div>
+
+<p>上面的代码输出结果：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="err">path:</span><span class="w"> </span><span class="err">'/user/:id?',</span><span class="w">
+  </span><span class="err">keys:</span><span class="w"> </span><span class="err">[</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="err">name:</span><span class="w"> </span><span class="err">'id',</span><span class="w"> </span><span class="err">optional:</span><span class="w"> </span><span class="err">true</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="err">],</span><span class="w">
+  </span><span class="err">regexp:</span><span class="w"> </span><span class="err">/^\/user(?:\/(</span><span class="p">[</span><span class="err">^\/</span><span class="p">]</span><span class="err">+?))?\/?$/i,</span><span class="w">
+  </span><span class="err">params:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">id:</span><span class="w"> </span><span class="err">'</span><span class="mi">12</span><span class="err">'</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="err">}</span><span class="w"> </span><span class="err">###</span><span class="w"> </span><span class="err">req.cookies</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>当cookieParser()中间件使用时该对象默认为{}，除此之外还包含由用户代理发送的cookies。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// Cookie: name=tj
+req.cookies.name
+// =&gt; "tj"
+</code></pre>
+</div>
+
+<p>如有任何问题或者疑问请参阅cookie-parser附加文档。</p>
+
+<h3 id="reqsignedcookies">req.signedCookies</h3>
+
+<p>当cookieParser(secret)中间件使用该对象默认为{}，还包括用户代理发送的签名cookies，未签名以及准备使用的。签名cookies存放于一个单独的对象，以显示开发者的意图，否则可以通过在req.cookie设置值发起恶意攻击，从而很轻易的欺骗。需要注意的是签名的cookie并不意味着它是隐藏的或者是加密的，这个防止篡改的秘密只是简单的将签名私有化。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// Cookie: user=tobi.CP7AWaXDfAKIRfH49dQzKJx7sKzzSoPq7/AcBBRVwlI3
+req.signedCookies.user
+// =&gt; "tobi" 如有任何问题或者疑问请参阅cookie-parser附加文档。
+</code></pre>
+</div>
+
+<h3 id="reqgetfield">req.get(field)</h3>
+
+<p>获取请求头内的field字段，不区分大小写。Referrer和Referer字段可以互换。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>req.get('Content-Type');
+// =&gt; "text/plain"
+
+req.get('content-type');
+// =&gt; "text/plain"
+
+req.get('Something');
+// =&gt; undefined 别名为req.header(field)。
+</code></pre>
+</div>
+
+<h3 id="reqacceptstypes">req.accepts(types)</h3>
+
+<p>检查给定的types是不是可以接受的，当结果为true时返回最佳匹配，否则返回undefined，在这种情况下你应该返回406”Not Acceptable”。</p>
+
+<p>type可以是单一的mine类型的字符串，比如”application/json”，扩展名如”json”，也可以是以逗号分隔的列表或者数组。当为列表或数组时将返回最佳匹配。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// Accept: text/html
+req.accepts('html');
+// =&gt; "html"
+
+// Accept: text/*, application/json
+req.accepts('html');
+// =&gt; "html"
+req.accepts('text/html');
+// =&gt; "text/html"
+req.accepts('json, text');
+// =&gt; "json"
+req.accepts('application/json');
+// =&gt; "application/json"
+
+// Accept: text/*, application/json
+req.accepts('image/png');
+req.accepts('png');
+// =&gt; undefined
+
+// Accept: text/*;q=.5, application/json
+req.accepts(['html', 'json']);
+req.accepts('html, json');
+// =&gt; "json"
+</code></pre>
+</div>
+
+<p>如有任何问题或者疑问，请参阅accepts附加文档。</p>
+
+<h3 id="reqacceptscharsetcharset">req.acceptsCharset(charset)</h3>
+<p>检查给定的字符集是否可以支持。</p>
+
+<p>如有任何问题或者疑问，请参阅accepts附加文档。</p>
+
+<h3 id="reqacceptslanguagelang">req.acceptsLanguage(lang)</h3>
+<p>检查给定的lang是否支持。</p>
+
+<p>如有任何问题或者疑问，请参阅accepts附加文档。</p>
+
+<h3 id="reqistype">req.is(type)</h3>
+
+<p>检查传入请求字符串是否包含了”Content-Type”头字段，并且给出匹配的mine类型。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// With Content-Type: text/html; charset=utf-8
+req.is('html');
+req.is('text/html');
+req.is('text/*');
+// =&gt; true
+
+// When Content-Type is application/json
+req.is('json');
+req.is('application/json');
+req.is('application/*');
+// =&gt; true
+
+req.is('html');
+// =&gt; false
+</code></pre>
+</div>
+
+<p>如有任何问题或者疑问，请参阅type-is附加文档。</p>
+
+<h3 id="reqip">req.ip</h3>
+
+<p>返回远程地址，或者当信任代理已启用时返回代理地址。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>req.ip
+// =&gt; "127.0.0.1" ### req.ips
+</code></pre>
+</div>
+
+<p>当信任代理为true时，解析”X-Forwarded-For”ip地址列表返回一个数组，否则返回一个空数组。例如当值为”client, proxy1, proxy2”时你会获得[“client”, “proxy1”, “proxy2”]数组，其中”proxy2”是最远的下游地址。</p>
+
+<h3 id="reqpath">req.path</h3>
+<p>返回请求的URL路径名。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// example.com/users?sort=desc
+req.path
+// =&gt; "/users" ### req.host Returns the hostname from the "Host" header field (void of portno).
+</code></pre>
+</div>
+
+<p>返回从”Host”头字段内取出的主机名(不包含端口)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// Host: "example.com:3000"
+req.host
+// =&gt; "example.com" ### req.fresh
+</code></pre>
+</div>
+
+<p>检查请求是否刷新，通过对Last-Modified和/或ETag进行匹配，表明资源是不是最新的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>req.fresh
+// =&gt; true 如有任何问题或者疑问，请参阅fresh附加文档。
+</code></pre>
+</div>
+
+<h3 id="reqstale">req.stale</h3>
+
+<p>检查请求是否过期，如果Last-Modified和/或ETag不匹配，表有资源是过期的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>req.stale
+// =&gt; true ### req.xhr
+</code></pre>
+</div>
+
+<p>检查请求头里是否包含”X-Requested-With”字段并且值为”XMLHttpRequest”(jQuery等)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>req.xhr
+// =&gt; true ### req.protocol 当使用TLS请求时返回"http"或"https"协议字符串。当信任路由设置为开启时"X-Forwarded-Proto"头字段将被信任。如果你正在运行一个支持https协议的反向代理，那么这个是支持的。
+
+
+req.protocol
+// =&gt; "http" ### req.secure
+</code></pre>
+</div>
+
+<p>检查TLS连接是否建立。这是一个简写：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>'https' == req.protocol; ### req.subdomains Return subdomains as an array. 返回子域数组。
+
+// Host: "tobi.ferrets.example.com"
+req.subdomains
+// =&gt; ["ferrets", "tobi"] ### req.originalUrl
+</code></pre>
+</div>
+
+<p>此属性很像req.url，但它保留了原始请求的url，允许你在做内部路由时自由重写req.url。例如app.use()中间件将重写req.url重新定义挂载点。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// GET /search?q=something
+req.originalUrl
+// =&gt; "/search?q=something"
+</code></pre>
+</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2014/06/10/node-plugin.html' title='node 插件化开发'>node 插件化开发</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2014/06/13/node-express4.x-api-3.html' title='Express4.x API 翻译[3] -- Response'>Express4.x API 翻译[3] -- Response</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2014/06/13/node-express4.x-api-3.html' title='Express4.x API 翻译[3] -- Response'>Express4.x API 翻译[3] -- Response</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/jacky/'>Jacky</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

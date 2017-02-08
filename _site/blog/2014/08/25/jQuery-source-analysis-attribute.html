@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>jQuery源码解读[12] -- 特性属性操作_博汇网_www.blogways.net</title>
+    <meta name=keywords content="$, jQuery, 源码, attr, 特性操作, prop, 属性操作">
+    
+    <meta name=description content="属性操作主要包括Attr特性和Prop属性两部分，attr特性就是存在于元素的attributes属性中的节点，对应的nodeType为2；而prop属性，则是对象的一个值，可以通过对象实例.prop属性名来访问和设置">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "万洲".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2014/08/22/jQuery-source-analysis-selector-expr.html' title='jQuery源码解读[11] -- 选择符表达式'>jQuery源码解读[11] -- 选择符表达式</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2014/08/26/jQuery-source-analysis-ajax(1).html' title='jQuery源码解读[13] -- AJAX（1）'>jQuery源码解读[13] -- AJAX（1）</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2014/08/26/jQuery-source-analysis-ajax(1).html' title='jQuery源码解读[13] -- AJAX（1）'>jQuery源码解读[13] -- AJAX（1）</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>jQuery源码解读[12] -- 特性属性操作
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2014-08-25
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>$</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>jQuery</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>源码</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>attr</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>特性操作</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>prop</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>属性操作</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>jQuery</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="一前言">一、前言</h2>
+
+<p>属性操作主要分为attr特性和prop属性操作，而一般使用的方法就三个：<code class="highlighter-rouge">.attr()</code>、<code class="highlighter-rouge">.prop</code>和<code class="highlighter-rouge">.val()</code>。其中<code class="highlighter-rouge">.attr()</code>用于操作attr特性，而<code class="highlighter-rouge">.prop()</code>主要用于操作prop属性，最后<code class="highlighter-rouge">.val()</code>则是用于操作元素的value属性值。</p>
+
+<p>提到attr特性和prop属性，很多人都会很疑惑，它们之间有什么不同呢？</p>
+
+<p>(1)<strong><em>attr特性</em></strong>，直接写在标签上的属性，可以通过浏览器原生的API：setAttribute、getAttribute进行设置、读取，如下所示的id，type，checked都是attr特性：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;input id='incb' type='checkbox' checked='checked'/&gt;
+</code></pre>
+</div>
+
+<p>attr特性，主要是通过<code class="highlighter-rouge">name＝'value'</code>的形式，通过NameNodeMap保存在元素节点当中，其自身作为<code class="highlighter-rouge">Node.ATTRIBUTE_NODE(2)</code>节点，上述的<code class="highlighter-rouge">&lt;input&gt;</code>元素对应的jQuery对象结构，如下图所示：</p>
+
+<p><img src="/images/attr.png" alt="attr 特性值 NameNodeMap" /></p>
+
+<p>从图中可以看到attr特性在元素节点中是以NameNodeMap类型保持的。</p>
+
+<p>(2)<strong><em>prop属性</em></strong>，prop属性和attr特性最明显的差异修饰保持方式和访问设置方式，attr要通过一些元素的API来访问设置，但是prop属性则是直接通过<code class="highlighter-rouge">.</code>号来进行访问和设置属性；prop属性是作为元素节点的实例对象属性来存储的。</p>
+
+<p>就像上面attr特性值中的图片所示，其中的<code class="highlighter-rouge">checked: true</code>，<code class="highlighter-rouge">accept:""</code>，<code class="highlighter-rouge">autofocus: false</code>等都是prop属性值，因为作为元素节点的属性，可以直接访问：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var $incb = $('#incb');
+$incb.accept = 'Test prop value!';
+console.log($incb.accept);
+</code></pre>
+</div>
+
+<p>结果会显示<code class="highlighter-rouge">Test prop value!</code>，可见上面通过对<code class="highlighter-rouge">.accept = '...'</code>直接赋值用于设置了prop属性，而通过<code class="highlighter-rouge">.accept</code>直接返回了设置的prop属性。</p>
+
+<p>而<code class="highlighter-rouge">.val()</code>则是操作的是元素的value属性。</p>
+
+<h2 id="二源码分析">二、源码分析</h2>
+
+<p>首先，看一下通过<code class="highlighter-rouge">jQuery.fn.extend</code>扩展到jQuery实例对象中的<code class="highlighter-rouge">.attr()</code>和<code class="highlighter-rouge">.prop()</code>方法，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>attr: function( name, value ) {
+	return access( this, jQuery.attr, name, value, arguments.length &gt; 1 );
+}
+
+prop: function( name, value ) {
+	return access( this, jQuery.prop, name, value, arguments.length &gt; 1 );
+}
+</code></pre>
+</div>
+
+<p>由上面的源码可以看出，jQuery实例对象中的两个方法都是调用了access，在参数传递方面除了在第二个参数不同之外，其余都是一样的，那么让我们来看一下access函数是何方神圣，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var access = jQuery.access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
+	var i = 0,
+		length = elems.length,
+		bulk = key == null;
+
+	// 传递的过来的key值是个对象，递归调用处理多值
+	if ( jQuery.type( key ) === "object" ) {
+		chainable = true;
+		for ( i in key ) {
+			jQuery.access( elems, fn, i, key[i], true, emptyGet, raw );
+		}
+
+	// 传递的value值有意义，处理单值
+	} else if ( value !== undefined ) {
+		chainable = true;
+
+		if ( !jQuery.isFunction( value ) ) {
+			raw = true;
+		}
+
+		if ( bulk ) {
+			// Bulk operations run against the entire set
+			// key值不为空，即传递过来的key值有意义
+			if ( raw ) {
+				// 如果传递过来的value不是一个函数，
+				// 则直接使用key和value值，调用传递过来的函数fn
+				fn.call( elems, value );
+				fn = null;
+
+			} else {
+				bulk = fn;
+				fn = function( elem, key, value ) {
+					return bulk.call( jQuery( elem ), value );
+				};
+			}
+		}
+
+		if ( fn ) { 	// 运行fn
+			for ( ; i &lt; length; i++ ) {
+				fn( elems[i], key, raw ? value : value.call( elems[i], i, fn( elems[i], key ) ) );
+			}
+		}
+	}
+	// chainable 为 arguments.length &gt; 1 的结果
+	return chainable ? 	 // 返回操作以后的数据
+		elems :
+		bulk ?
+			fn.call( elems ) :
+			length ? fn( elems[0], key ) : emptyGet;
+};
+</code></pre>
+</div>
+
+<p>从中可以看出，access方法没有太多代码，仅仅只是讲传递过来的参数做一定的修改，修改完成之后执行指定的函数(第二个参数所指定的函数)，而主要的参数修改，就是将多值参数分解为单值操作，然后分别执行相应的函数。</p>
+
+<p><code class="highlighter-rouge">.attr()</code>和<code class="highlighter-rouge">.prop()</code>方法在为access传递的第二个参数，分别传值为<code class="highlighter-rouge">jQuery.attr</code>和<code class="highlighter-rouge">jQuery.prop</code>，由此可见，attr特性与prop属性的get/set方法具体实现应该在这两个传值函数当中。</p>
+
+<p><strong><em>attr: function( elem, name, value )</em></strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>attr: function( elem, name, value ) {
+	var hooks, ret,
+		nType = elem.nodeType;
+
+	// 忽略文本、注释和属性节点的attr特性操作(get/set)
+	if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+		return;
+	}
+
+	// 当不支持浏览器原生的getAttribute时，
+	// 调用prop属性设置方法来实现
+	if ( typeof elem.getAttribute === strundefined ) {
+		return jQuery.prop( elem, name, value );
+	}
+
+	// 所有的attr特性名都是小写
+	if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
+		name = name.toLowerCase();  // 将特性名转换为小写样式
+		hooks = jQuery.attrHooks[ name ] || // 如果hook已被定义，则直接抓取
+			( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );
+	}
+
+	if ( value !== undefined ) {  // 特性值已定义
+
+		if ( value === null ) {  // 特性值为空，这删除对应属性
+			jQuery.removeAttr( elem, name );
+
+		} else if ( hooks &amp;&amp; "set" in hooks &amp;&amp; 
+						(ret = hooks.set( elem, value, name )) !== undefined ) {
+			return ret;
+
+		} else {
+			elem.setAttribute( name, value + "" );
+			return value;
+		}
+	// 如果有对应的hooks，且其中包含get方法，则调用hooks的get方法
+	} else if ( hooks &amp;&amp; "get" in hooks &amp;&amp; (ret = hooks.get( elem, name )) !== null ) {
+		return ret;
+
+	} else {
+		ret = jQuery.find.attr( elem, name );
+		// 不存在对应特性返回undefined
+		return ret == null ?
+			undefined :
+			ret;
+	}
+}
+</code></pre>
+</div>
+
+<p>由源码可知，通过对参数的一些判断和修正，实现来对<code class="highlighter-rouge">.attr()</code>方法的重载，首先，value值是否定义，来判别是get/set，value的类型(可以是function)，或者传入一个key-value值对象，都能实现类似<code class="highlighter-rouge">C/C++</code>中的函数重载：</p>
+
+<p>(1)<code class="highlighter-rouge">.attr( key )</code>，get方法，取得指定key值(特性名)对应的特性值；</p>
+
+<p>(2)<code class="highlighter-rouge">.attr( key, value )</code>，set方法，设置指定key值所示特性对应的特征值；</p>
+
+<p>(3)<code class="highlighter-rouge">.attr( key, fn )</code>，set方法，设置对应key特性的特性值，为调用fn之后的返回结果(每个匹配元素单独调用)；</p>
+
+<p>(4)<code class="highlighter-rouge">.attr( obj )</code>，set方法，根据传入的key-value对象设置特性</p>
+
+<p>(5)<code class="highlighter-rouge">.attr( key, null )</code>/<code class="highlighter-rouge">.removeAttr(key)</code>，删除指定key值对应的特性</p>
+
+<p><strong><em>prop: function( elem, name, value )</em></strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>prop: function( elem, name, value ) {
+	var ret, hooks, notxml,
+		nType = elem.nodeType;
+
+	// 忽略文本、注释和属性节点的attr特性操作(get/set)
+	if ( !elem || nType === 3 || nType === 8 || nType === 2 ) {
+		return;
+	}
+
+	notxml = nType !== 1 || !jQuery.isXMLDoc( elem );
+
+	if ( notxml ) {
+		// 修正属性名和的绑定的hooks
+		name = jQuery.propFix[ name ] || name;
+		hooks = jQuery.propHooks[ name ];
+	}
+	// 与attr一样，通过判断是否传递value，来鉴别get/set，
+	// 属性的设置与获取都是通过hooks来实现
+	if ( value !== undefined ) { 	// value值已定义，相当于set
+		return hooks &amp;&amp; "set" in hooks 
+					&amp;&amp; (ret = hooks.set( elem, value, name )) !== undefined ?
+			ret :
+			( elem[ name ] = value );
+
+	} else {	// value未定义，相当于get
+		return hooks &amp;&amp; "get" in hooks &amp;&amp; (ret = hooks.get( elem, name )) !== null ?
+			ret :
+			elem[ name ];
+	}
+}
+</code></pre>
+</div>
+
+<p>从源代码可以看出，<code class="highlighter-rouge">.attr()</code>和<code class="highlighter-rouge">.prop()</code>中并没有给出最底层调用原生API的实现，多数都是通过调用对应的hooks来实现对特性与属性的设置，由于笔者对于这个hooks也有些迷惑，还在学习中，此处不在说明。</p>
+
+<p>虽然具体底层实现没有给出，但是源码中可以看出，通过判断value参数值是否定义，用于判断实现get/set方法。</p>
+
+<p>(1)<code class="highlighter-rouge">.prop( key )</code>，get方法，取得指定key值(属性名名)对应的属性值；</p>
+
+<p>(2)<code class="highlighter-rouge">.prop( key, value )</code>，set方法，设置指定key值所示属性对应的属性值；</p>
+
+<p>(3)<code class="highlighter-rouge">.prop( key, fn )</code>，set方法，设置对应key属性的属性值，为调用fn之后的返回结果(每个匹配元素单独调用)；</p>
+
+<p>(4)<code class="highlighter-rouge">.prop( obj )</code>，set方法，根据传入的key-value对象设置属性</p>
+
+<p>(5)<code class="highlighter-rouge">.removeProp(key)</code>，删除指定key值对应的属性</p>
+
+<h3 id="附加">附加</h3>
+
+<p>要说attr特性和prop属性的实际应用，其中attr特性中使用的最多的要算class特性来，而在一些表单元素中使用最多的属性则是value属性来，面对这些常用的特性与属性，jQuery专门为之提供来操作的API，方便开发。</p>
+
+<h4 id="addclassremoveclasstoggleclasshasclass">addClass、removeClass、toggleClass、hasClass</h4>
+
+<p>其中的元素的class特性无意是使用率最高的，因为在CSS层叠样式表中，用匹配符来设计样式时，基本都是使用的class，因而class成为来最常要使用的特性。</p>
+
+<p>由于class包含很多通过空白分隔的若干个特性值，对于某些class特性值的修改非常的不容易，以前需要去编写循环操作，jQuery考虑到这些，专门提供来这几个方法来加快开发。</p>
+
+<p><strong><em>addClass( class )</em></strong></p>
+
+<p>为每个匹配的元素添加传入的类class</p>
+
+<p><strong><em>removeClass( class )</em></strong></p>
+
+<p>从每个匹配的元素中，删除传入的类class</p>
+
+<p><strong><em>toggleClass( class )</em></strong></p>
+
+<p>为每个匹配的元素执行后面的操作：如果传入的类class在匹配元素中已经存在，则删除此class；如果匹配的元素中不存在传入的类class，则在匹配的元素中添加类class</p>
+
+<p><strong><em>hasClass( class )</em></strong></p>
+
+<p>如果所有的匹配元素中，至少有一个元素包含类class则返回true，否则返回false</p>
+
+<h4 id="valval-value-">val()、val( value )</h4>
+
+<p><strong><em>.val()</em></strong></p>
+
+<p>返回所有匹配元素中，第一个匹配元素的value属性值</p>
+
+<p><strong><em>.val( val )</em></strong></p>
+
+<p>设置所有匹配元素的value属性值为传入的val值</p>
+
+<h2 id="三示例">三、示例</h2>
+
+<p><strong><em>attr特性操作</em></strong></p>
+
+<p>html:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;input id ='ic' class='hover highlight other' type='button' value='提交' /&gt;
+&lt;input id ='ic1' class='myclass' type='button' value='重置' /&gt;
+</code></pre>
+</div>
+
+<p>测试：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var $inbtn = $('#ic');
+
+$inbtn.attr('class'); 	// 去的'class'特性值，'hover highlight other'
+
+$inbtn.attr('type', 'input');  	// 将'type'设置为'input'，即按钮变成来输入框
+
+$inbtn.attr('class', null); 	// 删除'class'属性，及所有'class'特性值
+
+// 将上面两部操作合并到一个对象，一次性实现
+$inbtn.attr({'type': 'input','class': null});
+
+$inbtn.removeAttr('class');  // 完成与$inbtn.attr('class', null)一样的操作
+</code></pre>
+</div>
+
+<p><strong><em>prop属性操作</em></strong></p>
+
+<p>首先看一下一些prop属性，如下图所示：</p>
+
+<p><img src="/images/prop.png" alt="部分prop 属性" /></p>
+
+<p>首先要说一下的是，很多特性都有一个与之想对应的属性，就拿上面<code class="highlighter-rouge">&lt;input&gt;</code>元素的value特性来说，像html中那样编写，它明明是一个特性，但是在图中可以看出，在元素的属性中，也有一个与之对应的属性value。</p>
+
+<p>它们之间的修改是关联的，修改来属性，特性值也会跟着改变，同样修改来特性值，属性值也会跟着改变。</p>
+
+<p>测试：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$inbtn.prop('value');  // 返回属性value的值，此处为'提交'
+
+$inbtn.prop('value', '修改');  // 将'value'属性修改为'修改'
+
+$inbtn.prop('value', null );  // 删除'value'属性及其属性值
+
+// 将上面两步操作合并到了一个对象中，一次性实现，结果是删除来'value'属性，
+// 因为最后一个操作是删除'value'属性及其属性值，所以前面对'value'值的修改不会体现出来
+$inbtn.prop({'value': '修改', 'value': null });
+
+$inbtn.removeProp('value');  	// 实现与$inbtn.prop('value', null )一样的操作
+</code></pre>
+</div>
+
+<p><strong><em>jQuery操作class</em></strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$inbtn.addClass('hello world other');  // 为&lt;input&gt;元素添加三个类hello, world, other
+// 如果添加来已存在的类，会默认忽略，
+// 修改后的类为hover, highlight, other, hello, world
+
+$inbtn.removeClass('hover other');   // 删除&lt;input&gt;元素的两个类hover, other
+// 修改后的类为highlight
+
+$inbtn.toggleClass('hightlight bold'); 
+// 修改后的类hover, other, bold
+
+$inbtn.hasClass('myclass'); 	// 返回false，$inbtn只包含第一个&lt;input&gt;元素，没有myclass类
+
+$('input').hasClass('myclass'); 	// 返回true，$('input')包含两个&lt;input&gt;元素，
+// 第二个包含myclass类
+</code></pre>
+</div>
+
+<p><strong><em>.val()、.val( val )</em></strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$inbtn.val(); 	// 返回属性value的值，此处为'提交'
+
+$inbtn.val('修改');  // 实现跟$inbtn.prop('value', '修改')一样的操作
+</code></pre>
+</div>
+
+<p>&lt;/br&gt;</p>
+
+<p>===</p>
+
+<p><strong>未完待续。。。</strong></p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2014/08/22/jQuery-source-analysis-selector-expr.html' title='jQuery源码解读[11] -- 选择符表达式'>jQuery源码解读[11] -- 选择符表达式</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2014/08/26/jQuery-source-analysis-ajax(1).html' title='jQuery源码解读[13] -- AJAX（1）'>jQuery源码解读[13] -- AJAX（1）</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2014/08/26/jQuery-source-analysis-ajax(1).html' title='jQuery源码解读[13] -- AJAX（1）'>jQuery源码解读[13] -- AJAX（1）</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/wanzhou/'>万洲</a>
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

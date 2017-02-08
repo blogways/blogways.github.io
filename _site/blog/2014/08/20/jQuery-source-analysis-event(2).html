@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>jQuery源码解读[8] -- Event事件处理（2）_博汇网_www.blogways.net</title>
+    <meta name=keywords content="$, jQuery, 源码, Event, 事件处理">
+    
+    <meta name=description content="要在应用程序中实现交互性，必须时刻关注用户的一举一动，并对他们的操作给出响应，jQuery增强并扩展了了JavaScript的基本事件处理机制，很好的实现了开发人员在这方面的需求">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "万洲".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2014/08/19/jQuery-source-analysis-event(1).html' title='jQuery源码解读[7] -- Event事件处理（1）'>jQuery源码解读[7] -- Event事件处理（1）</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2014/08/21/jQuery-source-analysis-dom.html' title='jQuery源码解读[9] -- DOM操作方法应用'>jQuery源码解读[9] -- DOM操作方法应用</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2014/08/21/jQuery-source-analysis-dom.html' title='jQuery源码解读[9] -- DOM操作方法应用'>jQuery源码解读[9] -- DOM操作方法应用</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>jQuery源码解读[8] -- Event事件处理（2）
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2014-08-20
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>$</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>jQuery</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>源码</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Event</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>事件处理</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>jQuery</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="二源码分析">二、源码分析</h2>
+<h3 id="1源码结构">1、源码结构</h3>
+
+<p>event的源码实现结构如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function returnTrue() {};
+
+function returnFalse() {};
+
+// 返回当前获得焦点的元素
+function safeActiveElement() {};
+
+jQuery.event = {
+
+	global: {},
+	
+	// 绑定事件处理
+	add: function( elem, types, handler, data, selector ) {},
+	
+	// 移除事件处理
+	remove: function( elem, types, handler, selector, mappedTypes ) {},
+	
+	// 触发事件
+	trigger: function( event, data, elem, onlyHandlers ) {},
+	
+	// 分派（执行）事件处理程序
+	dispatch: function( event ) {},
+	
+	// 组装事件处理队列
+	handlers: function( event, handlers ) {},
+	
+	// 封装jQuery.Event原始对象，修正event事件属性
+	fix: function( event ) {},
+	
+	// 事件属性
+	props: "altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey "
+						+"relatedTarget shiftKey target timeStamp view which".split(" "),
+	
+	fixHooks: {},
+	
+	keyHooks: {},
+	
+	mouseHooks: {},
+	
+	// 事件特例，如load、click、focus、blur、beforeunload等
+	special: {},
+	
+	// 模拟事件触发
+	simulate: function( type, elem, event, bubble ) {}
+	
+};
+
+// jQuery事件对象，模拟实现部分W3C标准的DOM 3级别事件模型，统一了事件的属性
+jQuery.Event = function( src, props ) {};
+
+// jQuery事件对象原型
+jQuery.Event.prototype = {
+	// 是否已经阻止元素默认行为
+	isDefaultPrevented: returnFalse,
+	// 是否已经停止了事件传播
+	isPropagationStopped: returnFalse,
+	// 是否已经立即停止了事件传播
+	isImmediatePropagationStopped: returnFalse,
+	
+	// 阻止元素的浏览器默认行为
+	preventDefault: function() {},
+	// 停止事件传播
+	stopPropagation: function() {},
+	// 立即停止事件传播
+	stopImmediatePropagation: function() {}
+};
+
+// 如果不支持submit事件冒泡（IE），则submit事件委托
+if ( !support.submitBubbles ) {};
+// IE change事件委托，及checkbox/radio事件修正
+if ( !support.changeBubbles ) {};
+// 如果不支持focusin事件冒泡，则转为focus实现（focusin -&gt; focus, focusout -&gt; blur）
+if ( !support.focusinBubbles ) {};
+
+jQuery.fn.extend({
+	// 完成一些参数调整，调用内部add方法完成事件绑定
+	on: function( types, selector, data, fn, /*INTERNAL*/ one ) {},
+	// 元素只能运行一次事件处理器函数
+	one: function( types, selector, data, fn ) {},
+	// 解除绑定：删除一个之前附加的事件句柄
+	off: function( types, selector, fn ) {},
+	// 执行事件处理函数和默认行为
+	trigger: function( type, data ) {},
+	
+	// 执行事件处理函数，不执行默认行为，只触发匹配的第一个元素，不返回jQuery对象
+	triggerHandler: function( type, data ) {}
+});
+
+jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblclick " +
+	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+	"change select submit keydown keypress keyup error contextmenu")
+	.split(" "), function( i, name ) {
+
+	// 处理事件绑定
+	jQuery.fn[ name ] = function( data, fn ) {
+		return arguments.length &gt; 0 ?
+			this.on( name, null, data, fn ) :
+			this.trigger( name );
+	};
+});
+
+jQuery.fn.extend({
+	// 便捷方法，在匹配的元素上绑定两个事件处理函数，
+	// 鼠标移入时执行handlerIn，移出时执行handlerOut
+	hover: function( fnOver, fnOut ) {},
+	// 绑定
+	bind: function( types, data, fn ) {},
+	// 解绑定：删除一个之前附加的事件处理程序handler
+	unbind: function( types, fn ) {},
+	// 事件委托，调用on方法实现
+	delegate: function( selector, types, data, fn ) {},
+	// 删除事件委托，调用off实现
+	undelegate: function( selector, types, fn ) {}
+});
+</code></pre>
+</div>
+
+<p>jQuery对事件的绑定和委托及接触是通过on和off方法来实现，而on和off方法则是通过调用jQuery.event的内部方法add来remove实现，而add和remove这是调用浏览器的原生事件addEventListener/removeEventListener或attachEvent/detachEvent来实现处理指定和删除事件处理程序，其实现的方向如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>bind,delegate/unbind,undelegate -&gt; on/off -&gt; add/remove -&gt; addEventListener,attachEvent/removeEventListener,detachEvent
+</code></pre>
+</div>
+
+<p>一般情况下，jQuery中实现添加事件处理程序都是通过on或者事件特例（click，load，focus等）来实现的，相应的移除事件处理程序则是通过使用off方法来实现。</p>
+
+<p><strong><em>.bind( types,data, fn )</em></strong></p>
+
+<p><code class="highlighter-rouge">.bind()</code>方法用于直接附加一个事件处理程序到元素上。</p>
+
+<p>处理程序附加到jQuery对象中当前选中的元素，所以，在<code class="highlighter-rouge">.bind()</code>绑定事件的时候，这些元素必须已经存在，很明显就是直接调用的,没利用委托机制。</p>
+
+<p><strong><em>.delegate( selector, types, data, fn )</em></strong></p>
+
+<p>delegate事件委托其实质就是调用了on方法，将此方法的参数传递给on方法，让其代调用更具体的内部函数来实现事件委托，其源码如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>delegate: function( selector, types, data, fn ) {
+	return this.on( types, selector, data, fn );
+}
+</code></pre>
+</div>
+
+<p>由此可见，delegate就是调用了on方法，并将参数传递过去，自己本身并没有做任何的处理，因而可以变相的将dalegate视为on方法的别名。例如，将一个<code class="highlighter-rouge">&lt;a&gt;</code>元素的事件处理程序委托到祖先元素<code class="highlighter-rouge">&lt;div&gt;</code>元素上，html请参考上一篇开头的html文档<a href="/blog/2014/08/19/jQuery-source-analysis-event(1).html" title="jQuery源码解读[7] -- Event事件处理（1）">Event事件处理（1）</a>，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$('.div').on('click', '.a', function(){
+	alert('delegate by on()');
+});
+
+$('.div').delegate('.a', 'click', function(){
+	alert('delegate by delegate()');
+});
+</code></pre>
+</div>
+
+<p>上面两种方法实现的功能都是一样的，将<code class="highlighter-rouge">&lt;a&gt;</code>元素的click事件委托给<code class="highlighter-rouge">&lt;div&gt;</code>元素。</p>
+
+<p>任何时候只要有事件冒泡到<code class="highlighter-rouge">$('.div')</code>上，它就查看该事件是否是click事件，以及该事件的目标元素是否与CCS选择器相匹配。如果两种检查的结果都为真的话，它就执行函数。</p>
+
+<h3 id="2源码分析">2、源码分析</h3>
+
+<p><strong><em>add( elem, types, handler, data, selector )</em></strong></p>
+
+<p>elem：事件绑定的元素名称</p>
+
+<p>types：事件处理名称，如：click、bulr、mouseout等</p>
+
+<p>selector： 一个选择器字符串，用于过滤出被选中的元素中能触发事件的后代元素</p>
+
+<p>data：当一个事件被触发时，要传递给事件处理函数的</p>
+
+<p>handler：事件被触发时，执行的函数</p>
+
+<p>其部分源码如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>add: function( elem, types, handler, data, selector ) {
+	// ...
+	
+	// 尝试取出事件的namespace，如click.bbb.ccc中的bbb.ccc
+    tmp = rtypenamespace.exec( types[t] ) || [];
+    // 取出事件处理类型，如click
+    type = origType = tmp[1];
+    // 取出事件命名空间，如bbb.ccc，并根据"."分隔成数组
+    namespaces = ( tmp[2] || "" ).split( "." ).sort();
+
+    // 事件是否会改变当前状态，如果会则使用特殊事件
+    special = jQuery.event.special[ type ] || {};
+
+    // 根据是否已定义selector，决定使用哪个特殊事件api，如果没有非特殊事件，则用type
+    type = ( selector ? special.delegateType : special.bindType ) || type;
+
+    // 更具状态改变后的特殊事件
+    special = jQuery.event.special[ type ] || {};
+
+    // 组装用于特殊事件处理的对象
+	handleObj = jQuery.extend({
+			type: type,
+			origType: origType,
+			data: data,
+			handler: handler,
+			guid: handler.guid,
+			selector: selector,
+			needsContext: selector &amp;&amp; jQuery.expr.match.needsContext.test( selector ),
+			namespace: namespaces.join(".")
+		}, handleObjIn );
+	
+	// 第一次添加事件处理时，初始化事件处理函数队列
+	if ( !(handlers = events[ type ]) ) {
+		handlers = events[ type ] = [];
+		handlers.delegateCount = 0;
+		
+		// 如果特殊事件处理程序函数返回false，使用addEventListener/attachEvent添加事件
+		if ( !special.setup || special.setup.call( elem, data, namespaces, 
+			eventHandle ) === false ) {
+			// 为元素绑定全局事件处理函数
+			if ( elem.addEventListener ) {
+				elem.addEventListener( type, eventHandle, false );
+			} else if ( elem.attachEvent ) {
+				elem.attachEvent( "on" + type, eventHandle );
+			}
+		}
+	}
+	
+	// 通过特殊事件add处理事件
+    if ( special.add ) {
+        // 添加事件
+        special.add.call( elem, handleObj );
+        // 设置处理函数的ID
+        if ( !handleObj.handler.guid ) {
+            handleObj.handler.guid = handler.guid;
+        }
+    }
+
+    // 将事件处理函数推入处理列表
+    if ( selector ) {
+        handlers.splice( handlers.delegateCount++, 0, handleObj );
+    } else {
+        handlers.push( handleObj );
+    }
+		
+	// ...
+}
+</code></pre>
+</div>
+
+<p>从这里的源代码看，对于没有特殊事件特有监听方法和普通事件都用addEventListener来添加事件。而有特有监听方法的特殊事件，则调用相应的<code class="highlighter-rouge">special.add.call</code>来添加事件。总之而言，此方法是jQuery中为元素添加事件监听器的。</p>
+
+<p><strong><em>on( types, selector, data, fn, one )</em></strong></p>
+
+<p>types：事件处理程序名称</p>
+
+<p>selector：一个选择器字符串，用于过滤出被选中的元素中能触发事件的后代元素</p>
+
+<p>data：当一个事件被触发时，要传递给事件处理函数的</p>
+
+<p>fn：事件触发时执行的程序</p>
+
+<p>one：近在内部使用，用于标识是否该事件只能被触发一次</p>
+
+<p>其源码如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>on: function( types, selector, data, fn, /*INTERNAL*/ one ) {
+	var type, origFn;
+
+	// types可以是一个由types/handlers组成的map对象
+	if ( typeof types === "object" ) {
+		// 如果selector不是字符串
+        // 则将传参由( types-Object, selector, data )变成( types-Object, data )
+		if ( typeof selector !== "string" ) {
+			data = data || selector;
+			selector = undefined;
+		}
+		
+		// 遍历所有types，递归调用将事件绑定到当前元素上
+		for ( type in types ) {
+			this.on( type, selector, data, types[ type ], one );
+		}
+		return this;
+	}
+	// 如果data为空，且fn为空
+	if ( data == null &amp;&amp; fn == null ) {
+		// 则传参由( types, selector )变成( types, fn )
+		fn = selector;
+		data = selector = undefined;
+
+	// 否则如果只是fn为空
+	} else if ( fn == null ) {
+		// 且selector为字符串
+		if ( typeof selector === "string" ) {
+
+			// 则传参从( types, selector, data )变成( types, selector, fn )
+			fn = data;
+			data = undefined;
+		} else {
+			// 否则传参从( type, selector, data )变成( types, data, fn )
+			fn = data;
+			data = selector;
+			selector = undefined;
+		}
+	}
+	//如果fn为false则变成一个return false的函数
+	if ( fn === false ) {
+		fn = returnFalse;
+	} else if ( !fn ) {
+		//如果fn现在还不存在，则直接return this
+		return this;
+	}
+
+	if ( one === 1 ) {  // 如果one为1
+		origFn = fn;  // 保存，并重定义fn
+		fn = function( event ) {
+			// 这个事件只触发一次，触发完成就用off取消掉
+			jQuery().off( event );
+			return origFn.apply( this, arguments );
+		};
+		// 使用相同的ID，为了未来好删除事件
+		fn.guid = origFn.guid || ( origFn.guid = jQuery.guid++ );
+	}
+	// 对所有用jQuery.event.add来添加事件
+	return this.each( function() {
+		jQuery.event.add( this, types, fn, data, selector );
+	});
+}
+</code></pre>
+</div>
+
+<p>从上面的代码可以看出，其实on()方法大部分的代码都是在模拟重载on()方法的重载，还有一小段代码提供了one()方法的实现，若为某个事件标识了one（即只会触发一次），那么在on()方法中就会备份别改写一个回调函数（事件触发时执行的函数），</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>origFn = fn;  // 保存，并重定义fn
+fn = function( event ) {
+	// 这个事件只触发一次，触发完成就用off取消掉
+	jQuery().off( event );
+	return origFn.apply( this, arguments );
+};
+// 使用相同的guid，为了未来好删除事件
+fn.guid = origFn.guid || ( origFn.guid = jQuery.guid++ );
+</code></pre>
+</div>
+
+<p>通过回调函数传递的事件对象参数，	使用off()方法将该触发事件取消绑定，达到不会在触发下一次，即仅触发了本次一次的目的，在改写的回调函数中，通过</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>origFn.apply( this, arguments );
+</code></pre>
+</div>
+
+<p>调用未改写前的回调函数来实现触发后的事件处理，最后还讲副本及改写函数都设置一个统一的guid，以便未来好删除事件。</p>
+
+<p>而实际上on()方法最核心的代码其实就只有两行，就是最后两行代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>return this.each( function() {
+	jQuery.event.add( this, types, fn, data, selector );
+});
+</code></pre>
+</div>
+
+<p>首先此处的this是一个jQuery对象，引用的是希望被绑定事件的元素，就像</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$('.div').on('click mouseleave', '.p', function(){....});
+</code></pre>
+</div>
+
+<p>所示，当上面的代码运行到on()方法最后两行时，this指的就是<code class="highlighter-rouge">$('.div')</code>所表示的jQuery对象。</p>
+
+<p>on()方法源码中，对当前jQuery对象调用each方法，调用<code class="highlighter-rouge">jQuery.event</code>的内部函数add()方法，为当前jQuery对象所包含的所有DOM元素添加事件。由此可以看出，这些源码中最最核心的还是add/remove方法，其它的各种样式的方法都在在这两个基础的方法上扩展实现的。</p>
+
+<p>相应的事件的触发，最核心的也是<code class="highlighter-rouge">jQuery.event</code>中的trigger()方法。</p>
+
+<p>从源码中可以看出，通过<code class="highlighter-rouge">jQuery.fn.extend</code>扩展到jQuery实例对象中的所有事件方法，都是通过直接调用on，off，trigger方法，间接调用add，remove，trigger，fix等一系列<code class="highlighter-rouge">jQuery.event</code>中的方法来实现实现的绑定、移除和触发的，当然前面也说过，最终将其添加到浏览器DOM上还是通过浏览器原生的addEventListener/attachEvent，removeEventListener/detachEvent来实现的。</p>
+
+<p>而jQuery中所做的就是在这些浏览器元素的添加事件监听方法的基础上，通过<code class="highlighter-rouge">jQuery.event</code>对象，将原生的事件对象进行扩展与增强，然后实现功能更加强大的事件处理，最后将这些增强过后的事件处理接口（如：on, delegate, bind, off 等）扩展到jQuery实例对象中，暴露给用户使用。</p>
+
+<p><strong><em>简写绑定</em></strong></p>
+
+<p>前面说的都是一些标准的，通用的事件处理，下面我们来看一下一些简写的事件处理，就像如下所示，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$('.div').click(function(){....});      or    $('.div').change(function(){....});
+</code></pre>
+</div>
+
+<p>这些方法不用通过on()方法，并为其传递事件处理类型名称，而是直接通过类型名称来创建事件处理，不需要在像下面这样创建事件处理，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$('.div').on('change', function(){....});
+</code></pre>
+</div>
+
+<p>相比之下，简写事件处理显得更加语意明确，书写简单，一看就能知道需要触发的条件是什么。其实现源代码如下所示，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblclick " +
+	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+	"change select submit keydown keypress keyup error contextmenu")
+	.split(" "), function( i, name ) {
+
+	// 处理事件绑定
+	jQuery.fn[ name ] = function( data, fn ) {
+		return arguments.length &gt; 0 ?
+			this.on( name, null, data, fn ) :
+			this.trigger( name );
+	};
+});
+</code></pre>
+</div>
+
+<p>首先通过<code class="highlighter-rouge">.split</code>将所有的简写事件处理分为一个数组，然后使用<code class="highlighter-rouge">jQuery.each</code>遍历这些简写事件处理，通过</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>jQuery.fn[ name ] = function( data, fn ) {
+	return arguments.length &gt; 0 ?
+		this.on( name, null, data, fn ) :
+		this.trigger( name );
+};
+</code></pre>
+</div>
+
+<p>将其扩展到jQuery的实例对象当中去，万变不离其宗，虽然在创建事件处理的时候是通过这些简写事件名称来创建的，实际上这些事件的添加到元素、触发，还是通过<code class="highlighter-rouge">jQuery.event</code>中基础的on()和trigger()方法来实现的。</p>
+
+<h2 id="三示例">三、示例</h2>
+
+<p>由于在前面一篇博文，介绍事件处理的一些概念的时候，已经应用了很多的示例，此处不在给出，如果需要查看，可以跳转！<a href="/blog/2014/08/19/jQuery-source-analysis-event(1).html" title="jQuery源码解读[7] -- Event事件处理（1）">Event事件处理（1）</a></p>
+
+<p>&lt;/br&gt;</p>
+
+<p>===</p>
+
+<p><strong>未完待续。。。</strong></p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2014/08/19/jQuery-source-analysis-event(1).html' title='jQuery源码解读[7] -- Event事件处理（1）'>jQuery源码解读[7] -- Event事件处理（1）</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2014/08/21/jQuery-source-analysis-dom.html' title='jQuery源码解读[9] -- DOM操作方法应用'>jQuery源码解读[9] -- DOM操作方法应用</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2014/08/21/jQuery-source-analysis-dom.html' title='jQuery源码解读[9] -- DOM操作方法应用'>jQuery源码解读[9] -- DOM操作方法应用</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/wanzhou/'>万洲</a>
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

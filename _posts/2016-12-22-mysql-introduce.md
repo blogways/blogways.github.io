@@ -98,7 +98,7 @@ PATH=.......;D:\software\mysql-5.7\bin;(注意是追加,不是覆盖)。
 - 无论增删改查，对sql的执行语句都是conn.query(sql)  
 如：
 
-{conn.query('select * from book where book_status=0' ,function(err, rows, fields) {
+conn.query('select * from book where book_status=0' ,function(err, rows, fields) {
    //具体业务逻辑
     });
 
