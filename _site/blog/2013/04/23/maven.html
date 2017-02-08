@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Maven 环境搭建_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Nexus, Maven, Windows">
+    
+    <meta name=description content="Maven这一跨平台的项目管理工具。作为Apache组织中的一个颇为成功的开源项目，Maven主要服务于基于Java平台的项目构建、依赖管理和项目信息管理。无论是小型的开源类库项目，还是大型的企业级应用；无论是传统的瀑布式开发，还是流行的敏捷模式，Maven都能大显身手。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "Jacky".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/04/23/jenkins-git-maven-junit-2.html' title='Jenkins+git+maven+junit 二'>Jenkins+git+maven+junit 二</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/04/25/2013-todo-list.html' title='2013年待研究学习事项'>2013年待研究学习事项</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/04/25/2013-todo-list.html' title='2013年待研究学习事项'>2013年待研究学习事项</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Maven 环境搭建
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-04-23
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Nexus</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Maven</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Windows</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>杂记</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="maven-安装-简介">Maven 安装 简介</h2>
+<ul>
+  <li>
+    <p>Maven 安装</p>
+
+    <p>下载安装包
+  地址：http://maven.apache.org/download.html</p>
+
+    <p>Windows 安装：
+  本机jdk必需是1.5或者以上版本</p>
+
+    <p>解压安装包</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  目录结构：
+  bin   Maven的运行脚本
+  boot  Maven自己的类装载器
+  conf  该目录下包含了全局行为定制文件setting.xml
+  lib   Maven运行时所需的类库
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>配置环境变量</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  M2_HOME=安装目录
+  在path变量中增加%M2_HOME%\bin
+  检查安装是否正确
+  Mvn –v
+  能看到Maven和JDK的版本号为安装正确
+  试运行maven命令
+  mvn help:system
+  该命令将会下载help插件并运行它，且打印出Java系统属性和环境变量
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Maven名词解释</p>
+
+    <ol>
+      <li>Project：任何您想build的事物，Maven都可以认为它们是工程。这些工程被定义为工程对象模型(POM，Poject Object Model)。一个工程可以依赖其它的工程；一个工程也可以由多个子工程构成。</li>
+      <li>POM：POM(pom.xml)是Maven的核心文件，它是指示Maven如何工作的元数据文件，类似于Ant中的build.xml文件。POM文件位于每个工程的根目录中。</li>
+      <li>GroupId：groupId是一个工程的在全局中唯一的标识符，一般地，它就是工程名。groupId有利于使用一个完全的包名，将一个工程从其它有类似名称的工程里区别出来。</li>
+      <li>Artifact：artifact 是工程将要产生或需要使用的文件，它可以是jar文件，源文件，二进制文件，war文件，甚至是pom文件。每个artifact都由groupId和 artifactId组合的标识符唯一识别。需要被使用(依赖)的artifact都要放在仓库(见Repository)中，否则Maven无法找到 (识别)它们。</li>
+      <li>Dependency：为了能够build或运行，一个典型的Java工程会依赖其它的包。在Maven中，这些被依赖的包就被称为dependency。dependency一般是其它工程的artifact。</li>
+      <li>Plug-in：Maven是由插件组织的，它的每一个功能都是由插件提供的。插件提供goal(类似于Ant中的target)，并根据在POM中找到的元数据去完成工作。主要的Maven插件要是由Java写成的，但它也支持用Beanshell或Ant脚本写成的插件。</li>
+      <li>Repository：仓库。</li>
+    </ol>
+  </li>
+  <li>
+    <p>配置文件</p>
+
+    <p>$user.home/.m2/repository/setting.xml 
+  为用户范围的配置文件
+  $M2_HOME/conf/setting.xml 
+  为全局范围的配置文件，修改后将影响本机所有用户的配置
+  建议：只修改用户级别的配置，既不影响其它用户，也不影响后期升级。</p>
+  </li>
+  <li>
+    <p>配置介绍</p>
+
+    <ol>
+      <li>localRepository： 自定义本地库路径，默认在$user.home/.m2中</li>
+      <li>interactiveMode：</li>
+      <li>offline：是否每次编译都去查找远程中心库</li>
+      <li>pluginGroups：插件组，例如org.mortbay.jetty</li>
+      <li>proxies：通过代理访问外部库</li>
+      <li>servers：集成认证服务，例如集成Tomcat</li>
+      <li>mirrors：镜像库，可以指定内部中心库</li>
+      <li>profiles：个性配置，需要在Activation标签中激活</li>
+      <li>activeProfiles：表示激活的profile</li>
+    </ol>
+  </li>
+  <li>
+    <p>maven仓库</p>
+
+    <ol>
+      <li>远程公用仓库 
+  Maven内置了远程公用仓库：http://repo1.maven.org/maven2这个公共仓库是由Maven自己维护，里面有大量的常用类库，并包含了世界上大部分流行的开源项目构件。目前是以java为主。</li>
+      <li>内部中心仓库
+  也称私有共享仓库(私服)。一般是由公司自己设立的，只为本公司内部共享使用。它既可以作为公司内部构件协作和存档，也可作为公用类库镜像缓存，减少在外部访问和下载的频率。Nexus和Artifactory均可搭建仓库服务器。但后者支持LDAP认证，这样就可以将私有仓库的认证集成到公司已经有的LDAP认证服务器。内部中心库又可以连接第三方库，例如Jboss中心库、Spring中心库，以随时获得最新版本的第三方构件。</li>
+      <li>本地仓库
+  Maven会将工程中依赖的构件(Jar包)从远程下载到本机一个目录下管理，通常默认在$user.home/.m2/repository下。
+  修改本地库位置：在$M2_HOME/conf/setting.xml文件的<localRepository>元素中指定路径，例如：<localRepository>D:/my_repository</localRepository></localRepository></li>
+    </ol>
+  </li>
+  <li>
+    <p>Maven常用命令</p>
+
+    <ol>
+      <li>检测Maven、JDK版本
+  mvn –v  或者  mvn -version</li>
+      <li>获取帮助选项
+  mvn –h  或者  mvn –help</li>
+      <li>显示详细错误信息
+  mvn –e</li>
+      <li>创建Java项目
+  mvn archetype:create -DgroupId=${groupId} -DartifactId=${artifactId}
+  示例：mvn archetype:create -DgroupId=com.howsun -DartifactId=myApp-Dversion=0.1</li>
+      <li>创建Web项目
+  mvn archetype:create -DgroupId=${packageName}    -DartifactId=${webappName} -DarchetypeArtifactId=maven-archetype-webapp</li>
+      <li>创建其它项目(例如SSH、JPA、JSF、Seam…)
+  mvn archetype:generate然后根据提示选择项目骨架、groupid、artifactid、版本号…Maven3已有上百个项目骨架</li>
+      <li>转换成Eclipse工程
+  mvn eclipse:eclipse
+  mvn eclipse:clean  //清除Eclipse设置信息
+  转换成idea项目：mvn idea:ide</li>
+      <li>编译
+  mvn compile</li>
+      <li>编译测试代码
+  mvn test-compile</li>
+      <li>产生Site：
+  mvn site</li>
+      <li>测试
+  mvn test  //运行测试
+  mvn test -Dtest=${类名} //单独运行测试类</li>
+      <li>清除
+  mvn clean  //将清除原来编译的结果</li>
+      <li>打包
+  mvn packagemvn package –Dmaven.test.skip=true //打包时不执行测试</li>
+      <li>发布
+  mvn install //将项目打包成构件安装到本地仓库
+  mvn deploy  //发布到本地仓库或服务器(例如Tomcat、Jboss)</li>
+      <li>手动添加构件到仓库
+  mvn install:install-file -Dfile=${jar包文件位置} -DgroupId=${groupId} -DartifactId=${artifactId} -Dversion=${版本号} -Dpackaging=jar -DgeneratePom=${是否同时创建pom文件}</li>
+      <li>复制依赖构件到相应目录
+  mvn dependency:copy-dependencies -DoutputDirectory=${目标目录} -DexcludeScope=${scope} -Dsilent=true
+  示例：
+  mvn dependency:copy-dependencies 
+     -DoutputDirectory=WebRoot/WEB-INF/lib 
+     -Dsilent=true 
+     -DincludeScope=runtime</li>
+      <li>显示一个插件的详细信息(configuration, goals等):
+  mvn help:describe -Dplugin=pluginName –Ddetail</li>
+    </ol>
+  </li>
+  <li>
+    <p>工程配置文件 pom.xml</p>
+
+    <p>是Maven项目的核心配置文件，位于每个工程的根目录，指示Maven工作的元数据文件。
+  节点介绍</p>
+    <ol>
+      <li>
+        <project> ：文件的根节点 .
+</project>
+      </li>
+      <li>
+        <modelversion> ： pom.xml使用的对象模型版本 .
+</modelversion>
+      </li>
+      <li>
+        <groupId> ：创建项目的组织或团体的唯一 Id.
+</groupId>
+      </li>
+      <li>
+        <artifactId> ：项目的唯一 Id, 可视为项目名 .
+</artifactId>
+      </li>
+      <li>
+        <packaging> ：打包类型，一般有JAR,WAR,EAR 等 
+</packaging>
+      </li>
+      <li>
+        <version> ：产品的版本号 .
+</version>
+      </li>
+      <li>
+        <name> ：项目的显示名，常用于 Maven 生成的文档。 
+</name>
+      </li>
+      <li>
+        <url> ：组织的站点，常用于 Maven 生成的文档。 
+</url>
+      </li>
+      <li>
+        <description> ：项目描述，常用于 Maven 生成的文档。 
+</description>
+      </li>
+      <li>
+        <dependencies>：构件依赖<parent>：模型继承 
+</parent></dependencies>
+      </li>
+      <li>
+        <dependencyManagement>：依赖管理  
+</dependencyManagement>
+      </li>
+      <li>
+        <reporting>：创建报告 
+</reporting>
+      </li>
+      <li>
+        <build>：构建 
+</build>
+      </li>
+      <li>
+        <repositories>：引用第三方仓库 
+</repositories>
+      </li>
+      <li>
+        <licenses>：许可
+
+</licenses>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>Eclipse中使用maven</p>
+
+    <ol>
+      <li>安装M2Eclipse插件
+  Help -&gt; InstallNewSoftware -&gt; Work with -&gt; Add
+  核心组件：</li>
+      <li>Name：m2e
+  Location：http://m2eclipse.sonatype.org/sites/m2e</li>
+      <li>扩展组件：
+  Name： m2e-extras
+  Location：http://m2eclipse.sonatype.org/sites/m2e-extras</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="示例">示例</h2>
+<ul>
+  <li>
+    <p>命令行创建java工程</p>
+
+    <ol>
+      <li>
+        <p>command 窗口执行</p>
+
+        <p>F:\maven&gt;mvn archetype:create -DgroupId=com.ailk.test -DartifactId=hello -DpackageName=com.ailk.test -Dversion=1.0
+ 目录会下生成一个 hello 的文件夹
+ Hello/src/main/java 是源文件目录
+ Hello/src/test/java 是测试文件目录
+ Hello/target 是编译目标文件夹
+ Hello/pom.xml 是工程的 maven 配置文件</p>
+      </li>
+      <li>
+        <p>Setting 配置</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code> &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+ &lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+   &lt;localRepository&gt;F:\maven\repo&lt;/localRepository&gt;
+   &lt;pluginGroups&gt;
+   &lt;/pluginGroups&gt;
+   &lt;proxies&gt;
+   &lt;/proxies&gt;
+   &lt;servers&gt;
+   	&lt;server&gt;
+             &lt;id&gt;sphost&lt;/id&gt;
+             &lt;username&gt;admin&lt;/username&gt;
+             &lt;password&gt;admin123&lt;/password&gt;
+         &lt;/server&gt;
+         &lt;server&gt;
+             &lt;id&gt;spsnap&lt;/id&gt;
+             &lt;username&gt;admin&lt;/username&gt;
+             &lt;password&gt;admin123&lt;/password&gt;
+         &lt;/server&gt;
+   &lt;/servers&gt;
+   &lt;mirrors&gt;
+   	&lt;mirror&gt;
+             &lt;id&gt;nexus-public&lt;/id&gt;
+             &lt;mirrorOf&gt;public&lt;/mirrorOf&gt;
+             &lt;!--url&gt;http://127.0.0.1:8081/nexus/content/groups/mygroup&lt;/url--&gt;
+             &lt;url&gt;http://192.168.4.19:8081/nexus/content/groups/spgroup/&lt;/url&gt;
+         &lt;/mirror&gt;
+   &lt;/mirrors&gt;
+   &lt;profiles&gt;
+   	&lt;profile&gt;
+     &lt;id&gt;nexus&lt;/id&gt;
+     &lt;repositories&gt;
+         &lt;repository&gt;
+             &lt;id&gt;nexus&lt;/id&gt;
+             &lt;name&gt;local private nexus&lt;/name&gt;
+             &lt;url&gt;http://192.168.4.19:8081/nexus/content/groups/spgroup/&lt;/url&gt;
+             &lt;releases&gt;
+                 &lt;enabled&gt;true&lt;/enabled&gt;
+             &lt;/releases&gt;
+             &lt;snapshots&gt;
+                 &lt;enabled&gt;true&lt;/enabled&gt;
+             &lt;/snapshots&gt;
+         &lt;/repository&gt;
+     &lt;/repositories&gt;
+     &lt;pluginRepositories&gt;
+         &lt;pluginRepository&gt;
+             &lt;id&gt;nexus&lt;/id&gt;
+             &lt;name&gt;local private nexus&lt;/name&gt;
+             &lt;url&gt;http://192.168.4.19:8081/nexus/content/groups/spgroup/&lt;/url&gt;
+             &lt;releases&gt;
+                 &lt;enabled&gt;true&lt;/enabled&gt;
+             &lt;/releases&gt;
+             &lt;snapshots&gt;
+                 &lt;enabled&gt;true&lt;/enabled&gt;
+             &lt;/snapshots&gt;
+         &lt;/pluginRepository&gt;
+     &lt;/pluginRepositories&gt;
+ &lt;/profile&gt;
+   &lt;/profiles&gt;
+		  
+   &lt;activeProfiles&gt;
+         &lt;activeProfile&gt;nexus&lt;/activeProfile&gt;
+     &lt;/activeProfiles&gt;
+ &lt;/settings&gt;
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>Pom 配置</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code> &lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+   &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+   &lt;groupId&gt;com.ailk.test&lt;/groupId&gt;
+   &lt;artifactId&gt;hello&lt;/artifactId&gt;
+   &lt;version&gt;1.0&lt;/version&gt;
+   &lt;packaging&gt;jar&lt;/packaging&gt;
+   &lt;name&gt;hello&lt;/name&gt;
+   &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+   &lt;properties&gt;
+     &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+   &lt;/properties&gt;
+   &lt;dependencies&gt;
+     &lt;dependency&gt;
+       &lt;groupId&gt;junit&lt;/groupId&gt;
+       &lt;artifactId&gt;junit&lt;/artifactId&gt;
+       &lt;version&gt;4.8.1&lt;/version&gt;
+       &lt;scope&gt;test&lt;/scope&gt;
+     &lt;/dependency&gt;
+   &lt;/dependencies&gt;
+   &lt;build&gt;
+         &lt;pluginManagement&gt;
+             &lt;plugins&gt;
+                 &lt;plugin&gt;
+                     &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                     &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                     &lt;configuration&gt;
+                         &lt;source&gt;1.5&lt;/source&gt;
+                         &lt;target&gt;1.5&lt;/target&gt;
+                     &lt;/configuration&gt;
+                 &lt;/plugin&gt;
+             &lt;/plugins&gt;
+         &lt;/pluginManagement&gt;
+         &lt;extensions&gt;
+             &lt;extension&gt;
+                 &lt;groupId&gt;org.apache.maven.wagon&lt;/groupId&gt;
+                 &lt;artifactId&gt;wagon-ftp&lt;/artifactId&gt;
+                 &lt;version&gt;1.0-alpha-6&lt;/version&gt;
+             &lt;/extension&gt;
+         &lt;/extensions&gt;
+     &lt;/build&gt;
+     &lt;!-- 配置远程发布到私服，mvn deploy --&gt;
+     &lt;distributionManagement&gt;
+         &lt;repository&gt;
+             &lt;id&gt;sphost&lt;/id&gt;
+             &lt;name&gt;Nexus Release Repository&lt;/name&gt;
+             &lt;url&gt;http://192.168.4.19:8081/nexus/content/repositories/sphost/&lt;/url&gt;
+         &lt;/repository&gt;
+         &lt;snapshotRepository&gt;
+             &lt;id&gt;spsnap&lt;/id&gt;
+             &lt;name&gt;Nexus Snapshot Repository&lt;/name&gt;
+             &lt;url&gt;http://192.168.4.19:8081/nexus/content/repositories/spsnap/&lt;/url&gt;
+         &lt;/snapshotRepository&gt;
+     &lt;/distributionManagement&gt;
+ &lt;/project&gt;
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>清除、编译、测试、打包、安装到本机、发布到远程仓库</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code> F:\maven&gt;cd hello
+ F:\maven\hello&gt;mvn clean compile test package install deploy
+</code></pre>
+        </div>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p>Eclipse创建web工程</p>
+
+    <ol>
+      <li>
+        <p>创建 maven web 工程</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code> File/new/project/maven project/next/next
+ 选择创建maven web项目（maven-archetype-webapp）
+ Group id: com.ailk.web.test
+ Artiface id: hello
+ Version: 0.0.1-SNAPSHOT
+ Package: com.ailk.web.test.hello
+ 创建完按下面目录添加serverlet、struts.xml、web.xml以及一些页面
+ src/main/java java源文件
+ src/main/resources struts等配置文件目录
+ src/main/webapp 页面以及web.xml文件目录
+ target 编译和打包目录
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>setting.xml 配置</p>
+
+        <p>添加一个 tomcat server</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>   &lt;servers&gt;
+   	&lt;server&gt;
+             &lt;id&gt;sphost&lt;/id&gt;
+             &lt;username&gt;admin&lt;/username&gt;
+             &lt;password&gt;admin123&lt;/password&gt;
+         &lt;/server&gt;
+         &lt;server&gt;
+             &lt;id&gt;spsnap&lt;/id&gt;
+             &lt;username&gt;admin&lt;/username&gt;
+             &lt;password&gt;admin123&lt;/password&gt;
+         &lt;/server&gt;
+         &lt;server&gt;
+             &lt;id&gt;tomcat&lt;/id&gt;
+             &lt;username&gt;admin&lt;/username&gt;
+             &lt;password&gt;admin&lt;/password&gt;
+         &lt;/server&gt;
+   &lt;/servers&gt;
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>pom.xml 配置</p>
+
+        <p>添加编译 tomcat 插件</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code> &lt;build&gt;
+     &lt;finalName&gt;hello&lt;/finalName&gt;
+     &lt;plugins&gt;
+         &lt;plugin&gt;
+             &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+             &lt;artifactId&gt;tomcat-maven-plugin&lt;/artifactId&gt;
+             &lt;version&gt;1.0-beta-1&lt;/version&gt;
+             &lt;configuration&gt;
+                 &lt;url&gt;http://localhost:8080/manager/text&lt;/url&gt;
+                 &lt;server&gt;tomcat&lt;/server&gt;
+             &lt;/configuration&gt;
+         &lt;/plugin&gt;
+     &lt;/plugins&gt;
+ &lt;/build&gt;
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>清除、编译、测试、打包、安装本地仓库、发布远程仓库、部署 tomcat 服务器</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code> 项目右键/run as/maven build.../goals:clean compile test package install deploy site/run
+</code></pre>
+        </div>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2013/04/23/jenkins-git-maven-junit-2.html' title='Jenkins+git+maven+junit 二'>Jenkins+git+maven+junit 二</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2013/04/25/2013-todo-list.html' title='2013年待研究学习事项'>2013年待研究学习事项</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2013/04/25/2013-todo-list.html' title='2013年待研究学习事项'>2013年待研究学习事项</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/jacky/'>Jacky</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

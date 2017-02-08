@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Jenkins+git+maven+junit 一_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Jenkins, git, maven, junit">
+    
+    <meta name=description content="Jenkins 能实施监控集成中存在的错误，提供详细的日志文件和提醒功能，还能用图表的形式">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "汤仕忠".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2013/04/15/junit-usage-5.html' title='JUnit4 使用进阶五'>JUnit4 使用进阶五</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2013/04/18/install-jekyll-on-windows.html' title='windows 下安装jekyll'>windows 下安装jekyll</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2013/04/18/install-jekyll-on-windows.html' title='windows 下安装jekyll'>windows 下安装jekyll</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Jenkins+git+maven+junit 一
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2013-04-17
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Jenkins</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>git</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>maven</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>junit</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>JUnit</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h3 id="一持续集成概述">一、持续集成概述</h3>
+<p>随着软件开发复杂度的不断提高，团队开发成员间如何更好地协同工作以确保软件开发的质量已经慢慢成为开发过程中不可回避的问题。尤其是近些年来，敏捷（Agile） 在软件工程领域越来越红火，如何能再不断变化的需求中快速适应和保证软件的质量也显得尤其的重要。
+持续集成正是针对这一类问题的一种软件开发实践。它倡导团队开发成员必须经常集成他们的工作，甚至每天都可能发生多次集成。而每次的集成都是通过自动化的构建来验证，包括自动编译、发布和测试，从而尽快地发现集成错误，让团队能够更快的开发内聚的软件。
+持续集成的核心价值在于：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.持续集成中的任何一个环节都是自动完成的，无需太多的人工干预，有利于减少重复过程以节省时间、
+  费用和工作量；
+2.持续集成保障了每个时间点上团队成员提交的代码是能成功集成的。换言之，任何时间点都能第一时
+  间发现软件的集成问题，使任意时间发布可部署的软件成为了可能；
+3.持续集成还能利于软件本身的发展趋势，这点在需求不明确或是频繁性变更的情景中尤其重要，持
+  续集成的质量能帮助团队进行有效决策，同时建立团队对开发产品的信心。 
+</code></pre>
+</div>
+
+<h3 id="二持续集成的原则">二、持续集成的原则</h3>
+
+<p>业界普遍认同的持续集成的原则包括：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.需要版本控制软件保障团队成员提交的代码不会导致集成失败。常用的版本控制软件有 CVS、
+  Subversion、git 等，本文中用的是git；
+2.开发人员必须及时向版本控制库中提交代码，也必须经常性地从版本控制库中更新代码到本地；
+3.需要有专门的集成服务器来执行集成构建。根据项目的具体实际，集成构建可以被软件的修改来
+  直接触发，也可以定时启动，如每半个小时构建一次；
+4.必须保证构建的成功。如果构建失败，修复构建过程中的错误是优先级最高的工作。一旦修复，
+  需要手动启动一次构建。
+</code></pre>
+</div>
+
+<h3 id="三持续集成系统的组成">三、持续集成系统的组成</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1.一个自动构建过程，包括自动编译、分发、部署和测试等，本文中用的是maven+junit。 
+2.一个代码存储库，即需要版本控制软件来保障代码的可维护性，同时作为构建过程的素材库，
+  本文中用的是git。 
+3.一个持续集成服务器。本文中用到的是jenkins。 
+</code></pre>
+</div>
+
+<h3 id="四jenkins简介及安装">四、Jenkins简介及安装</h3>
+<p>git、maven、junit本博客其他篇章中都有所介绍，所以今天我们主要介绍Jenkins的应用：
+Jenkins 是一个开源项目，提供了一种易于使用的持续集成系统，使开发者从繁杂的集成中解脱出来，
+专注于更为重要的业务逻辑实现上。同时 Jenkins 能实施监控集成中存在的错误，提供详细的日志文
+件和提醒功能，还能用图表的形式形象地展示项目构建的趋势和稳定性。</p>
+
+<ul>
+  <li>下载Jenkins，<a href="http://jenkins-ci.org/">http://jenkins-ci.org/ </a></li>
+  <li>
+    <p>Jenkins 安装：本文介绍安装在linux主机上通过命令行安装</p>
+
+    <p>1.将下载的jenkins.war文件上传到linux主机安装目录下
+     如：/home/spdev
+  2.执行java -jar jenkins.war
+  3.打开ie输入地址 http://hoestname:8080 （hostname为主机  ip）即能访问Jenkins,如自己设定端口可执行：java -jar jenkins.war –httpPort= port</p>
+  </li>
+</ul>
+
+<h3 id="五jenkins配置及使用">五、Jenkins配置及使用</h3>
+
+<ul>
+  <li>
+    <p>进入“系统管理”-&gt;“插件管理”</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  1.选择“已安装”tab页查看发下maven插件已经安装，git、junit插件没有安装
+  2.选择“可选插件”tab页，在Filter输入框输入git，过滤条件后将git相关插件安装，同样
+     操作安装junit插件
+  3.选择“可选插件”tab页，找到“Jenkins Email Extension Plugin”插件并安装，此插件
+     是后面发布及测试法邮件使用
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>进入“系统管理”-&gt;“系统设置”</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  1.选择“JDK”安装，定义别名，JAVA_HOME输入JDK安装目录
+  2.选择“Git”安装，定义别名，安装目录输入Git安装目录
+  3.选择“Maven”安装，定义别名，安装目录输入MAVEN_HOME安装目录
+  4.“System Admin e-mail address”输入系统管理员邮箱地址
+  5.“Extended E-mail Notification”标签为插件“Jenkins Email Extension Plugin“里
+      内容，为邮件通知设置，这里我的配置如下图： &lt;img src="/images/post/jenkins-setting.jpg" width="400" height="300" alt="image"/&gt;
+</code></pre>
+    </div>
+  </li>
+  <li>回到Jenkins首页，点击“新Job”，输入job名称如：MavenPrj，选择“构建一个maven2/3项目”</li>
+  <li>选择任务“MavenPrj”，点击“配置”进入任务配置界面，源代码管理中选择git,并输入仓库路径如：/home/git/MavenPrj/mytest，Branches to build根据自己需要输入，这里我取得主分支代码，输入的为master</li>
+  <li>“构建触发器”选择项下我选择的为“Poll SCM”，含义为在指定作业时间内有代码更新的时候去取代码，这里”Build periodically“含义为不管是否有代码更新在指定作业时间内都去取代码，”Build whenever a SNAPSHOT dependency is built“含义为当构建成功后，项目jar包会发到maven二方库上去</li>
+  <li>
+    <p>”日程表“我这里配的是<em>/1 * * * *，代表每隔一分钟取一次，这里五个 * 号从左到右分别
+分 时 日 月 年，相同 * 号段内用”,“号隔开，如：</em> * 8,20 * * *含义为每天8点、20点取代码
+-”构建后操作“Editable Email NOtification” 其中Project Recipient List
+ 可以配置收件人信箱，点击“高级”，“Add a Trigger”中可以选择对应触发器，我这里用到了构建失败(Failure),和测试报错(系统不稳定Unstable)两项，收件人选择了“Send To Recipient List”和提交者“Send To Committers”</p>
+  </li>
+  <li>git上建立仓库将本地现有Maven+junit java项目push到git仓库，打开Jenkins主页进入MavenPrj任务，几分钟后就能看到构建任务及测试结果了，下面是构建完的效果图：</li>
+</ul>
+
+<p><img src="/images/post/jenkins-setting2.jpg" width="400" height="300" alt="image" /></p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2013/04/15/junit-usage-5.html' title='JUnit4 使用进阶五'>JUnit4 使用进阶五</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2013/04/18/install-jekyll-on-windows.html' title='windows 下安装jekyll'>windows 下安装jekyll</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2013/04/18/install-jekyll-on-windows.html' title='windows 下安装jekyll'>windows 下安装jekyll</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/tangshizhong/'>汤仕忠</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

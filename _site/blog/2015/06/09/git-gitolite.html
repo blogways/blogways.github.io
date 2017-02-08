@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>git权限管理工具gitolite使用教程_博汇网_www.blogways.net</title>
+    <meta name=keywords content="git, gitolite">
+    
+    <meta name=description content="本章将通过实例方式介绍如何使用gitolite对git仓库进行权限管理.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "汤仕忠".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2015/06/01/jls7-3-10.html' title='Java SE 7 Third Edition 规范翻译之－数组'>Java SE 7 Third Edition 规范翻译之－数组</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2015/06/12/jls7-3-11.html' title='Java SE 7 Third Edition 规范翻译之－异常'>Java SE 7 Third Edition 规范翻译之－异常</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2015/06/12/jls7-3-11.html' title='Java SE 7 Third Edition 规范翻译之－异常'>Java SE 7 Third Edition 规范翻译之－异常</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>git权限管理工具gitolite使用教程
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2015-06-09
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>git</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>gitolite</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>杂记</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h3 id="一gitolite实现功能">一、gitolite实现功能</h3>
+
+<p>1.通过远程连接能够对服务器上仓库进行读写操作；</p>
+
+<p>2.安全的权限管理，控制特定用户只能访问仓库，并能限制读写权限;</p>
+
+<p>3.权限控制不只作用于仓库，而同样于仓库中的每个branch和tag name。</p>
+
+<h3 id="二gitolite安装">二、gitolite安装</h3>
+<p>Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，以下为安装前提条件：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	UNIX/LINUX操作系统
+	shell环境
+	git 1.6.6+
+	perl 5.8.8+
+	openssh 5.0+（好像低于这个版本也行）
+	gitolite使用的账号（本文用的git）
+</code></pre>
+</div>
+
+<ol>
+  <li>以git账号登入主机；</li>
+  <li>确保~/.ssh/authorized_keys为空或不存在；</li>
+  <li>主机上执行git clone  https://github.com/sitaramc/gitolite.git（不能上网可上传实现）；</li>
+  <li>mkdir -p /home/git/bin</li>
+  <li>./gitolite/install -to /home/git/bin/</li>
+  <li>选择一台机器作为client机器（我这里就选择本机），并将这台客户端机器的公钥上传并保存在主机的/home/git/YourName.pub（我这里用的我本机的，起名tangsz.pub）位置</li>
+  <li>
+    <p>~/bin/gitolite setup -pk ~/YourName.pub
+8.测试安装是否成功</p>
+
+    <p>本机(windows要到git Bash下执行)执行ssh git@10.20.16.78显示如下：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  hello git, this is git@slave2 running gitolite3 v3.6.3-10-g4be7ac5-dt on git 1.8.1.6
+ 
+  R W    gitolite-admin
+  R W    testing
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<p>注：安装过程中可能出现的错误：</p>
+
+<ol>
+  <li>
+    <p>/gitolite/install: /usr/bin/perl^M: bad interpreter: No such file or directory</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> 解决:install 文件转unix格式
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>git describe failed; cannot deduce version number</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> 解决：由于主机不能上网，我是把文件copy到主机，然后建立仓库的，这样不行，可以把本地下载的带.git目录的文件直接上传主机。
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>WARNING: Can’t exec “/data/git/bin/triggers/post-compile/ssh-authkeys”: No such file or directory at /data/git/bin/lib/Gitolite/Common.pm line 146, <DATA> line 1.</DATA></p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> 解决：dos2unix /data/git/bin/triggers/post-compile/*
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>ssh git@10.20.16.78 报错：WARNING: Can’t exec “/data/git/sbin/commands/info”: No such file or directory</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code> 解决：dos2unix /data/git/sbin/commands/info
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h3 id="三gitolite添加用户和仓库">三、gitolite添加用户和仓库</h3>
+<ol>
+  <li>
+    <p>clone 管理仓库gitolite-admin（我本机操作）：</p>
+
+    <ul>
+      <li>
+        <p>git clone git@server-host:gitolite-admin （如：git clone git@10.20.16.78:gitolite-admin.git）</p>
+      </li>
+      <li>
+        <p>gitolite-admin有conf和keydir两个子文件夹，keydir文件夹就是管理用户公钥的地方，如果有一位新用户（spdoop）希望申请账户并申请一个新的代码仓库（代码仓库叫做test），那么让他提供他的账号、他用的电脑的公钥给git管理员（可以通过email/qq等方式），然后由git管理员在keydir下创建spdoop.pub文件并将公钥内容复制其中。</p>
+      </li>
+      <li>
+        <p>conf/gitolite.conf设置权限文件：</p>
+      </li>
+    </ul>
+
+ 		repo test
+  			RW+ = spdoop
+
+    <ul>
+      <li>
+        <p>添加完配置后将本地仓库修改push到服务器仓库，服务会自动创建仓库test（当然这里也可以自己先到主机上建仓库，gitolite管理的仓库都在用户目录repositories下，也可修改配置），spdoop具有读写权限。</p>
+      </li>
+      <li>
+        <p>如果想添加spdoop为管理员，需管理员tangsz修改gitolite.conf</p>
+      </li>
+    </ul>
+
+ 		repo gitolite-admin
+ 			RW+     =   git tangsz 
+  </li>
+</ol>
+
+<p>注：push过程中可能出现的错误：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1. error: cannot run hooks/update: No such file or directory 解决方法： 此问题我是在windows机器传gitolite源码到linux机器上安装出现的，linux、mac不知道会不会出现，找了好久才发现要将update、post-update等文件dos2unix。具体命令，参考如下：
+
+cd ~/.gitolite/hooks/common
+dos2unix *
+cd ~/.gitolite/hooks/gitolite-admin
+dos2unix *
+</code></pre>
+</div>
+
+<h3 id="四gitolite配置实例">四、gitolite配置实例</h3>
+
+<p>这里对gitolite详细的权限配置就不做说明，通过一个简单的实例介绍下gitolite的使用：</p>
+
+<ol>
+  <li>
+    <p>添加新的仓库pangu-la-web，管理员tangsz具有读写、强制push操作权限：</p>
+
+    <ul>
+      <li>
+        <p>修改gitolite.conf</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>	repo pangu-la-web
+ 			RW+     =   tangsz
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>提交本地仓库并push到服务器</p>
+      </li>
+      <li>
+        <p>查看主仓库已经建立空仓库pangu-la-web</p>
+      </li>
+      <li>
+        <p>本机clone下pangu-la-web仓库（git clone git@10.20.16.78:pangu-la-web）</p>
+      </li>
+      <li>
+        <p>添加文件test，push到服务器仓库master分支</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>用户spdoop添加pangu-la-web中dev开头的分支有读/写/强制更新的权限，test分支（严格匹配）具有读/写权限</p>
+
+    <ul>
+      <li>
+        <p>修改gitolite.conf</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>  repo pangu-la-web
+      RW+     =   tangsz
+      RW+     dev       =   spdoop
+      RW      test$     =   spdoop
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>提交并push到服务器仓库</p>
+      </li>
+      <li>
+        <p>spdoop clone pangu-la-web仓库到本地，修改test，执行git push origin master后错误如下（没有权限提交master）：</p>
+
+        <div class="highlighter-rouge"><pre class="highlight"><code>  remote: FATAL: W refs/heads/master pangu-la-web spdoop DENIED by fallthru
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p>spdoop新建分支dev1（git branch dev1） checkout到dev1分支（git checkout dev1），执行git push origin dev1成功</p>
+      </li>
+      <li>
+        <p>spdoop新建分支test（git branch test） checkout到test分支（git checkout test），执行git push origin test成功</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>这里用户spdev试图clone仓库pangu-la-web（git clone git@10.20.16.78:pangu-la-web），出现错误如下：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>    fatal: 'pangu-la-web' does not appear to be a git repository
+    fatal: Could not read from remote repository.	
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h3 id="五外部人员参与现有项目开发条件">五、外部人员参与现有项目开发条件</h3>
+
+<ol>
+  <li>
+    <p>保证本机电脑安装了git，windows下安装的是msysgit（windows安装后会生成git Bash命令窗口），其中git安装可以参阅本博客git篇；</p>
+  </li>
+  <li>
+    <p>命令窗口下生成用户公钥（windows下安装msysgit后在git Bash下生成），命令为：ssh-keygen，生成后在用户目录.ssh 下，文件名为id_rsa.pub；</p>
+  </li>
+  <li>
+    <p>向项目仓库管理员申请操作某项目权限，将id_rsa.pub文件发给管理员，如开发员tom需要开发项目pangu-la-web，则需要邮件或qq等方式将id_rsa.pub发给管理员tangsz，并申明需要有pangu-la-web项目开发权限；</p>
+  </li>
+  <li>
+    <p>管理员会根据tom的权限为其赋予pangu-la-web项目特定权限（如只能新建dev开头的分支进行开发，不允许tom操作master分支），然后通过tom可以进行clone代码开发了；</p>
+  </li>
+  <li>
+    <p>tom接到通知后clone下pangu-la-web代码及可以进行开发了，clone命令为：git clone git@10.20.16.78:pangu-la-web  （windows下在git Bash 窗口执行）；</p>
+  </li>
+  <li>
+    <p>tom clone完代码后可以自己新建个分支如dev-tom（git branch dev-tom）进行开发，然后git checkout dev-tom，待功能开发完后push到dev-tom分支（git push origin dev-tom)</p>
+  </li>
+  <li>
+    <p>tom 在分支dev-tom上开发完后就可以通知管理员tom的功能点已经开发完了，申请合并到master分支；</p>
+  </li>
+  <li>
+    <p>管理员接到tom通知后做合并处理。</p>
+  </li>
+</ol>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2015/06/01/jls7-3-10.html' title='Java SE 7 Third Edition 规范翻译之－数组'>Java SE 7 Third Edition 规范翻译之－数组</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2015/06/12/jls7-3-11.html' title='Java SE 7 Third Edition 规范翻译之－异常'>Java SE 7 Third Edition 规范翻译之－异常</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2015/06/12/jls7-3-11.html' title='Java SE 7 Third Edition 规范翻译之－异常'>Java SE 7 Third Edition 规范翻译之－异常</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/tangshizhong/'>汤仕忠</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>H5终端自适应解决方案 -- flexible + rem_博汇网_www.blogways.net</title>
+    <meta name=keywords content="rem, Web">
+    
+    <meta name=description content="H5终端自适应解决方案">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "刘益伟".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2016/08/18/web-svg-2.html' title='SVG学习[2]--基本数据及path元素'>SVG学习[2]--基本数据及path元素</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2016/08/31/ued-design-share.html' title='8招教你玩转［视觉引导］'>8招教你玩转［视觉引导］</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2016/08/31/ued-design-share.html' title='8招教你玩转［视觉引导］'>8招教你玩转［视觉引导］</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>H5终端自适应解决方案 -- flexible + rem
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2016-08-26
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>rem</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Web</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories/web前端/'>web前端</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><em>目 录</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#1st">目前移动端现状</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#2nd">像素的概念</a></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#3nd">初识rem与flexible</a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="#end">制作rem小例子</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="1st"></a></p>
+
+<h2 id="一目前移动端现状">一、目前移动端现状</h2>
+
+<h4 id="随着移动设备的普及不同的手机屏幕与尺寸接连出现作为前端开发人员虽然h5的页面与pc的web页面相比简单了不少但让我们头痛的事情是要想尽办法让页面能适配众多不同的终端设备让我们来看看目前市场上的情况">随着移动设备的普及，不同的手机屏幕与尺寸接连出现；作为前端开发人员，虽然H5的页面与PC的Web页面相比简单了不少，但让我们头痛的事情是要想尽办法让页面能适配众多不同的终端设备，让我们来看看目前市场上的情况</h4>
+
+<p><img src="/images/liuyw6/20160826img01.png" alt="20160826img01" /></p>
+
+<h4 id="而作为前端开发人员需要适配终端设备数据如下图">而作为前端开发人员，需要适配终端设备数据如下图</h4>
+
+<p><img src="/images/liuyw6/20160826img02.png" alt="20160826img02" /></p>
+
+<h4 id="看到这些数据是否死的心都有了或者说为此捏了一把汗出来">看到这些数据，是否死的心都有了，或者说为此捏了一把汗出来。</h4>
+
+<h4 id="为了应对如此多的终端设备设计师和前端开发之间又应该采用什么协作模式">为了应对如此多的终端设备，设计师和前端开发之间又应该采用什么协作模式？</h4>
+
+<h4 id="目前淘宝的设计思路为">目前淘宝的设计思路为：</h4>
+
+<h4 id="1选择一种尺寸作为设计和开发基准">1.选择一种尺寸作为设计和开发基准</h4>
+
+<h4 id="2定义一套适配规则自动适配剩下的两种尺寸其实不仅这两种你懂的">2.定义一套适配规则，自动适配剩下的两种尺寸(其实不仅这两种，你懂的)</h4>
+
+<h4 id="3特殊适配效果给出设计效果">3.特殊适配效果给出设计效果</h4>
+
+<h4 id="如下图为手淘的协作模式">如下图为手淘的协作模式</h4>
+
+<p><img src="/images/liuyw6/20160826img03.jpg" alt="20160826img03" /></p>
+
+<h4 id="通过上图可以看出手淘设计师常选择iphone6作为基准设计尺寸交付给前端的设计尺寸是按750px--1334px为准高度会随着内容多少而改变前端开发人员通过一套适配规则flexiblerem自动适配到其他的尺寸flexiblerem会在后面详解">通过上图可以看出，手淘设计师常选择iPhone6作为基准设计尺寸，交付给前端的设计尺寸是按750px * 1334px为准(高度会随着内容多少而改变)。前端开发人员通过一套适配规则（flexible+rem）自动适配到其他的尺寸，flexible+rem会在后面详解。</h4>
+
+<h2 id="二像素的概念">二、像素的概念</h2>
+
+<h4 id="做为前端开发人员对于像素的概念是不可或缺的其中包含了物理像素physical-pixel设备独立像素density-independent-pixelcss像素屏幕密度设备像素比device-pixel-ratio等基本概念让我们一个个的理解">做为前端开发人员，对于像素的概念是不可或缺的，其中包含了“物理像素(physical pixel)”、“设备独立像素(density-independent pixel)”、“CSS像素”、“屏幕密度”、“设备像素比(device pixel ratio)”等基本概念，让我们一个个的理解</h4>
+
+<h3 id="1物理像素physical-pixel">1.物理像素(physical pixel)</h3>
+
+<h4 id="物理像素又被称为设备像素他是显示设备中一个最微小的物理部件每个像素可以根据操作系统设置自己的颜色和亮度正是这些设备像素的微小距离欺骗了我们肉眼看到的图像效果">物理像素又被称为设备像素，他是显示设备中一个最微小的物理部件。每个像素可以根据操作系统设置自己的颜色和亮度。正是这些设备像素的微小距离欺骗了我们肉眼看到的图像效果。</h4>
+
+<h3 id="2设备独立像素density-independent-pixel">2.设备独立像素(density-independent pixel)</h3>
+
+<h4 id="设备独立像素也称为密度无关像素可以认为是计算机坐标系统中的一个点这个点代表一个可以由程序使用的虚拟像素比如说css像素然后由相关系统转换为物理像素">设备独立像素也称为密度无关像素，可以认为是计算机坐标系统中的一个点，这个点代表一个可以由程序使用的虚拟像素(比如说CSS像素)，然后由相关系统转换为物理像素。</h4>
+
+<h3 id="3css像素">3.CSS像素</h3>
+
+<h4 id="css像素是一个抽像的单位主要使用在浏览器上用来精确度量web页面上的内容一般情况之下css像素称为与设备无关的像素device-independent-pixel简称dips">CSS像素是一个抽像的单位，主要使用在浏览器上，用来精确度量Web页面上的内容。一般情况之下，CSS像素称为与设备无关的像素(device-independent pixel)，简称DIPs。</h4>
+
+<h3 id="4屏幕密度">4.屏幕密度</h3>
+
+<h4 id="屏幕密度是指一个设备表面上存在的像素数量它通常以每英寸有多少像素来计算ppi">屏幕密度是指一个设备表面上存在的像素数量，它通常以每英寸有多少像素来计算(PPI)。</h4>
+
+<h3 id="5设备像素比device-pixel-ratio">5.设备像素比(device pixel ratio)</h3>
+
+<h4 id="设备像素比简称为dpr其定义了物理像素和设备独立像素的对应关系它的值可以按下面的公式计算得到">设备像素比简称为dpr，其定义了物理像素和设备独立像素的对应关系。它的值可以按下面的公式计算得到：</h4>
+
+<h4 id="设备像素比--物理像素--设备独立像素">设备像素比 ＝ 物理像素 / 设备独立像素</h4>
+
+<h4 id="在javascript中可以通过windowdevicepixelratio获取到当前设备的dpr而在css中可以通过-webkit-device-pixel-ratio-webkit-min-device-pixel-ratio和--webkit-max-device-pixel-ratio进行媒体查询对不同dpr的设备做一些样式适配这里只针对webkit内核的浏览器和webview">在JavaScript中，可以通过window.devicePixelRatio获取到当前设备的dpr。而在CSS中，可以通过-webkit-device-pixel-ratio，-webkit-min-device-pixel-ratio和 -webkit-max-device-pixel-ratio进行媒体查询，对不同dpr的设备，做一些样式适配(这里只针对webkit内核的浏览器和webview)。</h4>
+
+<h4 id="dip或dpdevice-independent-pixels设备独立像素与屏幕密度有关dip可以用来辅助区分视网膜设备还是非视网膜设备">dip或dp,（device independent pixels，设备独立像素）与屏幕密度有关。dip可以用来辅助区分视网膜设备还是非视网膜设备</h4>
+
+<h4 id="众所周知iphone6的设备宽度和高度为375pt--667pt可以理解为设备的独立像素而其dpr为2根据上面公式我们可以很轻松得知其物理像素为750pt--1334pt">众所周知，iPhone6的设备宽度和高度为375pt * 667pt,可以理解为设备的独立像素；而其dpr为2，根据上面公式，我们可以很轻松得知其物理像素为750pt * 1334pt。</h4>
+
+<h2 id="三初识rem与flexible">三、初识rem与flexible</h2>
+
+<h3 id="1css3新成员rem">1.CSS3新成员：rem</h3>
+
+<h4 id="在w3c规范中是这样描述rem的">在W3C规范中是这样描述rem的:</h4>
+
+<h4 id="font-size-of-the-root-element">font size of the root element.</h4>
+
+<h4 id="简单的理解rem就是相对于根元素html的font-size来做计算而我们的方案中使用rem单位是能轻易的根据html的font-size计算出元素的盒模型大小而这个特色对我们来说是特别的有益处">简单的理解，rem就是相对于根元素&lt;html&gt;的font-size来做计算。而我们的方案中使用rem单位，是能轻易的根据&lt;html&gt;的font-size计算出元素的盒模型大小。而这个特色对我们来说是特别的有益处。</h4>
+
+<h4 id="在整个手淘团队我们有一个名叫lib-flexible的库而这个库就是用来解决h5页面终端适配的">在整个手淘团队，我们有一个名叫lib-flexible的库，而这个库就是用来解决H5页面终端适配的。</h4>
+
+<h3 id="2lib-flexible是什么">2.lib-flexible是什么？</h3>
+
+<h4 id="lib-flexible是一个制作h5适配的开源库获取需要的javascript和css文件可以直接下载或直接通过阿里cdn云">lib-flexible是一个制作H5适配的开源库，获取需要的JavaScript和CSS文件，可以直接下载或直接通过阿里CDN云</h4>
+
+<h4 id="下载地址httpsgithubcomamfelib-flexiblearchivemasterzip">下载地址：https://github.com/amfe/lib-flexible/archive/master.zip</h4>
+
+<h4 id="下载后解压同时引入js库如">下载后解压，同时引入js库，如</h4>
+
+<h4><script src="build/flexible_css.debug.js"></script></h4>
+<h4 id="-1"><script src="build/flexible.debug.js"></script></h4>
+
+<h4 id="云引用">云引用：<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script></h4>
+
+<h4 id="3lib-flexible有什么用">3.lib-flexible有什么用？</h4>
+
+<h4 id="lib-flexible加入执行后会在html元素上增加一个data-dpr属性以及一个font-size样式">lib-flexible加入执行后，会在&lt;html&gt;元素上增加一个data-dpr属性，以及一个font-size样式。</h4>
+
+<h4 id="js会根据不同的设备添加不同的data-dpr值比如说2或者3同时会给html加上对应的font-size的值比如说75px">JS会根据不同的设备添加不同的data-dpr值，比如说2或者3，同时会给html加上对应的font-size的值，比如说75px；</h4>
+
+<h4 id="如此一来页面中的元素都可以通过rem单位来设置他们会根据html元素的font-size值做相应的计算从而实现屏幕的适配效果">如此一来，页面中的元素，都可以通过rem单位来设置。他们会根据html元素的font-size值做相应的计算，从而实现屏幕的适配效果。</h4>
+
+<h2 id="四rem小例子分析">四、rem小例子分析</h2>
+
+<h4 id="请用手机扫下面的二维码查看最终实现效果">请用手机扫下面的二维码查看最终实现效果</h4>
+
+<p><img src="/images/liuyw6/20160826img04.jpg" alt="20160826img04" /></p>
+
+<h4 id="该界面是如何实现的首先我们来看一张750的设计图稿">该界面是如何实现的？首先我们来看一张750的设计图稿</h4>
+
+<p><img src="/images/liuyw6/20160826img05.png" alt="20160826img05" /></p>
+
+<h4 id="通过该设计稿可知每个元素的边距大小在7501334上的比例前端开发人员可在750设备上完成框架设计即iphone6上进行开发之后通过将px转化为rem实现终端适配详细流程如下">通过该设计稿可知每个元素的边距、大小在750*1334上的比例；前端开发人员可在750设备上完成框架设计（即iphone6上进行开发），之后通过将px转化为rem实现终端适配，详细流程如下</h4>
+
+<h3 id="1创建html模版">1.创建HTML模版</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">"yes"</span> <span class="na">name=</span><span class="s">"apple-mobile-web-app-capable"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">"yes"</span> <span class="na">name=</span><span class="s">"apple-touch-fullscreen"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">content=</span><span class="s">"telephone=no,email=no"</span> <span class="na">name=</span><span class="s">"format-detection"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"apple-touch-icon"</span> <span class="na">href=</span><span class="s">"favicon.png"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"Shortcut Icon"</span> <span class="na">href=</span><span class="s">"favicon.png"</span> <span class="na">type=</span><span class="s">"image/x-icon"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>flexible+rem实战用例<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="c">&lt;!-- 页面结构写在这里 --&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<h4 id="首先需要加载flexible所需的配置">首先需要加载Flexible所需的配置</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"&gt;&lt;/script&gt;
+</code></pre>
+</div>
+
+<h3 id="2根据设计图编写body中的内容具体如下">2.根据设计图编写&lt;body&gt;中的内容，具体如下</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div class="item-section" data-repeat="sections"&gt;
+    &lt;div class="item-section_header"&gt;
+        &lt;h2&gt;&lt;img src="http://xxx.cdn.com/B1PNLZKXXXXXaTXXXXXXXXXXXX-750-481.jpg" alt=""&gt;&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;ul&gt;
+        &lt;li data-repeat="items" class="flag" role="link" href="##"&gt;
+            &lt;a class="figure flag-item" href="##"&gt;
+                &lt;img src="https://placeimg.com/350/350/people/grayscale" alt=""&gt;
+            &lt;/a&gt;
+            &lt;div class="figcaption flag-item"&gt;
+                &lt;div class="flag-title"&gt;&lt;a href="##" title=""&gt;Carter's1年式灰色长袖连体衣包脚爬服全棉鲸鱼男婴儿童装115G093&lt;/a&gt;&lt;/div&gt;
+                &lt;div class="flag-price"&gt;&lt;span&gt;双11价&lt;/span&gt;&lt;strong&gt;¥299.06&lt;/strong&gt;&lt;small&gt;(满400减100)&lt;/small&gt;&lt;/div&gt;
+                &lt;div class="flag-type"&gt;1小时内热卖5885件&lt;/div&gt;
+                &lt;a class="flag-btn" href="##"&gt;马上抢！&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+</div>
+
+<h3 id="3将px转化为rem以适配不同终端">3.将px转化为rem，以适配不同终端</h3>
+
+<h4 id="在实际生产当中如果每一次计算px转换rem或许会觉得非常麻烦或许直接影响大家平时的开发效率为了能让大家更快进行转换我们团队内的同学各施所长为px转换rem写了各式各样的小工具">在实际生产当中，如果每一次计算px转换rem，或许会觉得非常麻烦，或许直接影响大家平时的开发效率。为了能让大家更快进行转换，我们团队内的同学各施所长，为px转换rem写了各式各样的小工具。</h4>
+
+<h4 id="1cssrem">（1）CSSREM</h4>
+
+<h4 id="cssrem是一个css的px值转rem值的sublime-text3自动完成插件这个插件是由正霖编写先来看看插件的效果">CSSREM是一个CSS的px值转rem值的Sublime Text3自动完成插件。这个插件是由@正霖编写。先来看看插件的效果：</h4>
+
+<p><img src="/images/liuyw6/20160826img06.gif" alt="20160826img06" /></p>
+
+<h4 id="2在线转换器">（2）在线转换器</h4>
+
+<h4 id="地址http520uedcomtoolsrem--该转换器上传工程css文件然后定义html-font-size即可转换">地址：http://520ued.com/tools/rem ； 该转换器上传工程CSS文件，然后定义html font size，即可转换</h4>
+
+<h2 id="结束语">结束语</h2>
+
+<h4 id="本文主要就目前移动终端的适配做了一个简单的阐述目的在于认识移动终端知晓目前主流的适配方法详细的学习请参考丰富的网络资源谢谢">本文主要就目前移动终端的适配做了一个简单的阐述，目的在于认识移动终端，知晓目前主流的适配方法；详细的学习请参考丰富的网络资源，谢谢！</h4>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2016/08/18/web-svg-2.html' title='SVG学习[2]--基本数据及path元素'>SVG学习[2]--基本数据及path元素</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2016/08/31/ued-design-share.html' title='8招教你玩转［视觉引导］'>8招教你玩转［视觉引导］</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2016/08/31/ued-design-share.html' title='8招教你玩转［视觉引导］'>8招教你玩转［视觉引导］</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/liuyiwei/'>刘益伟</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	
