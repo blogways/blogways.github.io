@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>linux下源码安装wordpress全过程_博汇网_www.blogways.net</title>
+    <meta name=keywords content="WordPress">
+    
+    <meta name=description content="linux主机源码安装wordpress的全过程">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "王栋".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2015/12/22/wordpress-install-78.html' title='公司主机装载apache+PHP+phpmyadmin+wordpress'>公司主机装载apache+PHP+phpmyadmin+wordpress</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2016/01/04/drupal-install.html' title='Drupal安装教程'>Drupal安装教程</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2016/01/04/drupal-install.html' title='Drupal安装教程'>Drupal安装教程</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>linux下源码安装wordpress全过程
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2015-12-22
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>WordPress</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>WordPress</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="搭建lamp环境">搭建lamp环境</h2>
+<h3 id="一-准备安装包">一 准备安装包</h3>
+<h4 id="库文件">库文件：</h4>
+<ol>
+  <li>libxml2-2.6.30.tar.gz</li>
+  <li>libmcrypt-2.5.8.tar.gz</li>
+  <li>zlib-1.2.3.tar.gz</li>
+  <li>libpng-1.2.31.tar.gz</li>
+  <li>jpegsrc.v6b.tar.gz</li>
+  <li>freetype-2.3.5.tar.gz</li>
+  <li>autoconf-2.61.tar.gz</li>
+  <li>gd-2.0.35.tar.gz</li>
+  <li>apr-1.4.6.tar.gz</li>
+  <li>apr-util-1.5.1.tar.gz</li>
+</ol>
+
+<h4 id="主要文件">主要文件:</h4>
+<ol>
+  <li>httpd-2.2.9.tar.gz</li>
+  <li>mysql-5.1.59.tar.gz</li>
+  <li>php-5.2.6.tar.gz</li>
+  <li>phpMyAdmin-3.0.0</li>
+</ol>
+
+<h4 id="将安装包都上传到usrlocalsrc目录">将安装包都上传到/usr/local/src目录</h4>
+<h3 id="二-安装apache前期准备库文件安装">二 安装apache前期准备（库文件安装）</h3>
+<h4 id="1-解包">1. 解包</h4>
+<h5 id="编写一个shell脚本tarsh进行解包">编写一个shell脚本tar.sh进行解包。</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nb">cd</span> /usr/local/src
+ls <span class="k">*</span>.tar.gz &gt; ls.list      
+<span class="k">for </span>TAR <span class="k">in</span> ’cat ls.list‘
+<span class="k">do
+</span>tar -zxvf <span class="nv">$TAR</span>
+<span class="k">done</span>
+</code></pre>
+</div>
+<h5 id="执行脚本tarsh进行解包">执行脚本tar.sh进行解包</h5>
+<h4 id="2-按顺序安装">2. 按顺序安装</h4>
+<h5 id="安装libxml2">【安装libxml2】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd libxml2-2.6.30  
+./configure --prefix=/usr/local/libxml2/  
+make   
+make install  
+</code></pre>
+</div>
+<h5 id="安装libmcrypt">【安装libmcrypt】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd libmcrypt-2.5.8  
+./configure --enable-ltdl-install  
+make  
+make install  
+</code></pre>
+</div>
+<h5 id="安装zlib">【安装zlib】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd zlib-1.2.3  
+./configure  
+make  
+make install
+</code></pre>
+</div>
+<h5 id="安装libpng">【安装libpng】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd libpng-1.2.31  
+./configure --prefix=/usr/local/libpng/  
+make  
+make install  
+</code></pre>
+</div>
+<h5 id="安装jpegsrcv6b">【安装jpegsrc.v6b】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>mkdir /usr/local/jpeg6  
+mkdir /usr/local/jpeg6/bin  
+mkdir /usr/local/jpeg6/lib  
+mkdir /usr/local/jpeg6/include  
+mkdir -p /usr/local/jpeg6/man/man1  
+cd jpeg-6b  
+./configure --prefix=/usr/local/jpeg6/ --enable-shared --enable-static  
+make  
+make install  
+</code></pre>
+</div>
+<h5 id="安装freetype">【安装freetype】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd freetype-2.3.5  
+./configure --prefix=/usr/local/freetype/  
+make  
+make install  
+</code></pre>
+</div>
+<h5 id="安装autoconf">【安装autoconf】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd autoconf-2.61  
+./configure  
+make  
+make install
+</code></pre>
+</div>
+<h5 id="安装gd">【安装gd】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd gd-2.0.35  
+./configure --prefix=/usr/local/gd2/ --with-jpeg=/usr/local/jpeg6/ --with-freetype=/usr/local/freetype/  
+make  
+make install  
+</code></pre>
+</div>
+<h5 id="安装apr">【安装apr】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>./configure
+make
+make install
+</code></pre>
+</div>
+<h5 id="安装apr-util">【安装apr-util】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>./configure  --with-apr=/usr/local/apr/
+make
+make install
+</code></pre>
+</div>
+<h3 id="三-安装apache">三 安装apache</h3>
+<h4 id="apache安装与配置">apache安装与配置</h4>
+<h5 id="安装apache">【安装apache】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd httpd-2.2.9  
+./configure --prefix=/usr/local/apache2/ --sysconfdir=/etc/httpd/ --with-included-apr --disable-userdir --enable-so --enable-deflate=shared --enable-expires=shared --enable-rewrite=shared --enable-static-support  
+make  
+make install  
+</code></pre>
+</div>
+<h6 id="启动apache">启动apache</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>/usr/local/apache2/bin/apachectl start  
+</code></pre>
+</div>
+<h6 id="修改配置文件">修改配置文件</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>vi /etc/httpd/httpd.conf
+#查找ServerName,将注释去掉  
+ServerName 'www.example.com:80'
+</code></pre>
+</div>
+<h6 id="将apache添加到系统服务中">将apache添加到系统服务中</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>cp /usr/local/apache2/bin/apachectl /etc/init.d/httpd  
+vi /etc/rc.d/init.d/httpd  
+#在#!/bin/sh后添加下面两行(包含"#")  
+# chkconfig:2345 85 15
+# description:Apache
+#添加执行权限  
+chmod 755 /etc/init.d/httpd  
+#添加到系统服务中  
+chkconfig --add httpd  
+</code></pre>
+</div>
+<h6 id="开启apache">开启apache</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>service httpd start
+</code></pre>
+</div>
+<h3 id="四-安装mysql">四 安装mysql</h3>
+<h4 id="mysql安装与配置">mysql安装与配置</h4>
+<h5 id="安装mysql">【安装mysql】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>groupadd mysql  
+useradd -g mysql mysql  
+cd mysql-5.1.59  
+./configure --prefix=/usr/local/mysql/ --with-extra-charsets=all  
+make  
+make install
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>cp support-files/my-medium.cnf /etc/my.cnf  
+/usr/local/mysql/bin/mysql_install_db --user=mysql  
+chown -R root /usr/local/mysql  
+chown -R mysql /usr/local/mysql/var  
+chgrp -R mysql /usr/local/mysql  
+/usr/local/mysql/bin/mysqld_safe  --user=mysql &amp;  
+cp /lamp/src/mysql-5.1.59/support-files/mysql.server /etc/rc.d/init.d/mysqld  
+chown root.root /etc/rc.d/init.d/mysqld  
+chmod 755 /etc/rc.d/init.d/mysqld  
+chkconfig --add mysqld  
+chkconfig --list mysqld  
+chkconfig --levels 245 mysqld off  
+</code></pre>
+</div>
+<h6 id="配置mysql">配置mysql</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd /usr/local/mysql  
+bin/mysqladmin version //简单的测试  
+bin/mysqladmin Variables //查看所有mysql参数  
+bin/mysql -uroot //没有密码可以直接登录本机服务器  
+DELETE FROM mysql.user WHERE Host='localhost' AND User='';  
+FLUSH PRIVILEGES;  
+#设置root密码为123456  
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123456');  
+#配置可远程连接mysql  
+use mysql  
+SELECT user,password,host FROM user;  
+DELETE FROM user WHERE host='localhsot.localdomain'  
+DELETE FROM user WHERE host='10.20.16.79';  
+UPDATE user SET host='%' WHERE user='root';  
+</code></pre>
+</div>
+<h6 id="重启mysql">重启mysql</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>service mysqld restart
+</code></pre>
+</div>
+<h3 id="五-安装php">五 安装php</h3>
+<h4 id="php安装与配置">php安装与配置</h4>
+<h5 id="安装php">【安装php】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd php-5.2.6  
+./configure --prefix=/usr/local/php/ --with-config-file-path=/usr/local/php/etc/ --with-apxs2=/usr/local/apache2/bin/apxs --with-mysql=/usr/local/mysql/ --with-libxml-dir=/usr/local/libxml2/ --with-jpeg-dir=/usr/local/jpeg6/ --with-freetype-dir=/usr/local/freetype/ --with-gd=/usr/local/gd2/ --with-mcrypt=/usr/local/libmcrypt/ --with-mysqli=/usr/local/mysql/bin/mysql_config --enable-soap --enable-mbstring=all --enable-sockets  
+make  
+make install
+</code></pre>
+</div>
+<h6 id="创建配置文件">创建配置文件</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code># cp php.ini-dist /usr/local/php/etc/php.ini
+</code></pre>
+</div>
+<h6 id="使用vi编辑apache配置文件">使用vi编辑apache配置文件</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code># vi /etc/httpd/httpd.conf
+</code></pre>
+</div>
+<p>添加这一条代码</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Addtype application/x-httpd-php .php .phtml
+</code></pre>
+</div>
+<h6 id="重启apache">重启Apache</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code># /usr/local/apache2/bin/apachectl restart
+</code></pre>
+</div>
+<h5 id="apache配置">【apache配置】</h5>
+<p>######建立工作目录</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>mkdir -p /var/www/html  
+</code></pre>
+</div>
+<h6 id="修改httpdconf">修改httpd.conf</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>vi /etc/httpd/httpd.conf  
+#功能: 设置工作目录  
+#说明: 搜索DocumentRoot, 修改为  
+DocumentRoot "/var/www/html"  
+#功能: 设置目录选项
+搜索&lt;Directory "/usr/local/apache2//htdocs"&gt;, 修改为  
+&lt;Directory "/var/www/html"&gt;  
+#功能: 设置默认文档  
+搜索&lt;IfModule dir_module&gt;, 修改为  
+DirectoryIndex index.html index.php
+#功能: 增加php类型  
+搜索 AddType application/x-gzip .gz .tgz在后面添加  
+AddType application/x-httpd-php .html .php  
+功能: 不允许访问目录  
+说明: 搜索Options Indexes FollowSymLinks项并注释  
+#Options Indexes FollowSymLinks   
+#注意: 修改配置文件后, 重启apache才能生效  
+</code></pre>
+</div>
+<h6 id="重启apache-1">重启apache</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>service httpd restart
+</code></pre>
+</div>
+<h5 id="添加pdo_mysql扩展">【添加PDO_MYSQL扩展】</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd /lamp/src/php-5.2.6/ext/pdo_mysql  
+/usr/local/php/bin/phpize  
+./configure --with-php-config=/usr/local/php/bin/php-config --with-pdo-mysql=/usr/local/mysql  
+make  
+make install  
+</code></pre>
+</div>
+<h6 id="执行完make-install后会生成">执行完make install后会生成</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>#Installing shared extensions: /usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/  
+</code></pre>
+</div>
+<h6 id="修改phpini">修改php.ini</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>vi /usr/local/php/etc/php.ini  
+#查找extension_dir,修改为
+extension_dir = "/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/"  
+#添加pdo_mysql
+extension = pdo_mysql.so  
+</code></pre>
+</div>
+<p>######重启apache</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>service httpd restart
+</code></pre>
+</div>
+<h3 id="六-安装phpmyadmin">六 安装phpmyadmin</h3>
+<h4 id="phpmyadmin安装与配置">phpmyadmin安装与配置</h4>
+<h5 id="安装phpmyadmin">【安装phpmyadmin】</h5>
+<h6 id="拷贝目录到指定位置并改名为phpmyadmin">拷贝目录到指定位置并改名为phpmyadmin</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code>#cp -a  phpMyAdmin-3.0.0-rc1-all-languages /var/www/html/phpmyadmin
+#cd /var/www/html/phpmyadmin/
+#cp config.sample.inc.php config.inc.php
+</code></pre>
+</div>
+<h5 id="配置phpmyadmin">配置phpMyAdmin</h5>
+<div class="highlighter-rouge"><pre class="highlight"><code>#vi /var/www/html/phpmyadmin/config.inc.php
+</code></pre>
+</div>
+<p>将auth_type 改为http</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$cfg['Servers'][$i]['auth_type'] = 'http';
+</code></pre>
+</div>
+
+<h5 id="测试">测试</h5>
+<h6 id="编写infophp文件查看php配置详细">编写info.php文件，查看php配置详细</h6>
+<div class="highlighter-rouge"><pre class="highlight"><code> vi /var/www/html/info.php
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php
+phpinfo();
+?&gt;
+</code></pre>
+</div>
+<h5 id="通过浏览器访问http10201679infophp获得php的详细配置信息">通过浏览器访问http://10.20.16.79/info.php，获得php的详细配置信息</h5>
+
+<h2 id="安装wordpress">安装wordpress</h2>
+<ol>
+  <li>将解压后的wordpress移动到/var/www/html目录下</li>
+  <li>在浏览器中访问 http://localhost/wordpress/wp-admin/install.php，会访问失败，问题解决方法是修改wp-config.php配置信息，提供数据库的名(wordpress)，用户名(root)，密码()。然后刷新浏览器就能成功访问</li>
+  <li>根据提示注册账号，登录即可进入</li>
+</ol>
+
+<h2 id="安装过程参考网址">安装过程参考网址</h2>
+<ol>
+  <li><a href="http://www.cnblogs.com/BTMaster/p/3551073.html">http://www.cnblogs.com/BTMaster/p/3551073.html</a></li>
+  <li><a href="http://www.cnblogs.com/mchina/archive/2012/11/28/2778779.html">http://www.cnblogs.com/mchina/archive/2012/11/28/2778779.html</a></li>
+</ol>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2015/12/22/wordpress-install-78.html' title='公司主机装载apache+PHP+phpmyadmin+wordpress'>公司主机装载apache+PHP+phpmyadmin+wordpress</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2016/01/04/drupal-install.html' title='Drupal安装教程'>Drupal安装教程</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2016/01/04/drupal-install.html' title='Drupal安装教程'>Drupal安装教程</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/wangdong/'>王栋</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

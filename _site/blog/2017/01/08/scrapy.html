@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Scrapy 爬虫框架入门_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Python">
+    
+    <meta name=description content="介绍Scrapy快速编写网络爬虫">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "景阳".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                                    </span>
+                                </div>
+                                
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Scrapy 爬虫框架入门
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2017-01-08
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Python</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories/python/'>Python</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="一网络爬虫">一、网络爬虫</h2>
+<p>网络爬虫或者叫网络机器人是用来自动采集网络内容的工具，通常被用于搜索引擎。基于我自己的理解，要写一个网络爬虫通常要解决以下几个问题：</p>
+
+<ul>
+  <li>有哪些网络资源是需要被爬取的。网络上的资源多种多样，有单纯的HTML页面，也有各种格式的文件、音频或视频等等，在本文中我仅爬取HTML页面中的文本，所以这里的首要问题是哪些URL是爬虫要处理的。</li>
+  <li>如何从文本中提取到我想要的信息。HTML文本中包含了很多无用的信息，包括标签等，网络爬虫最终提供给我的应该是我感兴趣的内容。</li>
+  <li>如何把爬取到的信息保存下来。爬虫得到的有用信息要通过数据库或其他有效途径保存下来。</li>
+  <li>其他问题：包括网站的反爬虫策略、爬虫策略、错误处理能力等等。</li>
+</ul>
+
+<p>以上几个问题如果单独提出来可能大家都有解决的办法，但是整合到一起处理，还是有一些麻烦的。Scrapy这个爬虫框架就提供给我们一个简单的解决方案。</p>
+
+<h2 id="二scrapy">二、Scrapy</h2>
+<p>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。它包含了几大组件：</p>
+
+<ul>
+  <li>Scrapy engine：它负责数据流在系统中所有组件中流动，相当于爬虫的“大脑”，是调度中心。</li>
+  <li>Downloader：负责获取页面并提供给引擎。</li>
+  <li>Spider：是真正的爬虫，负责URL和解析HTML提供item。</li>
+  <li>Pipeline：负责处理spider提供的item。典型的应用有清理错误、持久化等。</li>
+  <li>Middlewares：处理spider的输入和输出。典型的应用有网络代理验证。</li>
+</ul>
+
+<p><img src="/images/jyjsjd/scrapy_workflow.png" alt="scrapy_workflow.png" /></p>
+
+<h2 id="三新建一个项目">三、新建一个项目</h2>
+<p>在写爬虫之前我们要新建一个项目，Scrapy非常贴心的为我们提供了一个命令帮助我们建立项目框架：</p>
+
+<p><code class="highlighter-rouge">scrapy startproject [project_name]</code></p>
+
+<p>这个命令建立的项目框架如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>project_name/
+  scrapy.cfg
+  db/
+    __init__.py
+    config.py
+  spiders/
+    __init__.py
+    spider.py
+  items.py
+  pipelines.py
+  settings.py
+  spiders/
+      __init__.py
+      ...
+</code></pre>
+</div>
+
+<ul>
+  <li>scrapy.cfg: 项目的配置文件。</li>
+  <li>db/config.py：数据库的设置文件。</li>
+  <li>spiders/：爬虫所在的目录。</li>
+  <li>project_name/items.py: 项目中的item文件。</li>
+  <li>project_name/pipelines.py: 项目中的pipelines文件。</li>
+  <li>project_name/settings.py: 项目的设置文件。包括数据库设置等。</li>
+  <li>project_name/spiders/: 放置spider代码的目录。</li>
+</ul>
+
+<h2 id="四编写一个爬虫">四、编写一个爬虫</h2>
+<p>房子这两年大热，这里我写一个爬取链家网二手房的爬虫为例。打开<a href="http://nj.lianjia.com/ershoufang/">网页</a>来观察一下结构：</p>
+
+<p><img src="/images/jyjsjd/page_example.png" alt="page_example.png" /></p>
+
+<p>网页看上去十分规整，包含了很多我们想要的信息，包括总价、单价、面积和位置等。</p>
+
+<h3 id="声明item">声明item</h3>
+<p>Item是spider得到的结构化数据。</p>
+
+<p>打开items.py，用Python简单的class定义语法来新建一个类：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import scrapy
+from scrapy.loader.processors import MapCompose, TakeFirst
+
+class HomeLinkItem(scrapy.Item):
+    hid = scrapy.Field()
+    url = scrapy.Field()
+    title = scrapy.Field()
+    price = scrapy.Field()
+    room = scrapy.Field()
+    htype = scrapy.Field()
+    area = scrapy.Field()
+    areaName = scrapy.Field()
+</code></pre>
+</div>
+
+<h3 id="爬虫">爬虫</h3>
+<p>在<code class="highlighter-rouge">spiders/</code>目录下新建home_link.py，作为爬虫。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class HomeSpider(CrawlSpider):
+    name = "home_link"
+
+    def parse_item(self, response):
+        ...
+</code></pre>
+</div>
+
+<p>爬虫要知道从哪里爬取，所以第一步是告诉爬虫域名和开始的URL：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>allow_domains = ['nj.lianjia.com']
+start_urls = ['http://nj.lianjia.com/ershoufang/']
+</code></pre>
+</div>
+
+<p>爬虫开始抓取网页之后还有告诉爬虫哪些URL是要处理的，也就是爬取的规则：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>rules = (
+    Rule(LinkExtractor(allow=(r'\d+\.html', r'pg\d+\\')), callback='parse_item', follow=True),
+)
+</code></pre>
+</div>
+
+<p>大家可以打开刚才那个网页中的任意一个房子，观察它的URL。可以发现，URL都是域名加一串数字构成的。如：
+  <code class="highlighter-rouge">http://nj.lianjia.com/ershoufang/103100443605.html</code>。</p>
+
+<p>这里可以用正则表达式写多个规则，我在这里只写了一个。</p>
+
+<h3 id="解析网页">解析网页</h3>
+<p>爬虫中的<code class="highlighter-rouge">parse_item</code>方法就是用来解析网页，并返回一个item的。</p>
+
+<p>Python有很多解析HTML的优秀库，如<code class="highlighter-rouge">BeautifulSoup</code>，我在这里专注于爬虫就不用这些库了。实际上我们可以非常简单地通过XPath语法来获取网页上我们感兴趣的内容。XPath非常简单，只要熟悉CSS选择器就可以快速上手。</p>
+
+<p>我们再来看一下网页的源码，如我们感兴趣的<em>总价</em>：</p>
+
+<p><img src="/images/jyjsjd/price_tag.png" alt="price_tag.png" /></p>
+
+<p>可以看到<em>总价</em>位于<code class="highlighter-rouge">class</code>为<code class="highlighter-rouge">price</code>的<code class="highlighter-rouge">div</code>中的class为<code class="highlighter-rouge">total</code>的<code class="highlighter-rouge">div</code>中（为看起来方便没有截更多，实际上他们还被<code class="highlighter-rouge">class</code>为<code class="highlighter-rouge">content</code>的<code class="highlighter-rouge">div</code>包含）。</p>
+
+<p>那么要取得总价，XPath写成：</p>
+
+<p><code class="highlighter-rouge">//div[@class="content"]/div[@class="price "]/span[@class="total"]/text()</code></p>
+
+<p>其他的字段都是类似我就不再赘述。</p>
+
+<p>最终<code class="highlighter-rouge">parse_item</code>方法写成：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def parse_item(self, response):
+    l = ItemLoader(item=HomeLinkItem(), response=response)
+    l.add_xpath('hid', '//div[@class="content"]/span[@class="sharethis"]/span[@class="erweibox"]/img')
+    l.add_value('url', response.url)
+    l.add_xpath('title', '//title/text()')
+    l.add_xpath('price', '//div[@class="content"]/div[@class="price "]/span[@class="total"]/text()')
+    l.add_xpath('room', '//div[@class="content"]/div[@class="houseInfo"]/div[@class="room"]'
+                        '/div[@class="mainInfo"]/text()')
+    l.add_xpath('htype', '//div[@class="content"]/div[@class="houseInfo"]/div[@class="type"]'
+                         '/div[@class="mainInfo"]/text()')
+    l.add_xpath('area', '//div[@class="content"]/div[@class="houseInfo"]/div[@class="area"]'
+                        '/div[@class="mainInfo"]/text()')
+    l.add_xpath('areaName', '//div[@class="content"]/div[@class="aroundInfo"]/div[@class="communityName"]'
+                            '/a[@class="info"]/text()')
+    return l.load_item()
+</code></pre>
+</div>
+
+<p>返回一个item。</p>
+
+<h3 id="表的定义">表的定义</h3>
+<p>最终我们想把数据保存在数据库中。Scrapy使用SQLAlchemy来帮助完成持久化，它相当于Hibernate，工作原理类似。</p>
+
+<p>定义一个类<code class="highlighter-rouge">house</code>来保存数据，它对应数据库表<code class="highlighter-rouge">house</code>。sqlalchemy.Column()这句代码定义字段和它的类型等。
+在db/下新建house.py：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import sqlalchemy
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class House(Base):
+    __tablename__ = 'house'
+
+    hid = sqlalchemy.Column(sqlalchemy.String, primary_key=True, name='id')
+    url = sqlalchemy.Column(sqlalchemy.String)
+    title = sqlalchemy.Column(sqlalchemy.String)
+    price = sqlalchemy.Column(sqlalchemy.String)
+    room = sqlalchemy.Column(sqlalchemy.String)
+    htype = sqlalchemy.Column(sqlalchemy.String, name='type')
+    area = sqlalchemy.Column(sqlalchemy.String)
+    areaName = sqlalchemy.Column(sqlalchemy.String, name='area_name')
+</code></pre>
+</div>
+
+<p>数据库表<code class="highlighter-rouge">house</code>的定义如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CREATE TABLE `house` (
+  `id` varchar(30) NOT NULL DEFAULT '',
+  `url` varchar(256) DEFAULT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `price` varchar(10) DEFAULT NULL,
+  `room` varchar(100) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `area` varchar(50) DEFAULT NULL,
+  `area_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre>
+</div>
+
+<p>这里我使用的是MySQL，打开db/config.py，写入数据库连接字符串：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>engine = create_engine('mysql+mysqlconnector://user:pasword@localhost:3306/test')
+DBSession = sessionmaker(bind=engine)
+</code></pre>
+</div>
+
+<h3 id="保存结果">保存结果</h3>
+<p>Pipelines的典型应用就是持久化数据。它接收Spider返回的item对象并对item进行处理。在这里我们把item包装成House类，并持久化。
+打开<code class="highlighter-rouge">pipelines.py</code>，并加入以下内容：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class DataBasePipeline(object):
+    def open_spider(self, spider):
+        self.session = DBSession()
+
+    def process_item(self, item, spider):
+        h = House(
+            hid=item.get('hid'),
+            url=item.get('url'),
+            title=item.get('title'),
+            price=item.get('price'),
+            room=item.get('room'),
+            htype=item.get('htype'),
+            area=item.get('area'),
+            areaName=item.get('areaName')
+        )
+        self.session.add(h)
+        self.session.commit()
+
+    def close_spider(self, spider):
+        self.session.close()
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">open_spider</code>方法取得数据库session。<code class="highlighter-rouge">process_item</code>方法处理对象，这里是将House对象存到数据库。</p>
+
+<h3 id="运行爬虫">运行爬虫</h3>
+<p>CD到项目目录，运行命令：<code class="highlighter-rouge">scrapy crawl home_link</code>。（home_link是爬虫的名字）</p>
+
+<p><img src="/images/jyjsjd/scrapy_run.png" alt="scrapy_run.png" /></p>
+
+<p>可以看到Scrapy取得了一个<code class="highlighter-rouge">house</code>。</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                                </span>
+                            </div>
+                            
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/jyjsjd/'>景阳</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-2.html' title='canvas学习[2]--样式与颜色'>canvas学习[2]--样式与颜色</a>
+                            </h5>
+                            <span class='desc'>在上一篇博文中，只用到默认的线条和填充样式。而在本文将介绍canvas 全...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

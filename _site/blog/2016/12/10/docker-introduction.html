@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Docker 入门简介_博汇网_www.blogways.net</title>
+    <meta name=keywords content="docker, container">
+    
+    <meta name=description content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "万洲".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2016/12/08/zen-coding.html' title='Zen Coding：快速编写HTML'>Zen Coding：快速编写HTML</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2016/12/10/esper-introduction.html' title='Esper复杂事件处理引擎 - 入门简介'>Esper复杂事件处理引擎 - 入门简介</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2016/12/10/esper-introduction.html' title='Esper复杂事件处理引擎 - 入门简介'>Esper复杂事件处理引擎 - 入门简介</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Docker 入门简介
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2016-12-10
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>docker</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>container</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories/杂记/'>杂记</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><em>目 录</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#link1">Docker简介</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#link2">Docker安装</a></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#link3">端口映射、网络</a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="#link4">自定义容器</a></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><a href="#link5">容器数据卷管理</a></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><a href="#link6">其它</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="link1"></a></p>
+<style>
+.red { color: red; }
+.blue { color: blue; }
+</style>
+
+<h2 id="一docker简介">一、Docker简介</h2>
+
+<p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 <code class="highlighter-rouge">Linux</code>、<code class="highlighter-rouge">Windows</code>机器上，也可以实现虚拟化。</p>
+
+<h3 id="11-什么是-docker">1.1 什么是 Docker</h3>
+<p><code class="highlighter-rouge">Docker</code>使用<strong>客户端-服务器</strong> (C/S) 架构模式。<code class="highlighter-rouge">Docker客户端</code>会与<code class="highlighter-rouge">Docker守护进程</code>进行通信。<code class="highlighter-rouge">Docker</code> 守护进程会处理复杂繁重的任务，例如建立、运行、发布你的<code class="highlighter-rouge">Docker</code>容器。<code class="highlighter-rouge">Docker</code>客户端和守护进程可以运行在同一个系统上，当然你也可以使用<code class="highlighter-rouge">Docker</code>客户端去连接一个远程的<code class="highlighter-rouge">Docker</code>守护进程。<code class="highlighter-rouge">Docker</code>客户端和守护进程之间通过 <code class="highlighter-rouge">socket</code> 或者 <code class="highlighter-rouge">RESTful API</code> 进行通信。</p>
+
+<p>首先，<code class="highlighter-rouge">Docker</code> 容器的启动可以在 <span class="red"><strong><em>秒级</em></strong></span> 实现，这相比传统的虚拟机方式要快得多。 其次，<code class="highlighter-rouge">Docker</code> 对系统资源的<span class="red"><strong><em>利用率很高</em></strong></span>，一台主机上可以同时运行数千个 <code class="highlighter-rouge">Docker</code> 容器。
+容器除了运行其中应用外，基本不消耗额外的系统资源，使得应用的性能很高，同时系统的开销尽量小。传统虚拟机方式运行 10 个不同的应用就要起 10 个虚拟机，而<code class="highlighter-rouge">Docker</code> 只需要启动 10 个隔离的应用即可。</p>
+
+<h3 id="12-与传统虚拟化的差异">1.2 与传统虚拟化的差异</h3>
+<p>容器是在 <strong><em>操作系统层面</em></strong> 上实现虚拟化，直接<span class="red"><strong><em>复用</em></strong></span>本地主机的操作系统，而传统方式则是在<span class="red"><strong><em>硬件层面</em></strong></span>实现。</p>
+
+<p><img src="/images/docker/vm-arch.png" alt="" /></p>
+
+<p>对于传统的虚拟机来说，每个虚拟的应用包括不仅仅一个应用程序（可能只有数十<code class="highlighter-rouge">MB</code>），还需要<code class="highlighter-rouge">bins</code>和<code class="highlighter-rouge">libs</code>，但是一个完整的操作系统可能有数十<code class="highlighter-rouge">GB</code>。</p>
+
+<p><img src="/images/docker/docker-arch.png" alt="" /></p>
+
+<p>而<code class="highlighter-rouge">Docker Engine</code>仅包括应用程序和它的依赖。在宿主机操作系统上，用户空间，独立的运行，和其它容器分享内核。但是有更高的可移植性和高效性。</p>
+
+<h3 id="13-为什么使用docker">1.3 为什么使用Docker</h3>
+<p>前面简单介绍了下<code class="highlighter-rouge">Docker</code>，说了很多<code class="highlighter-rouge">Docker</code>的相关概念，可是为什么我们要使用它呢？它给我们带来了什么具体的好处呢？</p>
+
+<ul>
+  <li>
+    <p>首先，前面也说了<code class="highlighter-rouge">Docker</code> 容器的启动可以在<strong><em>秒级</em></strong>实现，这相比传统的虚拟机方式要快得多。</p>
+  </li>
+  <li>
+    <p>其次，Docker 对系统资源的利用率很高，一台主机上可以同时运行 <strong class="red">数千个</strong><code class="highlighter-rouge">Docker</code> 容器。</p>
+
+    <p>容器除了运行其中应用外，<strong class="red">基本不消耗</strong> 额外的系统资源，使得应用的性能很高，同时系统的开销尽量小。传统虚拟机方式运行 10 个不同的应用就要起 10 个虚拟机，而<code class="highlighter-rouge">Docker</code> 只需要启动 10 个隔离的应用即可。</p>
+  </li>
+  <li>
+    <p>快速交付和部署</p>
+
+    <p>对开发和运维人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。</p>
+
+    <p>开发者可以使用一个标准镜像来构建一套开发容器，开发完成之后，运维人员可以直接使用这个容器来部署代码。</p>
+
+    <p><code class="highlighter-rouge">Docker</code> 可以快速创建容器，<strong><em>快速迭代</em></strong>应用程序，并让整个过程全程可见，使团队中的其他成员更容易理解应用程序是如何创建和工作的。</p>
+
+    <p><code class="highlighter-rouge">Docker</code> 容器很轻很快！容器的启动时间是秒级的，<strong><em>大量</em></strong> 地节约开发、测试、部署的时间。</p>
+  </li>
+  <li>
+    <p>高效虚拟化、迁移、扩展</p>
+
+    <p><code class="highlighter-rouge">Docker</code> 容器的运行不需要额外的 <code class="highlighter-rouge">hypervisor</code> 支持，它是内核级的虚拟化，因此可以实现更高的性能和效率。</p>
+
+    <p><code class="highlighter-rouge">Docker</code> 容器几乎可以在任意的平台上运行，包括物理机、虚拟机、公有云、私有云、个人电脑、服务器等。 这种兼容性可以让用户把一个应用程序从一个平台直接迁移到另外一个。</p>
+
+    <p>使用 <code class="highlighter-rouge">Docker</code>，只需要小小的修改，就可以替代以往大量的更新工作。所有的修改都以增量的方式被分发和更新，从而实现自动化并且高效的管理。</p>
+  </li>
+  <li>
+    <p>对比传统虚拟机</p>
+
+    <p><img src="/images/docker/compare.png" alt="" /></p>
+  </li>
+</ul>
+
+<h3 id="14-docker-镜像">1.4 Docker 镜像</h3>
+<p><code class="highlighter-rouge">Docker</code> 容器运行时的<i class="red"><strong>只读模板</strong></i>，每一个镜像由一系列的层 (layers) 组成，最底层是<code class="highlighter-rouge">bootfs</code>，接着是<code class="highlighter-rouge">rootfs</code>。<code class="highlighter-rouge">Docker</code> 使用 <code class="highlighter-rouge">UnionFS</code> 来将这些层联合到单独的镜像中。</p>
+
+<p><code class="highlighter-rouge">UnionFS</code> 允许独立文件系统中的文件和文件夹(称之为分支)被<strong><em>透明覆盖</em></strong>，形成一个单独连贯的文件系统。</p>
+
+<p><img src="/images/docker/docker-images-fs.png" alt="" /></p>
+
+<p><code class="highlighter-rouge">bootfs</code>是<code class="highlighter-rouge">Docker</code>镜像最底层的 <strong><em>引导文件</em></strong>　系统，包括<code class="highlighter-rouge">bootloader</code>和<code class="highlighter-rouge">操作系统的内核</code>。在容器启动完毕之后，为了节省内存空间，<code class="highlighter-rouge">bootfs</code>会被卸载。</p>
+
+<p><code class="highlighter-rouge">rootfs</code>位于<code class="highlighter-rouge">bootfs</code>之上，是<code class="highlighter-rouge">Docker</code>容器启动时内部进程课件的文件系统，即<code class="highlighter-rouge">Docker</code>容器的根目录。通常包含一个操作系统运行所需的文件系统。如<code class="highlighter-rouge">/dev</code> <code class="highlighter-rouge">/proc</code> <code class="highlighter-rouge">/bin</code> <code class="highlighter-rouge">/etc</code> <code class="highlighter-rouge">/lib</code> <code class="highlighter-rouge">/usr</code> <code class="highlighter-rouge">/tmp</code> 等。</p>
+
+<p>将<code class="highlighter-rouge">rootfs</code>设为只读模式，在挂载完成之后，利用<code class="highlighter-rouge">UnionFS</code>，在<code class="highlighter-rouge">rootfs</code>上方创建一个<i class="red"><strong>读写层</strong></i>，只有在<code class="highlighter-rouge">Docke</code>容器运行过程中文件系统发生改变，才会把变化的文件内容写到可读可写层，并隐藏只读成的老版本文件（写时复制）。</p>
+
+<p>当修改镜像内的某个文件时，只对处于最上方的 <strong><em>读写层</em></strong> 进行了变动，不覆盖下层已有的文件系统的内容，已有文件在只读层的原始版本仍然存在，但会被读写层的新版本文件隐藏，当<code class="highlighter-rouge">docker commit</code>这个修改过的容器文件系统为一个新的镜像时，保存的内容仅为上层读写文件系统中被更新过的文件。</p>
+
+<h3 id="15-docker-仓库容器">1.5 Docker 仓库、容器</h3>
+<p><code class="highlighter-rouge">Docker</code> 仓库用来保存镜像，可以理解为代码控制中的代码仓库。</p>
+
+<p><code class="highlighter-rouge">Docker</code> 仓库有公有和私有的概念。公有的 <code class="highlighter-rouge">Docker</code> 仓库名字是 <code class="highlighter-rouge">Docker Hub</code>。</p>
+
+<p>容器是从镜像创建的运行实例。它可以被启动、开始、停止、删除。每个容器都是相互隔离的、保证安全的平台。</p>
+
+<p>可以把容器看做是一个 <i class="red"><strong>简易版</strong></i> 的 <code class="highlighter-rouge">Linux</code> 环境（包括<code class="highlighter-rouge">root</code>用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。</p>
+
+<h3 id="16-命名空间">1.6 命名空间</h3>
+<p><code class="highlighter-rouge">Docker</code>通过以下 <strong><em>6</em></strong> 种 <code class="highlighter-rouge">namespace</code> 从进程、网络、IPC、文件系统、UTS 和用户角度的隔离，一个 container 就可以对外展现出一个独立计算机的能力，并且不同 container 从 OS 层面实现了隔离。 然而不同 namespace 之间资源还是相互竞争的，仍然需要类似 ulimit 来管理每个 container 所能使用的资源 - <code class="highlighter-rouge">cgroup</code>。</p>
+
+<h4 id="161-pid-namespace">1.6.1 pid namespace</h4>
+<p>不同用户的进程就是通过 <code class="highlighter-rouge">pid namespace</code> 隔离开的，且不同 <code class="highlighter-rouge">namespace</code> 中可以有相同 PID。具有以下特征:</p>
+
+<ul>
+  <li>每个 <code class="highlighter-rouge">namespace</code> 中的 pid 是有各自的 pid=1 的进程(类似 <code class="highlighter-rouge">/sbin/init</code> 进程)</li>
+  <li>每个 <code class="highlighter-rouge">namespace</code> 中的进程只能影响自己的同一个 <code class="highlighter-rouge">namespace</code> 或子 <code class="highlighter-rouge">namespace</code> 中的进程</li>
+  <li>因为 <code class="highlighter-rouge">/proc</code> 包含正在运行的进程，因此在 <code class="highlighter-rouge">container</code> 中的 <code class="highlighter-rouge">pseudo-filesystem</code> 的 <code class="highlighter-rouge">/proc</code> 目录只能看到自己 <code class="highlighter-rouge">namespace</code> 中的进程</li>
+  <li>因为 <code class="highlighter-rouge">namespace</code> 允许嵌套，父 <code class="highlighter-rouge">namespace</code> 可以影响子 <code class="highlighter-rouge">namespace</code> 的进程，所以子 <code class="highlighter-rouge">namespace</code> 的进程可以在父 <code class="highlighter-rouge">namespace</code> 中看到，但是具有不同的 pid</li>
+</ul>
+
+<h4 id="162-mnt-namespace">1.6.2 mnt namespace</h4>
+<p>类似<code class="highlighter-rouge">chroot</code>，将一个进程放到一个特定的目录执行。</p>
+
+<p><code class="highlighter-rouge">mnt namespace</code> 允许不同 <code class="highlighter-rouge">namespace</code>的进程看到的文件结构不同，这样每个 <code class="highlighter-rouge">namespace</code>中的进程说看到的文件目录就被隔离开了。</p>
+
+<p>同<code class="highlighter-rouge">chroot</code>不同，每个 <code class="highlighter-rouge">namespace</code> 中的容器在<code class="highlighter-rouge">/proc/mounts</code> 的信息只包含所在 <code class="highlighter-rouge">namespace</code> 的 <code class="highlighter-rouge">mount point</code>。</p>
+
+<h4 id="163-net-namespace">1.6.3 net namespace</h4>
+<p>网络隔离是通过<code class="highlighter-rouge">net namespace</code> 实现的，内有<code class="highlighter-rouge">net namespace</code> 有独立的network devices，IP addresses，IP routeing tables， <code class="highlighter-rouge">/proc/net</code> 目录，这样每个容器的网络就能隔离开来。</p>
+
+<p><code class="highlighter-rouge">Docker</code> 默认采用<code class="highlighter-rouge">veth</code> 的方式将容器中的虚拟网卡同 宿主机host 上的一个<code class="highlighter-rouge">docker bridge</code> 连接在一起。</p>
+
+<h4 id="164-utsipc-namespace">1.6.4 uts/ipc namespace</h4>
+<p><code class="highlighter-rouge">UTS("Unix Time-sharding System") namespace</code> 允许每个 container 拥有独立的 <code class="highlighter-rouge">hostname</code> 和 <code class="highlighter-rouge">domain name</code>，使其在网络上可以被视作一个独立的节点，而非宿主机上的一个进程。</p>
+
+<p>container 中进程交互采用 <code class="highlighter-rouge">Linux</code> 常见的进程间交互方法 (interprocess communication - IPC), 包括常见的信号量、消息队列和共享内存。然而同 VM 不同，container 的进程间交互实际上还是宿主机上具有相同 pid namespace 中的进程间交互，因此需要在IPC资源申请时加入 namespace 信息 - 每个 IPC 资源有一个唯一的 32bit ID。</p>
+
+<h4 id="165-user-namespace">1.6.5 user namespace</h4>
+<p>每个 container 可以有不同的 user 和 group id, 也就是说可以以 container 内部的用户在 container 内部执行程序而非 Host 上的用户。</p>
+
+<p><a id="link2"></a></p>
+
+<h2 id="二docker-安装">二、Docker 安装</h2>
+<h3 id="21-centos--red-hat-enterprice-linux">2.1 CentOS / Red Hat Enterprice Linux</h3>
+<p>要求是<code class="highlighter-rouge">64</code>位操作系统，内核版本<code class="highlighter-rouge">&gt;=3.0</code>。</p>
+
+<ul>
+  <li>
+    <p>添加<code class="highlighter-rouge">Docker</code>的<code class="highlighter-rouge">yum</code>源：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-'EOF'
+  [dockerrepo]
+  name=Docker Repository
+  baseurl=https://yum.dockerproject.org/repo/main/centos/$releasever/
+  enabled=1
+  gpgcheck=1
+  gpgkey=https://yum.dockerproject.org/gpg
+  EOF 具体可以参考：
+
+  https://docs.docker.com/engine/installation/linux/centos/
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>安装命令：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  yum install docker-engine -y
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>设置开机启动：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  systemctl enable docker
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>启动配置文件路径</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  /usr/lib/systemd/system/docker.service
+	
+  [Unit]
+  Description=Docker Application Container Engine
+  Documentation=https://docs.docker.com
+  After=network.target docker.socket
+  Requires=docker.socket
+
+  [Service]
+  Type=notify
+  ExecStart=/usr/bin/docker daemon -H 0.0.0.0:2375 -H unix:///var/run/docker.sock
+  MountFlags=slave
+  LimitNOFILE=1048576
+  LimitNPROC=1048576
+  LimitCORE=infinity
+  TimeoutStartSec=0
+
+  [Install]
+  WantedBy=multi-user.target
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>加载</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  systemctl daemon-reload
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>重启<code class="highlighter-rouge">docker</code></p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  systemctl restart docker
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>免 <code class="highlighter-rouge">sudo</code> 使用<code class="highlighter-rouge">docker</code>(没权限访问 <code class="highlighter-rouge">/var/run/docker.sock</code>)</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  sudo groupadd docker
+  sudo gpasswd -a ${USER} docker
+  sudo service docker restart
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p><i class="red"><strong>注意：</strong></i></p>
+
+<ul>
+  <li>
+    <p>在安装的过程中，可能会提示有一个已安装的包冲突，先把冲突的卸载，</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  yum remove lvm-2.02
+  yum install docker-engine –y
+  yum install lvm-2.02 -y
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="22-mac-osx--windows">2.2 Mac OSX / Windows</h3>
+<p>下载安装即可，或者通过<code class="highlighter-rouge">docker-machine</code>安装，后续会有介绍，下载链接：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>https://www.docker.com/products/docker-toolbox 
+</code></pre>
+</div>
+
+<h3 id="23-centos--red-hat-enterprice-linux-测试">2.3 CentOS / Red Hat Enterprice Linux 测试</h3>
+<ul>
+  <li>
+    <p>运行<code class="highlighter-rouge">hello-world</code></p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker run hello-world
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>搜索镜像</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker search centos
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">pull</code>镜像</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  # [:tag]指定pull的版本，不指定默认为latest
+  docker pull centos[:7]
+  # 查看当前本地镜像列表
+  docker images
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>交互式运行容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker run --name test -i -t -d centos /bin/bash
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>查看当前运行的程序</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker ps
+  # 查看所有容器
+  docker ps -a
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>连接到运行的容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker exec -it test /bin/bash
+  # or
+  docker attach test
+  # 或容器的container id，退出 Ctrl +P,Ctrl +Q（exit或Ctrl+D退出容器） ### 2.4 常用命令介绍
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>查看所有<code class="highlighter-rouge">docker</code>命令</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>查看启动<code class="highlighter-rouge">docker server</code>的参数</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker daemon --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>查看某个具体命令的介绍</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker &lt;command&gt; --help
+  如： docker search --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>pull 拉取镜像</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker pull --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>push 推送指定镜像</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker push --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>查看所有镜像列表</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker images --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>移除一个或多个镜像</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker rmi --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>启动容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker run --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>创建容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker create --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>启动容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker start --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>停止容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker stop --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>kill 容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker kill --help
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>删除容器</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  docker rm --help
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p><a id="link3"></a></p>
+<h2 id="三端口映射网络">三、端口映射、网络</h2>
+<p>顾名思义，就是将容器内部服务的端口，映射到宿主机上，以便在宿主机、外部网络能访问容器内部发布的服务。映射的方式有两种：自动映射和绑定映射端口。</p>
+
+<p>自动映射：在容器启动的时候，通过指定 <code class="highlighter-rouge">-P</code> 参数( <code class="highlighter-rouge">docker run -P</code> )，自动绑定所有对外提供服务的容器端口，映射的端口会在没有使用的端口池中（<code class="highlighter-rouge">49000-49900</code>）自动选择。</p>
+
+<p>绑定映射：跟自动映射的区别在于，可以指定映射到宿主主机上的端口号，其基本语法如下所示，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run -p [([&lt;host_interface&gt;:[host_port]])|(&lt;host_port&gt;):]&lt;container_port&gt;[/udp] &lt;image&gt; &lt;cmd&gt;
+</code></pre>
+</div>
+
+<p><i class="red"><strong>注意：</strong></i></p>
+
+<ul>
+  <li>默认不指定绑定ip，则监听所有网络端口。</li>
+  <li><code class="highlighter-rouge">-P</code> 使用时需要指定<code class="highlighter-rouge">--expose</code> 选项，用于指定需要对外监听的端口。</li>
+  <li>可以通过<code class="highlighter-rouge">docker ps</code>、<code class="highlighter-rouge">docker inspect &lt;contain id&gt;</code> 或<code class="highlighter-rouge">docker port &lt;contain id&gt; &lt;port&gt;</code>等确定绑定信息。</li>
+</ul>
+
+<h3 id="31-四种网络模式">3.1 四种网络模式</h3>
+<p>在通过 <code class="highlighter-rouge">docker run</code> 命令创建并启动一个容器的时候，可以通过 <code class="highlighter-rouge">--net</code> 选项指定容器的网络模式，可选网络模式：</p>
+
+<ul>
+  <li><code class="highlighter-rouge">host</code>模式，使用 <code class="highlighter-rouge">--net=host</code> 指定。</li>
+  <li><code class="highlighter-rouge">container</code>模式，使用 <code class="highlighter-rouge">--net=container:name or id</code>指定。</li>
+  <li><code class="highlighter-rouge">none</code>模式，使用 <code class="highlighter-rouge">--net=none</code> 指定。</li>
+  <li><code class="highlighter-rouge">bridge</code>模式，使用 <code class="highlighter-rouge">--net=bridge</code> 指定。</li>
+</ul>
+
+<p>不指定，默认使用的是<code class="highlighter-rouge">bridge</code>模式（桥接）。</p>
+
+<h4 id="311-host-模式">3.1.1 host 模式</h4>
+<p>如果容器启动的时候指定了 <code class="highlighter-rouge">host</code> 模式，那么容器不会获取一个独立的 <code class="highlighter-rouge">network namespace</code>，而是和宿主机 <i class="red"><strong>共用</strong></i> 一个 <code class="highlighter-rouge">network namespace</code>。且不会虚拟自己的网卡、ip等，而是使用宿主机的 ip 和端口。</p>
+
+<p>形象一点描述，在 <code class="highlighter-rouge">10.211.55.2/24</code> 主机上用 host 模式启动了一个容器，对外监听 <code class="highlighter-rouge">27017</code> 端口。此时若在容器中用 <code class="highlighter-rouge">ifconfig</code>、<code class="highlighter-rouge">ip addr</code> 等查看网络信息的命令查看，看到的是宿主机的网络信息。而外界可以直接通过 <code class="highlighter-rouge">10.211.55.2:27017</code>访问即可，不用进行任何 <code class="highlighter-rouge">NAT</code> 转换，对于其他应用或人而言，就像一个 <strong><em>直接运行在宿主机上的进程</em></strong>。</p>
+
+<p>相对的，容器的文件系统，进程等还是跟宿主机 <strong><em>隔离</em></strong> 的。</p>
+
+<h4 id="312-container-模式">3.1.2 container 模式</h4>
+<p>指定此模式创建启动容器，则新创建的容器会和指定的容器共享同一个 <code class="highlighter-rouge">network namespace</code>，新创建的容器不会配置自己的网络环境、ip端口等，而是和指定的容器共享同一套ip、端口池等。</p>
+
+<p>跟host模式一样，两个容器的文件系统、进程列表等还是相互 <strong><em>隔离</em></strong> 的，两个进程和通过 <code class="highlighter-rouge">lo</code> 网卡进行通信，<code class="highlighter-rouge">127.0.0.1</code>、<code class="highlighter-rouge">0.0.0.0</code>。</p>
+
+<h4 id="313-none-模式">3.1.3 none 模式</h4>
+<p>此种模式下，容器拥有自己独立的 <code class="highlighter-rouge">network namespace</code>，但是并不会创建任何网络配置，也就是说该容器并没有网卡、ip、路由等。</p>
+
+<p>也就是说，如果有网络配置要求，需要 <i class="red"><strong>人为</strong></i> 去进行配置。</p>
+
+<h4 id="314-bridge-模式">3.1.4 bridge 模式</h4>
+<p><code class="highlighter-rouge">docker</code> 默认的网络模式，此模式为每个容器分配<code class="highlighter-rouge">network namespace</code>、设置ip等，并将所有的容器通过 <code class="highlighter-rouge">veth</code> 连接到宿主机的虚拟网桥上 <code class="highlighter-rouge">docker0</code>（<code class="highlighter-rouge">docker daemon</code> 启动时，会自动创建该网桥）。</p>
+
+<p>虚拟网桥的工作方式跟物理交换机类似，这样所有宿主机上的容器都通过交换机连接在一个二层网络中。</p>
+
+<p>在创建 <code class="highlighter-rouge">docker0</code> 网桥时，会自动为其分配一个和宿主机不同的ip地址和子网，连接到 <code class="highlighter-rouge">docker0</code> 的容器就从其子网内选择一个未被使用的ip分配给容器。</p>
+
+<p><code class="highlighter-rouge">docker</code> 一般会使用<code class="highlighter-rouge">172.17.0.0/16</code>这个网段，并将<code class="highlighter-rouge">172.17.42.1/16</code>分配给<code class="highlighter-rouge">docker0</code>网桥。也可以自己创建一个网桥，为其分配指定的网段，然后通过 <code class="highlighter-rouge">docker daemon</code> 的 <code class="highlighter-rouge">-b</code> 参数指定为<code class="highlighter-rouge">docker</code>默认的网桥。</p>
+
+<p><img src="/images/docker/bridge.png" alt="" /></p>
+
+<h3 id="32-跨主机容器互联">3.2 跨主机容器互联</h3>
+<p>可行的方式：</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">kubernetes</code> 集群</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">swarm</code> 集群 + <code class="highlighter-rouge">overlay</code></p>
+  </li>
+  <li>
+    <p>直接路由 – 要求所有主机</p>
+  </li>
+</ul>
+
+<h2 id="四自定义容器">四、自定义容器</h2>
+<p><code class="highlighter-rouge">Docker</code> 可以通过 <code class="highlighter-rouge">Dockerfile</code> 的内容来自动构建镜像，<code class="highlighter-rouge">Dockerfile</code>是一个包含创建镜像所有命令的 <strong><em>文本文件</em></strong>，通过 <code class="highlighter-rouge">docker build</code> 可以根据编写的 <code class="highlighter-rouge">Dockerfile</code> 来构建镜像。</p>
+
+<p><code class="highlighter-rouge">Dockerfile</code> 的指令选项：</p>
+
+<ul>
+  <li>FROM</li>
+  <li>MAINTAINER</li>
+  <li>RUN</li>
+  <li>CMD</li>
+  <li>EXPOSE</li>
+  <li>ENV</li>
+  <li>ADD</li>
+  <li>COPY</li>
+  <li>ENTRYPOINT</li>
+  <li>VOLUME</li>
+  <li>USER</li>
+  <li>WORKDIR</li>
+  <li>ONBUILD</li>
+</ul>
+
+<h3 id="41-from">4.1 FROM</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FROM &lt;image&gt;[:tag] &lt;i class='blue'&gt;说明：&lt;/i&gt;
+</code></pre>
+</div>
+
+<p>指定构建镜像的基础镜像，一般来说就是提供运行环境的基础镜像（<code class="highlighter-rouge">Linux</code>环境、<code class="highlighter-rouge">python</code>运行环境等），若本地不存在，这自动去共有仓库<code class="highlighter-rouge">pull</code>。</p>
+
+<p><i class="red">注意：</i></p>
+
+<ul>
+  <li><code class="highlighter-rouge">FROM</code> 必须是 <code class="highlighter-rouge">Dockerfile</code> 中非注释的第一个命令，即 <code class="highlighter-rouge">Dockerfile</code> 中<code class="highlighter-rouge">FROM</code> 开始。</li>
+  <li><code class="highlighter-rouge">FROM</code> 可以出现多次，比如说需要构建多个镜像。</li>
+  <li>如果没有指定 <code class="highlighter-rouge">[tag]</code>，则默认使用 <code class="highlighter-rouge">latest</code>作为<code class="highlighter-rouge">tag</code>。</li>
+</ul>
+
+<h3 id="42-maintainer">4.2 MAINTAINER</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>MAINTAINER &lt;name&gt; &lt;i class='blue'&gt;说明：&lt;/i&gt;
+</code></pre>
+</div>
+
+<p>指定创建镜像的用户。</p>
+
+<h3 id="43-run">4.3 RUN</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>RUN &lt;cmd&gt;     命令会在一个shell中运行 /bin/sh -c
+RUN ["cmd", "param1", "param2"]
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p>每条命令会在当前镜像上执行，并提交为新的镜像，后续的RUN 会在前面 RUN 提交的镜像为基础，镜像是分层的（UnionFS）。</p>
+
+<p><i class="red">注意：</i></p>
+
+<ul>
+  <li>
+    <p>第二种方式会被解析为一个 <code class="highlighter-rouge">JSON</code> 数组，必须使用双引号，且不会调用一个命令 <code class="highlighter-rouge">shell</code>，所以也就不会继承相应的变量，</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  RUN ["echo", "$HOME"] 上述命令不会输出 `HOME` 变量，正确的应该，
+
+  RUN ["sh", "-c", "echo", "$HOME"]
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">RUN</code> 命令产生的缓存在下一次构建时并不会失效，会被重用，可以使用 <code class="highlighter-rouge">--no-cache</code> 禁用。</p>
+  </li>
+</ul>
+
+<h3 id="44-cmd">4.4 CMD</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CMD ["executable", "param1", "param2"]  优先选择
+CMD ["param1", "param2"]  作为 ENTRYPOINT 的参数
+CMD command param1 param2
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p>为在容器启动的时候，提供一个默认的命令执行选项。如果用户启动容器的时候指定了运行的命令，这会覆盖 <code class="highlighter-rouge">CMD</code> 指定的命令。</p>
+
+<p><i class="red">注意：</i></p>
+
+<ul>
+  <li><code class="highlighter-rouge">CMD</code> 在 <code class="highlighter-rouge">Dockerfile</code> 中能使用一次，如果使用多个，只有最后一个生效。</li>
+</ul>
+
+<p>与<code class="highlighter-rouge">RUN</code>的差异：</p>
+
+<p><code class="highlighter-rouge">CMD</code>会在容器启动的时候执行，在容器构建的时候不执行，而RUN在容器构建时运行，待容器构建完成之后，后续的所有操作均与<code class="highlighter-rouge">RUN</code>无关。</p>
+
+<h3 id="45-expose">4.5 EXPOSE</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>EXPOSE &lt;port&gt; [&lt;port&gt; …] &lt;i class='blue'&gt;说明：&lt;/i&gt;
+</code></pre>
+</div>
+
+<p>告诉 <code class="highlighter-rouge">Docker</code> 服务端容器对外映射的端口号，需要在容器运行的时候，通过 <code class="highlighter-rouge">docker run -p</code> 或 <code class="highlighter-rouge">-P</code> 对外映射生效。</p>
+
+<h3 id="46-env">4.6 ENV</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ENV &lt;key&gt; &lt;value&gt;   # 只能设置一个变量
+ENV &lt;key&gt;=&lt;value&gt; …   # 可以设置多个变量 &lt;i class='blue'&gt;说明：&lt;/i&gt;
+</code></pre>
+</div>
+
+<p>指定一个或多个环境变量，会被后续的 <code class="highlighter-rouge">RUN</code> 命令所使用，并在容器运行时保留。</p>
+
+<p>例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ENV env1=test1 env2=test2
+等同于
+ENV env1 test1
+ENV env2 test2
+</code></pre>
+</div>
+
+<h3 id="47-add">4.7 ADD</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ADD &lt;src&gt; … &lt;dest&gt; &lt;i class='blue'&gt;说明：&lt;/i&gt;
+</code></pre>
+</div>
+
+<p>复制本地主机文件、目录或者远程文件 <code class="highlighter-rouge">URLS</code> 从 <code class="highlighter-rouge">&lt;src&gt;</code> 并且添加到容器指定路径中 <code class="highlighter-rouge">&lt;dest&gt;</code>。<code class="highlighter-rouge">&lt;src&gt;</code> 支持通过 <code class="highlighter-rouge">GO</code> 的正则模糊匹配，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ADD hom* /mydir/
+ADD hom?.txt /mydir/ &lt;i class='red'&gt;注意：&lt;/i&gt;
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">&lt;dest&gt;</code> 路径必须是绝对路径，如果 <code class="highlighter-rouge">&lt;dest&gt;</code> 不存在，会自动创建对应目录</li>
+  <li><code class="highlighter-rouge">&lt;src&gt;</code> 路径必须是 <code class="highlighter-rouge">Dockerfile</code> 所在路径的相对路径</li>
+  <li><code class="highlighter-rouge">&lt;src&gt;</code> 如果是一个目录，只会复制目录下的内容，而目录本身则不会被复制</li>
+</ul>
+
+<h3 id="48-copy">4.8 COPY</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>COPY &lt;src&gt; … &lt;dest&gt;
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p><code class="highlighter-rouge">COPY</code> 复制新文件或者目录从 <src> 添加到容器指定路径中 <dest>。</dest></src></p>
+
+<p><i class="red">注意：</i></p>
+
+<p>用法同 <code class="highlighter-rouge">ADD</code>，与 <code class="highlighter-rouge">ADD</code> 的区别是，<code class="highlighter-rouge">COPY</code> 不能指定远程文件。</p>
+
+<h3 id="49-entrypoint">4.9 ENTRYPOINT</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ENTRYPOINT ["executable", "param1", "param2"]
+ENTRYPOINT command param1 param2
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p>创建容器启动后执行的命令，并且不可以被 <code class="highlighter-rouge">docker run</code>提供的参数覆盖，如需替换，可以使用 <code class="highlighter-rouge">docker run --entrypoint</code>选项。</p>
+
+<p><i class="red">注意：</i></p>
+
+<ul>
+  <li>每个<code class="highlighter-rouge">Dockerfile</code> 只能有一个<code class="highlighter-rouge">ENTRYPOINT</code>，如指定多个，只有最后一个生效。</li>
+</ul>
+
+<p>例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FROM centos:7
+ENTRYPOINT [“top”, “-b”]
+CMD [“-c”] 使用 `exec form`来指定默认启动命令，通过`CMD`添加默认启动命令之外，经常被更改的参数项。
+
+FROM centos:7
+ENTRYPOINT exec top -b
+</code></pre>
+</div>
+
+<p>这种方式会在 <code class="highlighter-rouge">/bin/sh -c</code> 中执行，会忽略任何 <code class="highlighter-rouge">CMD</code> 或者 <code class="highlighter-rouge">docker run</code> 命令行选项，为了确保 <code class="highlighter-rouge">docker stop</code> 能够停止长时间运行 <code class="highlighter-rouge">ENTRYPOINT</code> 的容器，确保执行的时候使用 <code class="highlighter-rouge">exec</code> 选项.</p>
+
+<h3 id="410-volume">4.10 VOLUME</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>VOLUME [“/data”]
+VOLUME /data/db /data/logs &lt;i class='blue'&gt;说明：&lt;/i&gt;
+</code></pre>
+</div>
+
+<p>创建一个可以从本地主机或其他容器挂载的挂载点</p>
+
+<h3 id="411-user">4.11 USER</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>USER daemon
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p>指定运行容器时的用户名或 UID，后续的 <code class="highlighter-rouge">RUN</code>、<code class="highlighter-rouge">CMD</code>、<code class="highlighter-rouge">ENTRYPOINT</code> 也会使用指定用户。</p>
+
+<h3 id="412-workdir">4.12 WORKDIR</h3>
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>WORKDIR /path/to/your/dir
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p>为后续的 <code class="highlighter-rouge">RUN</code>、<code class="highlighter-rouge">CMD</code>、<code class="highlighter-rouge">ENTRYPOINT</code> 指令配置工作目录。可以使用多个 <code class="highlighter-rouge">WORKDIR</code> 指令，后续命令如果参数是相对路径，则会基于之前命令指定的路径。</p>
+
+<p>例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>WORKDIR /a
+WORKDIR b
+WORKDIR c
+
+最后的路径为 /a/b/c ### 4.13 ONBUILD 用法：
+
+ONBUILD [INSTRUCTION]
+</code></pre>
+</div>
+
+<p><i class="blue">说明：</i></p>
+
+<p>配置当所创建的镜像作为其它新创建镜像的基础镜像时，所执行的操作指令。</p>
+
+<h3 id="414-mongodb实例">4.14 mongodb实例</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FROM centos:7
+
+RUN mkdir -p /data/db /data/logs /keys /config
+
+ADD source/mongodb-bin.tar.gz /usr/local/bin
+COPY source/mongod.conf /config/
+COPY source/mongodb-keyfile /keys/
+COPY source/authAdmin.ms /config/
+
+RUN chmod 600 /keys/mongodb-keyfile \
+	&amp;&amp; ls -l /keys \
+	&amp;&amp; mongo --version
+COPY docker-entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
+EXPOSE 27017
+
+WORKDIR /config
+CMD ["mongod", "-f", "mongod.conf"]
+</code></pre>
+</div>
+
+<p><a id="link5"></a></p>
+
+<h2 id="五容器数据卷管理">五、容器数据卷管理</h2>
+<p><code class="highlighter-rouge">Docker</code> 镜像 &lt;==&gt; 只读层，虽然提高了镜像构建、存储和分发效率，但是也有如下的缺点：</p>
+
+<ul>
+  <li>容器文件在宿主机上保存形式复杂，不易在宿主机上进行访问。</li>
+  <li>多个容器间数据无法共享。</li>
+  <li>删除容器时，容器产生的数据会丢失。</li>
+</ul>
+
+<p>因而，<code class="highlighter-rouge">Docker</code> 引入了数据卷（<code class="highlighter-rouge">volume</code>）机制，存在于一个或多个容器中的特定文件或文件夹，能独立于联合文件系统的形式存在于宿主机中，并能为多个容器所共享。</p>
+
+<ul>
+  <li>在容器创建时初始化，容器运行时就可以使用其中的文件。</li>
+  <li>能在不同容器之间共享和重用。</li>
+  <li>对<code class="highlighter-rouge">volume</code>中数据的操作会马上生效。</li>
+  <li>对<code class="highlighter-rouge">volume</code>的操作不会影响到镜像本身。</li>
+  <li><code class="highlighter-rouge">volume</code>的生命周期独立于容器的生存周期。（即使删除容器，<code class="highlighter-rouge">volume</code>仍然存在，没有任何容器使用的<code class="highlighter-rouge">volume</code>也不会被<code class="highlighter-rouge">Docker</code>删除）</li>
+</ul>
+
+<h3 id="51-添加数据卷">5.1 添加数据卷</h3>
+<p>使用 <code class="highlighter-rouge">-v</code> 选项添加一个数据卷，或者可以使用多次 <code class="highlighter-rouge">-v</code> 选项为一个 <code class="highlighter-rouge">docker</code> 容器运行挂载多个数据卷。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run --name test -v /data -i -t -d centos /bin/bash
+</code></pre>
+</div>
+
+<p>创建的数据卷可以通过 <code class="highlighter-rouge">docker inspect</code> 获取宿主机对应路径。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker inspect test
+</code></pre>
+</div>
+
+<p>或者直接通过 <code class="highlighter-rouge">--format</code> 只显示需要的结果：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker inspect --format=“” data
+</code></pre>
+</div>
+
+<p><i class="red">注意：</i></p>
+
+<ul>
+  <li>此种方式添加的数据卷，数据默认保存在 <code class="highlighter-rouge">/var/lib/docker/volumes</code>。</li>
+</ul>
+
+<h3 id="52-挂载宿主机目录">5.2 挂载宿主机目录</h3>
+<p>除了直接挂载一个数据卷到容器之外，还可以将宿主机中的一个文件或目录挂载到容器当中。格式：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run --name mongod -itd -p 27017:27017 -v /data/db:/data phoenix-mongo
+</code></pre>
+</div>
+
+<p>默认挂载是读写的，可以在挂载的时候指定只读。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run --name mongod -itd -p 27017:27017 -v /data/db:/data:ro phoenix-mongo
+</code></pre>
+</div>
+
+<p>但是实际在运用过程中，会遇到一些问题，即挂载之后在容器中没有权限读取挂载的目录，只要将上述的 <code class="highlighter-rouge">ro</code> 指定为 <code class="highlighter-rouge">Z</code> 或 <code class="highlighter-rouge">z</code> 即可，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run -name mongod -itd -p 27017:27017 -v /data/db:/data:Z phoenix-mongo
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">stackoverflow</code>上关于 <code class="highlighter-rouge">Z</code>、<code class="highlighter-rouge">z</code> 的说明:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>http://stackoverflow.com/questions/24288616/permission-denied-on-accessing-host-directory-in-docker
+</code></pre>
+</div>
+
+<h3 id="53-数据卷容器">5.3 数据卷容器</h3>
+<p>如果需要在容器（或非持久性容器）间共享一些持久性数据，最好的办法是创建一个数据卷容器，然后从此容器上挂载数据。</p>
+
+<p>创建数据卷容器：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run -itd -v /data/test:/test:Z --name data centos echo hello
+</code></pre>
+</div>
+
+<p>使用 <code class="highlighter-rouge">--volume-from</code> 选项在另一个容器上挂载 <code class="highlighter-rouge">/test</code> 卷，不管 <code class="highlighter-rouge">data</code> 容器是否运行，其它容器都可以挂载该容器数据卷，若只是一个单独的数据卷（容器中没有任何服务逻辑）是不需要创建容器的，直接通过 <code class="highlighter-rouge">docker volume create</code> 创建即可。</p>
+
+<p>使用容器数据卷：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run --name test1 -itd --volume-form data centos /bin/bash
+docker run --name test2 -itd --volume-form data centos /bin/bash 也可以继承其它挂载 `/test` 卷的容器，
+
+docker run --name test3 -itd --volume-form test2 centos /bin/bash
+</code></pre>
+</div>
+
+<p>创建为按成之后的结构如下图所示：</p>
+
+<p><img src="/images/docker/container-volume.png" alt="" /></p>
+
+<p>删除数据卷<code class="highlighter-rouge">volume</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker rm -v，删除容器时指定 -v 参数。
+docker run --rm ，启动容器的时候指定 --rm 参数。
+</code></pre>
+</div>
+
+<p>若不像上述方式，在删除容器的时候删除其数据卷的话，会在 <code class="highlighter-rouge">/var/lib/docker/volumes</code> 目录下遗留很多文件及目录。</p>
+
+<p><a id="link6"></a></p>
+
+<h2 id="六其它">六、其它</h2>
+<p>很多部署<code class="highlighter-rouge">Docker</code> 服务的时候，会遇到容器间需要交互的情况，如展示WEB服务、数据库容器之间。</p>
+
+<p>容器见的交互，是在<code class="highlighter-rouge">docker daemon</code> 启动参数 <code class="highlighter-rouge">--icc</code> 控制，特殊情况为了保证容器及宿主机的安全，<code class="highlighter-rouge">--icc</code> 通常设置为<code class="highlighter-rouge">false</code>，即容器间不能进行交互。如果直接向外映射端口，虽然可以达到交互的条件，但是也可能不能满足安全性的要求。</p>
+
+<p>链接就是为了解决这一问题的，<code class="highlighter-rouge">Docker</code> 的连接系统可以在两个容器间建立一个安全的通道，斯特接收容器可以通过此通道访问源容器指定的相关服务信息（数据库访问等）。</p>
+
+<p>用法：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>--link &lt;name or id&gt;:alias
+</code></pre>
+</div>
+
+<h3 id="61-示例">6.1 示例</h3>
+<p>现有两个容器 <code class="highlighter-rouge">web</code> 和 <code class="highlighter-rouge">db</code>，分别提供展示和数据库服务。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker run --name db -itd phoenix-mongo
+docker run --name web --link db:webdb phoenix-web
+</code></pre>
+</div>
+
+<p>如此一个<code class="highlighter-rouge">link</code>就创建完成了，<code class="highlighter-rouge">web</code>容器可以从<code class="highlighter-rouge">db</code>容器中获取数据，<code class="highlighter-rouge">web</code>容器叫作接收容器或父容器，<code class="highlighter-rouge">db</code>容器叫作源容器或子容器。链接的具体实现：</p>
+
+<ul>
+  <li>设置接收容器的环境变量。</li>
+  <li>更新接收容器的 <code class="highlighter-rouge">/etc/hosts</code> 文件。</li>
+  <li>添加<code class="highlighter-rouge">iptables</code>规则，使容器链接的两个容器可以通讯。</li>
+</ul>
+
+<p><i class="red">注意：</i></p>
+
+<ul>
+  <li>一个接收容器可以设置多个源容器，一个源容器也可以有多个接收容器。</li>
+</ul>
+
+<h3 id="62-swarm-集群介绍">6.2 swarm 集群介绍</h3>
+<p>将一系列 <code class="highlighter-rouge">Docker</code> 宿主机变为一个集群，对外而言就像一个单一的宿主机一样。</p>
+
+<p><code class="highlighter-rouge">swarm</code>由一个<code class="highlighter-rouge">swarm manager</code>和若干个<code class="highlighter-rouge">swarm node</code> 组成，<code class="highlighter-rouge">swarm manager</code>上运行<code class="highlighter-rouge">swarm daemon</code>，用户跟<code class="highlighter-rouge">manager</code>通信，<code class="highlighter-rouge">manager</code>将操作转发到对应的<code class="highlighter-rouge">node</code>上。</p>
+
+<p><code class="highlighter-rouge">swarm daemon</code>只是一个调度器（<code class="highlighter-rouge">scheduler</code>）和路由器（<code class="highlighter-rouge">router</code>）的组合，其本身并不会运行任何 <code class="highlighter-rouge">Docker</code> 容器，它只是接受 <code class="highlighter-rouge">Docker</code> 客户端发来的请求，调度合适的 <code class="highlighter-rouge">swarm node</code> 来运行<code class="highlighter-rouge">container</code>。</p>
+
+<p>若<code class="highlighter-rouge">swarm daemon</code>意外挂掉了，已经运行的容器不会受到任何影响。其架构如下所示：</p>
+
+<p><img src="/images/docker/swarm-arch.png" alt="" /></p>
+
+<p>三个独立的主机，分别装了<code class="highlighter-rouge">docker daemon</code>：</p>
+
+<p><img src="/images/docker/single-docker.png" alt="" /></p>
+
+<p>通过<code class="highlighter-rouge">swarm</code>创建集群：</p>
+
+<p><img src="/images/docker/swarm-cluster.png" alt="" /></p>
+
+<h3 id="63-docker-compose-简介">6.3 docker-compose 简介</h3>
+<p><code class="highlighter-rouge">Dockerfile</code> 重现一个容器，<code class="highlighter-rouge">Compose</code>重现容器的配置和集群。</p>
+
+<p>编排<code class="highlighter-rouge">Orchestration</code>，定义被部署对象的各个组成部分之间的耦合关系，部署流程中各个动作的执行顺序，部署过程说需要的依赖文件，被部署文件的存储位置和获取方式，以及如何验证部署成功。</p>
+
+<p>部署<code class="highlighter-rouge">Deployment</code>，安装编排指定的内容和流程，在目标主机上执行编排指定的环境初始化，存放指定的依赖和文件，运行指定的部署动作，最终安装编排的规则确认部署成功与否。</p>
+
+<p>说的简单点，就是安装一个特定的顺序，完成其指定的容器启动顺序，并校验部署的成功与否。</p>
+
+<h4 id="631-示例">6.3.1 示例</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>-- docker-compose.yml
+web:
+images: phoenix-web
+ports:
+- “3000:3000”
+links:
+- db
+db:
+images: phoenix-mongo
+volumes:
+- /data/db:/data:Z
+</code></pre>
+</div>
+
+<p>运行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>docker-compose up
+</code></pre>
+</div>
+
+<h3 id="64-docker-machine-简介">6.4 docker-machine 简介</h3>
+<p>对于 <code class="highlighter-rouge">Docker</code> 集群而言，需要每台宿主机有安装并启动 <code class="highlighter-rouge">docker daemon</code> 进程，而安装启动<code class="highlighter-rouge">docker</code>进程的过程是重复，<code class="highlighter-rouge">Docker Machine</code>把用户搭建<code class="highlighter-rouge">Docker</code> 环境的各种方案汇集在一起，简化了 <code class="highlighter-rouge">Docker</code> 环境搭建过程，让用户和把时间花在开发上。</p>
+
+<p><code class="highlighter-rouge">Machine</code> 主要帮助用户在不同的云主机等上，创建并管理虚拟机，并在虚拟机中安装Docker，而 Docker本身就是客户端程序与守护进程之间的交互，启动了<code class="highlighter-rouge">docker daemon</code>即搭建了 <code class="highlighter-rouge">Docker</code> 运行环境。</p>
+
+<p>目前已经支持十余种运品台和虚拟机软件，包括<code class="highlighter-rouge">Amazon Web Services</code>、<code class="highlighter-rouge">Google Compute Engine</code>、<code class="highlighter-rouge">OpenStack</code>等。</p>
+
+<p><code class="highlighter-rouge">Machine</code> 支持多种虚拟机软件和众多主流的<code class="highlighter-rouge">IaaS</code>平台，支持的虚拟机软件有<code class="highlighter-rouge">VirtualBox</code>、<code class="highlighter-rouge">Vmware Fusion</code>和<code class="highlighter-rouge">Hyper-V</code>，涵盖了<code class="highlighter-rouge">Linux</code>、<code class="highlighter-rouge">Mac</code>和<code class="highlighter-rouge">Windows</code>三大平台。</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2016/12/08/zen-coding.html' title='Zen Coding：快速编写HTML'>Zen Coding：快速编写HTML</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2016/12/10/esper-introduction.html' title='Esper复杂事件处理引擎 - 入门简介'>Esper复杂事件处理引擎 - 入门简介</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2016/12/10/esper-introduction.html' title='Esper复杂事件处理引擎 - 入门简介'>Esper复杂事件处理引擎 - 入门简介</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/wanzhou/'>万洲</a>
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

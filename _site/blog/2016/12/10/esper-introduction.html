@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Esper复杂事件处理引擎 - 入门简介_博汇网_www.blogways.net</title>
+    <meta name=keywords content="esper, cep">
+    
+    <meta name=description content="CEP，是一种实时事件处理并从大量事件数据流中挖掘复杂模式的技术，全称为Complex Event Processing，即复杂事件处理。Esper是CEP的一个开源实现，它是一个Java开发的事件流处理和复杂事件处理引擎。该引擎可应用于网络入侵探测，SLA监测，RFID读取，航空运输调控，金融方面(风险管理，欺诈探测)等领域。它的特点是能够快速开发出复杂的实时计算策略，并且有着高吞吐量以及低延迟的特点，特别适合大量数据的实时计算。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "万洲".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2016/12/10/docker-introduction.html' title='Docker 入门简介'>Docker 入门简介</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2016/12/11/color-strategy.html' title='色彩攻略'>色彩攻略</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2016/12/11/color-strategy.html' title='色彩攻略'>色彩攻略</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Esper复杂事件处理引擎 - 入门简介
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2016-12-10
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>esper</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>cep</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories/杂记/'>杂记</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><em>目 录</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#link1">Esper简介</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#link2">事件类型</a></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#link3">处理模型</a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="#link4">未完待续…</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="link1"></a></p>
+<style>
+.red { color: red; }
+.blue { color: blue; }
+</style>
+
+<p><a id="link1"></a></p>
+
+<h2 id="一esper简介">一、Esper简介</h2>
+<p>将<code class="highlighter-rouge">Espser</code>之前，首先要讲<code class="highlighter-rouge">CEP</code>，是一种实时事件处理并从大量事件数据流中挖掘复杂模式的技术，全称为Complex Event Processing，即复杂事件处理。<code class="highlighter-rouge">CEP</code>是一种标准，<code class="highlighter-rouge">Esper</code>只是对这个标准的一种开源实现。</p>
+
+<p>听起来好像很复杂，实际上就是基于事件流进行数据处理，把要分析的数据抽象成事件，然后将数据发送到<code class="highlighter-rouge">CEP</code>引擎，引擎就会根据事件的输入和最初注册的处理模型，得到事件处理结果。</p>
+
+<p><code class="highlighter-rouge">CEP</code>的一个重要特点就是他是一个<i class="red">内存计算</i>工具和<i class="red">类SQL</i>语句。</p>
+
+<p>有朋友可能会想到目前很流行的一个实时计算框架——<code class="highlighter-rouge">Storm</code>，但这两个完全不是一类东西。<code class="highlighter-rouge">Esper</code>的特点在于它的复杂处理逻辑可以用类SQL语句（EPL）开发，而<code class="highlighter-rouge">Storm</code>的特点在于<strong><em>并行计算</em></strong>和<strong><em>快速恢复</em></strong>，但是计算逻辑是需要自己用代码实现的。</p>
+
+<p>前面说了，<code class="highlighter-rouge">Esper</code>，是<code class="highlighter-rouge">CEP</code>的一个开源实现，它是一个Java的事件流处理和复杂事件处理的引擎（.NET为NEsper）。</p>
+
+<p><code class="highlighter-rouge">Esper</code>引擎可应用于如下等领域：</p>
+
+<ul>
+  <li>网络入侵探测</li>
+  <li>SLA监测</li>
+  <li>RFID读取</li>
+  <li>航空运输调控</li>
+  <li>金融方面(风险管理，欺诈探测)等</li>
+</ul>
+
+<p>其特点是能够快速开发出复杂的实时计算策略，并且有着高吞吐量以及低延迟的特点，特别适合<i class="red">大量数据的实时计算</i>。</p>
+
+<p><i class="red"><strong>注意</strong>：</i></p>
+
+<ul>
+  <li>后续所有测试例子中的<code class="highlighter-rouge">Java Bean</code>都没有写出<code class="highlighter-rouge">getter</code>，<code class="highlighter-rouge">setter</code>，<code class="highlighter-rouge">toString</code>，如有需要请自行添加。</li>
+</ul>
+
+<h3 id="11-epl-简述">1.1 EPL 简述</h3>
+<p><code class="highlighter-rouge">EPL</code>，即Event Proess Language，<code class="highlighter-rouge">CEP</code>的类SQL语句，可以理解为处理模型的定义与描述。</p>
+
+<p>这是运行在<code class="highlighter-rouge">CEP</code>引擎中的特殊语句，之所以叫他类SQL，是因为它和SQL确实很像，除了<code class="highlighter-rouge">select</code>，<code class="highlighter-rouge">insert</code>，<code class="highlighter-rouge">delete</code>，<code class="highlighter-rouge">update</code>，而且也有<code class="highlighter-rouge">avg</code>，<code class="highlighter-rouge">count</code>等函数。所以对于会SQL的人来说，他的语法结构大致还是能猜出一二的。</p>
+
+<p>工作模式有点类似于一个数据库的 <i class="red"><strong>倒置</strong></i>，它允许应用程序存储查询并让数据通过，而不是存储数据并在存储的数据上运行查询语句（应用程序存储查询，并让数据运行通过）。当匹配查询的条件时，响应逻辑触发。</p>
+
+<p>数据库是先存储数据，通过编译解析SQL，完成已存储数据的查询，Esper则是先编译EPL语句，形成一个过滤（或处理）层（或者网），实时过来的数据，通过这个过滤层完成有效事件的筛选或形成有效事件。</p>
+
+<p>如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select * from Apple
+select avg(price) from Apple.win:length_batch(3)
+</code></pre>
+</div>
+
+<p>测试代码如下所示：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/**
+ * Created by wanzhou on 16/8/1.
+ */
+import com.espertech.esper.client.*;
+
+class Apple
+{
+  private int id;
+  private int price;
+}
+
+class AppleListener implements UpdateListener
+{
+
+  public void update(EventBean[] newEvents, EventBean[] oldEvents)
+  {
+    if (newEvents != null)
+    {
+//      Double avg = (Double) newEvents[0].get("avg(price)");
+//      System.out.println("Apple's average price is " + avg);
+      for (int i = 0; i &lt; newEvents.length; i++) {
+        System.out.println(newEvents[i].getUnderlying());
+      }
+    }
+  }
+
+}
+
+public class AverageTest {
+  public static void main(String[] args) throws InterruptedException {
+    EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+
+    EPAdministrator admin = epService.getEPAdministrator();
+
+    EPRuntime runtime = epService.getEPRuntime();
+
+    String product = Apple.class.getName();
+    String epl = "select avg(price) from " + product + ".win:length_batch(2)";
+	// String epl = "select * from Apple.win:length_batch(2)";
+
+    EPStatement state = admin.createEPL(epl);
+    state.addListener(new AppleListener());
+
+
+    Apple apple1 = new Apple();
+    apple1.setId(1);
+    apple1.setPrice(5);
+    runtime.sendEvent(apple1);
+
+    Apple apple2 = new Apple();
+    apple2.setId(2);
+    apple2.setPrice(2);
+    runtime.sendEvent(apple2);
+
+    Apple apple3 = new Apple();
+    apple3.setId(3);
+    apple3.setPrice(5);
+    runtime.sendEvent(apple3);
+
+    Apple apple4 = new Apple();
+    apple4.setId(4);
+    apple4.setPrice(6);
+    runtime.sendEvent(apple4);
+
+    Apple apple5 = new Apple();
+    apple5.setId(5);
+    apple5.setPrice(7);
+    runtime.sendEvent(apple5);
+  }
+}
+</code></pre>
+</div>
+
+<h3 id="12-事件类型">1.2 事件类型</h3>
+<p><code class="highlighter-rouge">Esper</code> 对处理的数据结构有明确的要求，能处理的数据结构：</p>
+
+<ul>
+  <li>POJO ( java.lang.Object )</li>
+  <li>java.util.Map</li>
+  <li>Object[]</li>
+  <li>XML</li>
+</ul>
+
+<p>特点：</p>
+
+<ul>
+  <li>支持nested、indexed、mapped属性（嵌套没有层数限制）</li>
+  <li>需要告知引擎类型元数据，包括嵌套的数据。</li>
+  <li>能改变属性顺序，或抽取部分属性到一个新的事件。</li>
+  <li>Object、Map 和 Object[] 类型支持超类( Supertype )</li>
+</ul>
+
+<h3 id="13-事件属性">1.3 事件属性</h3>
+<p>| <strong><em>类型</em></strong>|  <strong><em>说明</em></strong> | <strong><em>语法</em></strong> | <strong><em>实例</em></strong>|
+| — | — | — | — |
+| Simple | 只包含单个值得属性 | name | price |
+| Indexed | 索引 | name[index] | price[0] |
+| Mapped | map属性 | name[‘key’] | apple(‘price’) |
+| nested | 属性嵌套 | name.nestedname | apple.price|</p>
+
+<p>组合上述所有的属性，如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>person.address(‘home’).street[0]
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>事件属性示例</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  public class MyEventType {
+  String myMapKey;
+  int myIndexValue;
+  int myInnerIndexValue;
+  Map&lt;String, InnerType&gt; innerTypesMap; // mapped property
+  InnerType[] innerTypesArray; // indexed property
+  }
+  public class InnerType {
+  String name;
+  int[] ids;
+  }
+	
+  select innerTypesMap('somekey').ids[1],
+  // innerTypesMap(myMapKey).getIds(myIndexValue),
+  innerTypesArray[1].ids[2],
+  // innerTypesArray(myIndexValue).getIds(myInnerIndexValue)
+  from MyEventType
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="14-动态事件属性">1.4 动态事件属性</h3>
+<p>| <strong><em>类型</em></strong> | <strong><em>语法</em></strong> |
+| — | — |
+| Dynamic Simple | name? |
+| Dynamic Indexed | name[index]? |
+| Dynamic Mapped | name(‘key’)? |
+| Dynamic Nested | name?.nestedname |</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select timestamp? from OrderEvent
+
+select detail?.driection from OrderEvent
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">OrderEvent</code> 拥有多个接口类，其中某个或某些有<code class="highlighter-rouge">timestamp</code>属性，则其动态属性</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select timestamp? from OrderEvent
+</code></pre>
+</div>
+
+<p>如果动态属性是嵌套属性，则</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select detail?.driection from OrderEvent 等价于
+
+select detail?.direction? from OrderEvent
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>示例</p>
+
+    <p>动态属性返回值总是 <code class="highlighter-rouge">java.lang.Object</code> 类型，在事件进程运行时，动态属性不存在，则返回 <code class="highlighter-rouge">null</code>。</p>
+
+    <p>如：事件<code class="highlighter-rouge">OrderEvent</code>拥有一个<code class="highlighter-rouge">item</code>属性，通过动态属性指定一个查询来取得<code class="highlighter-rouge">Service</code>或<code class="highlighter-rouge">Product</code>的价格，如：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select item.price? from OrderEvent
+</code></pre>
+    </div>
+
+    <p>如果<code class="highlighter-rouge">OrderEvent</code> 拥有多个接口类，其中某个或某些有<code class="highlighter-rouge">timestamp</code>属性，则其动态属性：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select timestamp? from OrderEvent
+</code></pre>
+    </div>
+
+    <p>如果动态属性是嵌套属性，则动态属性下的所有嵌套属性都为动态属性：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select detail?.driection from OrderEvent   等价于
+
+  select detail?.direction? from OrderEvent
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>测试代码</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  class OrderEvent {
+    Object item;
+  }
+	
+  class Serivce {
+    String name;
+    int price;
+  }
+	
+  class Product {
+    String name;
+    int price;
+    String info;
+  }
+	
+  class DynamicListener implements UpdateListener
+  {
+	
+    public void update(EventBean[] newEvents, EventBean[] oldEvents)
+    {
+      if (newEvents != null)
+      {
+  //      Double avg = (Double) newEvents[0].get("item.price?");
+  //      System.out.println("Apple's average price is " + avg);
+        for (int i = 0; i &lt; newEvents.length; i++) {
+          System.out.println(newEvents[i].getUnderlying());
+        }
+      }
+    }
+	
+  }
+	
+  public class DynamicProps {
+    public static void main(String[] args) throws InterruptedException {
+      EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+	
+      EPAdministrator admin = epService.getEPAdministrator();
+	
+      String epl = "select item.info? from OrderEvent";
+	
+      EPStatement state = admin.createEPL(epl);
+      state.addListener(new AppleListener());
+	
+      EPRuntime runtime = epService.getEPRuntime();
+	
+      Product product = new Product();
+      product.setName("pdt1");
+      product.setPrice(5);
+      product.setInfo("Product Info.");
+	
+      OrderEvent oe1 = new OrderEvent();
+      oe1.setItem(product);
+      runtime.sendEvent(oe1);
+	
+      Serivce svr = new Serivce();
+      svr.setName("svr");
+      svr.setPrice(10);
+	
+      OrderEvent oe2 = new OrderEvent();
+      oe2.setItem(svr);
+      runtime.sendEvent(oe2);
+    }
+  }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p><a id="link2"></a></p>
+
+<h2 id="二事件类型">二、事件类型</h2>
+
+<h3 id="21-pojojavalangobject">2.1 POJO（<code class="highlighter-rouge">java.lang.Object</code>）</h3>
+
+<p>对于POJO，<code class="highlighter-rouge">Esper</code>要求对每一个私有属性要有<code class="highlighter-rouge">getter</code>方法。<code class="highlighter-rouge">Esper</code>允许不必按照<code class="highlighter-rouge">JavaBean</code>规定的格式，但是<code class="highlighter-rouge">getter</code>方法是必须的。又或者可以在配置文件中配置可访问的方法来代替<code class="highlighter-rouge">getter</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class Person  
+{  
+    String name;  
+    int age;  
+    public String getName()  
+    {  
+        return name;  
+    }  
+    public int getAge()  
+    {  
+        return age;  
+    }  
+} 
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">Esper</code>对POJO的支持基本上就是上面所说的，另外他还支持实现了多个接口类或者抽象类的POJO，使用方法和普通的POJO没什么区别，这里就不列举了。</p>
+
+<p>当<code class="highlighter-rouge">Person</code>的name属性为test时，得到对应的age,所有children和address.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select age,children,address from Person where name="test"  当Person的name属性为test时，得到对应的第二个孩子,家里的电话和家庭住址在哪条路上  
+
+select children[1], phones('home'), address.road from Person where name="test”
+public Child getChildren(int index) { // 返回对应下标的children信息
+	return children.get(index);
+}
+</code></pre>
+</div>
+
+<p>当<code class="highlighter-rouge">Person</code>的name属性为test时，更新家里的电话</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>update Person set phones('home') = 123456789 where name="test" 
+public void setPhones(String name, Integer number) {  
+   phones.put(name, number); // 用于 phones 属性的更新
+} 
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>PojoPersonTest 测试示例：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  class PojoPerson implements Serializable {
+    String pname;
+    int age;
+    List&lt;Child&gt; children;
+    Map&lt;String, Integer&gt; phones;
+    Address address;
+	
+    public String getPname() {
+      return pname;
+    }
+	
+    public void setPname(String pname) {
+      this.pname = pname;
+    }
+	
+    public int getAge() {
+      return age;
+    }
+	
+    public void setAge(int age) {
+      this.age = age;
+    }
+	
+    public List&lt;Child&gt; getChildren() {
+      return children;
+    }
+	
+    public Child getChildren(int index) {
+      return children.get(index);
+    }
+	
+    public void setChildren(List&lt;Child&gt; children) {
+      this.children = children;
+    }
+	
+    public Map&lt;String, Integer&gt; getPhones() {
+      return phones;
+    }
+	
+    public void setPhones(Map&lt;String, Integer&gt; phones) {
+      this.phones = phones;
+    }
+	
+    public void setPhones(String name, Integer number) {
+      System.out.println("=======");
+      phones.put(name, number);
+    }
+	
+    public Address getAddress() {
+      return address;
+    }
+	
+    public void setAddress(Address address) {
+      this.address = address;
+    }
+	
+    @Override
+    public String toString() {
+      return "PojoPerson{" +
+          "name='" + pname + '\'' +
+          ", age=" + age +
+          ", children=" + children +
+          ", phones=" + phones +
+          ", address=" + address +
+          '}';
+    }
+  }
+	
+  class Child
+  {
+    String cname;
+    int gender;
+	
+    public String getCname() {
+      return cname;
+    }
+	
+    public void setCname(String cname) {
+      this.cname = cname;
+    }
+	
+    public int getGender() {
+      return gender;
+    }
+	
+    @Override
+    public String toString() {
+      return "Child{" +
+          "name='" + cname + '\'' +
+          ", gender=" + gender +
+          '}';
+    }
+	
+    public void setGender(int gender) {
+      this.gender = gender;
+    }
+  }
+	
+  class Address
+  {
+    String road;
+    String street;
+    int houseNo;
+	
+    public String getRoad() {
+      return road;
+    }
+	
+    public void setRoad(String road) {
+      this.road = road;
+    }
+	
+    public String getStreet() {
+      return street;
+    }
+	
+    public void setStreet(String street) {
+      this.street = street;
+    }
+	
+    public int getHouseNo() {
+      return houseNo;
+    }
+	
+    public void setHouseNo(int houseNo) {
+      this.houseNo = houseNo;
+    }
+	
+    @Override
+    public String toString() {
+      return "Address{" +
+          "road='" + road + '\'' +
+          ", street='" + street + '\'' +
+          ", houseNo=" + houseNo +
+          '}';
+    }
+  }
+	
+	
+  public class PojoPersonTest {
+    public static void main(String[] args) {
+	
+      EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+      EPAdministrator admin = epService.getEPAdministrator();
+      EPRuntime runtime = epService.getEPRuntime();
+	
+      String qry1 = "select age,children,address from PojoPerson where pname = \"张三\"";
+      String qry2 = "select children[1], phones('home'), address.road from PojoPerson where pname=\"李四\"";
+      String qry = "select * from PojoPerson";
+	
+      EPStatement state1 = admin.createEPL(qry1);
+      state1.addListener(new UpdateListener() {
+        public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+          if (null != newEvents) {
+            System.out.print("qry1=====  ");
+            System.out.println(newEvents[0].getUnderlying());
+          }
+        }
+      });
+	
+      EPStatement state2 = admin.createEPL(qry2);
+      state2.addListener(new UpdateListener() {
+        public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+          if (null != newEvents) {
+            System.out.print("qry2+++++  ");
+            System.out.println(newEvents[0].getUnderlying());
+          }
+        }
+      });
+	
+	
+      EPStatement state = admin.createEPL(qry);
+      state.addListener(new UpdateListener() {
+        public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+          if (null != newEvents) {
+            System.out.print("qry----  ");
+            for (int i = 0; i &lt; newEvents.length; i++) {
+              System.out.println(newEvents[i].getUnderlying());
+            }
+          }
+        }
+      });
+	
+      PojoPerson pp1 = new PojoPerson();
+      Address a1 = new Address();
+      a1.setHouseNo(100);
+      a1.setRoad("Address 1");
+      a1.setStreet("Street 1");
+      pp1.setAddress(a1);
+      pp1.setPname("张三");
+      pp1.setAge(30);
+      Map&lt;String, Integer&gt; p1 = new HashMap&lt;String, Integer&gt;();
+      p1.put("home", 1333333333);
+      p1.put("work", 1333333334);
+      pp1.setPhones(p1);
+      List&lt;Child&gt; lc1 = new ArrayList&lt;Child&gt;();
+      Child ch1 = new Child();
+      ch1.setCname("张四");
+      ch1.setGender(1);
+      lc1.add(ch1);
+      pp1.setChildren(lc1);
+      runtime.sendEvent(pp1);
+	
+      PojoPerson pp2 = new PojoPerson();
+      Address a2 = new Address();
+      a2.setHouseNo(100);
+      a2.setRoad("Address 1");
+      a2.setStreet("Street 1");
+      pp2.setAddress(a2);
+      pp2.setPname("李四");
+      pp2.setAge(30);
+      Map&lt;String, Integer&gt; p2 = new HashMap&lt;String, Integer&gt;();
+      p2.put("home", 1444444444);
+      p2.put("work", 1444444445);
+      pp2.setPhones(p2);
+      List&lt;Child&gt; lc2 = new ArrayList&lt;Child&gt;();
+      Child ch21 = new Child();
+      ch21.setCname("李五");
+      ch21.setGender(1);
+      lc2.add(ch21);
+      Child ch22 = new Child();
+      ch22.setCname("李六");
+      ch22.setGender(0);
+      lc2.add(ch22);
+      pp2.setChildren(lc2);
+      runtime.sendEvent(pp2);
+	
+      PojoPerson pp3 = new PojoPerson();
+      Address a3 = new Address();
+      a3.setHouseNo(100);
+      a3.setRoad("Address 1");
+      a3.setStreet("Street 1");
+      pp3.setAddress(a3);
+      pp3.setPname("test");
+      pp3.setAge(30);
+      Map&lt;String, Integer&gt; p3 = new HashMap&lt;String, Integer&gt;();
+      p3.put("home", 1555555555);
+      p3.put("work", 1555555556);
+      pp3.setPhones(p3);
+      List&lt;Child&gt; lc3 = new ArrayList&lt;Child&gt;();
+      Child ch31 = new Child();
+      ch31.setCname("王六");
+      ch31.setGender(1);
+      lc3.add(ch31);
+      pp3.setChildren(lc3);
+	
+      runtime.sendEvent(pp3);
+    }
+  }
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>UpdateTest 测试代码</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  public class UpdateTest {
+    public static void main(String[] args) {
+	
+      EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+      EPAdministrator admin = epService.getEPAdministrator();
+      EPRuntime runtime = epService.getEPRuntime();
+	
+      String ctr = "create window UPerson.win:keepall() as Person";
+      String update = "on Person as p1 update UPerson as p2 set p2.age = 40 where p2.name = 'test'";
+  //    String update = "update Person set age = 40 where name = 'test'";
+      String qry = "select * from Person";
+	
+	
+      admin.createEPL(ctr);
+      admin.createEPL("insert into UPerson select * from Person");
+      EPStatement state3 = admin.createEPL(update);
+      state3.addListener(new UpdateListener() {
+        public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+          if (null != newEvents) {
+            System.out.print("update==&gt;  ");
+            for (int i = 0; i &lt; newEvents.length; i++) {
+              System.out.println(newEvents[i].getUnderlying());
+            }
+          }
+        }
+      });
+	
+      EPStatement state = admin.createEPL(qry);
+      state.addListener(new UpdateListener() {
+        public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+          if (null != newEvents) {
+            System.out.print("qry==&gt;  ");
+            for (int i = 0; i &lt; newEvents.length; i++) {
+              System.out.println(newEvents[i].getUnderlying());
+            }
+          }
+        }
+      });
+	
+      Person p1 = new Person();
+      p1.setName("test");
+      p1.setAge(22);
+      runtime.sendEvent(p1);
+	
+      Person p2 = new Person();
+      p2.setName("test2");
+      p2.setAge(23);
+      runtime.sendEvent(p2);
+		
+    }
+  }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="22-javautilmap">2.2 <code class="highlighter-rouge">java.util.Map</code></h3>
+<p><code class="highlighter-rouge">Esper</code>支持原生<code class="highlighter-rouge">Java Map</code>结构的事件。相对于POJO来说，<code class="highlighter-rouge">Map</code>的结构更利于事件类型的热加载，毕竟不是<code class="highlighter-rouge">class</code>，所以不需要重启JVM。</p>
+
+<p>所以如果系统对重启比较敏感，建议使用Map来定义事件的结构。<code class="highlighter-rouge">Map</code>的结构很简单，主要分为事件定义名和事件属性列表。</p>
+
+<p>通过 <code class="highlighter-rouge">sendEvent(Map map, String eventTypeName)</code> 方法发送事件。</p>
+
+<p>对于<code class="highlighter-rouge">Map</code>，<code class="highlighter-rouge">Esper</code>只支持增量更新，也就是说只能增加<code class="highlighter-rouge">Map</code>中的属性定义，而不能修改或者删除某个属性。</p>
+
+<p>实际上属性增多并不影响其处理性能，所以没有删除在我看来也没什么。至于修改，也只能是先注销再注册了。</p>
+
+<ul>
+  <li>
+    <p>定义</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  // Person定义  
+  Map&lt;String,Object&gt; person = new HashMap&lt;String,Object&gt;();  
+  person.put("name", String.class);  
+  person.put("age", int.class);  
+  person.put("children", List.class);  
+  person.put("phones", Map.class);  
+	          
+  // 注册Person到Esper  
+  admin.getConfiguration().addEventType("PersonEvent", person);
+	
+  select name, age, phones from PersonEvent.win:time(1 min) where age = 20 
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">java.util.Map</code>发送</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  Map&lt;String, Object&gt; p1 = new HashMap&lt;String, Object&gt;();
+  p1.put("name", "test");
+  p1.put("age", 20);
+  List&lt;Person&gt; child = new ArrayList&lt;Person&gt;();
+  p1.put("children", child);
+	
+  Map&lt;String, Object&gt; phones = new HashMap&lt;String, Object&gt;();
+  phones.put("home", "051088744796");
+  phones.put("self", "15051818371");
+  p1.put("phones", phones);
+	
+  epService.getEPRuntime().sendEvent(p1, "PersonEvent");
+	
+  select name, age, phones from PersonEvent.win:time(1 min) where age = 20 
+
+  {name=test, phones={self=15051818371, home=051088744796}, age=20}
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>PersonMap 示例</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  class Person implements Serializable
+  {
+    String name;
+    int age;
+	
+    public String getName() {
+      return name;
+    }
+	
+    public void setName(String name) {
+      this.name = name;
+    }
+	
+    public int getAge() {
+      return age;
+    }
+	
+    public void setAge(int age) {
+      this.age = age;
+    }
+	
+    @Override
+    public String toString() {
+      return "Person{" +
+          "name='" + name + '\'' +
+          ", age=" + age +
+          '}';
+    }
+  }
+	
+  class PersonMapListener implements UpdateListener
+  {
+	
+    public void update(EventBean[] newEvents, EventBean[] oldEvents)
+    {
+      if (newEvents != null)
+      {
+        for (int i = 0; i &lt; newEvents.length; i++) {
+          System.out.println(newEvents[i].getUnderlying());
+        }
+      }
+    }
+	
+  }
+	
+  public class PersonMap {
+    public static void main(String[] args) throws InterruptedException {
+      EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+	
+      EPAdministrator admin = epService.getEPAdministrator();
+	
+      // Person 定义
+      Map&lt;String, Object&gt; person = new HashMap&lt;String, Object&gt;();
+      person.put("name", String.class);
+      person.put("age", int.class);
+      person.put("children", List.class);
+      person.put("phones", Map.class);
+	
+      // 注册Person到Esper
+      admin.getConfiguration().addEventType("PersonEvent", person);
+	
+      String epl = "select name, age, phones from PersonEvent.win:time(1 min) where age = 20";
+      EPStatement state = admin.createEPL(epl);
+      state.addListener(new PersonMapListener());
+	
+      EPRuntime runtime = epService.getEPRuntime();
+	
+      Map&lt;String, Object&gt; p1 = new HashMap&lt;String, Object&gt;();
+      p1.put("name", "test");
+      p1.put("age", 20);
+	
+      List&lt;Person&gt; child = new ArrayList&lt;Person&gt;();
+      Person pc1 = new Person();
+      pc1.setName("Child1");
+      pc1.setAge(20);
+      child.add(pc1);
+      p1.put("children", child);
+	
+      Map&lt;String, Object&gt; phones = new HashMap&lt;String, Object&gt;();
+      phones.put("home", "051088744796");
+      phones.put("self", "15051818371");
+      p1.put("phones", phones);
+	
+      runtime.sendEvent(p1, "PersonEvent");
+	
+      // 新增一个gender属性
+  //    person.put("gender", int.class);
+  //    admin.getConfiguration().updateMapEventType("PersonEvent", person);
+    }
+  }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h4 id="221-javautilmap超类supertype">2.2.1 <code class="highlighter-rouge">java.util.Map</code>超类(Supertype)</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>epService.getEPAdministrator().getConfiguration().addEventType(
+	"AccountUpdate", accountUpdateDef, new String[] {"BaseUpdate"}
+);
+</code></pre>
+</div>
+
+<p>当继承之后，对超类进行<code class="highlighter-rouge">select</code>时，不管是子类、或超类事件到达，都会进行查询输出。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select * from BaseUpdate
+</code></pre>
+</div>
+
+<p>每个Map 事件可以有多个超类！</p>
+
+<h4 id="222-map-嵌套">2.2.2 Map 嵌套</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>Map&lt;String, Object&gt; updatedFieldDef = new HashMap&lt;String, Object&gt;();
+updatedFieldDef.put("name", String.class);
+updatedFieldDef.put("addressLine1", String.class);
+updatedFieldDef.put("history", UpdateHistory.class);
+epService.getEPAdministrator().getConfiguration().
+addEventType("UpdatedFieldType", updatedFieldDef);
+
+Map&lt;String, Object&gt; accountUpdateDef = new HashMap&lt;String, Object&gt;();
+accountUpdateDef.put("accountId", long.class);
+accountUpdateDef.put("fields", "UpdatedFieldType");	
+// the latter can also be:  accountUpdateDef.put("fields", updatedFieldDef);
+
+epService.getEPAdministrator().getConfiguration().
+addEventType("AccountUpdate", accountUpdateDef);
+
+Map&lt;String, Object&gt; updatedField = new HashMap&lt;String, Object&gt;();
+updatedField.put("name", "Joe Doe");
+updatedField.put("addressLine1", "40 Popular Street");
+updatedField.put("history", new UpdateHistory());
+
+Map&lt;String, Object&gt; accountUpdate = new HashMap&lt;String, Object&gt;();
+accountUpdate.put("accountId", 10009901);
+accountUpdate.put("fields", updatedField);
+
+epService.getEPRuntime().sendEvent(accountUpdate, "AccountUpdate");
+
+
+select accountId, fields.name, fields.addressLine1, fields.history.lastUpdate
+from AccountUpdate
+</code></pre>
+</div>
+
+<h4 id="223-map-数组">2.2.3 Map 数组</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>Map&lt;String, Object&gt; sale = new HashMap&lt;String, Object&gt;();
+sale.put("userids", int[].class);
+sale.put("salesPersons", SalesPerson[].class);
+sale.put("items", "OrderItem[]");	 // The property type is the name itself appended by []
+
+epService.getEPAdministrator().getConfiguration().
+    addEventType("SaleEvent", sale);
+</code></pre>
+</div>
+
+<p>查询语句：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select userids[0], salesPersons[1].name, 
+items[1], items[1].price.amount from SaleEvent
+</code></pre>
+</div>
+
+<h3 id="23-object-array">2.3 Object Array</h3>
+<p><code class="highlighter-rouge">Object</code> 数组跟<code class="highlighter-rouge">Map</code>类似，只是定义的方式有些区别，同时也只支持增量更新。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>String[] propertyNames = {"carId", "direction"};   // order is important
+Object[] propertyTypes = {String.class, int.class};  // type order matches name order
+
+epService.getEPAdministrator().getConfiguration().
+  addEventType("CarLocUpdateEvent", propertyNames, propertyTypes);
+
+epRuntime.sendEvent(new Object[]{carId, direction}, “CarLocUpdateEvent”);
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>查询语句：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select carId from CarLocUpdateEvent .win:time(1 min) where direction = 1
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>增量更新：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  admin.getConfiguration().updateObjectArrayEventType("Person", new String[] { "gender" }, new Object[] { int.class });
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>ObjectArray 实例：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  class CommonUpdateListener implements UpdateListener {
+	
+    public void update(EventBean[] newEvents, EventBean[] oldEvents) {
+      if (null != newEvents) {
+        System.out.print("common update method:  ");
+        for (int i = 0; i &lt; newEvents.length; i++) {
+          System.out.println(newEvents[i].getUnderlying());
+        }
+      }
+    }
+  }
+	
+  public class ObjectArray {
+	
+    /**
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+      EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+      EPAdministrator admin = epService.getEPAdministrator();
+      EPRuntime runtime = epService.getEPRuntime();
+	
+      // Address定义
+      String[] addressPropNames = { "road", "street", "houseNo" };
+      Object[] addressPropTypes = { String.class, String.class, int.class };
+	
+      // Child定义
+      String[] childPropNames = { "name", "age" };
+      Object[] childPropTypes = { String.class, int.class };
+	
+      // Person定义
+      String[] personPropNames = { "name", "age", "children", "phones", "address" };
+      Object[] personPropTypes = { String.class, int.class, "Child[]", Map.class, "Address" };
+	
+      // 注册Address到Esper
+      admin.getConfiguration().addEventType("Address", addressPropNames, addressPropTypes);
+      // 注册Child到Esper
+      admin.getConfiguration().addEventType("Child", childPropNames, childPropTypes);
+      // 注册Person到Esper
+      admin.getConfiguration().addEventType("Person", personPropNames, personPropTypes);
+	
+      // 新增一个gender属性
+      admin.getConfiguration().updateObjectArrayEventType("Person", new String[] { "gender" }, new Object[] { int.class });
+	
+      /** 输出结果：
+       * Person props: [name, age, children, phones, address, gender]
+       */
+      EventType event = admin.getConfiguration().getEventType("Person");
+      System.out.println("Person props: " + Arrays.asList(event.getPropertyNames()));
+	
+      String epl = "select name, age, phones, address.road, address.street, address.houseNo, children[0].name from Person";
+      EPStatement state = admin.createEPL(epl);
+      state.addListener(new CommonUpdateListener());
+	
+      Object[] addr = {"road1", "street1", 1};
+      Object[][] child = child;
+	
+      Map&lt;String, Object&gt; phones = new HashMap&lt;String, Object&gt;();
+      phones.put("home", "051088744796");
+      phones.put("self", "15051818371");
+	
+      Object[] person = {"person", 30, child, phones, addr};
+	
+      runtime.sendEvent(person, "Person");
+    }
+  }
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h4 id="231-object-array-超类supertype">2.3.1 Object Array 超类（Supertype）</h4>
+<p><code class="highlighter-rouge">Object[]</code> 可以在引擎初始化、或运行时通过administrator接口，定义一个超类。</p>
+
+<p>超类必须也是<code class="highlighter-rouge">Object[]</code> 事件，且所有的属性会对子类可见，同名属性将会被覆盖。定义于超类上的EPL查询语法，子类亦会触发。</p>
+
+<p>定义：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>create objectarray schema SuperType (p0 String)
+create objectarray schema SubType (p1 String, p2 String) inherits SuperType
+</code></pre>
+</div>
+
+<p>发送：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>epRuntime.sendEvent(new Object[] {"p0_value", "p1_value"}, "SubType");
+epRuntime.sendEvent(new Object[] {"p0_value"}, "SuperType");
+</code></pre>
+</div>
+
+<h4 id="232-object-array嵌套属性">2.3.2 Object Array（嵌套属性）</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>String[] propertyNamesUpdField = {"name", "addressLine1", "history"};
+Object[] propertyTypesUpdField = {String.class, String.class, UpdateHistory.class};
+epService.getEPAdministrator().getConfiguration().
+addEventType("UpdatedFieldType", propertyNamesUpdField, propertyTypesUpdField);
+
+String[] propertyNamesAccountUpdate = {"accountId", "fields"};
+Object[] propertyTypesAccountUpdate = {long.class, "UpdatedFieldType"};
+epService.getEPAdministrator().getConfiguration().
+addEventType("AccountUpdate", propertyNamesAccountUpdate, propertyTypesAccountUpdate);
+
+Object[] updatedField = {"Joe Doe", "40 Popular Street", new UpdateHistory()};
+Object[] accountUpdate = {10009901, updatedField};
+epService.getEPRuntime().sendEvent(accountUpdate, "AccountUpdate");
+
+select accountId, fields.name, fields.addressLine1, fields.history.lastUpdate
+from AccountUpdate
+</code></pre>
+</div>
+
+<h4 id="233-object-array一对多属性">2.3.3 Object Array（一对多属性）</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>String[] propertyNames = {"userids", "salesPersons", "items"};
+Object[] propertyTypes = {int[].class, SalesPerson[].class, "OrderItem[]");
+
+epService.getEPAdministrator().getConfiguration().addEventType("SaleEvent", propertyNames, propertyTypes);
+</code></pre>
+</div>
+
+<p>查询语句：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select userids[0], salesPersons[1].name, 
+	items[1], items[1].price.amount from SaleEvent
+</code></pre>
+</div>
+
+<h3 id="24-xml">2.4 XML</h3>
+
+<ul>
+  <li>
+    <p>ParseXmlSchema 示例</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  class ParseXMLListener implements UpdateListener
+  {
+	
+    public void update(EventBean[] newEvents, EventBean[] oldEvents)
+    {
+      if (newEvents != null)
+      {
+        for (int i = 0; i &lt; newEvents.length; i++) {
+          System.out.println(newEvents[i].getUnderlying());
+        }
+      }
+    }
+	
+  }
+	
+  public class ParseXmlSchema {
+    public static void main(String[] args) throws InterruptedException, IOException, ParserConfigurationException, SAXException {
+      String xml = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;" +
+          "&lt;Sensor xmlns=\"SensorSchema\"&gt;" +
+          "  &lt;ID&gt;urn:epc:1:4.16.36&lt;/ID&gt;" +
+          "  &lt;Observation Command=\"READ_PALLET_TAGS_ONLY\"&gt;" +
+          "    &lt;ID&gt;00000001&lt;/ID&gt;" +
+          "    &lt;Tag&gt;" +
+          "      &lt;ID&gt;urn:epc:1:2.24.400&lt;/ID&gt;" +
+          "    &lt;/Tag&gt;" +
+          "    &lt;Tag&gt;" +
+          "      &lt;ID&gt;urn:epc:1:2.24.401&lt;/ID&gt;" +
+          "    &lt;/Tag&gt;" +
+          "  &lt;/Observation&gt;" +
+          "&lt;/Sensor&gt;";
+      URL schemaURL = ParseXmlSchema.class.getResource("sensor.xsd");
+      EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();
+	
+      EPAdministrator admin = epService.getEPAdministrator();
+      epService = EPServiceProviderManager.getDefaultProvider();
+      ConfigurationEventTypeXMLDOM sensorcfg = new ConfigurationEventTypeXMLDOM();
+      sensorcfg.setRootElementName("Sensor");
+      sensorcfg.setSchemaResource(schemaURL.toString());
+      epService.getEPAdministrator().getConfiguration()
+          .addEventType("SensorEvent", sensorcfg);
+	
+      String epl = "select ID, Observation.Command, Observation.ID, Observation.Tag[0].ID, Observation.Tag[1].ID from SensorEvent";
+      EPStatement state = admin.createEPL(epl);
+      state.addListener(new ParseXMLListener());
+	
+      InputSource source = new InputSource(new StringReader(xml));
+      DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+      builderFactory.setNamespaceAware(true);
+      Document doc = builderFactory.newDocumentBuilder().parse(source);
+	
+      epService.getEPRuntime().sendEvent(doc);
+    }
+  }
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>对应的<code class="highlighter-rouge">schema</code>文件</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+	
+    &lt;xs:element name="Sensor"&gt;
+      &lt;xs:complexType&gt;
+        &lt;xs:sequence&gt;
+          &lt;xs:element name="ID" type="xs:string"/&gt;
+          &lt;xs:element ref="Observation" /&gt;
+        &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+	
+    &lt;xs:element name="Observation"&gt;
+      &lt;xs:complexType&gt;
+        &lt;xs:sequence&gt;
+          &lt;xs:element name="ID" type="xs:string"/&gt;
+          &lt;xs:element ref="Tag" maxOccurs="unbounded" /&gt;
+        &lt;/xs:sequence&gt;
+        &lt;xs:attribute name="Command" type="xs:string" use="required" /&gt;
+      &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+	
+    &lt;xs:element name="Tag"&gt;
+      &lt;xs:complexType&gt;
+        &lt;xs:sequence&gt;
+          &lt;xs:element name="ID" type="xs:string"/&gt;
+        &lt;/xs:sequence&gt;
+      &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+  &lt;/xs:schema&gt;
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="25-事件类型对比">2.5 事件类型对比</h3>
+<p><img src="/images/esper/compare.png" alt="" /></p>
+
+<p><a id="link3"></a></p>
+
+<h2 id="三处理模型">三、处理模型</h2>
+<p><code class="highlighter-rouge">Esper</code> 进程模型是连续不间断的：根据<code class="highlighter-rouge">event stream</code>、<code class="highlighter-rouge">views</code>、<code class="highlighter-rouge">filters</code>和<code class="highlighter-rouge">output rates</code>的语句选择范围，</p>
+
+<p><code class="highlighter-rouge">UpdaterListener</code>是Esper提供的一个接口，用于监听某个EPL在引擎中的运行情况，即事件进入并产生结果后会通知<code class="highlighter-rouge">UpdateListener</code>。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>package com.espertech.esper.client;  
+  
+import com.espertech.esper.client.EventBean;  
+  
+public interface UpdateListener  
+{  
+    public void update(EventBean[] newEvents, EventBean[] oldEvents);  
+} 
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">Esper</code>是怎么处理事件的，即<code class="highlighter-rouge">Esper</code>的进程模型。</p>
+
+<p>一个update方法，其中包括两个EventBean数组。EventBean中有一个最常用的get方法，是用来得到EPL中某个字段的值。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select name from User  
+//假设newEvents长度为一  
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">newEvents[0].get("name")</code>能得到进入的User事件的name属性值。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select count(*) from User.win:time(5 sec)  
+//假设newEvents长度为一  
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">newEvents[0].get("count(*))</code>能得到5秒内进入引擎的User事件数量有多少。</p>
+
+<h3 id="31-insert-and-remove-stream">3.1 Insert And Remove Stream</h3>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">IR Stream</code></p>
+
+    <p><img src="/images/esper/irstream.png" alt="" /></p>
+
+    <p>从此图可以看出，随着时间推移，每个进入到引擎的<code class="highlighter-rouge">W</code>事件都是<code class="highlighter-rouge">newEvents</code>，即<code class="highlighter-rouge">Insert Stream</code>。<code class="highlighter-rouge">W</code>后括号里的值为属性值，可忽略。</p>
+
+    <p><code class="highlighter-rouge">Insert</code>表示事件进入引擎，<code class="highlighter-rouge">Remove Stream</code>表示移出引擎，对应于<code class="highlighter-rouge">UpdateListener</code>中的 <code class="highlighter-rouge">newEvents</code> 和 <code class="highlighter-rouge">oldEvents</code>。</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select * from Withdrawal
+</code></pre>
+    </div>
+
+    <p>每当引擎处理一个 <code class="highlighter-rouge">Withdrawal</code> 或 <code class="highlighter-rouge">Withdrawal</code> 子类型的事件时，会触发对应所有的 <code class="highlighter-rouge">update listener</code>，并将该事件传递给每个 <code class="highlighter-rouge">EPL</code> 语句的监听器。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">Window Length</code></p>
+
+    <p>队列窗口(length window)告知引擎只保留最新的 <code class="highlighter-rouge">N</code> 个事件，如：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select * from Withdrawal.win:length(5)
+</code></pre>
+    </div>
+
+    <p>开放了一个大小为 5 的空间，可同时存放 5 个事件。</p>
+
+    <p>引擎将所有接收到的事件，让入到一个长度为 5 的空间中，当空间满了之后，最老的事件将会置换出队列，新到的事件即为<code class="highlighter-rouge">newEvent</code>，置换出去的即为<code class="highlighter-rouge">oldEvent</code>。</p>
+
+    <p><img src="/images/esper/irstream-win-length.png" alt="" /></p>
+
+    <p>实际上这个EPL触发监听器都只能看到<code class="highlighter-rouge">newEvents</code>，看不到<code class="highlighter-rouge">oldEvents</code>。如果想看到<code class="highlighter-rouge">oldEvents</code>，EPL要改写一下：</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select irstream * from Withdrawal.win:length(5)
+</code></pre>
+    </div>
+
+    <p>默认情况下，Esper认为你只想让<code class="highlighter-rouge">newEvents</code>触发监听器，即<code class="highlighter-rouge">istream</code>(insert stream)。如果想让<code class="highlighter-rouge">oldEvents</code>触发监听器，那么为<code class="highlighter-rouge">rstream</code>(remove stream)。如果两个都想，那么为<code class="highlighter-rouge">irstream</code>。当然这个默认情况是可以配置的，以后会说到这个问题。</p>
+
+    <p>当只用<code class="highlighter-rouge">rstream</code>时，过期的<code class="highlighter-rouge">oldEvents</code>是放松到<code class="highlighter-rouge">newEvents</code>中的。</p>
+  </li>
+</ul>
+
+<h3 id="32-filter-and-where-causes">3.2 Filter And Where-causes</h3>
+<p>EPL有两种过滤事件的方式：</p>
+
+<ul>
+  <li>过滤事件进入view（可以把view理解为一个窗口），即Filter。</li>
+  <li>让事件都进入view，但不触发UpdateListener，即Where子句。</li>
+</ul>
+
+<p><i class="red"><strong>Filter：</strong></i></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select * from Withdrawal(amount&gt;=200).win:length(5)
+</code></pre>
+</div>
+
+<p>所有<code class="highlighter-rouge">Withdrawal</code>事件中，只有<code class="highlighter-rouge">amount</code>属性值 <code class="highlighter-rouge">&gt;= 200</code>的才可以进入 <code class="highlighter-rouge">win:length</code>，且<code class="highlighter-rouge">win:length</code>大小为 5.</p>
+
+<p><img src="/images/esper/irstream-filter-where.png" alt="" /></p>
+
+<p><i class="red"><strong>Where-causes：</strong></i></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>select * from Withdrawal.win:length(5) where amount &gt;= 200
+</code></pre>
+</div>
+
+<p>所有<code class="highlighter-rouge">Withdrawal</code>事件中，都可以进入 <code class="highlighter-rouge">win:length</code>，且<code class="highlighter-rouge">win:length</code>大小为 5，只有<code class="highlighter-rouge">amount</code>属性 <code class="highlighter-rouge">&gt;= 200</code> 的才可以触发 <code class="highlighter-rouge">UpdateListener</code>。</p>
+
+<p><img src="/images/esper/irstream-where.png" alt="" /></p>
+
+<h3 id="33-time-windows">3.3 Time Windows</h3>
+<ul>
+  <li>
+    <p>Time Windows</p>
+
+    <p>Time Window 是基于过去系统时间上的，一个移动的指定时间间隔的窗口，Time Window 能够限制一次查询中事件的个数，类似于length window。</p>
+
+    <p>例如，要查询所有过去4秒的account中，amount大于1000的withdrawal的平均值，</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select account, avg(amount)
+  from Withdrawal.win:time(4 sec)
+  group by account
+  having amount &gt; 1000
+
+  select * from Withdrawal.win:time(4 sec)
+</code></pre>
+    </div>
+
+    <p><img src="/images/esper/time-window.png" alt="" /></p>
+
+    <ol>
+      <li>t+4 秒，W1到达并进入window，引擎将之反馈给 update listeners</li>
+      <li>t+5 秒，W2到达并进入window，引擎将之反馈给 update listeners</li>
+      <li>t+6.5 秒，W3到达并进入window，引擎将之反馈给 update listeners</li>
+      <li>t+8 秒，W1离开time window，引擎将之作为一个old event 告知update listeners</li>
+    </ol>
+  </li>
+  <li>
+    <p>Time Batch</p>
+
+    <p>Time Batch视图缓存事件，并在每个指定的时间间隔更新时释放它们，可以理解为批、批处理。length batch也类似。</p>
+
+    <p>例如，</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select * from Withdrawal.win:time_batch(4 sec)
+</code></pre>
+    </div>
+
+    <p>上述EPL语句可以理解为通过时间分批查询，每一批为4秒钟。</p>
+
+    <p><img src="/images/esper/time-batch.png" alt="" /></p>
+
+    <ol>
+      <li>在 t + 1秒，W1 到达并进入batch，不触发调用 update listeners</li>
+      <li>在 t + 3秒，W2 到达并进入batch，不触发调用 update listeners</li>
+      <li>在 t + 4秒，引擎处理batch事件，并开始一个新的batch，引擎触发W1和W2给update listeners</li>
+      <li>在 t + 6.5秒，W3 引擎处理batch事件，并开始一个新的batch，引擎触发W1和W2给update listeners</li>
+      <li>在 t + 8秒，引擎处理batch事件，并开始一个新的batch，引擎触发W3给update listeners,并将W1和W2作为old data（前一个batch）发给update listeners</li>
+    </ol>
+
+    <p>收集1秒钟之内到达的Withdrawal事件，并在1秒钟结束之后，将之作为new events（insert stream）发送给引擎的每个listener，将上1秒的作为old events（remove stream）发送给每个listener</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select account, amount from Withdrawal.win:time_batch(1 sec)
+</code></pre>
+    </div>
+
+    <p>1秒内所有Withdrawal时间的amount属性和</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select sum(amount) as mysum from Withdrawal.win:time_batch(1 sec)
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="34-分组聚合">3.4 分组聚合</h3>
+
+<ul>
+  <li>
+    <p>IStream</p>
+
+    <p>当聚合属性值发生改变的时候，聚合事件语句，能够通过聚合函数传递(post)remove steam（即聚合函数值也能作为触发update listener的条件）。</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select count(*) as mycount from Withdrawal having count(*) = 2   当接收到 2 个Withdrawal事件时，输出。
+
+  select istream count(*) as mycount form Withdrawal having count(*) = 2
+</code></pre>
+    </div>
+
+    <p><code class="highlighter-rouge">istream</code> 或 <code class="highlighter-rouge">rstream</code>关键字能被用来指定传递（post） <code class="highlighter-rouge">new events</code> 或 <code class="highlighter-rouge">old events</code> 给<code class="highlighter-rouge">update listeners</code>。上述语句，表示当且仅当第二个<code class="highlighter-rouge">Withdrawal</code>事件到达时，引擎才会调用<code class="highlighter-rouge">listener</code>；若<code class="highlighter-rouge">istream</code>改为<code class="highlighter-rouge">rstream</code>，则仅当第三个<code class="highlighter-rouge">Withdrawal</code>事件到达时，引擎才会调用<code class="highlighter-rouge">listener</code>。</p>
+  </li>
+  <li>
+    <p>IR Stream</p>
+
+    <p>监听器有两个参数 newEvents 和 oldEvents，newEvents 表示通常的计算结果，oldEvents 可以理解为上一次计算结果。默认情况下，newEvents 有值，oldEvnets 为null。</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select rstream * from Withdrawal   上述结果会将上一次的计算结果放入到 newEvents，而不是 oldEvents，且无法获取当前计算结果！
+
+  select irstream * from Withdrawal   会将当前计算结果放入 newEvents，上次计算结果放入到 oldEvents。
+
+  select istream * from Withdrawal
+  select * from Withdrawal   会将当前计算结果放入newEvents，且无法得到上次计算结果，默认设置。
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Aggregate and Group</p>
+
+    <p>不聚合、不分组</p>
+
+    <div class="highlighter-rouge"><pre class="highlight"><code>  select * from Withdrawal.win:time_batch(1 sec)   只有聚合，没有分组
+
+  select sum(amount)
+  from Withdrawal.win:time_batch(1 sec)   非聚合属性、聚合属性，当不分组
+
+  select account, sum(amount)
+  from Withdrawlal.win:time_batch(1 sec)   查询语句中的聚合属性、所有非聚合属性，都被group by语句列出。
+
+  select account, sum(amount)
+  from Withdrawal.win:time_batch(1 sec)
+  group by account   查询 非聚合属性和聚合属性，仅用group by分组了部分属性。
+
+  select account, accountName, sum(amount) 
+  from Withdrawal.win:time_batch(1 sec) 
+  group by account
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p><a id="link4"></a></p>
+
+<h3 id="未完待续">未完待续…</h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2016/12/10/docker-introduction.html' title='Docker 入门简介'>Docker 入门简介</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2016/12/11/color-strategy.html' title='色彩攻略'>色彩攻略</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2016/12/11/color-strategy.html' title='色彩攻略'>色彩攻略</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/wanzhou/'>万洲</a>
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

@@ -1,0 +1,85 @@
+span.article-mark{ position: relative; top: -10px; font-size: 40px; color: #ddd;}
+
+.container{ margin-top: 71px; }
+
+/* to-top*/
+.totop > a, .totop-xs > a{ background: url(http://img.baidu.com/img/iknow/exp/exp-share-sprite.png) no-repeat;}
+#to-top{ position: fixed; bottom: 50px; right: 50px; z-index: 99999; background-position: 0 -110px;  width: 50px; height: 50px;    display: none;}
+#to-top-xs{ position: fixed; bottom: 20px; right: 20px; z-index: 99999; background-position: 0 -110px;  width: 50px; height: 50px;    display: none;}
+#to-top:hover, #to-top-xs:hover { text-decoration: none; background: #31b0d5;}
+#to-top-title, #to-top-title-xs{ font-family: 'Microsoft Yahei',"微软雅黑",arial,"宋体",sans-serif; font-size: 14px; color: #fff; width: 50px; height: 50px; display: none; line-height: 18px; padding-top: 6px; padding-left: 9px; }
+
+/**
+ * authors_list
+ * */
+.al-article-list { font-family: Georgia, serif; }
+h2.al-year { margin-top: 0px; text-align: center; font-family: Georgia, serif; }
+hr.al-hr { margin-top: 0px; border-top-color: #ccc; }
+.al-article { padding-left: 23px; background: url(/images/ico_Original.gif) 0% 50% no-repeat; -webkit-margin-before: 1em; font-size: 20px; }
+.al-article > a { color: black; }
+.al-article > a:hover{ color: #31b0d5; }
+span.al-article-date { color: #959595; }
+h2.al-author-name.panel-title { font-size: 25px; font-weight: bold; text-align: center; }
+/* visible-xs */
+.al-article-date-xs { float: right; font-size: 13px; font-family: Georgia, serif; color: #959595;}
+.al-article-list-xs > .panel > .list-group > a { font-size: 13px; color: black;}
+.al-title-xs { font-size: 14px; }
+.al-title-xs + div > .badge { background-color: #5bc0de; }
+
+/**
+ * about.html ab-
+ * */
+.ab-author-img > a.thumbnail { margin-bottom: 0; }
+.ab-author-name { font-size: x-large; margin-top: 25px; text-align: center; }
+.ab-article-num { font-weight: 900; font-family: Georgia, serif; color: #959595; text-align: center; margin-top: 20px; }
+.ab-article-num > span { font-family: initial; }
+.ab-desc { text-align: center; margin-top: 20px; color: #959595 }
+.ab-author-name > a { color: black; }
+.ab-author-name > a:hover { color: #31b0d5; }
+.ab-author-info > div { margin-left: -76px; }
+h2.al-author-name { margin-bottom: 0px; margin-top: 0px; }
+
+/**
+ * index.html ix-
+ * */
+.ix-article-title > a { color: black; }
+.ix-article-title > a:hover { color: #31b0d5; }
+.ix-description.visible-lg { line-height: 22px; margin-bottom: 0; margin-top: 4px; }
+.ix-description.visible-md { line-height: 28px; margin-bottom: 0; margin-top: 1px; }
+.ix-hr { margin-top: 0; }
+.ix-article-author { float: left; }
+.ix-article-date { float: right; }
+
+/**
+ * categories  
+ * */
+h2.category-name.panel-title { font-size: 25px; text-align: center; font-weight: bold; }
+.cate-drop-menu { min-width: 190px; }
+
+/**
+ * post.html pt-
+ * */
+.pt-article-title > h2 { font-size: 25px; margin-bottom: 20px; }
+.pt-article-date { float: right; color: #959595; }
+.pt-article-main h2 { font-size: 21px; margin-bottom: 25px; border-bottom: 1px solid #cccccc; padding-bottom: 12px; }
+.pt-article-main h3 { font-size: 19px; }
+.pt-article-main h4 { font-size: 17px; }
+.pt-article-main h5 { font-size: 15px; }
+.pt-article-main h6 { font-size: 13px; }
+.pt-article-main hr { display: none; }
+.pt-article-main br { display: none; }
+.new-heading + .desc { font-size: 12px; color: #959595; }
+.new-heading > a { color: black; }
+.new-heading > a:hover { color: #31b0d5; }
+.new-date { color: #959595; }
+.new-author { color: #959595; }
+.new-author > a { color: black; }
+.new-author > a:hover { color: #31b0d5; }
+#pt-article-num { font-family: Georgia, serif; /* font-weight: bold; */ }
+.pt-author-name { margin-top: 5px; /* margin-bottom: 9px; */ margin-left: 13px; }
+#pt-article-num { font-family: Georgia, serif; font-size: 13px; margin-left: 13px; }
+#pt-author-url { color: black; }
+#pt-author-url:hover { color: #31b0d5; }
+
+h4{padding:5px 0 !important;line-height:25px;text-indent:2em}
+h3{padding:10px 0 !important;}

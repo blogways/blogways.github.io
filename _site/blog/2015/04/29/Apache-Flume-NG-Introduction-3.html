@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>Apache Flume-NG 介绍[3] 之 Sink_博汇网_www.blogways.net</title>
+    <meta name=keywords content="Flume-NG, sink">
+    
+    <meta name=description content="Flume NG是一个分布式、可靠、可用的系统，它能够将不同数据源的海量日志数据进行高效收集、聚合、移动，最后存储到一个中心化数据存储系统中。由原来的Flume OG到现在的Flume NG，进行了架构重构，经过架构重构后，Flume NG更像是一个轻量的小工具，非常简单，容易适应各种方式日志收集，并支持failover和负载均衡。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "万洲".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2015/04/28/spring-exception.html' title='Spring NoSuchBeanDefinitionException'>Spring NoSuchBeanDefinitionException</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2015/04/29/Apache-Flume-NG-Introduction-4.html' title='Apache Flume-NG 介绍[4] 之 Channel'>Apache Flume-NG 介绍[4] 之 Channel</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2015/04/29/Apache-Flume-NG-Introduction-4.html' title='Apache Flume-NG 介绍[4] 之 Channel'>Apache Flume-NG 介绍[4] 之 Channel</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>Apache Flume-NG 介绍[3] 之 Sink
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2015-04-29
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>Flume-NG</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>sink</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>Apache</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="一常用sink介绍">一、常用Sink介绍</h2>
+
+<p>此处介绍的 Sinks 有：HDFS Sink、Logger Sink、Avro/Thrift Sink、HBase Sink。</p>
+
+<h3 id="avro-sink">Avro Sink</h3>
+
+<p>Avro Sink 为 Flume 的层次连接提供了一半的支持( 另一半为 Avro Source )，发送到此 Sink 的 Flume 被转换为 Avro 事件，然后被发送到对应的主机：端口上。其必须的属性如下：</p>
+
+<table width="100%">
+<tr><th width="15%">属性名</th><th width="10%">默认值</th><th>描述</th></tr>
+<tr><td width="15%">channels</td><td width="10%">-</td><td></td></tr>
+<tr><td width="15%">type</td><td width="10%">-</td><td>组件类型名称必须是<code>avro</code></td></tr>
+<tr><td width="15%">hostname</td><td width="10%">-</td><td>绑定的主机名或者 IP 地址</td></tr>
+<tr><td width="15%">port</td><td width="10%">-</td><td>绑定的端口号</td></tr>
+<tr><td width="15%">batch-size</td><td width="10%">100</td><td>一次同时发送的 event 数</td></tr>
+<tr><td width="15%">connect-timeout</td><td width="10%">20000</td><td>第一次握手请求时允许的时长。( ms )</td></tr>
+<tr><td width="15%">request-timeout</td><td width="10%">20000</td><td>第一次过后，后续请求允许的时长 ( ms )</td></tr>
+<tr><td width="15%">ireset-connection-interval</td><td width="10%">none</td><td></td></tr>
+<tr><td width="15%">compression-type</td><td width="10%">none</td><td>可选项为“none”或“deflate”，compression-type必须符合匹配AvroSource的compression-type</td></tr>
+<tr><td width="15%">compression-level</td><td width="10%">6</td><td>压缩 event 的压缩级别，0 为不压缩，1 - 9 为压缩，数字越大则压缩率越大。</td></tr>
+<tr><td width="15%">ssl</td><td width="10%">false</td><td>设置为<code>true</code>启用SSL加密，同时可以选择性设置“truststore”，“truststore-password”，“truststore-type”，并且指定是否打开“trust-all-certs”</td></tr>
+<tr><td width="15%">trust-all-certs</td><td width="10%">false</td><td>如果设置为 <code>true</code>，则远程服务( Avro Source )的 SSL 服务证书将不会进行校验，因而生产环境不能设置为 <code>true</code></td></tr>
+<tr><td width="15%">truststore</td><td width="10%">-</td><td>Java truststore文件的路径，需要启用SSL加密</td></tr>
+<tr><td width="15%">truststore-password</td><td width="10%">-</td><td>Java truststore的密码，需要启用SSl加密</td></tr>
+<tr><td width="15%">truststore-type</td><td width="10%">JKS</td><td>Java truststore的类型，可选项为：“JSK” 或其它支持的Java truststore 类型</td></tr>
+<tr><td width="15%">exclude-protocols</td><td width="10%">SSLv2Hello SSLv3</td><td>Space-separated list of SSL/TLS protocols to exclude</td></tr>
+<tr><td width="15%">maxIoWorkers</td><td width="10%">2 * 当前机器上可用的处理器数</td><td>I/O 处理线程的最大数，在 <code>NettyAvroRpcClient</code> 和 <code>NioClientSocketChannelFactory</code> 上被加载。</td></tr>
+</table>
+
+<p>实例 <code class="highlighter-rouge">Agent a1</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a1.channels = c1
+a1.sinks = k1
+a1.sinks.k1.type = avro
+a1.sinks.k1.channel = c1
+a1.sinks.k1.hostname = 10.10.10.10
+a1.sinks.k1.port = 4545
+</code></pre>
+</div>
+
+<h3 id="thrift-sink">Thrift Sink</h3>
+<p>Thrift Sink 为 Flume 的层次连接提供了一半的支持( 另一半为 Thrift Source )，发送到此 Sink 的 Flume 被转换为 Thrift 事件，然后被发送到对应的主机：端口上。其必须的属性如下：</p>
+
+<table width="100%">
+<tr><th width="15%">属性名</th><th width="10%">默认值</th><th>描述</th></tr>
+<tr><td width="15%">channels</td><td width="10%">-</td><td></td></tr>
+<tr><td width="15%">type</td><td width="10%">-</td><td>组件类型名称必须是<code>thrift</code></td></tr>
+<tr><td width="15%">hostname</td><td width="10%">-</td><td>绑定的主机名或者 IP 地址</td></tr>
+<tr><td width="15%">port</td><td width="10%">-</td><td>绑定的端口号</td></tr>
+<tr><td width="15%">batch-size</td><td width="10%">100</td><td>一次同时发送的 event 数</td></tr>
+<tr><td width="15%">connect-timeout</td><td width="10%">20000</td><td>第一次握手请求时允许的时长。( ms )</td></tr>
+<tr><td width="15%">request-timeout</td><td width="10%">20000</td><td>第一次过后，后续请求允许的时长 ( ms )</td></tr>
+<tr><td width="15%">ireset-connection-interval</td><td width="10%">none</td><td></td></tr>
+</table>
+
+<p>实例，<code class="highlighter-rouge">Agent a1</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a1.channels = c1
+a1.sinks = k1
+a1.sinks.k1.type = thrift
+a1.sinks.k1.channel = c1
+a1.sinks.k1.hostname = 10.10.10.10
+a1.sinks.k1.port = 4545
+</code></pre>
+</div>
+
+<h3 id="hdfs-sink">HDFS Sink</h3>
+<p>HDFS Sink 将 events 写入到 Hadoop 分布式文件系统( HDFS )当中，目前它支持创建文本文件和二进制序列化文件( SequenceFile )，这两种文件类型都支持压缩文件。数据库文件能够周期性地，在运行时间、数据大小或event数量的基础上轮转( 关闭当前文件，并创建一个新文件 )。It also buckets/partitions data by attributes like timestamp or machine where the event originated. The HDFS directory path may contain formatting escape sequences that will replaced by the HDFS sink to generate a directory/file name to store the events. 使用 HDFS Sink 需要安装 hadoop，如此 Flume 便能够通过 hadoop jars 连接 HDFS 集群，注意，Hadoop 的版本必须支持<code class="highlighter-rouge">sync()</code>调用。</p>
+
+<p>下面是支持的转义序列：</p>
+<table width="100%">
+<tr><th width="20%">别名</th><th>描述</th></tr>
+<tr><td width="20%">%{host}</td><td></td></tr>
+<tr><td width="20%">%t</td><td>Unix 时间的秒数</td></tr>
+<tr><td width="20%">%a</td><td>本地的星期缩写名称 (Mon, Tue, ...)</td></tr>
+<tr><td width="20%">%A</td><td>本地的星期完整名称 (Monday, Tuesday, ...)</td></tr>
+<tr><td width="20%">%b</td><td>本地的月份缩写名称 (Jan, Feb, ...)</td></tr>
+<tr><td width="20%">%B</td><td>本地的月份完整名称 (January, February, ...)</td></tr>
+<tr><td width="20%">%c</td><td>本地的日期和时间 (Thu Mar 3 23:05:25 2005)</td></tr>
+<tr><td width="20%">%d</td><td>某月中的某天 (01)</td></tr>
+<tr><td width="20%">%D</td><td>日期，与 <code>%m/%d/%y</code> 一样</td></tr>
+<tr><td width="20%">%H</td><td>24 小时制的小时，<b><i>补齐两位</i></b> (00..23)</td></tr>
+<tr><td width="20%">%I</td><td>12 小时制的小时，<b><i>补齐两位</i></b> (01..12)</td></tr>
+<tr><td width="20%">%j</td><td>某年中的某天 (001..366)</td></tr>
+<tr><td width="20%">%k</td><td>24 小时制的小时，<b><i>不补齐两位</i></b> ( 0..23)</td></tr>
+<tr><td width="20%">%m</td><td>月份 (01..12)</td></tr>
+<tr><td width="20%">%M</td><td>分钟数 (00..59)</td></tr>
+<tr><td width="20%">%p</td><td>本地上午或下午 (am, pm)</td></tr>
+<tr><td width="20%">%s</td><td>从 <code>1970-01-01 00:00:00 UTC</code> 到现在的秒数</td></tr>
+<tr><td width="20%">%S</td><td>秒数 (00..59)</td></tr>
+<tr><td width="20%">%y</td><td>年份的后两位数字 (00..99)</td></tr>
+<tr><td width="20%">%Y</td><td>年份 (2015)</td></tr>
+<tr><td width="20%">%z</td><td>+hhmm numeric timezone (for example, -0400)</td></tr>
+</table>
+
+<p>正在读取的文件的文件名会以 <code class="highlighter-rouge">.tmp</code> 结尾，一旦文件被关闭，则扩展部分会被移除，这使排除目录中部分完成的文件称为可能。其config属性如下：</p>
+
+<p><strong><em>注意：对于所有与时间相关的转义系列，一个包含 “timestamp” 的header必须在 event 的所有headers中存在( 除非 <code class="highlighter-rouge">hdfs.useLocalTimeStamp</code> 被设置为 <code class="highlighter-rouge">true</code> )。设置自动添加的一种方式是使用 <code class="highlighter-rouge">TimestampInterceptor</code>。</em></strong></p>
+
+<table width="100%">
+<tr><th width="15%">属性名</th><th width="10%">默认值</th><th>描述</th></tr>
+<tr><td width="15%">channels</td><td width="10%">-</td><td></td></tr>
+<tr><td width="15%">type</td><td width="10%">-</td><td>组件类型名称必须是<code>hdfs</code></td></tr>
+<tr><td width="15%">hdfs.path</td><td width="10%">-</td><td>HDFS 目录路径 (如 <code>hdfs://namenode/flume/webdata/</code>)</td></tr>
+<tr><td width="15%">hdfs.filePrefix</td><td width="10%">FlumeData</td><td>在 HDFS 目录中，Flume 创建的文件的前缀</td></tr>
+<tr><td width="15%">hdfs.fileSuffix</td><td width="10%">-</td><td>文件的后缀 (如 <code>.avro</code> - 注意：时间不是自动添加的)</td></tr>
+<tr><td width="15%">hdfs.inUsePrefix</td><td width="10%">-</td><td>Flume 正在写入的临时文件的的前缀</td></tr>
+<tr><td width="15%">hdfs.inUseSuffix</td><td width="10%"><code>.tmp</code></td><td>Flume 正在写入的临时文件的后缀</td></tr>
+</table>
+
+<p>更多属性配置详见：<a href="http://flume.apache.org/FlumeUserGuide.html#hdfs-sink">http://flume.apache.org/FlumeUserGuide.html#hdfs-sink</a></p>
+
+<p>实例，<code class="highlighter-rouge">Agent a1</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a1.channels = c1
+a1.sinks = k1
+a1.sinks.k1.type = hdfs
+a1.sinks.k1.channel = c1
+a1.sinks.k1.hdfs.path = /flume/events/%y-%m-%d/%H%M/%S
+a1.sinks.k1.hdfs.filePrefix = events-
+a1.sinks.k1.hdfs.round = true
+a1.sinks.k1.hdfs.roundValue = 10
+a1.sinks.k1.hdfs.roundUnit = minute
+</code></pre>
+</div>
+
+<p>上面的配置将时间戳四舍五入到最近的10分钟，如：一个 event 的时间戳是 <code class="highlighter-rouge">11:54:34 AM, June 12, 2012</code>，那么映射到 hdfs 路径则为 <code class="highlighter-rouge">/flume/events/2012-06-12/1150/00</code></p>
+
+<h3 id="hbase-sink">HBase Sink</h3>
+<p>具体介绍等，详见：<a href="http://flume.apache.org/FlumeUserGuide.html#hbasesink">http://flume.apache.org/FlumeUserGuide.html#hbasesink</a></p>
+
+<table width="100%">
+<tr><th width="15%">属性名</th><th width="10%">默认值</th><th>描述</th></tr>
+<tr><td width="15%">channels</td><td width="10%">-</td><td></td></tr>
+<tr><td width="15%">type</td><td width="10%">-</td><td>组件类型名称必须是<code>hbase</code></td></tr>
+<tr><td width="15%">table</td><td width="10%">-</td><td>HBase 中写入数据的表</td></tr>
+<tr><td width="15%">columnFamily</td><td width="10%">-</td><td>HBase 中写入数据列簇</td></tr>
+<tr><td width="15%">zookeeperQuorum</td><td width="10%">-</td><td>The quorum spec. This is the value for the property hbase.zookeeper.quorum in hbase-site.xml</td></tr>
+<tr><td width="15%">znodeParent</td><td width="10%">/hbase</td><td>The base path for the znode for the -ROOT- region. Value of zookeeper.znode.parent in hbase-site.xml</td></tr>
+<tr><td width="15%">batchSize</td><td width="10%">100</td><td>每次事务处理写入的 event数</td></tr>
+<tr><td width="15%">coalesceIncrements</td><td width="10%">false</td><td>是否添加一个保存文件 <code>basename</code> 的Header</td></tr>
+<tr><td width="15%">serializer</td><td width="10%">org.apache.flume.sink.hbase.SimpleHbaseEventSerializer</td><td>Default increment column = “iCol”, payload column = “pCol”</td></tr>
+<tr><td width="15%">serializer.*</td><td width="10%">-</td><td>Properties to be passed to the serializer.</td></tr>
+<tr><td width="15%">kerberosPrincipal</td><td width="10%">-</td><td>Kerberos user principal for accessing secure HBase</td></tr>
+<tr><td width="15%">kerberosKeytab</td><td width="10%">-</td><td>Kerberos keytab for accessing secure HBase</td></tr>
+</table>
+
+<p>实例，<code class="highlighter-rouge">Agent agent-1</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a1.channels = c1
+a1.sinks = k1
+a1.sinks.k1.type = hbase
+a1.sinks.k1.table = foo_table
+a1.sinks.k1.columnFamily = bar_cf
+a1.sinks.k1.serializer = org.apache.flume.sink.hbase.RegexHbaseEventSerializer
+a1.sinks.k1.channel = c1
+</code></pre>
+</div>
+
+<h3 id="logger-sink">Logger Sink</h3>
+<p>Logs Sink 属于 INFO 级别的，通常用作测试或调试目的，其属性：</p>
+
+<table width="100%">
+<tr><th width="15%">属性名</th><th width="10%">默认值</th><th>描述</th></tr>
+<tr><td width="15%">channels</td><td width="10%">-</td><td></td></tr>
+<tr><td width="15%">type</td><td width="10%">-</td><td>组件类型名称必须是<code>logger</code></td></tr>
+</table>
+
+<p>实例，<code class="highlighter-rouge">Agnet a1</code>：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a1.channels = c1
+a1.sinks = k1
+a1.sinks.k1.type = logger
+a1.sinks.k1.channel = c1
+</code></pre>
+</div>
+
+<p>&lt;/br&gt;</p>
+
+<p>===</p>
+
+<p><strong><em>未完待续。。。</em></strong></p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2015/04/28/spring-exception.html' title='Spring NoSuchBeanDefinitionException'>Spring NoSuchBeanDefinitionException</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2015/04/29/Apache-Flume-NG-Introduction-4.html' title='Apache Flume-NG 介绍[4] 之 Channel'>Apache Flume-NG 介绍[4] 之 Channel</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2015/04/29/Apache-Flume-NG-Introduction-4.html' title='Apache Flume-NG 介绍[4] 之 Channel'>Apache Flume-NG 介绍[4] 之 Channel</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/wanzhou/'>万洲</a>
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	

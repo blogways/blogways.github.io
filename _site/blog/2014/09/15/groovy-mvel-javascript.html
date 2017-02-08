@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>java 动态脚本之groovy、mvel and javascript_博汇网_www.blogways.net</title>
+    <meta name=keywords content="java动态脚本, groovy, mvel, javascript">
+    
+    <meta name=description content="从javaSE6开始，JSR 223中规范了在Java虚拟机上运行的脚本语言与Java程序之间的交互方式，目前Java虚拟机支持比较多的脚本语言，比较流行的有JavaScript、Scala、JRuby、Jython和Groovy等，另外基于java开源的动态表达式语言也很多，如：MVEL、ognl、JUEL，还有国人开发的Aviator、JSEL，本章对最近研究的groovy、mvel以及java中动态调用各动态脚本性能比较。">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li class='disabled active'>
+                                <a href='javascript:void(0)'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                                </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "汤仕忠".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2014/08/27/jQuery-source-analysis-ajax(2).html' title='jQuery源码解读[14] -- AJAX（2）'>jQuery源码解读[14] -- AJAX（2）</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2014/09/17/checkStyle.html' title='Java项目代码编写规范'>Java项目代码编写规范</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2014/09/17/checkStyle.html' title='Java项目代码编写规范'>Java项目代码编写规范</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>java 动态脚本之groovy、mvel and javascript
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2014-09-15
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>java动态脚本</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>groovy</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>mvel</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>javascript</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories//'>Java</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="一groovy">一、groovy</h2>
+
+<h3 id="-groovy介绍">. groovy介绍</h3>
+<p>Groovy 是 用于Java虚拟机的一种敏捷的动态语言，它是一种成熟的面向对象编程语言，既可以用于面向对象编程，又可以用作纯粹的脚本语言。使用该种语言不必编写过多的代码，同时又具有闭包和动态语言中的其他特性。</p>
+
+<p>Groovy是JVM的一个替代语言（替代是指可以用 Groovy 在Java平台上进行 Java 编程），使用方式基本与使用 Java代码的方式相同，该语言特别适合与Spring的动态语言支持一起使用，设计时充分考虑了Java集成，这使 Groovy 与 Java 代码的互操作很容易。（注意：不是指Groovy替代java，而是指Groovy和java很好的结合编程。</p>
+
+<h3 id="-groovy语法">. groovy语法</h3>
+
+<p>groovy语法和java语法类似，具体请参阅<a href="http://beta.groovy-lang.org/docs/groovy-2.3.1/html/documentation/" title="官方文档">http://beta.groovy-lang.org/docs/groovy-2.3.1/html/documentation/</a>，这里不做介绍。</p>
+
+<h3 id="-java中使用groovy">. java中使用groovy</h3>
+
+<p>Java中调用Groovy情况：</p>
+
+<p>1、Eval</p>
+
+<p>Eval很容易的通过me方法执行一段逻辑，但是Eval不支持多行逻辑，并且没有对执行的script脚本缓存，效率非常低。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("Eval begin:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").
+				format(new Date()));
+for (int i = 0; i &lt; 1000; i++) {
+	Eval.xy(i, i + 1, "x*y");
+}
+System.out.println("Eval end:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").
+                format(new Date()));
+
+输出：
+	Eval begin:2014-09-17 14:36:43:218
+	Eval end:  2014-09-17 14:36:52:203
+</code></pre>
+</div>
+
+<p>2、GroovyShell:</p>
+
+<p>GroovyShell支持简单脚本及Groovy文件的解析执行， GroovyShell支持script脚本的缓存，执行效率相对Eval高多了（下面例子100000次循环比Eval1000次循环还快），但要注意GroovyShell中shell.parse解析脚本程序不能放在大循环中或被频繁的调用，否则会大大降低性能，并且还有PermGen space异常风险。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("GroovyShell begin:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+       
+Binding binding = new Binding();
+GroovyShell shell = new GroovyShell(binding);    
+Script  script = shell.parse("def mul(x, y) { return x * y }\n mul(x1, y1)");  
+for (int i = 0; i &lt; 100000; i++) {               
+    binding.setProperty("x1", i);
+    binding.setProperty("y1", i + 1);
+    script.run();
+}
+System.out.println("GroovyShell end:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+	GroovyShell begin:2014-09-17 15:50:04:945
+	GroovyShell end:2014-09-17 15:50:06:389
+</code></pre>
+</div>
+
+<p>3、GroovyClassLoader:适用于复杂逻辑的整个groovy文件，这里引入了Groovy2.0新增的静态编译，效率有进一步提升。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("GroovyClassLoader begin " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+        
+GroovyClassLoader loader = new GroovyClassLoader();
+Class groovyClass = loader.parseClass(new File("src/extendTest/Test.groovy"));
+   
+GroovyObject object = (GroovyObject) groovyClass.newInstance();
+for (int i = 0; i &lt; 100000; i++) {  
+    object.invokeMethod("num", new int[]{i, i + 1});
+}
+
+System.out.println("GroovyClassLoader end" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+	GroovyClassLoader begin 2014-09-17 16:23:06:156
+	GroovyClassLoader end   2014-09-17 16:23:06:411
+</code></pre>
+</div>
+
+<p>4、GroovyScriptEngine：GroovyScriptEngine类似GroovyShell，但存在互关联的多个脚本时，使用GroovyScriptEngine会更好些，但是GroovyScriptEngine效率也不理想。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("SimpleScript begin:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+for (int i = 0; i &lt; 100000; i++) {
+    binding1.setVariable("x", i);
+    binding1.setVariable("y", i + 1);
+    engine.run("src/extendTest/SimpleScript.groovy", binding1);
+}
+System.out.println("SimpleScript end:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+	SimpleScript begin:2014-09-17 18:48:48:506
+	SimpleScript end:2014-09-17 18:49:13:796
+</code></pre>
+</div>
+
+<p>5、Bean Scripting Framework：Bean Scripting Framework是一组Java Classes提供了在Java应用程序内对脚本语言的支持，通过脚本语言可以访问java的对象和方法，Groovy的BSF引擎是继承org.codehaus.groovy.bsf.GroovyEngine，其效率也达不到GroovyClassLoader效率，这里不做实例分析。</p>
+
+<p>6、JSR 223是Java 6提供的一种从Java内部执行脚本编写语言的方便、标准的方式，并提供从脚本内部访问Java 资源和类的功能。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("JSR 223 begin:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+ScriptEngineManager factory = new ScriptEngineManager();
+ScriptEngine engine1 = factory.getEngineByName("groovy");
+String testScript = "def num(int[] a) {return  a[0] * a[1]}";  
+engine1.eval(testScript);  
+Invocable inv = (Invocable) engine1; 
+for (int i = 0; i &lt; 100000; i++) {
+    inv.invokeFunction("num",  new int[]{i, i + 1});  
+}
+
+System.out.println("JSR 223 end:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+
+	JSR 223 begin:2014-09-17 18:55:10:665
+	JSR 223 end:2014-09-17 18:55:10:716
+</code></pre>
+</div>
+
+<p>以上一个简单的乘法运算测试发现JSR 223的效率比GroovyClassLoader要高。怀疑是不是GroovyClassLoader加载Groovy文件及编译文件耗时比较长，将开始打印日志移至for循环上面一行，同时将JSR 223测试代码打印日志也移至for循环上面一行，测试后发现JSR 223效率任然高于GroovyClassLoader，于是将JSR 223测试程序改读取Groovy文件，并使用Groovy静态编译，效率降低，稍高于GroovyClassLoader方式（GroovyClassLoader不读取文件方式高于GroovyClassLoader读取文件，稍低于JSR 223不读取文件方式）：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ScriptEngineManager factory = new ScriptEngineManager();
+ScriptEngine engine1 = factory.getEngineByName("groovy");
+//String testScript = "def num(int[] a) {return  a[0] * a[1]}";  
+engine1.eval(new FileReader("D:/workspace/extendTest/src/extendTest/Test.groovy"));
+//engine1.eval(testScript);  
+Invocable inv = (Invocable) engine1; 
+System.out.println("JSR 223 begin:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+for (int i = 0; i &lt; 100000; i++) {
+    inv.invokeFunction("num",  new int[]{i, i + 1});  
+}
+
+System.out.println("JSR 223 end:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+	JSR 223 begin:2014-09-17 18:49:13:847
+	JSR 223 end:2014-09-17 18:49:13:969
+</code></pre>
+</div>
+
+<p>注：虽然JSR 223调用方式性能大大提升，但是其性能与java相比还相差很多，以上简单的乘法运算，用java实现，100000次循环仅仅需5毫秒，所以对于实时性要求很高的功能，Groovy并不合适。</p>
+
+<h2 id="二mvel">二、MVEL</h2>
+
+<h3 id="-mvel介绍">. MVEL介绍</h3>
+
+<p>MVEL为 MVFLEX Expression Language（MVFLEX表达式语言）的缩写，它是一种动态/静态的可嵌入的表达式语言和为Java平台提供Runtime（运行时）的语言。最初是作为一个应用程序框架实用程序的语言开始，该项目现已发展完全独立。MVEL通常用于执行用户（程序员）通过配置XML文件或注释等定义的基本逻辑。它也可以用来解析简单的JavaBean表达式。Runtime（运行时）允许MVEL表达式通过解释执行或者预编译生成字节码后执行。</p>
+
+<h3 id="-mvel语法">. MVEL语法</h3>
+
+<p>MVEL语法具体请参阅 <a href="http://mvel.codehaus.org/Language+Guide+for+2.0" title="MVEL">http://mvel.codehaus.org/Language+Guide+for+2.0</a>，这里不做介绍。</p>
+
+<h3 id="-java中使用mvel">. java中使用MVEL</h3>
+
+<p>Java中调用MVEL情况：</p>
+
+<p>1、解释执行</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("interpreted begin:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+    
+Map&lt;String, Object&gt; params = new HashMap&lt;String, Object&gt;();  
+  
+for (int i = 0; i &lt; 100000; i++) {
+    params.put("x", i);  
+    params.put("y", i + 1);  
+    MVEL.eval("x*y", params);  
+}
+System.out.println("interpreted end:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+	
+	interpreted  begin:2014-09-18 10:54:01:162
+	interpreted  end:2014-09-18 10:54:01:879
+</code></pre>
+</div>
+
+<p>2、编译后执行（加快执行）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println("compiled begin:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+ExpressionCompiler compiler = new ExpressionCompiler("x * y");  
+CompiledExpression exp = compiler.compile();  
+Map&lt;String, Object&gt; params1 = new HashMap&lt;String, Object&gt;();  
+          
+for (int i = 0; i &lt; 100000; i++) {
+    params.put("x", i);  
+    params.put("y", i + 1);  
+    MVEL.executeExpression(exp, params);  
+   
+}
+System.out.println("compiled end:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+输出：
+	
+	compiled begin:2014-09-18 10:57:50:471
+	compiled end:2014-09-18 10:57:50:632
+</code></pre>
+</div>
+
+<p>以上执行结果看出，编译后执行效率明显高于解释执行。</p>
+
+<h2 id="三groovymveljavascript-调用性能分析">三、Groovy、MVEL、javascript 调用性能分析</h2>
+
+<p>1、java中调用javascript测试：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ScriptEngineManager manager = new ScriptEngineManager();
+ScriptEngine engine = manager.getEngineByName("javascript"); 
+
+String str = "function num (x,y) { return x*y }";   
+try {
+    engine.eval(str);
+} catch (ScriptException e) {
+    e.printStackTrace();
+}   
+Invocable invoke = (Invocable) engine;
+System.out.println("javascript begin:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()));
+
+try {
+    for (int i = 0; i &lt; 100000; i++) {
+        invoke.invokeFunction("num", i, i + 1);
+    }
+} catch (ScriptException e) {
+    e.printStackTrace();
+} catch (NoSuchMethodException e) {
+    e.printStackTrace();
+}
+System.out.println("javascript end:"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date())); 
+
+输出：
+	
+	javascript begin:2014-09-18 11:28:11:661
+	javascript end:2014-09-18 11:28:16:348
+</code></pre>
+</div>
+
+<p>2、性能分析</p>
+
+<p>从以上对Java中调用Groovy、MVEL、javascript实现的一个简单的乘法运算100000次循环的结果来看：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Groovy JSR 223调用方式：51毫秒
+MVEL编译后执行：161毫秒
+javascript调用：4秒多
+</code></pre>
+</div>
+
+<p>MVEL官网给出性能报告显示MVEL性能高于Groovy，不知道其什么数据测试场景，看官网报告测试的Groovy版本是1.5.7，低于本文测试的Groovy2.0版，从Groovy1.6开始才开始引入Cache功能，并且到了2.0才加入静态编译，所以MVEL官网的测试报告我觉得已经不能够正确说明Groovy的实际性能，至少从本文例子中看出Groovy2.0性能是明显优于MVEL2.2的。</p>
+
+<h2 id="四总结">四、总结</h2>
+
+<p>动态语言给我们实际编程中带来很多方便，比如常用的规则引擎，然而性能与功能不能同时得到满足，从本文测试中看出无论是Groovy还是MVEL都是实现动态逻辑配置的不错选择，但是遇到高实时性需求时，可能两者就不是特别适合，因为两者的性能与Java本身相比还是有数倍的差距。</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2014/08/27/jQuery-source-analysis-ajax(2).html' title='jQuery源码解读[14] -- AJAX（2）'>jQuery源码解读[14] -- AJAX（2）</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2014/09/17/checkStyle.html' title='Java项目代码编写规范'>Java项目代码编写规范</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2014/09/17/checkStyle.html' title='Java项目代码编写规范'>Java项目代码编写规范</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/tangshizhong/'>汤仕忠</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	
