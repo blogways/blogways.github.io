@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <title>vert.x介绍_博汇网_www.blogways.net</title>
+    <meta name=keywords content="NIO, Netty, AIO, Undertow, Hazelcast">
+    
+    <meta name=description content="vert.x，JVM下的nodeJS">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='/js/jquery-2.1.1.js'></script>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
+    <link rel='stylesheet' type='text/css' href='/css/app.css'>
+    <script src='/bootstrap/js/bootstrap.js'></script>
+    <script src='/js/app.js'></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body style='background-color: #f5f5f5;'>
+    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
+        <a id='to-top' href='javascript:void(0)'>
+            <span id='to-top-title'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
+        <a id='to-top-xs' href='javascript:void(0)'>
+            <span id='to-top-title-xs'>返回</br>顶部</span>
+        </a>
+    </div>
+    <div class='headerbar'>
+            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='containr-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
+                    <span class='sr-only'>下拉框</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
+            </div>
+            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
+                <ul class='nav navbar-nav'>
+                    <li><a href='/'>主页</a></li>
+                    <li class='divider visible-xs'></li>
+                    
+                    <li class='dropdown visible-sm visible-xs active'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+                            
+                            <li>
+                                <a href='/categories/Jekyll/'>Jekyll
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/杂记/'>杂记
+                                    <span class='badge pull-right'>28</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/JUnit/'>JUnit
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/NoSQL/'>NoSQL
+                                    <span class='badge pull-right'>11</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Sencha/'>Sencha
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Nginx/'>Nginx
+                                    <span class='badge pull-right'>4</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Apache/'>Apache
+                                    <span class='badge pull-right'>10</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Node.js/'>Node.js
+                                    <span class='badge pull-right'>7</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Express/'>Express
+                                    <span class='badge pull-right'>14</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/jQuery/'>jQuery
+                                    <span class='badge pull-right'>21</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Java/'>Java
+                                    <span class='badge pull-right'>8</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Solr/'>Solr
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/WordPress/'>WordPress
+                                    <span class='badge pull-right'>3</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/drupal/'>drupal
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/joomla/'>joomla
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/design/'>design
+                                    <span class='badge pull-right'>5</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Web前端/'>Web前端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/keepalived/'>keepalived
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/iot/'>iot
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web前端/'>web前端
+                                    <span class='badge pull-right'>15</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/交互设计/'>交互设计
+                                    <span class='badge pull-right'>6</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Spring/'>Spring
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/web后端/'>web后端
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/git/'>git
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/索引/'>索引
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/storm/'>storm
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/Python/'>Python
+                                    <span class='badge pull-right'>2</span>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href='/categories/nodejs/'>nodejs
+                                    <span class='badge pull-right'>1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu' role='menu'>
+                            <li><a href='/about.html'>所有信息</a></li>
+                            <li class='divider'></li>
+                            <li><a href='/authors/chenfan/'>陈凡</a></li>
+                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
+                            <li><a href='/authors/fukui/'>付奎</a></li>
+                            <li><a href='/authors/huangmai/'>黄劢</a></li>
+                            <li><a href='/authors/huqinghai/'>胡青海</a></li>
+                            <li><a href='/authors/jacky/'>Jacky</a></li>
+                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
+                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
+                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
+                            <li><a href='/authors/tangzhi/'>唐治</a></li>
+                            <li><a href='/authors/wangdong/'>王栋</a></li>
+                            <li><a href='/authors/wanghui/'>汪回</a></li>
+                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
+                            <li><a href='/authors/wanzhou/'>万洲</a></li>
+                            <li><a href='/authors/zhangke/'>张可</a></li>
+                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
+                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
+                        </ul>
+                    </li>
+                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
+                </ul>
+                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </form>-->
+                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
+            </div>
+        </div>    
+    </div>
+
+    </div>
+        <script>
+        $(document).ready(function(){
+            (function(){
+                $.getJSON("/authors.json",function(mJSON){
+                    $.each( mJSON , function( i , item ){
+                        var name = item.name.toLowerCase().replace(" ","") || "";
+                        var page_name = "汤仕忠".toLowerCase().replace(" ","");
+                        var num = item.articles.length || 0;
+                        if(name == page_name){
+                            $("#pt-article-num").append( num + " 篇博文" );
+                        }
+                    });
+                });
+            })();
+        });
+    </script>
+
+    <div class='container'>
+        <div class='row main-content'>
+            <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
+                <div class='pt-article'>
+                    <div class='panel panel-default pt-article-extra'>
+                        <div class='panel-body'>
+                            <div class='pt-article-pn row'>
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span>上一篇:
+                                        <a href='/blog/2016/12/11/responsive-design.html' title='响应式设计学习'>响应式设计学习</a>
+                                    </span>
+                                </div>
+                                
+                                
+                                <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                    <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                        <a href='/blog/2016/12/11/wchart-introduction.html' title='微信小程序'>微信小程序</a>
+                                    </span>
+                                    <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                        <a href='/blog/2016/12/11/wchart-introduction.html' title='微信小程序'>微信小程序</a>
+                                    </span>
+                                </div>
+                                
+                            </div><!--end of article-pn-->
+                            <hr class='hidden-sm hidden-xs'>
+                            <div class='pt-article-info'>
+                                <div class='pt-article-title'>
+                                    <h2>vert.x介绍
+                                        <small class='pt-article-date hidden-xs'>
+                                            <span class='glyphicon glyphicon-calendar'></span>&nbsp;
+                                            <span class='sr-only'>发布于&nbsp;:&nbsp;</span>2016-12-11
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class='row pt-article-tags'>
+                                    <div class='col-xs-12 post-tags'>
+                                        <span class='glyphicon glyphicon-tags'></span>&nbsp;
+                                        
+                                        <a class='label label-info' href='#'>NIO</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Netty</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>AIO</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Undertow</a>
+                                        
+                                        、
+                                        
+                                        <a class='label label-info' href='#'>Hazelcast</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    分类: <a class='label label-info' href='/categories/java/'>Java</a>
+                                </div>
+                                <div class='pt-article-tags'>
+                                    <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more"></span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='pt-article-main'>
+                        <div class='panel panel-default'>
+                            <div class='panel-body'>
+                                <div class='pt-article-content'>
+                                    <h2 id="一背景">一、背景</h2>
+<p>在传统J2EE开发中，用户对生产系统的部署都需依赖昂贵的服务器中间件（如WebLogic、WebSphere，当然也有免费的tomcat等），这些服务器上面部署了大型的程序包，它们运行缓慢，消耗大量的内存，运维人员也需要对服务器有足够了解。随着异步非阻塞、微服务等概念的出现，近年来也涌现了很多不依赖传统容器的服务框架。2009年，Node.js项目启动，它支持异步非阻塞的、基于事件驱动的I/O。如果服务器的线程使用得当，Node.js可以极大地提升响应速度，单个服务器的吞吐量可以媲美一个Java EE服务器集群。同时基于JAVA NIO、AIO（jdk1.7后）原理，也涌现出了一批如Netty、mina等优秀网络框架。其中vert.x、undertow等就是基于这些优秀框架（undertow基于XNIO）诞生的异步无阻塞的网络框架，</p>
+
+<h2 id="二vertx-简介">二、vert.x 简介</h2>
+<p>vert.x，是一个JVM下、轻量级、高性能的应用平台，非常适用于最新的移动端后台、互联网、企业应用，基于Netty实现的异步无阻塞的网络框架，诞生于2011年，当时叫node.x，不过后来因为某些原因改名位Vert.x。经过5年多的发展，现在已经到了3.3.3版本。</p>
+
+<p>Vert.x是一个异步无阻塞的网络框架，其参照物是node.js。基本上node.js能干的事情，Vert.x都能干。而且Vert.x还支持分布式，与多核利用。通过Hazelcast管理各个Vert.x节点的信息，然后通过EventBus在节点之间互相发消息，于此同时Vert.x还能支持应用的高可用。</p>
+
+<h3 id="vertx体系架构">vert.x体系架构</h3>
+<p><img src="/images/tangsz/vert-frame.jpg" alt="vert-frame" /></p>
+
+<p>我们的业务逻辑其实都是基于verticle来实现的，然后Vert.x框架会将你的verticle绑定到相关的线程模型上，这里verticle1,verticle2是I/O密集型项目，所有的逻辑都会跑在NIO Worker上。而Verticle3会有一些同步的耗时的请求，则会被绑定到Worker线程模型上。另外两个Vert.x节点则通过EventBus互相通信，而EventBus通过HazelCast来获取整个集群里的节点信息。注意这里每一个verticle其实都是一个线程(启动的时候指定实例数目参数即可)，这样可以充分的利用多核。而node.js其实只能通过Cluster来提升多核利用</p>
+
+<p>一个典型的Vert.x部署场景:
+<img src="/images/tangsz/vert-deploy.jpg" alt="vert-deploy" /></p>
+
+<p>图中业务逻辑被拆成很多小的verticle。这里你可以把这些小的verticle看成是微服务，然后水平扩展这些服务，同时也可以把自己的业务按CPU密集与I/O密集型拆分。服务与服务之间可以通过EventBus互相调用，另外Vert.x的EventBus调用目标verticle的时候会按RoundRobin算法来做balance</p>
+
+<h2 id="三vertx中基本概念">三、vert.x中基本概念</h2>
+
+<p><img src="/images/tangsz/vert-module.png" alt="vert-module" /></p>
+
+<h3 id="verticle">Verticle</h3>
+
+<p>Vert.x的代码执行包，它可以用JS、Ruby等多语言来编写，在同一个Vert.x实例中可以同时执行多个Verticle，一个应用可能由多个Verticle组成，他们被部署到不同的网络节点上，彼此之间通过在Vert.x的事件总线(event bus)上交换信息来通信。对于具体的verticle可以直接从命令行启动，但是通常会将它打包成modules</p>
+
+<h3 id="module">Module</h3>
+<p>Vert.x应用由一个或多个modules来实现.一个模块由多个verticles来实现.你可以把module想象出一个个Java package.里面可能是特定业务的实现,或者公共的服务实现(那些可以重用的服务).Vert.x编写好的module,可以发布到maven的仓库里.以zip包装成二进制格式.或者发布到vert.x module 注册中心.实际上这种以模块方式的开发,支撑着整个Vert.x生态系统</p>
+
+<h3 id="vertx-实例">Vert.x 实例</h3>
+<p>Verticles 其实是跑在 Vert.x实例上的.所谓Vert.x实例其实就是一个运行在某一个JVM上的Vert.x对象实例.可以将多个Verticles运行在一个Vert.x实例上,而vert.x实例可以跑在单个JVM上,也可以跑在其他JVM上,通过分布式event bus来维持通信.注意vert.x实例其实是由vertx命令行启动的.你可以指定实例数目在单个JVM上</p>
+
+<h3 id="event-loop-vertical">Event Loop Vertical</h3>
+<p>事件的业务处理线程，存在于Event Loop中，用于处理非阻塞短任务</p>
+
+<h3 id="event-bus">Event Bus</h3>
+<p>它是Vert.X的核心，在集群中容器之间的通信，各个Verticle之间的通讯都是经过Event Bus来实现的</p>
+
+<h3 id="shared-data共享数据">Shared Data（共享数据）</h3>
+<p>它是Vert.X提供的一个简单共享Map和Set，用来解决各个Verticle之间的数据共享。</p>
+
+<h3 id="worker-vertical-阻塞处理">Worker Vertical （阻塞处理）</h3>
+<p>事件的业务处理线程，用于处理长任务阻塞任务。
+事件处理之外肯定会发生其长时间数据处理请求.比如处理一个图片上传,然后转存到磁盘上等.或者一次长时间的排序计算等.</p>
+
+<p>在Verticle类型里,有一种特别的verticle叫做Worker.不同于标准的verticle,他不使用event loop.而是采用vert.x内部的另一个线程池叫做worker pool.其区别在于,worker verticles不会并行的执行Handler.而是阻塞式的,等待上一个Handler处理完了,才会再执行后面的请求.你可以想象出队列的方式执行某些请求.所以为了支持标准的与阻塞式的worker verticles, Vert.x提供了一种混合线程模型,你可以选择适当的模型用于你的应用.</p>
+
+<h2 id="四vertx特性">四、vert.x特性</h2>
+
+<h3 id="多语言支持">多语言支持</h3>
+<p>能在JVM上运行的常见语言，都可以直接编写基于Vert.X的应用，目前官方支持的有 Java, JavaScript, CoffeeScript, Ruby, Python or Groovy</p>
+
+<h3 id="多服务器客户端支持">多服务器客户端支持</h3>
+<p>支持编写TCP、UDP客户端和服务器，HTTP客户端和服务器和Websocket支持，Vert.x-Web模块能够实现基于http的微服务框架</p>
+
+<h3 id="支持多异步客户端">支持多异步客户端</h3>
+<p>Vert.x提供了不同的异步客户端，用于从应用程序访问各种数据存储。 当然Vert.x也没有限制你必须用vert.x的客户端，你也可以到下载各软件自己的客户端（如mongoDB自己的），不过vert.x的异步API，提供多了多种语言支持Java、JavaScript、Groovy、Ruby等多语言的支持。从目前官网列出的异步API有：MongoDB client、JDBC client、SQL common、Redis client、MySQL / PostgreSQL client 等。</p>
+
+<p>除了数据访问层API支持，Vert.x还实现了Mail Client、STOMP Client &amp; Server、TCP 客户端A等PI，同时vert.x也对Eventbus、apache Camel、RabbitMQ等桥接集成了实现，的并支持Java、JavaScript、Groovy、Ruby等多语言。</p>
+
+<h3 id="认证和授权">认证和授权</h3>
+<p>Vert.x目前已经支持Auth common、JDBC auth、JWT auth、Shiro auth、MongoDB auth、OAuth 2等多种认证和授权API，并支持Java、JavaScript、Groovy、Ruby等多语言。</p>
+
+<h3 id="微服务支持">微服务支持</h3>
+<p>在Vert.x3.3.0中，vert.x提供了两个微服务相关特性：服务发现和断路器。其中服务发现是在服务运行时发现，服务位置不要硬编码，可以使用Consul、Kubernetes、redis Docker links等扩展服务发现的支持；另外断路器</p>
+
+<h3 id="集群支持">集群支持</h3>
+<p>vert.x Verticle支持集群部署、支持Verticle的高可用和故障备份。在一个Verticle突然崩溃时，Verticle会被迁移到另外的vert.x实例上。</p>
+
+<h2 id="五vertx的使用">五、vert.x的使用</h2>
+<p>vert.x社区目前已经很活跃，在国内vert.x的用还很少见到，但是在国外已经有很多大公司将vert.x运用到自己的项目中了，以下为vert.x官网列出的部分公司：
+<img src="/images/tangsz/vert-company.png" alt="vert-company" /></p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span>上一篇:
+                                    <a href='/blog/2016/12/11/responsive-design.html' title='响应式设计学习'>响应式设计学习</a>
+                                </span>
+                            </div>
+                            
+                            
+                            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                                <span class='pull-right hidden-sm hiden-xs visible-lg visible-md'>下一篇:
+                                    <a href='/blog/2016/12/11/wchart-introduction.html' title='微信小程序'>微信小程序</a>
+                                </span>
+                                <span class='hidden-lg hiden-md visible-sm visible-xs'>下一篇:
+                                    <a href='/blog/2016/12/11/wchart-introduction.html' title='微信小程序'>微信小程序</a>
+                                </span>
+                            </div>
+                            
+                        </div><!--end row-->
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-3 hidden-sm hidden-xs sidebar'>
+
+                <div class='authorbar panel panel-default'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>作品信息</h4>
+                    </div>
+                    <div class='pt-author-info row panel-body'>
+                        <a class='col-lg-3 col-md-4'>
+                            <img width='58' height='58' src='/images/pix3.jpg' alt='作者头像'>
+                        </a>
+                        <div class='col-md-6 media-body'>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h4 class='pt-author-name media-heading'>
+                                <a id='pt-author-url' href='/authors/tangshizhong/'>汤仕忠</a>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            </h4>
+                            <span id='pt-article-num'></span>
+                        </div>
+                    </div>
+                </div><!--end of authorbar-->
+                
+                <div class='newbar panel panel-default' id='newbar'>
+                    <div class='panel-heading'>
+                        <h4 class='panel-title'>最新博文</h4>
+                    </div>
+                    <div class='list-group new-list'>
+                        
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2017/01/08/scrapy.html' title='Scrapy 爬虫框架入门'>Scrapy 爬虫框架入门</a>
+                            </h5>
+                            <span class='desc'>介绍Scrapy快速编写网络爬虫</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2017-01-08
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/jyjsjd/'>景阳</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/22/mysql-introduce.html' title='mysql入门及在nodejs下的简单应用'>mysql入门及在nodejs下的简单应用</a>
+                            </h5>
+                            <span class='desc'>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-22
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/huqinghai/'>胡青海</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/19/pm2.html' title='PM2-NodeJs生产系统进程管理器'>PM2-NodeJs生产系统进程管理器</a>
+                            </h5>
+                            <span class='desc'>PM2是具有内置负载平衡器的Node.js应用程序的生产流程管理器。 它可...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-19
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/tangshizhong/'>汤仕忠</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/mocha-introduction.html' title='测试框架 Mocha入门'>测试框架 Mocha入门</a>
+                            </h5>
+                            <span class='desc'>Mocha（发音"摩卡"）诞生于2011年，是现在最流行的JavaScri...</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/chenfan/'>陈凡</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='list-group-item list-group-item-default'>
+                            <h5 class='new-heading'>
+                                <a href='/blog/2016/12/18/canvas-3.html' title='canvas学习[3]--文本和图片'>canvas学习[3]--文本和图片</a>
+                            </h5>
+                            <span class='desc'>本文将介绍canvas中对于文本和图片的处理。</span>
+                            <div class='new-post-info'>
+                                <span class='new-date'>
+                                    <span class='glyphicon glyphicon-calendar'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    2016-12-18
+                                </span>&nbsp;&nbsp;
+                                <span class='new-author'>
+                                    <span class='glyphicon glyphicon-user'></span>
+                                    <span class='sr-only'>&nbsp;:&nbsp;</span>
+                                    
+                                    <a href='/authors/wanghui/'>汪回</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--end of newestbar-->
+            </div>
+        </div>
+    </div>
+
+    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+</body>
+</html>	
