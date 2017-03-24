@@ -1,9 +1,9 @@
-##一、根目录功能说明
+## 一、根目录功能说明
 
 暂无
 
 
-##二、博客正文及标题编写说明
+## 二、博客正文及标题编写说明
 ### jekyll变量声明
 
 	---
@@ -25,7 +25,7 @@
 其它的标题逐级递减。
 
 
-##三、博文添加
+## 三、博文添加
 将编写号的`*.md`文件添加到根目录下的`_post/`目录下，
 
 `.md`文件命名格式：`YYYY-MM-DD-XXXX.md`（如：`2014-01-02-jekyll-introduction.md`，
@@ -53,7 +53,7 @@
 ```
 
 
-##四、作者添加
+## 四、作者添加
 在新增加作者之后，需要进行如下的后续操作：
 
 1. 在`_author`目录下添加一个`xxxx.html`，其中xxxx为当前作者的唯一标示符，最好为全为英文
@@ -72,7 +72,7 @@
 
         {% include authors_list.html %}
 
-#License
+# License
 
 The following directories and their contents are Copyright www.blogways.net . You may not reuse anything therein without my permission:
 
