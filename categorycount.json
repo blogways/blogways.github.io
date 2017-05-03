@@ -79,6 +79,15 @@
   ,
 
   ["nodejs" , "nodejs" , 1]
+  ,
+
+  ["地图" , "地图" , 1]
+  ,
+
+  ["websocket" , "websocket" , 1]
+  ,
+
+  ["kafka" , "kafka" , 1]
    
 
 ]
