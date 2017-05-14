@@ -87,7 +87,7 @@
   ["websocket" , "websocket" , 1]
   ,
 
-  ["kafka" , "kafka" , 1]
+  ["kafka" , "kafka" , 2]
    
 
 ]
