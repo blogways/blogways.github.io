@@ -52,7 +52,7 @@ extends Command，它是一种特殊的Command。除了Command的execute方法�
   
 **5. CloseSale.class**
 
- ![CloseSale.png](/images/chenlong/CloseSale.png)
+ ![CloseSale.png](/images/chenlong/closeSale.png)
  
 另外，我们也顺便在添加两个Filter进去，filter代码如下：
 
