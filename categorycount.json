@@ -94,6 +94,12 @@
   ,
 
   ["tiles" , "tiles" , 1]
+  ,
+
+  ["dubbo" , "dubbo" , 1]
+  ,
+
+  ["zookeeper" , "zookeeper" , 1]
    
 
 ]
