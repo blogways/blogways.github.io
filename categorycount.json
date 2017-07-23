@@ -108,6 +108,9 @@
   ["mysql" , "mysql" , 1]
   ,
 
+  ["ehcache" , "ehcache" , 1]
+  ,
+
   ["disconf" , "disconf" , 1]
    
 
