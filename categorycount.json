@@ -30,7 +30,7 @@
   ["jquery" , "jQuery" , 21]
   ,
 
-  ["java" , "Java" , 11]
+  ["java" , "Java" , 12]
   ,
 
   ["solr" , "Solr" , 6]
@@ -112,6 +112,9 @@
   ,
 
   ["disconf" , "disconf" , 1]
+  ,
+
+  ["docker" , "docker" , 1]
    
 
 ]
