@@ -5,7 +5,7 @@ category: ['杂记']
 tags: ['cordova', 'webapp']
 author: 唐 治
 email:
-description: 之前用的是JSHint，感觉挺不错的。最近发现了ESLint，试用了一下，发现更好！特此，把所了解的信息分享一下。
+description: 主要记录在Android环境下cordova的简易使用。
 ---
 
 
