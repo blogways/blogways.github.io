@@ -15,7 +15,7 @@
   ["sencha" , "Sencha" , 5]
   ,
 
-  ["nginx" , "Nginx" , 4]
+  ["nginx" , "Nginx" , 5]
   ,
 
   ["apache" , "Apache" , 12]
@@ -72,7 +72,7 @@
   ["索引" , "索引" , 1]
   ,
 
-  ["storm" , "storm" , 4]
+  ["storm" , "storm" , 5]
   ,
 
   ["python" , "Python" , 2]
@@ -87,7 +87,7 @@
   ["websocket" , "websocket" , 1]
   ,
 
-  ["kafka" , "kafka" , 2]
+  ["kafka" , "kafka" , 3]
   ,
 
   ["gc" , "GC" , 1]
@@ -115,6 +115,9 @@
   ,
 
   ["docker" , "docker" , 1]
+  ,
+
+  ["linux" , "linux" , 1]
    
 
 ]
