@@ -4,7 +4,7 @@ title: 手机界面扁平化设计案例赏析
 category: ['design']
 tags: ['ui', 'flat design', 'mobile interface']
 author: 陈文婷
-email:
+email: chenwt5@asiainfo.com
 description: 这人很懒，什么都没有留下！
 ---
 
@@ -21,47 +21,47 @@ description: 这人很懒，什么都没有留下！
 
 ![](/images/chenwt/flatdesign/1.0.png)
 
-### 2. _[Vault financial app design]()_
+### 2. _[Vault financial app design](https://www.behance.net/gallery/55376655/Vault-financial-app-design)_
 亮点：logo “ V ” 的设计非常巧妙，凸显主题Vault Financial app design，且配色简单。纯白背景色，留白空间。排版中的重点突出，信息层次分明，界面很干净。
 
 ![](/images/chenwt/flatdesign/2.0.png)
 
-### 3. _[Intimate]()_
+### 3. _[Intimate](https://dribbble.com/shots/3903572-Intimate)_
 亮点：纯白背景留白，空间点十足。文本排版合理，字体大小对比鲜明且不突兀，突出主要信息。配图简洁，风格一致，整体界面和谐干净，交互合理，不会让用户产生误解。  
 
 ![](/images/chenwt/flatdesign/3.0.png)  
 
-### 4. _[Upper APP]()_
+### 4. _[Upper APP](https://tower.im/projects/4d5e9e452f424e3aa5f06b52f45382a1/docs/e6982f41ac9149ffbb0dcf22167bb954)_
 亮点：色彩，红黑白三种色彩，对比鲜明，明快鲜亮，且所占比例符合6：3：1的UI配色黄金比例。字体色彩选择与其背景形成对比，突出文本信息，不会产生阅读障碍。
 
 ![](/images/chenwt/flatdesign/4.0.png)
 
-### 5. _[Sea Schedule App]()_
+### 5. _[Sea Schedule App](https://www.behance.net/gallery/38120159/Sea-Schedule-App)_
 亮点：采用UI安全色蓝色为纯色背景，易于接近用户，界面简洁。界面元素为蓝色背景的颜变色，但仍旧采用梯度式渐变。
 
 ![](/images/chenwt/flatdesign/5.0.png)
 
-### 6. _[Analytics]()_
+### 6. _[Analytics](https://dribbble.com/shots/3113887-Analytics)_
 亮点：紫色纯色背景色，界面整齐统一， icon简单流畅。
 
 ![](/images/chenwt/flatdesign/6.0.png)
 
-### 7. _[Lines activity tracker]()_
+### 7. _[Lines activity tracker](https://www.behance.net/gallery/40518179/Lines-activity-tracker)_
 亮点：元素简洁，文本排突出重要信息，不会给用户造成视觉疲劳。图标简洁，线条干净。
 
 ![](/images/chenwt/flatdesign/7.0.png)
 
-### 8. _[Foly Mobile App]()_
+### 8. _[Foly Mobile App](https://www.behance.net/gallery/50570935/Foly-Mobile-App)_
 亮点：logo设置简洁贴合主题，且色彩对比鲜明。神色纯色背景，具有高级感。 界面元素色彩和背景色对比鲜明。
 
 ![](/images/chenwt/flatdesign/8.0.png)
  
-### 9. _[Smart Home App - iPhone X]()_
+### 9. _[Smart Home App - iPhone X](https://www.behance.net/gallery/57084317/Smart-Home-App-iPhone-X)_
 亮点：浅色纯色背景，绿色给人舒适愉悦的体验。图标是亮点，元素生动简洁。
 
 ![](/images/chenwt/flatdesign/9.0.png)
 
-### 10. _[Weather app]()_
+### 10. _[Weather app](https://www.behance.net/gallery/53996035/Weather-app)_
 亮点：深紫色配色大胆时尚，几何元素的使用引人注目。
 
 ![](/images/chenwt/flatdesign/10.0.png)
