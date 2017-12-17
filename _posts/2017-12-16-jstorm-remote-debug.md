@@ -25,15 +25,15 @@ description: 使用idea对jstorm拓扑进行远程调试
 3. 进入jstorm nimbus监控页面，查看拓扑的worker运行在哪些机器上。
 ![1](/images/qianwx/nimbus_view1.png)
 找到自己的拓扑，点击进去，
-![1](/images/qianwx/nimbus_view2.png)
+![2](/images/qianwx/nimbus_view2.png)
 点击Task Stats,
-![1](/images/qianwx/nimbus_view3.png)
+![3](/images/qianwx/nimbus_view3.png)
 可以看到自己的tasks，选择其中一个，记录下ip
 
 4. 在idea中创建remote
-![1](/images/qianwx/idea_remote.png)
+![4](/images/qianwx/idea_remote.png)
 把host修改成task记录的ip，端口填写13006（自定义），点击ok保存。
 
 5. 点击debug按钮
-![1](/images/qianwx/idea_remote_succ.png)
+![5](/images/qianwx/idea_remote_succ.png)
 出现如图，就可以成功debug了
