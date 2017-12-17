@@ -118,6 +118,9 @@
   ,
 
   ["linux" , "linux" , 1]
+  ,
+
+  ["spring-cloud" , "spring-cloud" , 1]
    
 
 ]
