@@ -52,5 +52,16 @@ description: kafka-manager安装与使用
 这样就启动成功了。
 
 ## 三、kafka manager使用<a href="kafka-manager-use"></a>
+* 点击[http://localhost:9000](http://localhost:9000)导航栏上的"Add Cluster"
+* 配置kafka集群名称、kafka集群的zk等：<br/>
+![kafka-manager-add-cluster.png](/images/qianwx/kafka-manager/kafka-manager-add-cluster.png)
+* 点击保存后，可以进入到集群列表页面：<br/>
+![kafka-manager-clusters.png](/images/qianwx/kafka-manager/kafka-manager-clusters.png)
+* topics列表页和详情页:<br/>
+![kafka-manager-topics.png](/images/qianwx/kafka-manager/kafka-manager-topics.png)
+![kafka-manager-topic-detail.png](/images/qianwx/kafka-manager/kafka-manager-topic-detail.png)
+* consumers信息:<br/>
+![kafka-manager-consumer.png](/images/qianwx/kafka-manager/kafka-manager-consumer.png)
+
 
 
