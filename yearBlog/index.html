@@ -1,0 +1,73 @@
+---
+layout: layout
+page_type: yearBlog
+---
+    <link rel="stylesheet" href="/css/yearBlog.css">
+    <script type="text/javascript" src="/js/yearBlog.js"></script>
+
+    <section>
+        <div class="container">
+            <div class="banner">
+                <span class="glyphicon glyphicon-home"></span> 
+                <a href="/">首页</a> > 年度博文
+            </div>
+            <div class="main col-md-10 col-sm-12 col-xs-12">
+                {% assign opacity = 1 %}
+                {% for year in site.data.years %}
+                    {% assign yearcount = 0 %}
+                    {% assign y = year.y %}
+                    {% for post in site.posts %}
+                        {% assign postyear = post.date | date: "%Y" %}
+                        {% if postyear == y %}
+                            {% assign yearcount = yearcount | plus : 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    <a name="{{ y }}"></a>
+                    <div class="page {{ y }}" style="opacity: {{ opacity }}">
+                        {{ y }}年度博文(共计{{ yearcount }}篇)<span style="font-size: 12px;color: #999;">点击展开/关闭</span>
+                        <span class="glyphicon glyphicon-list-alt pull-right">
+                        </span>
+                    </div>
+                    <div class="blogs">
+                        <table class="table table-hover" id="{{ y }}">
+                                <tr style="display: none;">
+                                    <td>
+                                        <span class="glyphicon glyphicon-user"></span>
+                                        {{ author.name }}
+                                    </td>
+                                    <td>共计<span class="count">{{ author.count }}篇</span></td>
+                                </tr>
+                        </table>
+                    </div>
+                {% assign opacity = opacity | minus:0.1 %}    
+                {% endfor %}    
+            </div>
+            <div class="col-md-2 year list-group hidden-sm hidden-xs">
+                <a class="list-group-item">
+                    <span class="glyphicon glyphicon-calendar">
+                        年份
+                    </span>
+                </a>
+                <div id="year-list">
+                    {% for year in site.data.years %}
+                        {% assign yearcount = 0 %}
+                        {% assign y = year.y %}
+                        {% for post in site.posts %}
+                            {% assign postyear = post.date | date: "%Y" %}
+                            {% if postyear == y %}
+                                {% assign yearcount = yearcount | plus : 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        <a onclick="shows('{{ y }}')" class="list-group-item">
+                            {{ y }}年度
+                            <span class="badge">{{ yearcount }}</span>
+                            <div class="inset-line"></div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    

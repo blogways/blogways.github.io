@@ -1,0 +1,123 @@
+body{
+	padding-top: 100px;
+	background-color: #fff;
+}
+.container{
+    padding-right: 0;
+}
+.section{
+    min-height: 700px;
+}
+.banner{
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    font-weight: 600;
+    padding-left: 20px;
+    background-color: #f3f3f3;
+}
+.banner a{
+    color: #000;
+}
+.mainbar{
+    padding-right: 30px;
+}
+.page{
+    height: 50px;
+    line-height: 50px;
+    background-color: #262a2b;
+    text-align: center;
+    font-size: 24px;
+    color: #f2f2f2;
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 0 20px;
+}
+.page:last-child{
+    margin-bottom: 20px;
+}
+.page .glyphicon-list-alt{
+    padding-top: 15px;
+}
+.blogs{
+    background-color: #fff;
+}
+.table{
+    border: 1px solid #f3f3f3;
+}
+.table>tbody>tr>td{
+    padding: 12px 20px;
+}
+table tr > td:nth-child(2){
+    text-align: right;
+}
+.table>tbody>tr>td a{
+    color: #000;
+}
+.table>tbody>tr>td .glyphicon-file:before{
+    padding-right: 20px;
+}
+.table-hover > tbody > tr:hover td a{
+    color:#337ab7;;
+}
+.authorslistbar{
+    padding-left: 0;
+    height: 550px;
+}
+#author-list{
+    height: 580px;
+    overflow-y: scroll;
+}
+#authorlist{
+    margin-top: 20px;
+}
+#authorlist .list-group-item{
+    border-top: none;
+    border-bottom: none;
+}
+#authorlist .list-group-item:last-child{
+    border-bottom: 1px solid #ddd;
+}
+.list-group a{
+    cursor: pointer;
+}
+a.list-group-item{
+    color: #24292c;
+    background-color: #f3f3f3;
+}
+.list-group > .list-group-item:first-child{
+    height: 50px;
+    line-height: 28px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow:  0 -2px 2px #bebdbd inset;
+    background-color: #f3f3f3;
+}
+.list-group .list-group-item:not(:first-child){
+    border-top: none;
+}
+a.list-group-item:hover{
+    background-color: #e7e7e7;
+}
+.list-group .list-group-item:last-child .inset-line{
+    display: none;
+}
+.inset-line{
+    height: 2px;
+    border-top: 1px solid #dcdedd;
+    box-shadow: 0 2px 0 rgba( 255, 255, 250, 0.6) inset;
+    position: relative;
+    bottom: -9px;
+}
+.list-group-item>.badge{
+    background-color: #000;
+}
+.list-group-item.active{
+    background-color: #e7e7e7;
+    color: #609DD1;
+    border:none;
+}
+.list-group-item.active .badge{
+    background-color: #000;
+    color: #fff;
+}

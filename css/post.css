@@ -1,0 +1,60 @@
+body{
+    padding-top : 80px;
+    position: relative;
+    background-color: #dbdbdb;
+}
+.banner{
+    height: 40px;
+    line-height: 40px;
+    background-color: #fff;
+    font-weight: 600;
+    margin: 20px 0;
+    padding-left: 20px;
+    background-color: #f3f3f3;
+}
+.label-info{
+    background-color: #C7C7C7;
+}
+.post-tags .glyphicon{
+    color: #878787;
+}
+#my-like .list-group-item:last-child{
+    border-bottom: 1px solid #ddd;
+}
+a.list-group-item{
+    color: #24292c;
+}
+#my-like a.list-group-item:not(:first-child) > span{
+    color: #8c8c8c;
+    margin-top: 8px;
+}
+.list-group > .list-group-item:first-child{
+    height: 50px;
+    line-height: 28px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow:  0 -2px 2px #bebdbd inset;
+}
+.list-group .list-group-item:not(:first-child){
+    border-top: none;
+    border-bottom: none;
+}
+.list-group .list-group-item:last-child .inset-line{
+    display: none;
+}
+a.list-group-item:hover{
+    background-color: #f3f3f3;
+}
+.inset-line{
+    height: 2px;
+    border-top: 1px solid #dcdedd;
+    box-shadow: 0 2px 0 rgba( 255, 255, 250, 0.6) inset;
+    position: relative;
+    bottom: -9px;
+}
+.list-group-item a{
+    color: #24292c;
+}
+img{
+    max-width: 100%;
+}
