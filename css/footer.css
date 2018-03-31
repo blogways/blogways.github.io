@@ -1,0 +1,11 @@
+footer{
+    background-color: rgba(35,40,43,0.98);
+    height: 80px;
+    width: 100%;
+}
+footer .grid{
+    text-align: center;
+    font-size: 16px;
+    color:rgba(178, 174, 174, 0.98);
+    line-height: 80px;
+}

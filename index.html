@@ -18,107 +18,153 @@ pre_page: 第
 of_page: 页 共
 end_page: 页
 no_content: 无
-limit_tags: 8 
+limit_tags: 8
 ---
-
-<div class='container'>
-    <div class='bdsharebar'>
-        {% include bdshare.html %}
-        <br/>
-    </div>
-    <div class='row main-content'>
-        <div class='col-md-9 col-sm-12 col-xs-12 mainbar'>
-            <div class='ix-article-list'>{% for post in paginator.posts %}
-                <div class='ix-article panel'>
-                    <div class='panel-body hidden-sm hidden-xs'>
-                        
-                        <div class='ix-article-tags'></div>
-                        <h3 class='ix-article-title'>
-                            <a href='{{ post.url }}' target='_blank' title='{{ post.title }}'>{{ post.title }}</a>
-                        </h3>
-                        <div class='row ix-article-content'>
-                            <div class='col-lg-4 col-md-5'>
-                                <a class='thumbnail' href='{{ post.url }}' target='_blank' title='{{ post.title }}'>
-                                    {% if post.image == null %}
-                                    <img class="media-object" src="/images/blogways.png" alt="..." width='278px' height='166px'>
-                                    {% else %}
-                                    <img class="media-object" src="{{ post.image }}" alt="..." width='278px' height='166px'>
-                                    {% endif %}
-                                </a>
-                            </div>
-                            <div class='col-lg-8 col-md-7 row'>
-                                <div class='col-lg-12'>
-                                    <div class='ix-article-author'>
-                                        <span class='glyphicon glyphicon-user'></span>
-                                        <span class='sr-only'>{{ page.posted_by }}&nbsp;:&nbsp;</span>
-                                        {% for author in site.authors %}{% if post.author == author.name %}
-                                        <a href='{{ author.page_path }}'>{{ post.author | remove: ' '}}</a>{% endif %}{% endfor %}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="articles">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <!-- 分类与年份的下拉框 -->
+                                <div class="sort">
+                                    分类
+                                    <div class="select wheel">
+                                      <span>ALL</span>  
+                                      <ul>
+                                        <li><span class="category">ALL</span><span class='pull-right check'>√</span></li>
+                                      </ul>
                                     </div>
-                                    <div class='ix-article-date'>
-                                        <span class='glyphicon glyphicon-calendar'></span>
-                                        <span class='sr-only'>{{ page.posted_on }}&nbsp;:&nbsp;</span>
-                                        {{ post.date | date: "%Y-%m-%d"  }}
-                                    </div>
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
                                 </div>
-                                <p class='ix-description col-xs-12 visible-lg'>{{ post.description }}</p>
-                                <p class='ix-description col-xs-12 visible-md'>{{ post.description | truncate: 120 }}</p>          
+                                <div class="time">
+                                    年份
+                                    <div class="select wheel">
+                                        <span class="pull-left">ALL</span> 
+                                        <ul>
+                                            <li><span class="year">ALL</span><span class='pull-right check'>√</span></li>
+                                            {% for year in site.data.years %}
+                                            <li><span class="year">{{ year.y }}年度</span><span class='pull-right check'>√</span></li>
+                                            {% endfor %}
+                                        </ul> 
+                                    </div>
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <!-- 主页面的博文 -->
+                                <div class="row">
+                                    {% for post in site.posts %}
+                                    <div class="blog">
+                                        <div class="post_time">
+                                            {{ post.date | date: "%Y.%m.%d" }}
+                                        </div>
+                                        <div class="divider-line">
+                                            <img src="/images/circle-black.png">
+                                        </div>
+                                        <div class="post_info">
+                                            {% if post.image != null %}
+                                                <div class="post_pic">
+                                                    <a href="{{ post.url }}">
+                                                        <img src="{{ post.image }}">
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                            <div class="post_title">
+                                                <h4><a href="{{ post.url }}">{{ post.title }}</a></h4>
+                                                <p class="post_description">{{ post.description }}</p>
+                                                <div class="post_tag">
+                                                    {% for author in site.authors %}{% if post.author == author.name %}
+                                                        <span class='glyphicon glyphicon-user'>
+                                                            <a href='{{ author.page_path }}'>{{ post.author }}</a>
+                                                        </span>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    <span class='glyphicon glyphicon-tags kind'>
+                                                        <a href='/categories/{{post.category}}'>{{ post.category }}</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post_scan">
+                                            阅读量<br/>
+                                            {% if site.leancloud.enable %}
+                                                <span id="{{ post.url }}" class="leancloud_visitors" data-flag-title="{{ post.title }}">
+                                                 <span class="leancloud-visitors-count"></span>
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>    
+                                    {% endfor %}
+                                </div>
+                                <div class="footer">
+                                    向下滑动加载更多...
+                                </div>
                             </div>
                         </div>
-                        <hr class='ix-hr'>
-                        <div class='row'>{% assign limnum = page.limit_tags %}
-                            <div class='col-xs-12 post-tags'>{% if post.tags == null %}
-                                <span class='glyphicon glyphicon-tag'></span>{{ page.no_content}}{% else %}
-                                <span class='glyphicon glyphicon-tags'></span>&nbsp;{% for tag in post.tags %}
-                                {% if limnum > 0 %}
-                                <a class='label label-info' href='#'>{{ tag }}</a>
-                                {% assign limnum = limnum | minus: 1 %}{% endif %}
-                                {% if forloop.last == false and limnum > 0 %}、{% endif %}{% endfor %}{% endif %}
-                            </div>
-                        </div>
-                    </div><!--end of panel-body -->
-                    <div class='panel-body visible-sm visible-xs'>
-                        <div class='ix-article-title'>
-                            <h4>
-                                <a href='{{ post.url }}' target='_blank' title='{{ post.title }}'>{{ post.title }}
-                                </a>
-                            </h4>
-                        </div>
-                        <p class='ix-article-info'>
-                            <span class='ix-article-date'>
-                                <span class='glyphicon glyphicon-calendar'></span>
-                                <span class='sr-only'>{{ page.posted_on }}&nbsp;:&nbsp;</span>
-                                {{ post.date | date: "%Y-%m-%d"  }}
-                            </span>&nbsp;&nbsp;
-                            <span class='ix-article-author'>
-                                <span class='glyphicon glyphicon-user'></span>
-                                <span class='sr-only'>{{ page.posted_by }}&nbsp;:&nbsp;</span>
-                                {% for author in site.authors %}{% if post.author == author.name %}
-                                <a href='{{ author.page_path }}'>{{ post.author | remove: ' '}}</a>{% endif %}{% endfor %}
-                            </span>
-                        </p>
-                        <div class='ix-article-content'>
-                            <a href='{{ post.url }}' title='{{ post.title }}' target='_blank' class='thumbnail'>
-                                {% if post.image == null %}
-                                <img width='750' height='450' src='/images/blogways.png' style='display: block;'>
-                                {% else %}
-                                <img width='750' height='450' src='{{ post.image }}' style='display: block;'>
-                                {% endif %}
-                            </a>
-                            <div class='well'>
-                                {{ post.description | truncate: 120}}
-                            </div>
-                        </div>
-                        <a href='{{ post.url }}' class='btn btn-default btn-block' title='{{ post.title }}'>{{ page.read_more }}</a>
-                    </div><!--end of panel-body -->
-                </div><!--end of article-->{% endfor %}
-            </div><!--end of article-list -->
-            <div class='paginationbar'>
-                <label class='hidden-xs' style='color: #959595; margin-top: 25px;'>{{ page.pre_page }}{{ paginator.page }}{{ page.of_page }}{{ paginator.total_pages }}{{ page.end_page }}</label>
-                {% include paginationbar.html %}
+                    </div>
+                </div>
             </div>
-        </div><!--end of mainbar-->
-        <div class='col-md-3 hidden-sm hidden-xs sidebar'>
-            {% include categorybar.html %}
+            <div class="col-md-2 sideBar hidden-sm hidden-xs">
+                <!-- 年度博文列表 -->
+                <div class="list-group" id="year_Blog">
+                    <a href="/yearBlog/index.html" class="list-group-item">
+                        <span class="glyphicon glyphicon-calendar">
+                            年度博文
+                        </span>
+                    </a>
+                    {% assign count = 1 %}
+                    {% for post in site.posts reversed %}
+                    {% assign year = post.date | date: '%Y' %}
+                    {% assign nyear = post.next.date | date: '%Y' %}
+                    {% if year != nyear %}
+                    {% assign count = count | append: ', ' %}
+                    {% assign counts = counts | append: count %}
+                    {% assign count = 1 %}
+                    {% else %}
+                    {% assign count = count | plus: 1 %}
+                    {% endif %}
+                    {% endfor %}
+                    {% assign counts = counts | split: ', ' | reverse %}
+                    {% assign i = 0 %}
+                    {% for post in site.posts  %}
+                    {% assign year =post.date | date: '%Y' %}
+                    {% assign nyear = post.next.date | date: '%Y'  %}
+                    {% if year !=nyear %}
+                    <a href="/yearBlog/index.html?year={{post.date| date: '%Y'}}" class="list-group-item">
+                        {{post.date| date: '%Y'}}年度
+                        <span class="pull-right badge">{{counts[i]}}</span>
+                        <div class="inset-line"></div>
+                    </a>
+                    {% assign i=i | plus: 1 %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- 热门分类 -->
+                <div class="list-group">
+                    <a class="list-group-item">
+                        <span class="glyphicon glyphicon-tags">
+                            热门分类
+                        </span>
+                    </a>
+                    <div id="categorybar-list">
+                    </div>
+                </div>
+                <!-- 人气博主 -->
+                <div class="list-group">
+                    <a class="list-group-item">
+                        <span class="glyphicon glyphicon-heart">
+                            人气博主
+                        </span>
+                    </a>
+                    <div id="my-like">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
+<link rel="stylesheet" href="/css/index.css">
+<script src="/js/index.js"></script>

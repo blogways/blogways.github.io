@@ -33,7 +33,7 @@
 则访问路径为`www.blogways.net/blog/2014/01/02/jekyll-introduction.html`）
 在新添加一篇博客之后需要的操作：
 
-1. 删除本地categories文件夹：`rm -r categories`
+1. 删除本地categories文件夹：`rm -r categories`;删除本地categorycount.json文件
 2. 本地编译工程：`jekyll build` （或者`jekyll serve`）
 3. 将_site目录下的categories子目录，添加到根目录下(以便上传github page后生效)：`cp -r _site/categories .`
 4. 将_site目录下的categorycount.json文件，添加到根目录下面（一遍上传github page后生效):`cp -r _site/categorycount.json .`
