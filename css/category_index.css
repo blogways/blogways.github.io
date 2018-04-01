@@ -2,11 +2,11 @@ body{
 	padding-top: 100px;
 	background-color: #fff;
 }
-.container{
-    padding-right: 0;
-}
-.section{
+section{
     min-height: 700px;
+}
+section .container{
+    padding-right: 0;
 }
 .banner{
     height: 40px;

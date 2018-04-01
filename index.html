@@ -31,9 +31,9 @@ limit_tags: 8
                                 <!-- 分类与年份的下拉框 -->
                                 <div class="sort">
                                     分类
-                                    <div class="select wheel">
+                                    <div class="select">
                                       <span>ALL</span>  
-                                      <ul>
+                                      <ul class="wheel">
                                         <li><span class="category">ALL</span><span class='pull-right check'>√</span></li>
                                       </ul>
                                     </div>
@@ -41,9 +41,9 @@ limit_tags: 8
                                 </div>
                                 <div class="time">
                                     年份
-                                    <div class="select wheel">
+                                    <div class="select">
                                         <span class="pull-left">ALL</span> 
-                                        <ul>
+                                        <ul class="wheel">
                                             <li><span class="year">ALL</span><span class='pull-right check'>√</span></li>
                                             {% for year in site.data.years %}
                                             <li><span class="year">{{ year.y }}年度</span><span class='pull-right check'>√</span></li>
