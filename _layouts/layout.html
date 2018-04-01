@@ -80,20 +80,14 @@
                 $("#back").css("display","none");
             }
         }
-        //子元素滚动，父元素不滚动
-        $(".wheel").off('mousewheel').on('mousewheel',scrollUnique);
+        
         if($(window).width() <= 1200){
             $("ul.dropdown-menu").removeClass("wheel");
         }else{
             $("ul.dropdown-menu").addClass("wheel");
         }
-        window.onresize = function(){
-           if($(window).width() <= 1200){
-                $("ul.dropdown-menu").removeClass("wheel");
-            }else{
-                $("ul.dropdown-menu").addClass("wheel");
-            } 
-        }
+        //子元素滚动，父元素不滚动
+        $(".wheel").off('mousewheel').on('mousewheel',scrollUnique);
     </script>
 </body>
 </html>	
