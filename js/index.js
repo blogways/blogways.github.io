@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
     //选择分类
     $.getJSON("/categorycount.json",function(o){
         $.each( o, function( i , item ){
@@ -14,15 +14,13 @@ $(function () {
     $(".select > ul").delegate('li','click',function() {
         $(this).parent().prev().text($(this).children('span:first-child').text());
     });
+    var num = 9;
     //初始显示博文，返回博文数
-    var num = initialBlog();
-    //浏览器窗口发生变化时，根据窗口宽度确定显示博文数
-    window.onresize = function(){
-        initialBlog();
-    };
+    showBlog(num);
     //根据条件筛选博文的下拉框里的内容发生改变时，重新调用显示博文的函数
     $(".select > span").bind('DOMNodeInserted',function () {
-        initialBlog();
+        num = 9;
+        showBlog(num);
     });
     //当滚动条滑到底部时，增加显示的博文数。
     var winH = $(window).height();
@@ -31,11 +29,7 @@ $(function () {
         var scrollT = $(window).scrollTop();
         var aa = (pageH - winH - scrollT)/winH;
         if( aa < 0.02 ){
-            if($(window).width() <= 992){
-                num += 8;
-            }else{
-                num += 9;
-            } 
+            num += 9;
             showBlog(num);
         }
     });
@@ -81,17 +75,6 @@ $(function () {
     //子元素滚动，父元素不滚动
     $(".wheel").scrollUnique();
 });
-//屏幕小于等于992px时，最开始显示8篇博文，否则显示9篇
-function initialBlog(){
-    var num = 0;
-    if($(window).width() <= 992){
-        num = 8;
-    }else{
-        num = 9;
-    } 
-    showBlog(num);
-    return num;
-}
 //传入需要在首页展示的博客数量，然后展示。
 function showBlog(num) {
     var count = 0;
