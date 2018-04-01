@@ -38,7 +38,28 @@
     </div>
     <script>
         //子元素滚动，父元素不滚动的函数
-           
+        var scrollUnique = function() {
+            return $(this).each(function() {
+                var eventType = 'mousewheel';
+                // 火狐是DOMMouseScroll事件
+                if (document.mozHidden !== undefined) {
+                    eventType = 'DOMMouseScroll';
+                }
+                $(this).on(eventType, function(event) {
+                    // 一些数据
+                    var scrollTop = this.scrollTop,
+                        scrollHeight = this.scrollHeight,
+                        height = this.clientHeight;
+                    var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta : -(event.originalEvent.detail || 0);        
+                    if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
+                        // IE浏览器下滚动会跨越边界直接影响父级滚动，因此，临界时候手动边界滚动定位
+                        this.scrollTop = delta > 0? 0: scrollHeight;
+                        // 向上滚 || 向下滚
+                        event.preventDefault();
+                    }        
+                });
+            }); 
+        }   
         $("#back").click(function(){
             var timer = setInterval( function(){
                 //获取滚动条的滚动高度
@@ -60,28 +81,19 @@
             }
         }
         //子元素滚动，父元素不滚动
-        $(".wheel").off('mousewheel').on('mousewheel',function() {
-            return $(this).each(function() {
-                var eventType = 'mousewheel';
-                // 火狐是DOMMouseScroll事件
-                if (document.mozHidden !== undefined) {
-                    eventType = 'DOMMouseScroll';
-                }
-                $(this).on(eventType, function(event) {
-                    // 一些数据
-                    var scrollTop = this.scrollTop,
-                        scrollHeight = this.scrollHeight,
-                        height = this.clientHeight;
-                    var delta = (event.originalEvent.wheelDelta) ? event.originalEvent.wheelDelta : -(event.originalEvent.detail || 0);        
-                    if ((delta > 0 && scrollTop <= delta) || (delta < 0 && scrollHeight - height - scrollTop <= -1 * delta)) {
-                        // IE浏览器下滚动会跨越边界直接影响父级滚动，因此，临界时候手动边界滚动定位
-                        this.scrollTop = delta > 0? 0: scrollHeight;
-                        // 向上滚 || 向下滚
-                        event.preventDefault();
-                    }        
-                });
-            }); 
-        });
+        $(".wheel").off('mousewheel').on('mousewheel',scrollUnique);
+        if($(window).width() <= 1200){
+            $("ul.dropdown-menu").removeClass("wheel");
+        }else{
+            $("ul.dropdown-menu").addClass("wheel");
+        }
+        window.onresize = function(){
+           if($(window).width() <= 1200){
+                $("ul.dropdown-menu").removeClass("wheel");
+            }else{
+                $("ul.dropdown-menu").addClass("wheel");
+            } 
+        }
     </script>
 </body>
 </html>	
