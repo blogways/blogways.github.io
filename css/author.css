@@ -5,9 +5,8 @@ section{
     margin-top: 20px;
     min-height: 700px;
 }
-.container {
+section .container {
     padding-right: 0;
-    
 }
 .banner{
     height: 40px;

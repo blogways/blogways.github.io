@@ -34,7 +34,7 @@
                         <span class='caret'></span>
                     </a>
                 {% endif %}
-                    <ul class='dropdown-menu cate-drop-menu wheel' id="cate" role='menu'>
+                    <ul class='dropdown-menu cate-drop-menu' id="cate" role='menu'>
                         {% for cate in site.categories %}
                             {% assign ca_name = cate | first %}
                             {% if ca_name != page.category %}
@@ -71,7 +71,7 @@
                         <span class='caret'></span>
                     </a>
                 {% endif %}
-                    <ul class='dropdown-menu cate-drop-menu wheel' id="us" role='menu'>
+                    <ul class='dropdown-menu cate-drop-menu' id="us" role='menu'>
                         {% for author in site.authors %}
                             {% assign num = 0 %}
                             {% for post in site.posts %}
@@ -98,19 +98,19 @@
                 </li>
                 {% if page.page_type == 'yearBlog' %}
                 <li class='dropdown actived hovered'>
-                    <a class='dropdown-toggle' data-toggle='dropdown'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                         年度博文
                         <span class='caret'></span>
                     </a>
                     <span class="glyphicon glyphicon-triangle-top"></span>
                 {% else %}
                 <li class='dropdown'>
-                    <a class='dropdown-toggle' data-toggle='dropdown'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                         年度博文
                         <span class='caret'></span>
                     </a>
                 {% endif %}
-                    <ul class='dropdown-menu wheel' role='menu'>
+                    <ul class='dropdown-menu' role='menu'>
                         {% for year in site.data.years %}
                             {% assign yearcount = 0 %}
                             {% assign y = year.y %}

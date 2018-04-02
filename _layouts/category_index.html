@@ -6,57 +6,60 @@ pt_page_type: category
     <script type="text/javascript" src="/js/categories.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/category_index.css">
     <div style="display: none;" id="categ">{{ page.category | downcase }}</div>
-    <div class='section container'>
-        <div class="banner">
-            <span class="glyphicon glyphicon-home"></span> <a href="/">首页</a> > 热门分类 > {{ page.category }}
-        </div>
-        <div class='main-content row'>
-            <div class='mainbar col-md-10 col-sm-12 col-xs-12'>
-                <div class='category-list al-article-list'>
-                    {% for year in site.data.years %}
-                    {% assign flag = true %}
-                    {% for cate in site.categories %}
-                    {% capture c1 %}{{ cate[0] | downcase }}{% endcapture %}
-                    {% capture c2 %}{{ page.category | downcase }}{% endcapture %}
-                    {% capture c3 %}{{ cate[0] }}{% endcapture %}
-                    {% if c1 == c2 %}
-                    {% for post in site.categories[c3] %}
-                    {% capture y %}{{ post.date | date: '%Y' }}{% endcapture %}
-                    {% if year.y == y %}
-                    {% if flag == true %}
-                    <div class="page" style="opacity: {{ opacity }}">{{ y }}年度
-                        {% if blogcount != 0%}
-                        <span style="font-size: 12px;color: #999;">点击展开/关闭</span>
-                        {% endif %}
-                        <span class="glyphicon glyphicon-list-alt pull-right"></span>
-                    </div>
-                    <div class='blogs'>
-                        <table class="table table-hover" id="{{ y }}">
-                        {% assign flag = false %}{% endif %}
-                            <tr>
-                                <td>
-                                    <span class="glyphicon glyphicon-file"> </span>
-                                    <a href="{{ post.url }}">{{ post.title }}</a>
-                                </td>
-                                <td>发布于：{{ post.date | date: "%Y.%m.%d" }}</td>
-                            </tr>
-                        {% endif %}{% endfor %}
-                        {% endif %}{% endfor %}
-                        {% if flag == false %}
-                        </table>
-                    </div>{% endif %}{% endfor %}
-                </div><!--end of category-list-->
+    <section>
+        <div class='container'>
+            <div class="banner">
+                <span class="glyphicon glyphicon-home"></span> <a href="/">首页</a> > 热门分类 > {{ page.category }}
+            </div>
+            <div class='main-content row'>
+                <div class='mainbar col-md-10 col-sm-12 col-xs-12'>
+                    <div class='category-list al-article-list'>
+                        {% for year in site.data.years %}
+                        {% assign flag = true %}
+                        {% for cate in site.categories %}
+                        {% capture c1 %}{{ cate[0] | downcase }}{% endcapture %}
+                        {% capture c2 %}{{ page.category | downcase }}{% endcapture %}
+                        {% capture c3 %}{{ cate[0] }}{% endcapture %}
+                        {% if c1 == c2 %}
+                        {% for post in site.categories[c3] %}
+                        {% capture y %}{{ post.date | date: '%Y' }}{% endcapture %}
+                        {% if year.y == y %}
+                        {% if flag == true %}
+                        <div class="page" style="opacity: {{ opacity }}">{{ y }}年度
+                            {% if blogcount != 0%}
+                            <span style="font-size: 12px;color: #999;">点击展开/关闭</span>
+                            {% endif %}
+                            <span class="glyphicon glyphicon-list-alt pull-right"></span>
+                        </div>
+                        <div class='blogs'>
+                            <table class="table table-hover" id="{{ y }}">
+                            {% assign flag = false %}{% endif %}
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file"> </span>
+                                        <a href="{{ post.url }}">{{ post.title }}</a>
+                                    </td>
+                                    <td>发布于：{{ post.date | date: "%Y.%m.%d" }}</td>
+                                </tr>
+                            {% endif %}{% endfor %}
+                            {% endif %}{% endfor %}
+                            {% if flag == false %}
+                            </table>
+                        </div>{% endif %}{% endfor %}
+                    </div><!--end of category-list-->
 
-            </div><!--end of mainbar-->
-            <div class='authorslistbar col-md-2 hidden-sm hidden-xs'>
-                <div class='list-group' id="authorlist">
-                    <a class="list-group-item">
-                        <span class="glyphicon glyphicon-tags">
-                            热门分类
-                        </span>
-                    </a>
-                    <div id="author-list"></div>
-                </div>
-            </div><!--end of sidebar-->
-        </div><!--end of main-content-->
-    </div><!--end of container-->
+                </div><!--end of mainbar-->
+                <div class='authorslistbar col-md-2 hidden-sm hidden-xs'>
+                    <div class='list-group' id="authorlist">
+                        <a class="list-group-item">
+                            <span class="glyphicon glyphicon-tags">
+                                热门分类
+                            </span>
+                        </a>
+                        <div id="author-list"></div>
+                    </div>
+                </div><!--end of sidebar-->
+            </div><!--end of main-content-->
+        </div><!--end of container-->
+    </section>
+    
