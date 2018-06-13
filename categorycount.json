@@ -103,6 +103,9 @@
   ,
 
   ["webservice" , "webservice" , 2]
+  ,
+
+  ["elasticsearch" , "Elasticsearch" , 3]
    
 
 ]
