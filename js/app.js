@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     var documentHeight = 0;
     var $cate = null;//$("#categorybar").offset(), // categorybar too long, no scroll 
         $auth = $('#authorslistbar').offset(),
@@ -14,7 +13,6 @@ $(document).ready(function(){
     documentHeight = $(document).height();
 
     (function($){
-        $('[data-toggle="tooltip"]').tooltip();
         $('table').addClass('table table-bordered table-striped table-hover');
         $('table').wrap('<div class="table-responsive"></div>');
         $('table tr th').addClass('success');

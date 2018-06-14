@@ -1,2006 +1,2562 @@
 <!DOCTYPE html>
 <html lang='zh-CN'>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0
+    minimum-scale=1.0,user-scalable=0">
     <title>Category: kafka_博汇网_www.blogways.net</title>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script src='/js/jquery-2.1.1.js'></script>
-    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap.css'>
-    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-theme.css'>
-    <link rel='stylesheet' type='text/css' href='/css/app.css'>
-    <script src='/bootstrap/js/bootstrap.js'></script>
-    <script src='/js/app.js'></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "//hm.baidu.com/hm.js?ac29e786ae4e5463b445f1e0ad1f1d1e";
-          var s = document.getElementsByTagName("script")[0]; 
-          s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+    <link rel="stylesheet" href="/fonts/glyphicons-halflings-regular.svg">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/global.css">
+    <script src="/jquery-3.2.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/global.js"></script>
 </head>
-<body style='background-color: #f5f5f5;'>
-    <div class='totop visible-lg visible-md visible-sm hidden-xs'>
-        <a id='to-top' href='javascript:void(0)'>
-            <span id='to-top-title'>返回</br>顶部</span>
-        </a>
-    </div>
-    <div class='totop-xs hidden-lg hidden-md hidden-sm visible-xs'>
-        <a id='to-top-xs' href='javascript:void(0)'>
-            <span id='to-top-title-xs'>返回</br>顶部</span>
-        </a>
-    </div>
-    <div class='headerbar'>
-            <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
-        <div class='containr-fluid'>
-            <div class='navbar-header'>
-                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#bw-navbar-collapse'>
-                    <span class='sr-only'>下拉框</span>
-                    <span class='icon-bar'></span>
-                    <span class='icon-bar'></span>
-                    <span class='icon-bar'></span>
-                </button>
-                <a class='navbar-brand' href='/'>Blog<span>ways</span></a>
-            </div>
-            <div class='navbar-collapse collapse' id='bw-navbar-collapse'>
-                <ul class='nav navbar-nav'>
-                    <li><a href='/'>主页</a></li>
-                    <li class='divider visible-xs'></li>
-                    
-                    <li class='dropdown visible-sm visible-xs active'>
-                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
-                            <span class='caret'></span>
-                        </a>
-                        <ul class='dropdown-menu cate-drop-menu' role='menu'>
+<body>
+    
+  <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("3kzzUi5zFw00fQacd9NBe2ze-gzGzoHsz", "y0fPCw77KC6oQuSRfL9U14lY");</script>
+  <script>
+    function showHitCount(Counter) {
+      /* 这是给一个页面中有多篇文章时所调用的，例如博客主界面或者存档界面。
+      */
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      // 获取页面中所有文章的id（page.url）
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      // 批量查询
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var hits = item.get('hits');// 获取点击次数
+            var element = document.getElementById(url);
+
+            // 显示点击次数
+            $(element).find(COUNT_CONTAINER_REF).text(hits);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      // 页面（博客文章）中的信息：leancloud_visitors
+      // id为page.url， data-flag-title为page.title
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      // 只根据文章的url查询LeanCloud服务器中的数据
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {//说明LeanCloud中已经记录了这篇文章
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("hits");// 将点击次数加1
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('hits'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            // 执行这里，说明LeanCloud中还没有记录此文章
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);// 把文章标题
+            newcounter.set("url", url); // 文章url
+            newcounter.set("hits", 1); // 初始点击次数：1次
+            newcounter.save(null, { // 上传到LeanCloud服务器中
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('hits'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        // in post.html, so add 1 to hit counts
+        addCount(Counter);
+      } else {
+        // in index.html, there are many 'leancloud_visitors' and 'post-link', so just show hit counts.
+        showHitCount(Counter);
+      }
+    });
+  </script>
+
+
+
+    <nav class="navbar  navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="sr-only">切换导航栏</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png">
+            </a>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse my-nav">
+            <ul class="nav navbar-nav">
+                
+                <li>
+                    <a href='/'>主页</a>
+                </li>
+                
+                
+                <li class='dropdown actived hovered'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>热门分类
+                        <span class='caret'></span>
+                    </a>
+                    <span class="glyphicon glyphicon-triangle-top"></span>
+                
+                    <ul class='dropdown-menu cate-drop-menu' id="cate" role='menu'>
+                        
+                            
                             
                             <li>
-                                <a href='/categories/Jekyll/'>Jekyll
-                                    <span class='badge pull-right'>4</span>
+                                <a href='/categories/jekyll/'>
+                                    Jekyll
+                                    <span class='badge pull-right'>
+                                        4
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/杂记/'>杂记
-                                    <span class='badge pull-right'>29</span>
+                                <a href='/categories/杂记/'>
+                                    杂记
+                                    <span class='badge pull-right'>
+                                        31
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/JUnit/'>JUnit
-                                    <span class='badge pull-right'>8</span>
+                                <a href='/categories/junit/'>
+                                    JUnit
+                                    <span class='badge pull-right'>
+                                        8
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/NoSQL/'>NoSQL
-                                    <span class='badge pull-right'>11</span>
+                                <a href='/categories/nosql/'>
+                                    NoSQL
+                                    <span class='badge pull-right'>
+                                        11
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Sencha/'>Sencha
-                                    <span class='badge pull-right'>5</span>
+                                <a href='/categories/sencha/'>
+                                    Sencha
+                                    <span class='badge pull-right'>
+                                        5
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Nginx/'>Nginx
-                                    <span class='badge pull-right'>4</span>
+                                <a href='/categories/nginx/'>
+                                    Nginx
+                                    <span class='badge pull-right'>
+                                        5
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Apache/'>Apache
-                                    <span class='badge pull-right'>12</span>
+                                <a href='/categories/apache/'>
+                                    Apache
+                                    <span class='badge pull-right'>
+                                        12
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Node.js/'>Node.js
-                                    <span class='badge pull-right'>7</span>
+                                <a href='/categories/node.js/'>
+                                    Node.js
+                                    <span class='badge pull-right'>
+                                        7
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Express/'>Express
-                                    <span class='badge pull-right'>14</span>
+                                <a href='/categories/express/'>
+                                    Express
+                                    <span class='badge pull-right'>
+                                        14
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/jQuery/'>jQuery
-                                    <span class='badge pull-right'>21</span>
+                                <a href='/categories/jquery/'>
+                                    jQuery
+                                    <span class='badge pull-right'>
+                                        22
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Java/'>Java
-                                    <span class='badge pull-right'>8</span>
+                                <a href='/categories/java/'>
+                                    Java
+                                    <span class='badge pull-right'>
+                                        12
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Solr/'>Solr
-                                    <span class='badge pull-right'>6</span>
+                                <a href='/categories/solr/'>
+                                    Solr
+                                    <span class='badge pull-right'>
+                                        6
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/WordPress/'>WordPress
-                                    <span class='badge pull-right'>3</span>
+                                <a href='/categories/wordpress/'>
+                                    WordPress
+                                    <span class='badge pull-right'>
+                                        3
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/drupal/'>drupal
-                                    <span class='badge pull-right'>2</span>
+                                <a href='/categories/drupal/'>
+                                    drupal
+                                    <span class='badge pull-right'>
+                                        2
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/joomla/'>joomla
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/joomla/'>
+                                    joomla
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/design/'>design
-                                    <span class='badge pull-right'>5</span>
+                                <a href='/categories/design/'>
+                                    design
+                                    <span class='badge pull-right'>
+                                        11
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Web前端/'>Web前端
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/web前端/'>
+                                    Web前端
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/keepalived/'>keepalived
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/keepalived/'>
+                                    keepalived
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/iot/'>iot
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/iot/'>
+                                    iot
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/web前端/'>web前端
-                                    <span class='badge pull-right'>15</span>
+                                <a href='/categories/web前端/'>
+                                    web前端
+                                    <span class='badge pull-right'>
+                                        15
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/交互设计/'>交互设计
-                                    <span class='badge pull-right'>6</span>
+                                <a href='/categories/交互设计/'>
+                                    交互设计
+                                    <span class='badge pull-right'>
+                                        6
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Spring/'>Spring
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/spring/'>
+                                    Spring
+                                    <span class='badge pull-right'>
+                                        3
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/web后端/'>web后端
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/web后端/'>
+                                    web后端
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/git/'>git
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/git/'>
+                                    git
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/索引/'>索引
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/索引/'>
+                                    索引
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/storm/'>storm
-                                    <span class='badge pull-right'>2</span>
+                                <a href='/categories/storm/'>
+                                    storm
+                                    <span class='badge pull-right'>
+                                        7
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/Python/'>Python
-                                    <span class='badge pull-right'>2</span>
+                                <a href='/categories/python/'>
+                                    Python
+                                    <span class='badge pull-right'>
+                                        2
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/nodejs/'>nodejs
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/nodejs/'>
+                                    nodejs
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/地图/'>地图
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/地图/'>
+                                    地图
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
                             <li>
-                                <a href='/categories/websocket/'>websocket
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/categories/websocket/'>
+                                    websocket
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
                                 </a>
                             </li>
+                            
+                        
+                            
                             
                             <li class='disabled active'>
-                                <a href='javascript:void(0)'>kafka
-                                    <span class='badge pull-right'>2</span>
+                                <a href='javascript:void(0)'>
+                                    kafka
+                                    <span class='badge pull-right'>
+                                        4
+                                    </span>
                                 </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/gc/'>
+                                    GC
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/tiles/'>
+                                    tiles
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/dubbo/'>
+                                    dubbo
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/zookeeper/'>
+                                    zookeeper
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/jvm/'>
+                                    JVM
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/mysql/'>
+                                    mysql
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/ehcache/'>
+                                    ehcache
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/disconf/'>
+                                    disconf
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/docker/'>
+                                    docker
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/linux/'>
+                                    linux
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/spring-cloud/'>
+                                    spring-cloud
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/git/'>
+                                    Git
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/数据库/'>
+                                    数据库
+                                    <span class='badge pull-right'>
+                                        2
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/jekyll/'>
+                                    jekyll
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/less/'>
+                                    Less
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/liquid/'>
+                                    liquid
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/scala/'>
+                                    Scala
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                            
+                            
+                            <li>
+                                <a href='/categories/spark/'>
+                                    Spark
+                                    <span class='badge pull-right'>
+                                        1
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        
+                    </ul>
+                </li>
+                
+                <li class='dropdown'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
+                        <span class='caret'></span>
+                    </a>
+                
+                    <ul class='dropdown-menu cate-drop-menu' id="us" role='menu'>
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/chenfan/'>
+                                        陈凡
+                                        <span class="badge pull-right"> 
+                                            15
+                                        </span>
+                                    </a>
                                 </li>
                             
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/chenlong/'>
+                                        陈龙
+                                        <span class="badge pull-right"> 
+                                            3
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/chenwt/'>
+                                        陈文婷
+                                        <span class="badge pull-right"> 
+                                            11
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/fukui/'>
+                                        付奎
+                                        <span class="badge pull-right"> 
+                                            5
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/gaoxiaobo/'>
+                                        高晓波
+                                        <span class="badge pull-right"> 
+                                            4
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/guruiqi/'>
+                                        顾瑞棋
+                                        <span class="badge pull-right"> 
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/huangmai/'>
+                                        黄劢
+                                        <span class="badge pull-right"> 
+                                            6
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/jacky/'>
+                                        Jacky
+                                        <span class="badge pull-right"> 
+                                            26
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/jyjsjd/'>
+                                        景阳
+                                        <span class="badge pull-right"> 
+                                            15
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/linmingxing/'>
+                                        林明星
+                                        <span class="badge pull-right"> 
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/liuyiwei/'>
+                                        刘益伟
+                                        <span class="badge pull-right"> 
+                                            6
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/qianwx/'>
+                                        钱文旭
+                                        <span class="badge pull-right"> 
+                                            5
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/shenbin/'>
+                                        是吧
+                                        <span class="badge pull-right"> 
+                                            0
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/tangshizhong/'>
+                                        汤仕忠
+                                        <span class="badge pull-right"> 
+                                            19
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/tangzhi/'>
+                                        唐治
+                                        <span class="badge pull-right"> 
+                                            33
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/wangdong/'>
+                                        王栋
+                                        <span class="badge pull-right"> 
+                                            2
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/wanghui/'>
+                                        汪回
+                                        <span class="badge pull-right"> 
+                                            9
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/wangtianwen/'>
+                                        王天文
+                                        <span class="badge pull-right"> 
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/xuwannian/'>
+                                        徐万年
+                                        <span class="badge pull-right"> 
+                                            3
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/wanzhou/'>
+                                        万洲
+                                        <span class="badge pull-right"> 
+                                            27
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/weixucheng/'>
+                                        卫旭成
+                                        <span class="badge pull-right"> 
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/xuwannian/'>
+                                        徐万年
+                                        <span class="badge pull-right"> 
+                                            3
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/zhangke/'>
+                                        张可
+                                        <span class="badge pull-right"> 
+                                            9
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/zhangshaoyong/'>
+                                        张少勇
+                                        <span class="badge pull-right"> 
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                            
+                            
+                            
+                                <li>
+                                    <a href='/authors/zhaojiajun/'>
+                                        赵家君
+                                        <span class="badge pull-right"> 
+                                            14
+                                        </span>
+                                    </a>
+                                </li>
+                            
+                        
+                    </ul>
+                </li>
+                
+                <li class='dropdown'>
+                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                        年度博文
+                        <span class='caret'></span>
+                    </a>
+                
+                    <ul class='dropdown-menu' role='menu'>
+                        
+                            
+                            
+                            
+                            
                             <li>
-                                <a href='/categories/GC/'>GC
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/yearBlog/index.html?year=2018'>
+                                    2018
+                                    <span class="badge pull-right"> 
+                                        10
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
+                            
+                            
                             <li>
-                                <a href='/categories/tiles/'>tiles
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/yearBlog/index.html?year=2017'>
+                                    2017
+                                    <span class="badge pull-right"> 
+                                        40
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
+                            
+                            
                             <li>
-                                <a href='/categories/dubbo/'>dubbo
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/yearBlog/index.html?year=2016'>
+                                    2016
+                                    <span class="badge pull-right"> 
+                                        56
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
+                            
+                            
                             <li>
-                                <a href='/categories/zookeeper/'>zookeeper
-                                    <span class='badge pull-right'>1</span>
+                                <a href='/yearBlog/index.html?year=2015'>
+                                    2015
+                                    <span class="badge pull-right"> 
+                                        42
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
+                            
+                            
                             <li>
-                                <a href='/categories/webservice/'>webservice
-                                    <span class='badge pull-right'>2</span>
+                                <a href='/yearBlog/index.html?year=2014'>
+                                    2014
+                                    <span class="badge pull-right"> 
+                                        31
+                                    </span>
                                 </a>
                             </li>
                             
+                        
+                            
+                            
+                            
+                            
                             <li>
-                                <a href='/categories/Elasticsearch/'>Elasticsearch
-                                    <span class='badge pull-right'>3</span>
+                                <a href='/yearBlog/index.html?year=2013'>
+                                    2013
+                                    <span class="badge pull-right"> 
+                                        41
+                                    </span>
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-                    <li class='dropdown'>
-                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>关于我们
-                            <span class='caret'></span>
-                        </a>
-                        <ul class='dropdown-menu' role='menu'>
-                            <li><a href='/about.html'>所有信息</a></li>
-                            <li class='divider'></li>
-                            <li><a href='/authors/chenfan/'>陈凡</a></li>
-                            <li><a href='/authors/chenlong/'>陈龙</a></li>
-                            <li><a href='/authors/chenwt/'>陈文婷</a></li>
-                            <li><a href='/authors/fukui/'>付奎</a></li>
-                            <li><a href='/authors/gaoxiaobo/'>高晓波</a></li>
-                            <li><a href='/authors/huangmai/'>黄劢</a></li>
-                            <li><a href='/authors/jacky/'>Jacky</a></li>
-                            <li><a href='/authors/jyjsjd/'>景阳</a></li>
-                            <li><a href='/authors/liuyiwei/'>刘益伟</a></li>
-                            <li><a href='/authors/tangshizhong/'>汤仕忠</a></li>
-                            <li><a href='/authors/tangzhi/'>唐治</a></li>
-                            <li><a href='/authors/wangdong/'>王栋</a></li>
-                            <li><a href='/authors/wanghui/'>汪回</a></li>
-                            <li><a href='/authors/xuwannian/'>徐万年</a></li>
-                            <li><a href='/authors/wanzhou/'>万洲</a></li>
-                            <li><a href='/authors/zhangke/'>张可</a></li>
-                            <li><a href='/authors/zhangshaoyong/'>张少勇</a></li>
-                            <li><a href='/authors/zhaojiajun/'>赵家君</a></li>
-                        </ul>
-                    </li>
-                    <li><a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>联系我们</a></li>
-                </ul>
-                <!--<form class="navbar-form navbar-right hidden-sm hidden-xs" role="search">
+                            
+                        
+                    </ul>
+                </li>
+                <li>
+                    <a href='https://github.com/blogways/blogways.github.io' title='https://github.com/blogways/blogways.github.io' target='_blank'>
+                        欢迎投稿
+                    </a>
+                </li>
+                <li class="pull-right" id="search">
+                    <div class="navbar-form">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <button type="submit" class="btn btn-default">Submit</button>
+                        <span class="glyphicon glyphicon-search">
+                        </span>
+                            <input id="info" type="text" placeholder="搜索类别、作者" value="" />
+                        </div>
+                        <ul id="result" class="wheel"></ul>
                     </div>
-                </form>-->
-                <p class="navbar-text navbar-right hidden-sm hidden-xs"><small>汇集优秀博文(关注:敏捷开发/WEB开发/移动终端开发/NOSQL/云计算...)尽在</small><a href="/" class="navbar-link">Blogways</a>!</p>
-            </div>
-        </div>    
+                </li>
+            </ul>
+        </div>
     </div>
+</nav>
 
-    </div>
+<link rel="stylesheet" href="/css/header.css">
+<script type="text/javascript" src="/js/header.js"></script>
+        <script type="text/javascript" src="/js/categories.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/category_index.css">
+    <div style="display: none;" id="categ">kafka</div>
+    <section>
         <div class='container'>
-        <div class='main-content row'>
-            <div class='mainbar col-md-9 col-sm-12 col-xs-12'>
-                <div class='panel panel-info'>
-                    <div class='category-title panel-heading'>
-                        <h2 class='category-name panel-title'>kafka</h2>
-                    </div>
-                    <div class='panel bdsharebar'>
-                        <!-- Baidu Button BEGIN -->
-<div id="bdshare" class="bdshare_t bds_tools_32 get-codes-bdshare">
-<a class="bds_qzone"></a>
-<a class="bds_tsina"></a>
-<a class="bds_tqq"></a>
-<a class="bds_renren"></a>
-<a class="bds_t163"></a>
-<span class="bds_more"></span>
-<a class="shareCount"></a>
-</div>
-<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=59150" ></script>
-<script type="text/javascript" id="bdshell_js"></script>
-<script type="text/javascript">
-document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
-</script>
-<!-- Baidu Button END -->
-
-                    </div>
-                </div>
-
-                <div class='category-list al-article-list visible-lg visible-md visible-sm hidden-xs'>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <div class='panel panel-default'>
-                        <div class='panel-body'>
-                            <h2 class='al-year'>2017</h2>
-                            <hr class='al-hr'>
-                            <div class='al-article'>
-                                <a href='/blog/2017/05/14/kafka-2.html' target='_blank' title='Apache_Kafka入门（二）'>Apache_Kafka入门（二）</a>
-                                <span class='al-article-date'>&nbsp;(发布于：2017.05.14)</span>
-                            </div>
-                    
-                    
-                    
-                            <div class='al-article'>
-                                <a href='/blog/2017/05/02/kafka-1.html' target='_blank' title='Apache_Kafka入门（一）'>Apache_Kafka入门（一）</a>
-                                <span class='al-article-date'>&nbsp;(发布于：2017.05.02)</span>
-                            </div>
+            <div class="banner">
+                <span class="glyphicon glyphicon-home"></span> <a href="/">首页</a> > 热门分类 > kafka
+            </div>
+            <div class='main-content row'>
+                <div class='mainbar col-md-10 col-sm-12 col-xs-12'>
+                    <div class='category-list al-article-list'>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <div class="page" style="opacity: ">2018年度
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                            <span style="font-size: 12px;color: #999;">点击展开/关闭</span>
                             
+                            <span class="glyphicon glyphicon-list-alt pull-right"></span>
                         </div>
-                    </div><!--end of panel-->
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        <div class='blogs'>
+                            <table class="table table-hover" id="2018">
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file"> </span>
+                                        <a href="/blog/2018/01/07/kafka-manager.html">kafka-manager安装与使用</a>
+                                    </td>
+                                    <td>发布于：2018.01.07</td>
+                                </tr>
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        
+                        
+                        
+                        
+                        
+                        
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                            
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                            
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                            
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                            
-                </div><!--end of category-list-->
-
-                <div class='al-article-list-xs hidden-lg hidden-md hidden-sm visible-xs'>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <h2 class='panel-title al-year'>2017</h2>
+                            </table>
                         </div>
-                        <div class='list-group'>
-                            <a class='list-group-item list-group-item-default' href='/blog/2017/05/14/kafka-2.html' target='_blank'>
-                                <h4 class='list-group-item-heading al-title-xs'>Apache_Kafka入门（二）</h4>
-                                <div class='list-group-item-text'>
-                                    <span class='al-article-date-xs pull-right'>(05.14)</span>
-                                    <span class='badge'>kafka</span>
-                                </div>
-                            </a>
-                    
-                    
-                    
-                            <a class='list-group-item list-group-item-default' href='/blog/2017/05/02/kafka-1.html' target='_blank'>
-                                <h4 class='list-group-item-heading al-title-xs'>Apache_Kafka入门（一）</h4>
-                                <div class='list-group-item-text'>
-                                    <span class='al-article-date-xs pull-right'>(05.02)</span>
-                                    <span class='badge'>kafka</span>
-                                </div>
-                            </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <div class="page" style="opacity: ">2017年度
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                            <span style="font-size: 12px;color: #999;">点击展开/关闭</span>
                             
-                        </div><!--end of list-group-->
-                    </div><!--end of panel-->
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                            <span class="glyphicon glyphicon-list-alt pull-right"></span>
+                        </div>
+                        <div class='blogs'>
+                            <table class="table table-hover" id="2017">
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file"> </span>
+                                        <a href="/blog/2017/12/06/kafka-1.html">Kafka集群搭建</a>
+                                    </td>
+                                    <td>发布于：2017.12.06</td>
+                                </tr>
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        
+                        
+                        
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file"> </span>
+                                        <a href="/blog/2017/05/14/kafka-2.html">Apache_Kafka入门（二）</a>
+                                    </td>
+                                    <td>发布于：2017.05.14</td>
+                                </tr>
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        
+                        
+                        
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file"> </span>
+                                        <a href="/blog/2017/05/02/kafka-1.html">Apache_Kafka入门（一）</a>
+                                    </td>
+                                    <td>发布于：2017.05.02</td>
+                                </tr>
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                            </table>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                             
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                             
-                </div><!--end of list-xs-->
-            </div><!--end of mainbar-->
-            <div class='sidebar col-md-3 hidden-sm hidden-xs'>
-                <div class='cate-ix-bar panel panel-default' id='categorybar'>
-                    <div class='panel-heading'>
-                        <h4 class='panel-title'>热门分类</h4>
-                    </div>
-                    <div class='list-group' id="categorybar-list">
-                    </div>
-                </div><!--end of cateixbar-->
-                <script>
-                    $(document).ready(function(){
-                        (function(){
-                            $.getJSON("/categorycount.json",function(o){
-                                $.each( o, function( i , item ){
-                                    var currentCategory = "kafka";
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                            
+                    </div><!--end of category-list-->
 
-                                    var content;
-                                    if (currentCategory !== item[0]) {
-                                      content ="<a class='list-group-item list-group-item-default' href='/categories/"+item[0]+"/'>"+item[1];
-                                    }else{
-                                      content ="<a class='list-group-item disabled' >"+item[1];
-                                    }
-                                    content += "<span class='badge pull-right'>"+item[2]+"</span>"+
-                                    "</a>"
-                                    $("#categorybar-list").append(content);
-                                });
-                            });
-                        })();
-                    });
-                </script>
-            </div><!--end of sidebar-->
-        </div><!--end of main-content-->
-    </div><!--end of container-->
+                </div><!--end of mainbar-->
+                <div class='authorslistbar col-md-2 hidden-sm hidden-xs'>
+                    <div class='list-group' id="authorlist">
+                        <a class="list-group-item">
+                            <span class="glyphicon glyphicon-tags">
+                                热门分类
+                            </span>
+                        </a>
+                        <div id="author-list"></div>
+                    </div>
+                </div><!--end of sidebar-->
+            </div><!--end of main-content-->
+        </div><!--end of container-->
+    </section>
+    
 
-    <script src="http://s13.cnzz.com/stat.php?id=5229914&web_id=5229914" language="JavaScript"></script>
+    <link rel="stylesheet" href="/css/footer.css">
+<footer>
+    <div class="grid">
+        Copyright &copy; <a href="http://www.blogways.net">blogways.net</a> <a href="http://www.miitbeian.gov.cn">苏ICP备17010572号</a>
+    </div>
+</footer>
+
+
+    <div id="back" class="btn-group-vertical">
+        <a><button type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </button></a>
+    </div>
 </body>
 </html>	

@@ -1,9 +1,9 @@
 [
 
-  ["jekyll" , "Jekyll" , 4]
+  ["jekyll" , "jekyll" , 5]
   ,
 
-  ["杂记" , "杂记" , 29]
+  ["杂记" , "杂记" , 31]
   ,
 
   ["junit" , "JUnit" , 8]
@@ -15,7 +15,7 @@
   ["sencha" , "Sencha" , 5]
   ,
 
-  ["nginx" , "Nginx" , 4]
+  ["nginx" , "Nginx" , 5]
   ,
 
   ["apache" , "Apache" , 12]
@@ -27,10 +27,10 @@
   ["express" , "Express" , 14]
   ,
 
-  ["jquery" , "jQuery" , 21]
+  ["jquery" , "jQuery" , 22]
   ,
 
-  ["java" , "Java" , 8]
+  ["java" , "Java" , 12]
   ,
 
   ["solr" , "Solr" , 6]
@@ -45,7 +45,7 @@
   ["joomla" , "joomla" , 1]
   ,
 
-  ["design" , "design" , 5]
+  ["design" , "design" , 11]
   ,
 
   ["web前端" , "web前端" , 16]
@@ -60,19 +60,19 @@
   ["交互设计" , "交互设计" , 6]
   ,
 
-  ["spring" , "Spring" , 1]
+  ["spring" , "Spring" , 3]
   ,
 
   ["web后端" , "web后端" , 1]
   ,
 
-  ["git" , "git" , 1]
+  ["git" , "Git" , 2]
   ,
 
   ["索引" , "索引" , 1]
   ,
 
-  ["storm" , "storm" , 2]
+  ["storm" , "storm" , 7]
   ,
 
   ["python" , "Python" , 2]
@@ -87,7 +87,7 @@
   ["websocket" , "websocket" , 1]
   ,
 
-  ["kafka" , "kafka" , 2]
+  ["kafka" , "kafka" , 4]
   ,
 
   ["gc" , "GC" , 1]
@@ -102,10 +102,40 @@
   ["zookeeper" , "zookeeper" , 1]
   ,
 
-  ["webservice" , "webservice" , 2]
+  ["jvm" , "JVM" , 1]
   ,
 
-  ["elasticsearch" , "Elasticsearch" , 3]
+  ["mysql" , "mysql" , 1]
+  ,
+
+  ["ehcache" , "ehcache" , 1]
+  ,
+
+  ["disconf" , "disconf" , 1]
+  ,
+
+  ["docker" , "docker" , 1]
+  ,
+
+  ["linux" , "linux" , 1]
+  ,
+
+  ["spring-cloud" , "spring-cloud" , 1]
+  ,
+
+  ["数据库" , "数据库" , 2]
+  ,
+
+  ["less" , "Less" , 1]
+  ,
+
+  ["liquid" , "liquid" , 1]
+  ,
+
+  ["scala" , "Scala" , 1]
+  ,
+
+  ["spark" , "Spark" , 1]
    
 
 ]

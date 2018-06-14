@@ -1,0 +1,25 @@
+---
+layout: null
+type: json
+---
+[	
+	{% for year in site.data.years %}
+		{% assign y = year.y %}
+		{% for author in site.authors %}
+			{% assign blogcount = 0 %}
+			{% for post in site.posts %}
+				{% assign postyear = post.date | date: "%Y" %}
+				{% if postyear == y and post.author == author.name %}
+		    		{% assign blogcount = blogcount | plus : 1 %}
+				{% endif %}
+			{% endfor %}
+    {
+        "name"    : "{{ author.name }}",
+        "year"    : "{{ y }}",
+        "path"    : "{{ author.page_path }}",
+        "articles":  {{ blogcount }}
+    }		{% if forloop.last == false %},{% endif %}
+    	{% endfor %}
+    	{% if forloop.last == false %},{% endif %}
+    {% endfor %}
+]
