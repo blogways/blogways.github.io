@@ -132,7 +132,13 @@
   ["liquid" , "liquid" , 1]
   ,
 
+  ["webservice" , "webservice" , 2]
+  ,
+
   ["scala" , "Scala" , 1]
+  ,
+
+  ["elasticsearch" , "Elasticsearch" , 3]
   ,
 
   ["spark" , "Spark" , 1]
