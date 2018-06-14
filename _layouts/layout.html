@@ -11,9 +11,13 @@
     <script src="/jquery-3.2.1.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/global.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+    <script>AV.initialize("{{site.leancloud.app_id}}", "{{site.leancloud.app_key}}");</script>
+    <script src="/js/leancloud-analytics.js"></script>
 </head>
 <body>
-    {% include leancloud-analytics.html %}
+    <!-- {% include leancloud-analytics.html %} -->
     {% include header.html %}
     {{ content }}
     {% include footer.html %}
