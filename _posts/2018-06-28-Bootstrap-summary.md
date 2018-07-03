@@ -19,7 +19,7 @@ Bootstrap的整个框架是以HTML和CSS为基础，并加以一些Javascript插
 Bootstrap在网站及网络应用开发的工具主要集中在了四个模块：排版（layout)，内容(content)，部件(component),以及使用性(utilities)。
 ## 1.Layout
 Bootstrap 提供了一个十二网格系统，并拥有响应式的网络系统，其内容可根据显示器窗口大小调整。这对于网站的排版提供了巨大的便利，特别是当网站需要同时满足不同大小或分辨率的显示器，也为网站在移动端平台的开发提供了便利。
-![12grid]（https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3593067203,124634057&fm=27&gp=0.jpg）
+![12grid](/images/12grids.png)
 开发者亦可以通过十二网格系统的规则来决定网页内容在不同大小的显示屏中如何呈现，例如
 
 <div class="row">
@@ -56,7 +56,7 @@ Bootstrap对于原CSS的组件进行了整理和改进，特别是对于一些�
 
 ## 4.utilities
 Bootstrap增加了许多不同风格的实用性的工具以提高网站开发的效率，减少开发者自定义的CSS class的数量，并减少文件大小。
-实用工具以class的形式来表达特定的属性，这些实用工具和组件一样用class的形式添加,无需适用任何CSS代码，例如边框，边框颜色，圆角半径，框架内自带的工具有很多，也在官网[website]:（https://getbootstrap.com/docs/4.1/utilities/borders/）上列举出来，例如：在bootstrap框架中可以简单的通过`<div class="fixed-top">` 让整个<div>区间保持在显示器的上方
+实用工具以class的形式来表达特定的属性，这些实用工具和组件一样用class的形式添加,无需适用任何CSS代码，例如边框，边框颜色，圆角半径，框架内自带的工具有很多，也在官网[website](https://getbootstrap.com/docs/4.1/utilities/borders/）上列举出来，例如：在bootstrap框架中可以简单的通过`<div class="fixed-top">` 让整个<div>区间保持在显示器的上方
 
 ## 5.其他
 Bootstrap4 相比于Bootstrap3还是做出了明显的改变。CSS的源文件从LESS变成了SASS格式，并对整个表单系统做出了调整，使开发者可以便捷的加入自定义的元素。此外Bootstrap4对于原bootstrap3的组件实用规范做出了一系列的调整，例如菜单导航，折叠，响应式表格/图片等。
