@@ -31,7 +31,7 @@ Bootstrap 提供了一个十二网格系统，并拥有响应式的网络系统�
 Bootstrap对于一些HTML的基础元素的参数进行了更改使其变得简洁美观，并将所有的CSS文档保存在一份文件中。Bootstrap对于版面设计，多行代码编写，以及图片和表格的显示做出了规范，以求不同元素在不同类别的显示中最优化的显现
 
 例如，Headings和List同时的margin数值都被调整，基础的form与table形式也被调整的更简洁，对于显示规则也作出了一些调整，比如<label>的显示形式被调整为inline-block。
-具体的规范可去官网查阅：！[content](http://getbootstrap.com/docs/4.1/content/reboot/)
+具体的规范可去官网查阅：[content](http://getbootstrap.com/docs/4.1/content/reboot/)
 
 ## 3.Component
 Bootstrap对于原CSS的组件进行了整理和改进，特别是对于一些常用的组件，Bootstrap提供了跟简便的适用方法并添加了新的元素，整个Bootstrap包含了模拟框，滚动监听，标签页，轮播，折叠，表单，警告框，弹出框，胶囊式菜单，多媒体对象，进度条等网络开发时经常用到的元素，大大提高了开发的效率。如需要更详细的了解所有组件可以去官网或源代码内查阅。
