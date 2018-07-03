@@ -38,23 +38,23 @@ Bootstrap对于原CSS的组件进行了整理和改进，特别是对于一些�
 
 以Navigation Bar来举一个例子，在bootstrap框架中仅运用以下的代码就可以建立一个菜单导航页，相比于利用自己定义CSS来制作便捷了很多，省去了很多对于格式的调整。
 
-<nav class="navbar navbar-default">
-   <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">WebSiteName</a>
-      </div>
-      <ul class="nav navbar-nav">
-       <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li>
-        <li><a href="#">Page 3</a></li>
-      </ul>
-    </div>
-  </nav>
+	<nav class="navbar navbar-default">
+   	     <div class="container-fluid">
+      		<div class="navbar-header">
+        	    <a class="navbar-brand" href="#">WebSiteName</a>
+     	        </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li>
+                    <li><a href="#">Page 3</a></li>
+                </ul>
+            </div>
+        </nav>
 
 但是，Bootstrap自带的工具也提供了一定的局限性，譬如Bootstrap自带的菜单栏的折叠按钮只能在自带的菜单栏中使用，无法应用到自定义的菜单栏中，因此开发者需要自行定义CSS来满足需求。同理，如果开发者希望调整框架自带的一些基础设定，可以利用CSS工具或到源代码处自行调整。
 
-## 4.utilities
+## 4.Utilities
 Bootstrap增加了许多不同风格的实用性的工具以提高网站开发的效率，减少开发者自定义的CSS class的数量，并减少文件大小。
 实用工具以class的形式来表达特定的属性，这些实用工具和组件一样用class的形式添加,无需适用任何CSS代码，例如边框，边框颜色，圆角半径，框架内自带的工具有很多，也在官网[website](https://getbootstrap.com/docs/4.1/utilities/borders/）上列举出来，例如：在bootstrap框架中可以简单的通过`<div class="fixed-top">` 让整个<div>区间保持在显示器的上方
 
