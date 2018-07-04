@@ -2,7 +2,7 @@
 layout: post
 category: web前端
 title: Bootstrap 简介
-tags:['Bootstrap','Web Development','前端''网页']
+tags: ['Bootstrap','Web Development','前端''网页']
 author: 张向民
 description: Bootstrap框架的简介
 ---
