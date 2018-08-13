@@ -30,7 +30,7 @@
   ["jquery" , "jQuery" , 22]
   ,
 
-  ["java" , "Java" , 12]
+  ["java" , "Java" , 14]
   ,
 
   ["solr" , "Solr" , 6]
@@ -48,7 +48,7 @@
   ["design" , "design" , 11]
   ,
 
-  ["web前端" , "web前端" , 16]
+  ["web前端" , "web前端" , 17]
   ,
 
   ["keepalived" , "keepalived" , 1]
