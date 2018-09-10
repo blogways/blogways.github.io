@@ -142,6 +142,9 @@
   ,
 
   ["spark" , "Spark" , 1]
+  ,
+
+  ["elastic-job" , "Elastic-Job" , 1]
    
 
 ]
