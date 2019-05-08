@@ -144,7 +144,10 @@
   ["spark" , "Spark" , 1]
   ,
 
-  ["elastic-job" , "Elastic-Job" , 1]
+  ["elastic-job" , "Elastic-Job" , 2]
+  ,
+
+  ["seata" , "seata" , 1]
    
 
 ]
