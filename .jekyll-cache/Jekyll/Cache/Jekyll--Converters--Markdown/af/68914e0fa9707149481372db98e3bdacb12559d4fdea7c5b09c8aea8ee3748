@@ -1,0 +1,87 @@
+I"�<p>Flyway是一款开源的数据库版本管理工具，包含社区版、专业版和企业版，可以独立于应用实现管理并跟踪数据库变更。支持多种配置，包括<code class="language-plaintext highlighter-rouge">Java API</code>、<code class="language-plaintext highlighter-rouge">Command line</code>、<code class="language-plaintext highlighter-rouge">maven</code> 和 <code class="language-plaintext highlighter-rouge">gradle</code>。</p>
+
+<h2 id="一入门">一、入门</h2>
+<p>本文使用<code class="language-plaintext highlighter-rouge">社区版 Flyway</code> 的<code class="language-plaintext highlighter-rouge">maven 插件</code>来迁移数据库，数据库为 <code class="language-plaintext highlighter-rouge">MySQL</code>。</p>
+
+<h3 id="1新建-maven-项目">1、新建 maven 项目</h3>
+<p>在 <code class="language-plaintext highlighter-rouge">resources</code> 目录下建立 <code class="language-plaintext highlighter-rouge">db/migration</code> 目录。</p>
+
+<p><img src="/images/jyjsjd/flyway_dir.png" alt="flyway_dir.png" /></p>
+
+<h3 id="2修改-pomxml">2、修改 pom.xml</h3>
+<p>添加 Flyway 插件，并配置 mysql 的<code class="language-plaintext highlighter-rouge">连接字符串</code>、<code class="language-plaintext highlighter-rouge">用户名</code>和<code class="language-plaintext highlighter-rouge">密码</code>：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;build&gt;</span>
+  <span class="nt">&lt;plugins&gt;</span>
+    <span class="nt">&lt;plugin&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.flywaydb<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>flyway-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>5.0.5<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;url&gt;</span>jdbc:mysql://hostname:port#/db_name<span class="nt">&lt;/url&gt;</span>
+        <span class="nt">&lt;user&gt;</span>username<span class="nt">&lt;/user&gt;</span>
+        <span class="nt">&lt;password&gt;</span>password<span class="nt">&lt;/password&gt;</span>
+      <span class="nt">&lt;/configuration&gt;</span>
+    <span class="nt">&lt;/plugin&gt;</span>
+  <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</code></pre></div></div>
+
+<h3 id="3迁移数据库">3、迁移数据库</h3>
+<p>（1）建立一个<code class="language-plaintext highlighter-rouge">空</code>数据库用于测试。</p>
+
+<p>（2）在 <code class="language-plaintext highlighter-rouge">db/migration</code> 目录下建立 SQL 脚本 <code class="language-plaintext highlighter-rouge">V1__Create_person_table.sql</code>：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">create</span> <span class="k">table</span> <span class="n">PERSON</span> <span class="p">(</span>
+    <span class="n">ID</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">NAME</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>（3）运行 maven 命令：<code class="language-plaintext highlighter-rouge">mvn flyway:migrate</code>，数据库中会建立表 <code class="language-plaintext highlighter-rouge">flyway_schema_history</code> 跟踪数据库版本，插入第一次迁移记录，并执行 SQL 脚本。</p>
+
+<p><img src="/images/jyjsjd/migrate.png" alt="migrate.png" /></p>
+
+<h3 id="4第二次迁移">4、第二次迁移</h3>
+<p>（1）在 <code class="language-plaintext highlighter-rouge">db/migration</code> 目录下建立 SQL 脚本 <code class="language-plaintext highlighter-rouge">V2__Add_people.sql</code>：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">insert</span> <span class="k">into</span> <span class="n">PERSON</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">NAME</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'Axel'</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">PERSON</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">NAME</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">'Mr. Foo'</span><span class="p">);</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">PERSON</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">NAME</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">'Ms. Bar'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>（2）运行 maven 命令：<code class="language-plaintext highlighter-rouge">mvn flyway:migrate</code>，<code class="language-plaintext highlighter-rouge">flyway_schema_histry</code> 会插入第二条记录，并执行 SQL 脚本：</p>
+
+<p><img src="/images/jyjsjd/migrate2.png" alt="migrate2.png" /></p>
+
+<h2 id="二命令">二、命令</h2>
+
+<h3 id="1flyway-迁移">1、Flyway 迁移</h3>
+<p>（1）带版本的迁移：迁移脚本带版本号，每一次带版本的迁移都有<code class="language-plaintext highlighter-rouge">版本号</code>、<code class="language-plaintext highlighter-rouge">描述</code>和<code class="language-plaintext highlighter-rouge">校验和</code>，并且只能执行<em>一次</em>。典型用于数据表结构变更等。</p>
+
+<p>（2）可重复的迁移：和带版本的迁移不同，它没有版本号，只有<code class="language-plaintext highlighter-rouge">描述</code>和<code class="language-plaintext highlighter-rouge">校验和</code>，而且可以<em>多次</em>执行。典型用于插入数据等操作。</p>
+
+<p>（3）脚本命名规则：</p>
+
+<p><img src="/images/jyjsjd/migration_naming.png" alt="migration_naming.png" /></p>
+
+<h3 id="2flyway-命令">2、Flyway 命令</h3>
+<ul>
+  <li>migrate：把数据库迁移到最新版本，迁移是根据 <code class="language-plaintext highlighter-rouge">db/migration</code> 目录下的脚本<code class="language-plaintext highlighter-rouge">顺序</code>执行。</li>
+  <li>clean：<code class="language-plaintext highlighter-rouge">清空</code>数据库中的数据，<em>不能在生产环境使用此命令</em>。</li>
+  <li>info：打印出版本迁移信息。</li>
+  <li>validate：验证要执行的迁移脚本。</li>
+  <li>baseline：为已经存在的数据库建立基线，迁移数据库将建立在基线的基础上。</li>
+  <li>repair：修复 <code class="language-plaintext highlighter-rouge">flyway_schema_histry</code> 表。</li>
+</ul>
+
+<h2 id="三flyway-管理已存在的数据库">三、Flyway 管理已存在的数据库</h2>
+
+<ul>
+  <li>导出脚本：把现有数据库的结构和数据导出为 SQL 脚本，起名如 <code class="language-plaintext highlighter-rouge">V1__Base_version.sql</code>。</li>
+  <li>清理数据：这步可以跳过，如果数据不再需要可以运行清理命令：<code class="language-plaintext highlighter-rouge">mvn flyway:clean</code>。</li>
+  <li>建立基线：<code class="language-plaintext highlighter-rouge">mvn flyway:baseline</code>。</li>
+</ul>
+
+<p>之后对数据库的修改就可以通过 Flyway 来管理了。</p>
+:ET

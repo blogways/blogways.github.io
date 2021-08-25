@@ -1,0 +1,676 @@
+I"6t<div class="code fl">
+    <dl>
+    <dt>目录</dt>
+    <dd>
+    <ol type="I">
+        <li><a href="#1">概述</a></li>
+        <li>
+            <a href="#2">Function的那些事儿</a>
+            <ol type="1">
+                <li>arguments不是Array，但可以构造出一个Array对象来！</li>
+                <li>相同功能，不同调用形式的两方法——apply和call</li>
+                <li>去优雅地使用apply和call吧！</li>
+                <li>使用bind方法，再造函数！</li>
+                <li>uncurryThis，你知道吗？</li>
+            </ol>
+        </li>
+        <li>
+            <a href="#3">Array的那些事儿</a>
+            <ol type="1">
+                <li>可以浅度复制数组的slice方法</li>
+                <li>不仅仅作用于数组的堆栈操作，四方法：push/pop/shift/unshift</li>
+                <li>可删可插入的splice方法</li>
+                <li>forEach/map/reduce的实现与效率！</li>
+                <li>其他：join/concat/sort/reverse/...</li>
+            </ol>
+        </li>
+        <li><a href="#4">结束</a></li>
+    </ol>
+    </dd>
+    </dl>
+</div>
+
+<p><a name="1"></a></p>
+<h3 id="一概述">一、概述</h3>
+
+<p>在JavaScript中，内置对象Array和Function本身提供了不少方法，有些方法为人所熟知，有些方法则不被注意。而有些方法虽然被人所熟悉，却又有不被重视的使用场景，去实现一些妙用。</p>
+
+<p>本文结合当下自己的使用心得，一方面做个分享，一方面也是个备忘，哈哈！</p>
+
+<p><a name="2"></a></p>
+<h3 id="二function的那些事儿">二、Function的那些事儿</h3>
+
+<h4 id="21-arguments不是array">2.1 arguments不是Array！</h4>
+
+<p><code class="language-plaintext highlighter-rouge">arguments</code>是函数被执行时，传入的实参集合。他直接在函数里面被类似于一个数组进行访问。</p>
+
+<p>在Chrome浏览器的控制台执行下面代码（<em>本文代码都可以在Chrome浏览器的控制台中运行</em>）：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function testFunc() { 
+    console.log(arguments);
+    
+    for(var i=0; i&lt;arguments.length; ++i) {
+        console.log(arguments[i]);
+    }
+        
+    for(var idx in arguments) {
+        console.log(arguments[idx]);
+    }
+}
+</code></pre></div></div>
+<p>传入参数运行:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>testFunc(1,2,3,4)
+</code></pre></div></div>
+<p>执行结果：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1, 2, 3, 4]
+1
+2
+3
+4
+1
+2
+3
+4
+</code></pre></div></div>
+
+<p>从上面例子中，我们可以访问<code class="language-plaintext highlighter-rouge">arguments</code>的<code class="language-plaintext highlighter-rouge">length</code>属性，来确定实参的个数，以及通过下标对<code class="language-plaintext highlighter-rouge">arguments</code>进行访问，获取我们需要的某个参数。</p>
+
+<p><strong><span style="color:red">注意</span>：arguments不是一个Array！</strong></p>
+
+<p>示例代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var testFunc = function() { 
+    console.log("[] 是一个 Array？"+Array.isArray([]));
+    console.log("arguments 是一个Array？"+Array.isArray(arguments));
+    console.log("arguments toString:" + arguments.toString());
+}
+</code></pre></div></div>
+<p>传入参数运行:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>testFunc(1,2,3,4)
+</code></pre></div></div>
+<p>执行结果：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[] 是一个 Array？true
+arguments 是一个Array？false
+arguments toString:[object Arguments] 
+</code></pre></div></div>
+
+<p><strong><span style="color:red">提示</span>：我们可以基于arguments构造一个数组对象</strong></p>
+
+<p>示例代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var testFunc = function() { 
+    var args = Array.prototype.slice.apply(arguments);
+    console.log("args 是一个 Array?"+Array.isArray(args));
+    console.log(args);
+}
+</code></pre></div></div>
+
+<p>运行：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>testFunc(1,2,3,4)
+</code></pre></div></div>
+
+<p>结果：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>args 是一个 Array?true
+[1, 2, 3, 4]
+</code></pre></div></div>
+
+<p>当然，你也可以在构造的同时，对实参进行裁剪。参考代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var testFunc = function() { 
+    var args = Array.prototype.slice.call(arguments, 1);
+    console.log(args);
+}
+</code></pre></div></div>
+
+<h4 id="22-相同功能不同参数形式的两方法apply和call">2.2 相同功能，不同参数形式的两方法——apply和call</h4>
+
+<p>这两个方法的功能相同，只是定义参数方式不同：
+它们的作用都是将函数绑定到另外一个对象上去运行，两者仅在定义参数方式有所区别：</p>
+
+<blockquote>
+  <p>Function.apply(thisArg,argArray);</p>
+</blockquote>
+
+<blockquote>
+  <p>Function.call(thisArg[,arg1,arg2…]);</p>
+</blockquote>
+
+<p>他们的功能，都是将函数绑定到一个指定的对象上去运行，即所有函数内部的this指针都会被赋值为thisArg。</p>
+
+<p>这种功能，可以实现将函数作为特定对象的方法，进行执行的目的。</p>
+
+<p>为什么会有这两种不同的形式呢？是为满足需求，而决定的！</p>
+
+<p><code class="language-plaintext highlighter-rouge">Function.call</code>的形式很自然，调用起来很方便，就像<code class="language-plaintext highlighter-rouge">2.1</code>小节最后那个例子那样。在这个例子中，你肯定不愿意使用<code class="language-plaintext highlighter-rouge">Function.apply</code>，是不是？</p>
+
+<p>但是，它存在一个缺点：当函数的参数个数是动态的，只能在运行过程中才能确定下来，那么使用<code class="language-plaintext highlighter-rouge">Function.call</code>就不合适了，就只能使用<code class="language-plaintext highlighter-rouge">Function.apply</code>了。在运行过程中，将动态的参数都放到数组中去，然后把数组作为一个参数，传给<code class="language-plaintext highlighter-rouge">Function.apply</code>。这样就完美的解决问题了！</p>
+
+<h4 id="23-去优雅地使用apply和call吧">2.3 去优雅地使用apply和call吧</h4>
+
+<p>有一个动态数组:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var numbers=[]
+for(var i=0; i&lt;100; ++i) {
+    numbers[i] = Math.floor(Math.random()*10000);
+}
+</code></pre></div></div>
+
+<p>要求：从中找到最大数和最小数。</p>
+
+<p>先看看常规的方法吧：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>max = -Infinity, min = +Infinity;
+
+numbers.forEach(function(item) {
+  if (item &gt; max) max = item;
+  if (item &lt; min) min = item;
+})
+</code></pre></div></div>
+
+<p>那么，如何优雅地使用<code class="language-plaintext highlighter-rouge">apply</code>去编码呢？</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var max = Math.max.apply(null, numbers);
+var min = Math.min.apply(null, numbers);
+</code></pre></div></div>
+
+<p>就执行效率而言，后者也比前者快！</p>
+
+<p>当然，就解决这个题目而言，还有更快的方案，有兴趣地话，可以看看笔者的测试：<a href="http://jsperf.com/apply-vs-loop-for-max/2"><code class="language-plaintext highlighter-rouge">http://jsperf.com/apply-vs-loop-for-max/2</code></a>。这个测试的结果，可能会颠覆你的认知，让你惊讶的。^_^</p>
+
+<h4 id="24-使用bind方法定制函数">2.4 使用bind方法，定制函数！</h4>
+
+<p>先看定义：</p>
+
+<blockquote>
+  <p>fun.bind(thisArg[, arg1[, arg2[, …]]])</p>
+</blockquote>
+
+<p>如果说，前面的<code class="language-plaintext highlighter-rouge">apply</code>和<code class="language-plaintext highlighter-rouge">call</code>方法是将函数绑定到特定的对象上去执行。那么，<code class="language-plaintext highlighter-rouge">bind</code>方法，就是只绑定，不执行。</p>
+
+<p>它生成一个新的方法，它可以给已知的函数<code class="language-plaintext highlighter-rouge">fun</code>绑定执行的对象<code class="language-plaintext highlighter-rouge">thisArg</code>，还可以绑定执行的参数<code class="language-plaintext highlighter-rouge">[, arg1[, arg2[, ...]]]</code>，绑定的参数可以是部分，也可以是全部。</p>
+
+<p>所以，就实现的功能而言，<code class="language-plaintext highlighter-rouge">bind</code>方法也可以借助<code class="language-plaintext highlighter-rouge">apply</code>方法，用下面代码模拟：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Function.prototype.bind = function(ctx) {
+    var fn = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+    return function() {
+        fn.apply(ctx, args.concat(Array.prototype.slice.call(arguments)));
+    };
+}
+</code></pre></div></div>
+
+<p>那么，<code class="language-plaintext highlighter-rouge">bind</code>有哪些作用，适合用在哪些场合呢？</p>
+
+<p>看下面这段代码：</p>
+
+<p>背景设定：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.x = 9; 
+var module = {
+  x: 81,
+  getX: function() { return this.x; }
+};
+</code></pre></div></div>
+
+<p>调用：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>module.getX(); // 81
+</code></pre></div></div>
+
+<p>如你所愿，执行结果是 <code class="language-plaintext highlighter-rouge">81</code>.</p>
+
+<p>有时，你可能不经意间，进行赋值：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var getX = module.getX;
+</code></pre></div></div>
+
+<p>再运行：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getX(); // 9, because in this case, "this" refers to the global object
+</code></pre></div></div>
+<p>可能，你希望结果是 <code class="language-plaintext highlighter-rouge">81</code>，但却是<code class="language-plaintext highlighter-rouge">9</code>.</p>
+
+<p>怎么才能让结果仍然是 <code class="language-plaintext highlighter-rouge">81</code>呢？</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// create a new function with 'this' bound to module
+var boundGetX = getX.bind(module);
+boundGetX(); // 81
+</code></pre></div></div>
+<p>是的，如上使用<code class="language-plaintext highlighter-rouge">bind</code>就可以了！</p>
+
+<h4 id="25-uncurrythis你知道吗">2.5 uncurryThis，你知道吗？</h4>
+
+<p><code class="language-plaintext highlighter-rouge">uncurryThis</code>话题，来自于<code class="language-plaintext highlighter-rouge">Brendan Eich</code>(<code class="language-plaintext highlighter-rouge">JavaScript</code>之父)的一个<a href="http://twitter.com/BrendanEich/status/128975787448741891">tweet</a>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">uncurryThis</code>的最重要的用途，就是<strong>将对象的方法变为函数去使用</strong>。</p>
+
+<p>特殊一点，可以将A对象的方法a使用到B对象上去。在前面<code class="language-plaintext highlighter-rouge">2.1</code>小节中，我们就用到了这个技巧，在<code class="language-plaintext highlighter-rouge">Arguments</code>对象上使用了<code class="language-plaintext highlighter-rouge">Array</code>对象的方法<code class="language-plaintext highlighter-rouge">slice</code>。很有用，不是吗？</p>
+
+<p>那么怎么实现<code class="language-plaintext highlighter-rouge">uncurryThis</code>呢？</p>
+
+<ul>
+  <li>
+    <p>扩展Function原型去实现（Brendan Eich写的实现代码）:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Function.prototype.uncurryThis = function () {
+      var f = this;
+      return function () {
+          var a = arguments;
+          return f.apply(a[0], [].slice.call(a, 1));
+      };
+};
+</code></pre></div>    </div>
+
+    <p>使用：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var toUpperCase = String.prototype.toUpperCase.uncurryThis();
+[ "foo", "bar", "baz" ].map(toUpperCase)
+</code></pre></div>    </div>
+
+    <p>运行结果：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ 'FOO', 'BAR', 'BAZ' ]
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>独立的函数实现：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var uncurryThis = function(f) {
+      var call = Function.call;
+      return function() {
+          return call.apply(f, arguments);
+      };
+};
+</code></pre></div>    </div>
+
+    <p>使用：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var toUpperCase = uncurryThis(String.prototype.toUpperCase);
+[ "foo", "bar", "baz" ].map(toUpperCase)
+</code></pre></div>    </div>
+
+    <p>运行结果：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ 'FOO', 'BAR', 'BAZ' ]
+</code></pre></div>    </div>
+    <p><a name="3"></a></p>
+    <h3 id="三array的那些事儿">三、Array的那些事儿</h3>
+  </li>
+</ul>
+
+<p>Array是个很常用的内置对象，在Javascript规范的逐步完善中，其内置方法在不知不觉中已经提供了很多了。本文仅介绍一些常用的方法。</p>
+
+<h4 id="31-可以浅度复制数组的slice方法">3.1 可以浅度复制数组的slice方法</h4>
+
+<p>定义：</p>
+
+<blockquote>
+  <p>arr.slice(begin[, end])</p>
+</blockquote>
+
+<p>说明：返回一个新的浅度复制数组，包含从 <code class="language-plaintext highlighter-rouge">begin</code> 到 <code class="language-plaintext highlighter-rouge">end</code> （不包括该元素）的 <code class="language-plaintext highlighter-rouge">arr</code> 中的元素。(<em>原数组内容不发生变化</em>)</p>
+
+<p><code class="language-plaintext highlighter-rouge">begin</code>和<code class="language-plaintext highlighter-rouge">end</code>表示在原数组上，选取的范围。如果<code class="language-plaintext highlighter-rouge">end</code>省略，表示原数组的结尾。 如果<code class="language-plaintext highlighter-rouge">begin</code>省略，表示从0位开始。也可以是负数，表示从原数组的尾部开始计算位置。</p>
+
+<p>举例：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var arr = [1,2,3,4,5,6,7,8];
+arr.slice(2,4);      // [3, 4]
+arr.slice(4);        // [5, 6, 7, 8]
+arr.slice(-3);       // [6, 7, 8]
+arr.slice(3, -2);    // [4, 5, 6]
+arr.slice(-3, -1);   // [6, 7]
+arr.slice();         // [1,2,3,4,5,6,7,8]
+</code></pre></div></div>
+
+<p><strong><span style="color:red">提示</span>：利用<code class="language-plaintext highlighter-rouge">Array.prototype.slice</code>,我们可以将一个类似array对象，转换为array对象</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">arguments</code>不是数组，但可以转换为数组。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var args = Array.prototype.slice.call(arguments);
+</code></pre></div></div>
+
+<p>我们还可以看一个例子：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function a() { return {length:2, 0:"hello", 1:"world"}}
+
+var t = a();
+
+var z = Array.prototype.slice.call(t);
+
+t instanceof Array;      // false
+z instanceof Array       // true
+console.log(z);          // ["hello", "world"] 
+</code></pre></div></div>
+
+<h4 id="32-不仅仅作用于数组的堆栈操作四方法pushpopshiftunshift">3.2 不仅仅作用于数组的堆栈操作，四方法：push/pop/shift/unshift</h4>
+
+<p>先看定义：</p>
+
+<blockquote>
+  <p>arr.push(element1, …, elementN)</p>
+</blockquote>
+
+<blockquote>
+  <p>arr.pop()</p>
+</blockquote>
+
+<blockquote>
+  <p>arr.shift()</p>
+</blockquote>
+
+<blockquote>
+  <p>arr.unshift(element1, …, elementN)</p>
+</blockquote>
+
+<p>说明：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">push</code>将n个元素<code class="language-plaintext highlighter-rouge">element1, ..., elementN</code>追加到数组的尾部，其返回值为调用后数组的长度；</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var sports = ["soccer", "baseball"];
+var total = sports.push("football", "swimming");
+console.log(sports); // ["soccer", "baseball", "football", "swimming"]
+console.log(total);  // 4
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">pop</code>将数组的最后一个对象删除，其返还值就是这个删除的元素。如果是个空数组，则返回值为<code class="language-plaintext highlighter-rouge">undefined</code>;</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var myFish = ["angel", "clown", "mandarin", "surgeon"];
+var popped = myFish.pop();
+console.log(myFish);  // ["angel", "clown", "mandarin"] 
+console.log(popped);  // "surgeon"
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">shift</code> 删除数组的第一个数，并且数组内剩余的值，坐标依次前移。返回值为删掉的元素。如果是个空数组，那么返回值为<code class="language-plaintext highlighter-rouge">undefined</code>;</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var myFish = ["angel", "clown", "mandarin", "surgeon"];
+var shifted = myFish.shift();
+console.log(myFish);   // ["clown", "mandarin", "surgeon"]
+console.log(shifted);  // "angel"
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">unshift</code>将n个元素<code class="language-plaintext highlighter-rouge">element1, ..., elementN</code>插入道数组的头部。其返回值为调用后数组的长度。</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var arr = [1, 2];
+arr.unshift(0); // result of call is 3, the new array length
+// arr is [0, 1, 2]
+arr.unshift(-2, -1); // = 5
+// arr is [-2, -1, 0, 1, 2]
+arr.unshift( [-3] );
+// arr is [[-3], -2, -1, 0, 1, 2]
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>通过上面这四个方法，可以对数组进行堆栈操作了。</p>
+
+<p><strong><span style="color:red">注意</span>：这四个用作堆栈操作的方法，其实还支持非数组对象。不过，支持的对象需要类似数组。从某种角度而言，这也是支持你实现自定义的具有堆栈功能的对象。</strong></p>
+
+<p>所谓的类似数组，就是有<code class="language-plaintext highlighter-rouge">length</code>属性，可以通过<code class="language-plaintext highlighter-rouge">0...n</code>下标去访问元素。仅此，即可！</p>
+
+<p>看代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var myQueue = function() {return {length:0}};
+
+var tz = new myQueue();
+
+Array.prototype.push.call(tz, "hello", "world");  // 2
+
+console.log(Array.prototype.slice.call(tz));  //["hello", "world"] 
+
+Array.prototype.shift.call(tz);     // "hello"
+
+console.log(Array.prototype.slice.call(tz));  //["world"] 
+
+Array.prototype.unshift.call(tz, "hello");    // 2
+
+console.log(Array.prototype.slice.call(tz));  //["hello", "world"] 
+
+Array.prototype.pop.call(tz);     // "world"
+
+console.log(Array.prototype.slice.call(tz));  //["hello"] 
+
+</code></pre></div></div>
+
+<p>神奇吧！</p>
+
+<h4 id="33-可删可插入的splice方法">3.3 可删可插入的splice方法</h4>
+
+<p>先看定义：</p>
+
+<blockquote>
+  <p>array.splice(index , howMany[, element1[, …[, elementN]]])</p>
+</blockquote>
+
+<blockquote>
+  <p>array.splice(index)   // SpiderMonkey/Firefox/Chrome extension</p>
+</blockquote>
+
+<p>其中， <code class="language-plaintext highlighter-rouge">index</code>表示数组中操作所开始的位置。如果大于数组的长度，那就重定位为数组的尾端。如果是负数，那就从数组的尾端向前移。<code class="language-plaintext highlighter-rouge">howMany</code>，表示要删除的个数，如果是0，则表示不删除。<code class="language-plaintext highlighter-rouge">[, element1[, ...[, elementN]]]</code>，表示要插入的个数。 该方法的返回值为：删除的元素数组。</p>
+
+<p>看实例：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var myFish = ["angel", "clown", "mandarin", "surgeon"];
+
+//removes 0 elements from index 2, and inserts "drum"
+var removed = myFish.splice(2, 0, "drum");
+//myFish is ["angel", "clown", "drum", "mandarin", "surgeon"]
+//removed is [], no elements removed
+
+//removes 1 element from index 3
+removed = myFish.splice(3, 1);
+//myFish is ["angel", "clown", "drum", "surgeon"]
+//removed is ["mandarin"]
+
+//removes 1 element from index 2, and inserts "trumpet"
+removed = myFish.splice(2, 1, "trumpet");
+//myFish is ["angel", "clown", "trumpet", "surgeon"]
+//removed is ["drum"]
+
+//removes 2 elements from index 0, and inserts "parrot", "anemone" and "blue"
+removed = myFish.splice(0, 2, "parrot", "anemone", "blue");
+//myFish is ["parrot", "anemone", "blue", "trumpet", "surgeon"]
+//removed is ["angel", "clown"]
+
+//removes 2 elements from index 3
+removed = myFish.splice(3, Number.MAX_VALUE);
+//myFish is ["parrot", "anemone", "blue"]
+//removed is ["trumpet", "surgeon"]
+</code></pre></div></div>
+
+<p><strong><span style="color:red">提示</span>：我们可以用splice方法来实现数组的堆栈操作：push/pop/shift/unshift方法</strong></p>
+
+<ul>
+  <li>函数方式实现：</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var push = function(arr) {
+    var args = Array.prototype.slice.call(arguments,1);
+    args = [arr.length, 0].concat(args);
+    Array.prototype.splice.apply(arr, args);
+    return arr.length;
+}
+
+var pop = function(arr) {
+    if (arr.length==0) return undefined;
+    var el = Array.prototype.splice.call(arr, arr.length-1);
+    return el[0];
+}
+
+var shift = function(arr) {
+    if (arr.length==0) return undefined;
+    var el = Array.prototype.splice.call(arr, 0, 1);
+    return el[0];
+}
+
+
+var unshift = function(arr) {
+    var args = Array.prototype.slice.call(arguments,1);
+    args = [0, 0].concat(args);
+    Array.prototype.splice.apply(arr, args);
+    return arr.length;
+}
+
+</code></pre></div></div>
+
+<ul>
+  <li>原型方式实现：</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Array.prototype.push = function() {
+    var self = this;
+    var args = Array.prototype.slice.call(arguments);
+    args = [self.length, 0].concat(args);
+    Array.prototype.splice.apply(self, args);
+    return self.length;
+}
+
+Array.prototype.pop = function() {
+    var self = this;
+    if (self.length==0) return undefined;
+    var el = Array.prototype.splice.call(self, self.length-1);
+    return el[0];
+}
+
+Array.prototype.shift = function() {
+    var self = this;
+    if (self.length==0) return undefined;
+    var el = Array.prototype.splice.call(self, 0, 1);
+    return el[0];
+}
+
+
+Array.prototype.unshift = function() {
+    var self = this;
+    var args = Array.prototype.slice.call(arguments);
+    args = [0, 0].concat(args);
+    Array.prototype.splice.apply(self, args);
+    return self.length;
+}
+
+</code></pre></div></div>
+
+<p>由于是使用<code class="language-plaintext highlighter-rouge">splice</code>方法来替代实现的，所以，这些方法不能用于类似数组对象。</p>
+
+<p>笔者做了下性能对比测试：原生的最快，原型形式模拟的次之，函数形式模拟的最慢。性能测试见：<a href="http://jsperf.com/splice-vs-push-pop-shift-unshift">http://jsperf.com/splice-vs-push-pop-shift-unshift</a></p>
+
+<h4 id="34-foreachmapreduce的实现与效率">3.4 forEach/map/reduce的实现与效率！</h4>
+
+<p>先看定义：</p>
+
+<blockquote>
+  <p>arr.forEach(callback[, thisArg])</p>
+
+  <p>arr.reduce(callback,[initialValue])</p>
+
+  <p>arr.map(callback[, thisArg])</p>
+</blockquote>
+
+<p>给使用示例：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var numbers=[]
+for(var i=0; i&lt;100; ++i) {
+    numbers[i] = i;
+}
+
+var sum = 0;
+numbers.forEach(function(item) {
+  sum += item;
+})
+
+console.log(sum);   //4950
+
+var sum = numbers.reduce(function(sum, item){
+    return sum+item;
+}, 0);
+
+console.log(sum);  //4950
+
+numbers.slice(1,4).map(function(item){return Math.pow(item,2)});  //[1, 4, 9]
+
+</code></pre></div></div>
+
+<p>不太想写新手入门教程。写到这里，想说的是<span style="color:red">注意</span>下面几点：</p>
+
+<ul>
+  <li>使用<code class="language-plaintext highlighter-rouge">reduce</code>可以替代<code class="language-plaintext highlighter-rouge">forEach</code>的实现，并且效率略高一点点。实现和测试可见：<a href="http://jsperf.com/apply-vs-loop-for-max/2"><code class="language-plaintext highlighter-rouge">http://jsperf.com/apply-vs-loop-for-max/2</code></a>；</li>
+  <li>无论<code class="language-plaintext highlighter-rouge">forEach</code>还是<code class="language-plaintext highlighter-rouge">reduce</code>，都没有手写的<code class="language-plaintext highlighter-rouge">loop</code>循环效率高。具体测试可见<a href="http://jsperf.com/apply-vs-loop-for-max/2"><code class="language-plaintext highlighter-rouge">http://jsperf.com/apply-vs-loop-for-max/2</code></a>；</li>
+  <li>无论<code class="language-plaintext highlighter-rouge">forEach</code>还是<code class="language-plaintext highlighter-rouge">map</code>，其中的<code class="language-plaintext highlighter-rouge">callback</code>都是同步执行的，<code class="language-plaintext highlighter-rouge">async.js</code>框架中提供了对应的异步实现。</li>
+</ul>
+
+<h4 id="35-其他joinconcatsortreverseeverysome">3.5 其他：join/concat/sort/reverse/every/some…</h4>
+
+<p>Array内置了很多方法，下面在给出几个使用较多的方法的定义及使用示例。</p>
+
+<p>定义：</p>
+
+<blockquote>
+  <p>str = arr.join(separator)</p>
+</blockquote>
+
+<blockquote>
+  <p>arr.concat(value1, value2, …, valueN)</p>
+
+  <p>arr.sort([compareFunction])</p>
+
+  <p>arr.reverse()</p>
+
+  <p>arr.every(callback[, thisArg])</p>
+
+  <p>arr.some(callback[, thisArg])</p>
+</blockquote>
+
+<p>使用示例：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var a = new Array("Wind","Rain","Fire");
+var myVar1 = a.join();      // assigns "Wind,Rain,Fire" to myVar1
+var myVar2 = a.join(", ");  // assigns "Wind, Rain, Fire" to myVar2
+var myVar3 = a.join(" + "); // assigns "Wind + Rain + Fire" to myVar3
+
+
+var alpha = ['a', 'b', 'c'];
+var alphaNumeric = alpha.concat(1, [2, 3]);   //["a", "b", "c", 1, 2, 3] 
+alphaNumeric = alpha.concat(1,[2,3],[[4]]);   //["a", "b", "c", 1, 2, 3, [4]]
+ 
+
+var scores = [1, 2, 10, 21]; 
+scores.sort(); // [1, 10, 2, 21]
+scores.sort(function(a,b){return a-b}); //[1, 2, 10, 21]
+
+
+var myArray = ["one", "two", "three"];
+myArray.reverse();    // ["three", "two", "one"]
+
+
+
+function isBigEnough(element, index, array) {
+  return (element &gt;= 10);
+}
+var passed = [12, 5, 8, 130, 44].every(isBigEnough);   //false
+passed = [12, 54, 18, 130, 44].every(isBigEnough);     //true
+
+
+passed = [2, 5, 8, 1, 4].some(isBigEnough);  //false
+passed = [12, 5, 8, 1, 4].some(isBigEnough);  //true
+
+</code></pre></div></div>
+
+<p><strong><span style="color:red">注意</span>：<code class="language-plaintext highlighter-rouge">concat</code>是浅层复制，从上面例子中也可以看出来。</strong>，如果想实现深层复制，可以参考<code class="language-plaintext highlighter-rouge">underscore.js</code>框架中的<code class="language-plaintext highlighter-rouge">_.flatten</code>,或者参考<code class="language-plaintext highlighter-rouge">prototype.js</code>框架中的<code class="language-plaintext highlighter-rouge">Array#flatten()</code>。</p>
+
+<p><a name="4"></a></p>
+<h3 id="四结束">四、结束</h3>
+
+<p>非常高兴，你能耐心看完这篇文章，希望能给你带来帮助！欢迎讨论！</p>
+:ET

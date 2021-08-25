@@ -1,0 +1,67 @@
+I"�
+<h2 id="一概述">一、概述</h2>
+<p>HTML 语言很简单，但是却比较难写。各种标签、符号实在是太多了，标签又包含很多属性、class、id。想写出一个好看的静态页面确实是非常耗时而且麻烦。</p>
+
+<p>下面要介绍的 Zen Coding 是一种借助 CSS 选择器的方式帮你快速编写 HTML 代码的方法。它能用很短的语句写出很长的 HTML 代码。</p>
+
+<p>让我们来见识一下它的威力。</p>
+
+<h2 id="二实例介绍">二、实例介绍</h2>
+<p>在开始使用 Zen Coding 之前，介绍一下它支持的 CSS 选择器：</p>
+
+<ul>
+  <li>E：
+元素名称(div, p);</li>
+  <li>E#id：
+使用id的元素(div#content, p#intro, span#error);</li>
+  <li>E.class：
+使用类的元素(div.header, p.error.critial). 你也可以联合使用class和idID: div#content.column.width;</li>
+  <li>E&gt;N：
+子代元素(div&gt;p, div#footer&gt;p&gt;span);</li>
+  <li>E+N：
+兄弟元素(h1+p, div#header+div#content+div#footer);</li>
+  <li>E<em>N：
+元素倍增(ul#nav&gt;li</em>5&gt;a);</li>
+  <li>E$<em>N：
+条目编号 (ul#nav&gt;li.item-$</em>5);</li>
+</ul>
+
+<p>Zen Coding 其实就是基于这样的语法来快速生成 HTML 的。</p>
+
+<h3 id="编辑器">编辑器</h3>
+<p>下面所做的演示全部都来自 <em>Atom</em>，<em>Brackets</em> 同样也支持 Zen Coding。</p>
+
+<h3 id="实例一">实例一</h3>
+<p>在编辑器中输入：
+<code class="language-plaintext highlighter-rouge">！</code>
+然后按<em>tab</em>键。
+最后生成的结果是：</p>
+
+<p><img src="/images/jyjsjd/example1.png" alt="example1.png" /></p>
+
+<p>没错就是这么<em>神奇</em>。</p>
+
+<h3 id="实例二">实例二</h3>
+<p>在页面中添加一个 class 为 <em>col-sm-6</em> 的 div 标签，只需要输入
+<code class="language-plaintext highlighter-rouge">div.col-sm-6</code>，然后按 tab 键。</p>
+
+<p>如果想添加12个 class 为 <em>col-sm-1</em> 的 div 标签呢？</p>
+
+<p>只需要输入<code class="language-plaintext highlighter-rouge">div.col-sm-1*12</code>。</p>
+
+<p>同理，如果想要输出 id 为 test 的 div 标签只需要把<code class="language-plaintext highlighter-rouge">.</code>换成<code class="language-plaintext highlighter-rouge">#</code>就行了。</p>
+
+<h3 id="实例四">实例四</h3>
+<p>在页面中添加</p>
+
+<p><img src="/images/jyjsjd/example2.png" alt="example2.png" /></p>
+
+<p>输入<code class="language-plaintext highlighter-rouge">h1+p</code>即可。</p>
+
+<h3 id="实例五">实例五</h3>
+<p>想要下面这种效果？</p>
+
+<p><img src="/images/jyjsjd/example3.png" alt="example3.png" /></p>
+
+<p>输入<code class="language-plaintext highlighter-rouge">div.item$*3</code>！</p>
+:ET

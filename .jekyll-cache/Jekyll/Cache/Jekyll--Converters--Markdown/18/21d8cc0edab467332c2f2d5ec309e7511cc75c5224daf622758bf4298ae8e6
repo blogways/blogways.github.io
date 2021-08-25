@@ -1,0 +1,45 @@
+I"�<h3 id="一服务端开发">一、服务端开发</h3>
+
+<ol>
+  <li>编写SEI(Service Endpoint Interface)，SEI在webservice中称为portType，在java中称为接口，代码如下：</li>
+</ol>
+
+<p><img src="/images/chenlong/wb_02.png" alt="webservice_02.png" /></p>
+
+<ol>
+  <li>编写SEI实现类，并作为webservice提供服务类，代码如下：</li>
+</ol>
+
+<p><img src="/images/chenlong/wb_03.png" alt="webservice_03.png" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SEI实现类中至少要有一个非静态的公开方法需要作为webservice服务方法。
+public class 上边要加上@WebService 
+</code></pre></div></div>
+
+<ol>
+  <li>查看wsdl</li>
+</ol>
+
+<p>地址栏中输入<code class="language-plaintext highlighter-rouge">http://127.0.0.1:1234/weather?wsdl</code>查看</p>
+
+<h3 id="二wsimport生产客户端调用类">二、wsimport生产客户端调用类</h3>
+
+<p>wsimport具体使用可以使用命令 <code class="language-plaintext highlighter-rouge">wsimport -help</code>或者自行百度学习。</p>
+
+<p>新建一个名为wsimport的工程，cmd命令进入该工程的src目录，输入如下命令：<code class="language-plaintext highlighter-rouge">wsimport -s . http://127.0.0.1:1234/weather?wsdl</code>，刷新该工程，将src下生成.java文件代码Copy到webservice客户端工程中。</p>
+
+<h3 id="三客户端编写">三、客户端编写</h3>
+
+<p>代码如下：</p>
+
+<p><img src="/images/chenlong/wb_04.png" alt="webservice_04.png" /></p>
+
+<p>运行结果：</p>
+
+<p><img src="/images/chenlong/wb_06.png" alt="webservice_06.png" /></p>
+
+<p>最后，附上上述三个工程的结构：</p>
+
+<p><img src="/images/chenlong/wb_05.png" alt="webservice_05.png" /></p>
+
+:ET

@@ -1,0 +1,43 @@
+I"�<p>#使用libreOffice将office文件转为pdf
+##一、前言
+功能需求：上传office文档，并提供文件在线预览。</p>
+
+<p>之前提到了使用poi将文档转换html去预览。这篇文章讲下方案二中使用libreOffice将office文件转为pdf。</p>
+
+<p>使用libreOffice,需要安装使用libreOffice，linux还需要装unoconv，需要使用commons-io的pom依赖，之前maven官方库查询不到这个pom依赖所以放弃了这个方案，刚才准备查询资料时发现这个依赖已经可以使用，估计是前段时间maven官方库出现问题。</p>
+
+<h2 id="二安装libreoffice">二、安装libreOffice</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install libreoffice
+yum install libreoffice-headless
+
+tar -zxvf LibreOffice_5.4.0_Linux_x86-64_rpm.tar.gz
+cd LibreOffice_5.4.0.3_Linux_x86-64_rpm/RPMS
+yum install *.rpm
+</code></pre></div></div>
+
+<h2 id="三安装中文字体库">三、安装中文字体库</h2>
+<p>转换过程中可能会出现中文乱码问题。拷贝window的文字库拷贝到服务器下</p>
+
+<p>1、进入c:\windows\Fonts ，复制所需要的字体；</p>
+
+<p>2、将复制的文件放入服务器 /usr/share/font/ 目录下；</p>
+
+<p>3、刷新系统即刻生效，输入命令：sudo fc-cache -fv。</p>
+
+<h2 id="四转换成pdf">四、转换成pdf</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/libreoffice  --invisible --convert-to pdf --outdir /root/out/ zzz.docx
+</code></pre></div></div>
+
+<p>–outdir后面的参数是转换后的pdf文件保存的目录,最后的文件绝对路径也可以放在–outdir前面。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/libreoffice  --invisible --convert-to pdf /root/out/ --outdir zzz.docx
+</code></pre></div></div>
+
+<p>如果是自行编译需要带版本号:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/libreoffice5.4  --invisible --convert-to pdf --outdir /root/out/ zzz.docx
+</code></pre></div></div>
+
+:ET

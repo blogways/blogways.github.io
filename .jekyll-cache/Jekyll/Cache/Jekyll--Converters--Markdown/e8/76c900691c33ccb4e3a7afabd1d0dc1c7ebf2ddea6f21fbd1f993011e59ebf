@@ -1,0 +1,23 @@
+I"v<p>在IBM AIX平台下编译redis还是比较顺利的. 我没有直接使用官方的<code class="language-plaintext highlighter-rouge">Makefile</code>，参考了下官方<code class="language-plaintext highlighter-rouge">Makefile</code>中的编译依赖关系，按照平时常用的格式自己写了个<code class="language-plaintext highlighter-rouge">Makefile</code>文件。</p>
+
+<p>首先，编译<code class="language-plaintext highlighter-rouge">hiredis</code>时，主要在编译命令中定义了三个宏:<code class="language-plaintext highlighter-rouge">__HIREDIS_FMACRO_H</code>、<code class="language-plaintext highlighter-rouge">_BSD_SOURCE</code>、<code class="language-plaintext highlighter-rouge">AF_LOCAL=AF_UNIX</code>,编译就顺利通过了。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-D__HIREDIS_FMACRO_H -D_BSD_SOURCE -DAF_LOCAL=AF_UNIX 
+</code></pre></div></div>
+
+<p>编译服务器代码，稍微麻烦点，因为编译过程中会提示</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"redis.h", line 502.9: 1506-275 (S) Unexpected text integer constant encountered.
+</code></pre></div></div>
+
+<p>这是因为，<code class="language-plaintext highlighter-rouge">redis.h</code>中结构体<code class="language-plaintext highlighter-rouge">redisServer</code>用到了一个名为<code class="language-plaintext highlighter-rouge">hz</code>的成员,而<code class="language-plaintext highlighter-rouge">hz</code>这玩意在aix平台下被定义过。至此，编译就报错了。</p>
+
+<p>我在文件中加了<code class="language-plaintext highlighter-rouge">#undef hz</code>，解决了。</p>
+
+<p>同样，编译服务器代码，采用相同的思路，这次添加了四个宏定义，如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-D_XOPEN_SOURCE_EXTENDED=1 -D_ISOC99_SOURCE -D_ALL_SOURCE -DAF_LOCAL=AF_UNIX
+</code></pre></div></div>
+
+<p>以上修改后，redis的服务器代码和客户端代码的编译顺利通过！</p>
+:ET

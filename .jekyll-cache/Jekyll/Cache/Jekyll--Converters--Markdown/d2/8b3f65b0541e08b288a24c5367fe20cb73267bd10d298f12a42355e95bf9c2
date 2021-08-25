@@ -1,0 +1,71 @@
+I"�	<p>##一、静态与实力方法共享的设计
+学习jqeury的时候会发现也和其它编程语言一样存在有实例方法和静态方法，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(".a").each()   //作为实例方法存在
+$.each()             //作为静态方法存在 上面是对class=a的进行遍历，下面是可以遍历任何想要遍历的东西，在jQuery中都是通过一个方法实现的
+
+jQuery.prototype = {
+    each: function( callback, args ) {
+        return jQuery.each( this, callback, args );
+    }
+} 可以看到这样就能公用一个方法
+
+ajQuery.fn = ajQuery.prototype = {
+        name: 'aaron',
+        init: function(selector) {
+               this.selector = selector;
+               return this;
+        },
+        constructor: ajQuery
+}
+ajQuery.fn.init.prototype = ajQuery.fn
+</code></pre></div></div>
+
+<p>方法都是要构造才行的，静态的each 可以直接添加进jquery构造器，但是实力方法不行，通过上面的代码将jQuery的原型对象覆盖了init构造器的原型对象，这样也可以直接构造实例方法了。</p>
+
+<p>##二、方法链式调用的设计
+使用jQuery的时候经常链式调用，可以一直操作你取出来的一段东西，方便，代码量少</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>map: function( callback ) {
+	return this.pushStack( jQuery.map(this, function( elem, i ) {
+		return callback.call( elem, i, elem );
+	}));
+},
+
+slice: function() {
+	return this.pushStack( slice.apply( this, arguments ) );
+},
+
+first: function() {
+	return this.eq( 0 );
+},
+
+last: function() {
+	return this.eq( -1 );
+},
+
+eq: function( i ) {
+	var len = this.length,
+		j = +i + ( i &lt; 0 ? len : 0 );
+	return this.pushStack( j &gt;= 0 &amp;&amp; j &lt; len ? [ this[j] ] : [] );
+},
+
+end: function() {
+	return this.prevObject || this.constructor(null);
+} 比如说以上的各种 return this 这样就可以一直调用了。
+</code></pre></div></div>
+
+<p>##三、插件接口的设计
+jQuery 可以自己扩展方法，一般方法存在于下面两个地方</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jQuery.extend({
+    data:function(){},
+    removeData:function(){}
+})
+
+jQuery.fn.extend({
+    data:function(){},
+    removeData:function(){}
+}) 就相当于自己扩展其它语言里的实例方法和静态方法。
+</code></pre></div></div>
+:ET

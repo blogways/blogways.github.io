@@ -1,0 +1,86 @@
+I"�<h2 id="安装">安装</h2>
+
+<p>下载：http://nexus.sonatype.org/downloads/</p>
+
+<p>解压到服务器上</p>
+
+<ol>
+  <li>
+    <p>unix 启动：</p>
+
+    <p>目录：./nexus-2.3.1-01-bundle/nexus-2.3.1-01/bin/jsw/linux-x86-64</p>
+
+    <p>启动 nexus 服务：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [spdev@slave2 linux-x86-64]$ sh nexus start
+ 	Starting Nexus OSS... 
+ 	Started Nexus OSS
+</code></pre></div>    </div>
+
+    <p>从控制台可以看到 nexus 已经启动成功，可以在浏览器中访问</p>
+
+    <p>http://192.168.4.19:8081/nexus/index.html#view-repositories</p>
+
+    <p>login：admin/admin123</p>
+
+    <p>里面自带一些已经创建好的仓库供参考</p>
+  </li>
+  <li>
+    <p>window 启动：</p>
+
+    <p>目录：\nexus-2.3.1-01-bundle\nexus-2.3.1-01\bin\jsw\windows-x86-64</p>
+
+    <p>启动 nexus 服务:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> start-nexus.bat
+ wrapper  | The nexus service is already running with status: RUNNING
+</code></pre></div>    </div>
+
+    <p>访问同上，nexus 默认端口是 8081 ，如果有冲突可以在 \nexus-2.3.1-01-bundle\nexus-2.3.1-01\conf\nexus.properties 配置文件里面修改</p>
+  </li>
+</ol>
+
+<h2 id="创建我们自己的仓库">创建我们自己的仓库</h2>
+<ol>
+  <li>
+    <p>创建主机仓库</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Add/Hosted Repository
+ Repository ID: Sphost
+ Repository Name: SP Host
+ Repository Policy: Release
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>创建代理仓库</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Add/Proxy Repository
+ Repository ID: spproxy
+ Repository Name: SP Proxy
+ Remote Storage Location: http://repo1.maven.org/maven2/
+ Download remote indexes: true
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>创建快照仓库</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Add/Hosted Repository
+ Repository ID: Spsnap
+ Repository Name: SP Snap
+ Repository Policy: snapshot
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>创建仓库组</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> add/Repository Group
+ Group ID:spgroup
+ Group Name: SP Group
+ Publish URL: TRUE
+ Ordered group repositories: SP Host、SP Proxy、SP Snap
+</code></pre></div>    </div>
+
+    <p>每个仓库后面都对应一个 repository path，这个地址在配 maven 的 setting.xml 跟项目的 pom.xml 文件里面的地址要对应上，否则会下载不走主机仓库或者没法发布到主机仓库。由于现在主机连不上网，代理仓库无法连到网上下载，本地maven从代理仓库下不了的时候会默认自动从中心库上下载所需要的jar包。</p>
+  </li>
+</ol>
+:ET

@@ -1,0 +1,143 @@
+I""<h1 id="在drupal上部署主题">在Drupal上部署主题</h1>
+
+<h2 id="一简单粗暴法profile文件">一.简单粗暴法（profile文件）</h2>
+
+<p>以Avira主题为例</p>
+
+<h4 id="1系统需求">1.系统需求</h4>
+
+<ul>
+  <li>
+    <p>Drupal 7</p>
+  </li>
+  <li>
+    <p>主题文件：avira_install_profile.zip</p>
+  </li>
+  <li>
+    <p>Web server：Apache，Nginx</p>
+  </li>
+  <li>
+    <p>PHP 5.2.5 or higher</p>
+  </li>
+  <li>
+    <p>MySQL 5.0.15 or higher</p>
+  </li>
+</ul>
+
+<h4 id="2主题安装">2.主题安装</h4>
+
+<p>将主题文件解压到服务器目录下，用浏览器打开该目录，接下来的步骤和安装drupal的步骤类似，可根据视频所示安装即可。</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I9sScpIcO7E" frameborder="0" allowfullscreen=""></iframe>
+
+<blockquote>
+  <p>该视屏在youtobe上，可能需要翻墙观看</p>
+</blockquote>
+
+<h2 id="二修改数据库法">二.修改数据库法</h2>
+
+<ol>
+  <li>
+    <p>进入phpmyadmin，新建数据库，当然也可以使用命令新建数据库。</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> mysql -u root -p
+ create database Ariva;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>进入该数据库，将主题的数据库文件导入数据库。</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> use Ariva;
+ source /data/spdev/chenfan/Ariva/Ariva.sql;
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>然后把主题包解压放到服务器目录下，修改主题配置文件。主题配置文件在主题目录/sites/default/setting.php,并且修改该文件。然后用浏览器打开该主题目录即可</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo vi /data/spdev/chenfan/Ariva/sites/default/settings.php
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>　　修改下图部分:</p>
+
+<p><img src="\images\post\database.jpg" alt="database" /></p>
+
+<h2 id="三在已有drupal中安装主题">三.在已有drupal中安装主题</h2>
+
+<ol>
+  <li>
+    <p>下载主题文件</p>
+  </li>
+  <li>
+    <p>使用FTP工具将其放在drupal的<code class="language-plaintext highlighter-rouge">sites/all/themes/</code>目录下</p>
+  </li>
+  <li>
+    <p>打开drupal admin toolbar，点击 Appearance，找到导入的主题</p>
+  </li>
+  <li>
+    <p>然后点击主题下的Enable and set default，设置成默认主题</p>
+  </li>
+  <li>
+    <p>点击Theme settings，可以设置一些主题的基本操作</p>
+  </li>
+</ol>
+
+<h2 id="四在已有的drupal中部署主题">四.在已有的drupal中部署主题</h2>
+
+<p>在三中安装后的主题，是没有任何内容，这时我们需要加载一些模块来充实内容，使用这种方式也可以比较自由的设计自己心目当中想要的模块</p>
+
+<p>因为这里的内容较多，我只对常用的几大模块做些介绍</p>
+
+<h4 id="1slider幻灯片模块">1.slider（幻灯片模块）</h4>
+
+<p>在<a href="http://your-site.com/admin/modules">drupal官网</a>下载 jquery_update、imce、Layer slider，并将其解压放到<code class="language-plaintext highlighter-rouge">sites/all/modules/</code>中</p>
+
+<p>打开 drupal admin toolbar ，点击Modules，使下载的模块enable</p>
+
+<p>然后在drupal admin toolbar 中会显示layer slider，点击设计幻灯片</p>
+
+<p>在Home » Administration » Structure 中将该幻灯片放在你想放的位置，一般我们作为首页展示，会放在主页位置</p>
+
+<p>如下图所示</p>
+
+<p><img src="\images\post\slider.jpg" alt="slider" /></p>
+
+<p>便可以在主页前端看到出现该幻灯片</p>
+
+<h4 id="2菜单栏">2.菜单栏</h4>
+
+<p>在<a href="http://your-site.com/admin/modules">drupal官网</a>下载 Superfish 模块在设计菜单栏，并将其解压放到<code class="language-plaintext highlighter-rouge">sites/all/modules/</code>中</p>
+
+<p>打开 drupal admin toolbar ，点击Modules，使下载的模块enable</p>
+
+<p>在Home » Administration » Structure 中，有 “Superfish 1 (Superfish)”  点击”Configure”</p>
+
+<ul>
+  <li>
+    <p>在模块 title field 输入 : <none></none></p>
+  </li>
+  <li>
+    <p>在模块 description 输入: Main menu</p>
+  </li>
+  <li>
+    <p>在 Region settings -&gt; Nevia 选择 “Main menu”</p>
+  </li>
+  <li>
+    <p>拉到底部点击”save block”</p>
+  </li>
+</ul>
+
+<h4 id="3主页模块">3.主页模块</h4>
+
+<p>打开 drupal admin toolbar ，点击Content，然后add content，选择Basic page在这里你可以添加自己的页面，然后在settings里连接到想到链接的页面</p>
+
+<h4 id="4blog">4.blog</h4>
+
+<p>在<a href="http://your-site.com/admin/modules">drupal官网</a>下载 blog page 模块在设计菜单栏，并将其解压放到<code class="language-plaintext highlighter-rouge">sites/all/modules/</code>中</p>
+
+<p>打开 drupal admin toolbar ，点击Modules，使下载的模块enable</p>
+
+<p>然后点击Content ，add content选择blog，该模块可以添加标签等功能</p>
+
+:ET

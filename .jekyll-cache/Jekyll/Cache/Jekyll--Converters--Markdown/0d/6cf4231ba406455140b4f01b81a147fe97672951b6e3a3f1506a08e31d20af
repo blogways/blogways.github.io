@@ -1,0 +1,117 @@
+I"7<p>如果，你需要创建多个项目，项目之间即独立又有关系，那么创建一个Maven多模块项目是个非常好的选择，也非常cool！怎么在Eclipse里面创建多模块工程，以及需要注意哪些地方，我在这里做个简单的介绍。</p>
+
+<h3 id="一准备">一、准备</h3>
+
+<p>若想在Eclipse里面做这些的话，那么在做这一切前，请确认你是否已经在eclipse里面安装了maven插件。如果没有装插件，那只能通过命令行去做了。</p>
+
+<p>好，现在假设已经在Eclipse里面装了maven插件，那么我们一起用Eclipse来创建Maven多模块项目吧！</p>
+
+<h3 id="二先创建父项目">二、先创建父项目</h3>
+
+<ol>
+  <li>在Eclipse里面New -&gt; <code class="language-plaintext highlighter-rouge">Maven Project</code>；</li>
+  <li>在弹出界面中选择“Create a simple project”</li>
+  <li>
+    <p>设置工程的参数，见下图<br /><img src="/images/post/maven-modules1.png" alt="Params Settings" /></p>
+
+    <ul>
+      <li>Group Id: com.example</li>
+      <li>Artifact Id: multi-modules-demo</li>
+      <li><span style="color:red">Packaging: pom</span></li>
+      <li>Name: Multi Modules Demo</li>
+    </ul>
+  </li>
+  <li>点击完成</li>
+</ol>
+
+<p>这样，我们就按常规模版创建了一个Maven工程。我们还需要对这个工程进行修改。</p>
+
+<p>因为，这是一个父项目，不需要有什么源码，那么，我们在Eclipse中将这个工程下的不用的目录都删除，仅留下<code class="language-plaintext highlighter-rouge">pom.xml</code>文件就行了。</p>
+
+<h3 id="三创建子项目">三、创建子项目</h3>
+
+<ol>
+  <li>选中刚建的父项目，在弹出菜单中点击 New -&gt; <code class="language-plaintext highlighter-rouge">Maven Module</code>;</li>
+  <li>如图配置<br /><img src="/images/post/maven-modules3.png" alt="child settings" /></li>
+  <li>使用默认的Archetype（默认：GroupId:org.apache.maven.archetypes,Artifact Id:maven-archetype-quickstart）</li>
+  <li>完成工程配置，见下图<br /><img src="/images/post/maven-modules4.png" alt="Params Settings" /></li>
+  <li>点击完成</li>
+</ol>
+
+<p>这样一个子项目就创建完成了，在文件系统中，子项目会建在父项目的目录中。在父目录中运行<code class="language-plaintext highlighter-rouge">mvn test</code>等命令，所有的子项目都会按顺序执行。</p>
+
+<p>细心一点的人，可能会发现，通过这个步骤创建子项目的同时，会修改父项目的<code class="language-plaintext highlighter-rouge">pom.xml</code>，增加了类似下面的信息：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;modules&gt;
+  	    &lt;module&gt;module-children1-demo&lt;/module&gt;
+&lt;/modules&gt;
+</code></pre></div></div>
+
+<p>这个信息，就是标记有哪些子模块。</p>
+
+<p>重复创建子项目的步骤，可以创建多个子项目。</p>
+
+<h3 id="四优化配置">四、优化配置</h3>
+
+<p>虽然上面的步骤，可以完成多模块的创建，但是创建出来的多模块，在一个程序员的眼里，还是挺别扭的，怎么回事呢？对，存在重复。那让我们重构吧。</p>
+
+<p>按上面步骤创建的子项目，在<code class="language-plaintext highlighter-rouge">pom.xml</code>中有个<code class="language-plaintext highlighter-rouge">parent</code>节点，所以，他可以继承父项目的相关信息。没错，父子项目中存在继承关系。</p>
+
+<p>在子项目的<code class="language-plaintext highlighter-rouge">pom.xml</code>中，子项目的<code class="language-plaintext highlighter-rouge">groupId</code>和<code class="language-plaintext highlighter-rouge">version</code>一般和父项目相同，那么可以把子项目的这两个参数删除，这样会自动继承父项目的取值。</p>
+
+<p>同样，如果其他的一些属性，所有子项目都是一样的，那么可以上移到父项目中设置，子项目中无需重复设置。比如：<code class="language-plaintext highlighter-rouge">&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</code>可以仅在父项目中设置一次。</p>
+
+<p>除了这种情况以外，还有一种情况，就是依赖和插件。依赖和插件的情况是这样，某一个依赖或插件可能会被大部分子项目所使用，但是也可能有些子项目不需要使用，这样使用上述的方式，简简单单地进行继承就不合适了。</p>
+
+<p>Manen提供<code class="language-plaintext highlighter-rouge">dependencyManagement</code>和<code class="language-plaintext highlighter-rouge">pluginManagement</code>两个标签。使用这两个标签，可以在父项目中统一管理依赖和插件的配置参数，比如版本号啥的。而在子项目中，仅需列出需要使用的依赖和插件的<code class="language-plaintext highlighter-rouge">groupId</code>和<code class="language-plaintext highlighter-rouge">artifactId</code>就可以了，其他信息会自动从父项目管理的信息里面获取。</p>
+
+<p>看例子，父项目中：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependencyManagement&gt;
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;${junit.version}&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+        &lt;version&gt;1.7.5&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;version&gt;1.7.5&lt;/version&gt;
+    &lt;/dependency&gt;   
+  &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
+</code></pre></div></div>
+
+<p>在子项目中：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependencies&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre></div></div>
+
+<h3 id="四命令行创建">四、命令行创建</h3>
+
+<p>上面就是在Eclipse里面创建多模块的步骤，和一些优化配置。</p>
+
+<p>其中，具体的步骤可以根据实际情况进行适当的修改，比如选择<code class="language-plaintext highlighter-rouge">Archetype</code>时，可以根据需要，选择适当的<code class="language-plaintext highlighter-rouge">Archetype</code>。</p>
+
+<p>上述步骤中的一些环节，也可以先通过命令行来生成雏形，然后再修改<code class="language-plaintext highlighter-rouge">pom.xml</code>来实现。</p>
+
+<p>相关命令为:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mvn archetype:generate -DarchetypeCatalog=internal -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart
+</code></pre></div></div>
+
+<p>工程创建后需要修改<code class="language-plaintext highlighter-rouge">pom.xml</code>.修改方式，可以参考上面说到的内容。</p>
+:ET

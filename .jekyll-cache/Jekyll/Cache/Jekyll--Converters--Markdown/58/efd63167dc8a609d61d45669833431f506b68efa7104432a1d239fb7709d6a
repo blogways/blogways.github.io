@@ -1,0 +1,391 @@
+I"H=<h1 id="wordpress-公司主机安装教程">wordpress 公司主机安装教程</h1>
+
+<div class="code fl">
+    <dl>
+    <dt>目录</dt>
+    <dd>
+    <ol>
+        <li><a href="#1">介绍</a></li>
+        <li><a href="#2">安装前准备</a></li>
+        <li><a href="#3">配置变量环境</a></li>
+        <li><a href="#4">安装Apache</a></li>
+        <li><a href="#5">安装MySql</a></li>
+        <li><a href="#6">安装PHP</a></li>
+        <li><a href="#7">安装phpMyAdmin</a></li>
+        <li><a href="#8">安装WordPress</a></li>
+    </ol>
+    </dd>
+    </dl>
+</div>
+
+<h2 id="一-介绍">一.<a name="1"></a> 介绍</h2>
+
+<p>　　WordPress是一个注重美学、易用性和网络标准的个人信息发布平台。WordPress虽为免费的开源软件，但其价值无法用金钱来衡量。当前WordPress插件数据库中有超过18000个插件，包括SEO、控件等等。个人可以根据它的核心程序提供的规则自己开发模板和插件。这些插件可以快速地把你的博客改变成cms、forums、门户等各种类型的站点。</p>
+
+<h2 id="二-安装前准备">二. <a name="2"></a>安装前准备</h2>
+
+<p>Apache版本：</p>
+
+<ul>
+  <li>httpd-2.4.17.tar.gz</li>
+</ul>
+
+<p>Mysql 版本：</p>
+
+<ul>
+  <li>mysql-5.0.41.tar.gz</li>
+</ul>
+
+<p>Php版本：</p>
+
+<ul>
+  <li>php-7.0.0.tar.gz</li>
+</ul>
+
+<p>库文件准备：</p>
+
+<ul>
+  <li>autoconf-2.61.tar.gz</li>
+  <li>freetype-2.3.5.tar.gz</li>
+  <li>gd-2.1.1.tar.gz<br /></li>
+  <li>jpegsrc.v6b.tar.gz</li>
+  <li>libmcrypt-2.5.8.tar.gz</li>
+  <li>libpng-1.2.31.tar.gz</li>
+  <li>libxml2-2.6.30.tar.gz</li>
+  <li>zlib-1.2.3.tar.gz</li>
+  <li>phpMyAdmin-4.5.2-rc1-all-languages.tar.gz</li>
+</ul>
+
+<h2 id="三-配置变量环境">三. <a name="3"></a>配置变量环境</h2>
+
+<h3 id="1-安装libxml2">1. 安装libxml2</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/libxml2-2.6.30
+$./configure --prefix=/usr/local/libxml2
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<h3 id="2-安装libmcrypt">2. 安装libmcrypt</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/libmcrypt-2.5.8
+$./configure --prefix=/usr/local/libmcrypt
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<h3 id="3-安装zlib">3. 安装zlib</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/zlib-1.2.3
+$./configure
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<h3 id="4-安装libpng">4. 安装libpng</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/libpng-1.2.31
+$./configure --prefix=/usr/local/libpng
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<h3 id="5-安装jpeg6">5. 安装jpeg6</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$mkdir /usr/local/jpeg6
+$mkdir /usr/local/jpeg6/bin
+$mkdir /usr/local/jpeg6/lib
+$mkdir /usr/local/jpeg6/include
+$mkdir -p /usr/local/jpeg6/man/ma
+</code></pre></div></div>
+
+<blockquote>
+  <p>这个软件包安装有些特殊，其它软件包安装时如果目录不存在，会自动创建，但这个软件包安装时需要手动创建。</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/jpeg-6b
+$./configure --prefix=/usr/local/jpeg6/ --enable-shared --enable-static
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<h3 id="6-安装freetype">6. 安装freetype</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/freetype-2.3.5
+$./configure --prefix=/usr/local/freetype
+$make
+$make install
+</code></pre></div></div>
+
+<h3 id="7-安装autoconf">7. 安装autoconf</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/autoconf-2.61
+$./configure
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<h3 id="8-安装gd库">8. 安装GD库</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/gd-2.1.1
+$./configure \
+--prefix=/usr/local/gd2/ \
+--enable-m4_pattern_allow \
+--with-zlib=/usr/local/zlib/ \
+--with-jpeg=/usr/local/jpeg6/ \
+--with-png=/usr/local/libpng/ \
+--with-freetype=/usr/local/freetype/
+$make
+$make install
+</code></pre></div></div>
+
+<p><strong>1)</strong>　执行 make 报错：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make[2]: *** [gd_png.lo] Error 1  
+make[2]: Leaving directory /usr/local/src/gd-2.1.1  
+make[1]: *** [all-recursive] Error 1  
+make[1]: Leaving directory /usr/local/src/gd-2.1.1'  
+make: *** [all] Error 2  
+</code></pre></div></div>
+
+<p><strong>分析</strong>：这个问题是由于 gd 库中的 gd_png.c 源文件包含 png.h 时，png.h 没有找到导致的。</p>
+
+<p><strong>解决</strong>：在编译文件里 <code class="language-plaintext highlighter-rouge">vi gd_png.c</code> 将 <code class="language-plaintext highlighter-rouge">include "png.h"</code> 改成 <code class="language-plaintext highlighter-rouge">include "/usr/local/libpng/include/png.h"</code></p>
+
+<p><strong>2)</strong>　出现</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X--tag=CC: command not found
+</code></pre></div></div>
+
+<p><strong>解决</strong>：修改 aclocal.m4 文件，将上面的 <code class="language-plaintext highlighter-rouge">LIBTOOL＝'$(SHELL) $(top _builddir)/libtool'</code> 改成 <code class="language-plaintext highlighter-rouge">LIBTOOL='$(SHELL)  /usr/bin/libtool' </code>后重新执行 <code class="language-plaintext highlighter-rouge">./configure</code></p>
+
+<p><strong>3)</strong>　Invalid libtool wrapper script when make installing Apache</p>
+
+<p><strong>解决</strong>：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make clean
+--with-pcre=/usr/local/pcre
+</code></pre></div></div>
+
+<h2 id="四-安装apache"><a name="4"></a>四. 安装Apache</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cd /usr/local/src/httpd-2.2.9
+$./configure \
+--prefix=/usr/local/apache2 \
+--sysconfdir=/etc/httpd \
+--with-z=/usr/local/zlib \
+--with-included-apr \
+--with-apr=/usr/local/apr \
+--with-apr-util=/usr/local/apr-util /
+--with-pcre=/usr/local/pcre \
+--enable-so \
+--enable-deflate=shared \
+--enable-expires=shared \
+--enable-rewrite=shared \
+$make &amp;&amp; make install
+</code></pre></div></div>
+
+<p><strong>1)</strong>　执行 configure 出错：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>configure: error: Bundled APR requested but not found at ./srclib/.
+Download and unpack the corresponding apr and apr-util packages to ./srclib/.
+</code></pre></div></div>
+
+<p><strong>解决</strong>： 下载 api 和 api-util 安装到 apache 的 ./srclib/ 目录.</p>
+
+<p><strong>2)</strong>　<code class="language-plaintext highlighter-rouge">./configure</code> 命令后在执行 make 命令的时候报如下错误：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/ld: /usr/local/lib/libz.a(crc32.o): relocation RX86\_64\_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC   **解决**：下载 zlib-1.2.3.tar.gz 放在 /usr/local 目录执行以下命令：
+
+tar -zxvf zlib-1.2.3.tar.gz
+cd zlib-1.2.3
+./configure
+vi Makefile
+</code></pre></div></div>
+
+<p>找到 <code class="language-plaintext highlighter-rouge">CFLAGS=-O3 -DUSE\_MMAP</code>
+在后面加入-fPIC，即变成 <code class="language-plaintext highlighter-rouge">CFLAGS=-O3 -DUSE\_MAP -fPIC</code></p>
+
+<hr />
+<p><strong>启动Apache</strong></p>
+
+<p>/usr/local/apache2/bin/apachectl start</p>
+
+<p><strong>关闭Apache</strong></p>
+
+<p>/usr/local/apache2/bin/apachectl stop</p>
+
+<p><strong>查看80端口是否开启</strong></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>netstat -tnl</td>
+      <td>grep 80</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<p><strong>配置Apache</strong></p>
+
+<blockquote>
+  <p>标红部分为需要需改的地方</p>
+</blockquote>
+
+<p>&lt;font color=#DC143C&gt;ServerRoot “/usr/local/apache2”&lt;/font&gt;</p>
+<blockquote>
+  <p>你的apache软件安装的位置。其它指定的目录如果没有指定绝对路径，则目录是相对于该目录。</p>
+</blockquote>
+
+<p>PidFile logs/httpd.pid</p>
+<blockquote>
+  <p>第一个httpd进程(所有其他进程的父进程)的进程号文件位置。</p>
+</blockquote>
+
+<p>Listen 80</p>
+<blockquote>
+  <p>服务器监听的端口号。</p>
+</blockquote>
+
+<p>&lt;font color=#DC143C&gt;ServerName 10.20.16.78:80&lt;/font&gt;<br /></p>
+<blockquote>
+  <p>主站点名称（网站的主机名）。</p>
+</blockquote>
+
+<p>ServerAdmin admin@clusting.com</p>
+<blockquote>
+  <p>管理员的邮件地址。</p>
+</blockquote>
+
+<p>DocumentRoot “/data/spdev/chenfan”</p>
+<blockquote>
+  <p>主站点的网页存储位置。</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 变更路径
+&lt;Directory "/data/spdev/chenfan "&gt;
+	Options FollowSymLinks
+	AllowOverride None
+	Order allow,deny
+	#修改权限
+	Allow from all
+&lt;/Directory&gt;
+</code></pre></div></div>
+
+<h2 id="五-安装mysql"><a name="5"></a>五. 安装Mysql</h2>
+
+<h3 id="1-添加一个mysql标准组">1. 添加一个mysql标准组</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$groupadd mysql
+</code></pre></div></div>
+
+<h3 id="2-添加mysql用户并加到mysql组中">2. 添加mysql用户并加到mysql组中</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp;useradd -g mysql mysql
+&amp;cd /usr/local/src/mysql-5.0.41
+&amp;./configure \
+--prefix=/usr/local/mysql/ \
+--with-extra-charsets=all
+</code></pre></div></div>
+
+<h2 id="六-安装php"><a name="6"></a>六. 安装PHP</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$./configure \
+--prefix=/usr/local/php \
+--with-config-file-path=/usr/local/php/etc \
+--with-apxs2=/usr/local/apache2/bin/apxs \
+--with-mysql=/usr/local/mysql/mysql-cluster-gpl-7.2.8-linux2.6-x86_64/ \
+--with-libxml-dir=/usr/local/libxml2/ \
+--with-png-dir=/usr/local/libpng/ \
+--with-jpeg-dir=/usr/local/jpeg6/ \
+--with-freetype-dir=/usr/local/freetype/ \
+-with-gd=/usr/local/gd2/ \
+--with-zlib-dir=/usr/local/zlib/ \
+--with-mcrypt=/usr/local/libmcrypt/ \
+--with-mysqli=/usr/local/mysql/mysql-cluster-gpl-7.2.8-linux2.6-x86_64/bin/mysql_config \
+--enable-soap \
+--enable-mbstring=all \
+--enable-sockets
+</code></pre></div></div>
+
+<p><strong>配置PHP</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp /usr/local/src/php-5.3.16/php.ini-development  /usr/local/php/lib/php.ini
+</code></pre></div></div>
+
+<p>编辑 apache 配置文件</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$vi /etc/httpd/httpd.conf
+</code></pre></div></div>
+
+<p>添加这一条代码</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Addtype application/x-httpd-php .php .phtml
+</code></pre></div></div>
+
+<p><strong>测试</strong></p>
+
+<p>在 apache 的 htdocs 下建立一个 php 文件 test.php，里面的内容如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?php  
+	phpinfo();  
+?&gt;
+</code></pre></div></div>
+
+<p>然后在浏览器里输入 <a href="http://10.20.16.78/test.php">http://10.20.16.78/test.php</a>，出现 php 信息则为安装正确。</p>
+
+<h2 id="七-装载phpmyadmin"><a name="7"></a>七. 装载phpmyadmin</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$tar -zxvf phpMyAdmin-7.0.0-all-languages.tar.gz &gt;此时路径 /data/spdev/chenfan/phpMyAdmin-7.0.0-all-languages.tar.gz
+</code></pre></div></div>
+
+<p><strong>配置phpmyadmin</strong></p>
+
+<ol>
+  <li>重启apache 找到 /libraries/config.default.php文件(config.default.php复制到phpmyadmin目录下，然后更名为config.inc.php)，在linux下直接用vi编辑.</li>
+  <li>查找 <code class="language-plaintext highlighter-rouge">$cfg['PmaAbsoluteUri']</code> 修改为你将上传到空间的phpMyAdmin的网址
+如：<code class="language-plaintext highlighter-rouge">$cfg['PmaAbsoluteUri'] = 'http://10.20.16.78/admin/';</code></li>
+  <li>查找 <code class="language-plaintext highlighter-rouge">$cfg['Servers'][$i]['host'] = '10.20.16.78';</code>（通常用默认，也有例外，可以不用修改）</li>
+  <li>查找 ` $cfg[‘Servers’][$i][‘auth_type’] = ‘config’;`
+在自己的机子里调试用config；如果在网络上的空间用cookie，这里我们既然在前面已经添加了网址，就修改成cookie ，这里建议使用cookie.\</li>
+  <li>查找 <code class="language-plaintext highlighter-rouge">$cfg['Servers'][$i]['user'] = 'root';</code> // MySQL user（mysql用户名，自己机里用root；）</li>
+  <li>查找 <code class="language-plaintext highlighter-rouge">$cfg['Servers'][$i]['password'] = '123456'; </code>// MySQL password (mysql用户的密码,自己的服务器一般都是mysql用户root的密码)</li>
+  <li>查找 ` $cfg[‘Servers’][$i][‘only_db’] = ‘’;` // If set to a db-name, only（你只有一个数据就设置一下；如果你在本机或想架设服务器，那么建议留空）</li>
+  <li>查找 ` $cfg[‘DefaultLang’] = ‘zh’; `（这里是选择语言，zh代表简体中文的意思,这里不知道填gbk对否）</li>
+  <li>设置完毕后保存</li>
+</ol>
+
+<hr />
+<p><strong>出现错误</strong>：数据库连接错误</p>
+
+<p><strong>原因</strong>：绝对路径没有配置对</p>
+
+<p><strong>解决</strong>：修改 <code class="language-plaintext highlighter-rouge">$cfg['PmaAbsoluteUri'] = 'http://10.20.16.78/phpmyadmin/';</code></p>
+
+<h2 id="八装载wordpress"><a name="8"></a>八.装载wordpress</h2>
+
+<p>解压 wordpress</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$tar -zxvf wordpress-4.3.1-zh_CN.tar.gz
+</code></pre></div></div>
+
+<p>修改配置文件</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cp wp-config-sample.php wp-config.php
+$vi wp-config.php
+</code></pre></div></div>
+
+<p>define(‘DB_NAME’, ‘wordpress’);</p>
+<blockquote>
+  <p>数据库</p>
+</blockquote>
+
+<p>define(‘DB_USER’, ‘root’);</p>
+<blockquote>
+  <p>数据库名称</p>
+</blockquote>
+
+<p>define(‘DB_PASSWORD’, ‘<em>**</em>’);</p>
+<blockquote>
+  <p>数据库密码</p>
+</blockquote>
+
+<hr />
+<p><strong>出现错误</strong>：装载 php 时错误找不到 mysql_config</p>
+
+<p><strong>原因</strong>：指定的路径出错</p>
+
+<p><strong>解决办法</strong>：找到 <code class="language-plaintext highlighter-rouge">mysql\_config</code> 改成 <code class="language-plaintext highlighter-rouge">with-mysqli=/usr/local/mysql/mysql-cluster-gpl-7.2.8-linux2.6-x86\_64/bin/mysql_config \</code></p>
+:ET
