@@ -1,0 +1,105 @@
+I"�<h2 id="一commons-chain-介绍">一、Commons Chain 介绍</h2>
+<p><code class="language-plaintext highlighter-rouge">Chain of Responsibility（CoR）</code>模式也叫职责链模式或者职责连锁模式，是由GoF提出的23种软件设计模式的一种。Chain of Responsibility模式是行为模式之一，该模式构造一系列分别担当不同的职责的类的对象来共同完成一个任务，这些类的对象之间像链条一样紧密相连，所以被称作职责链模式。</p>
+
+<p><code class="language-plaintext highlighter-rouge">Apache Commons Chain</code> 提供了对CoR模式的基础支持，简化和促进了实际应用CoR模式。CommonsChain实现了Chain of Responsebility和Command模式，其中的Catalog + 配置文件的方式使得调用方和Command的实现方的耦合度大大的降低，提高了灵活性。</p>
+
+<h2 id="二apache-commons-chain-核心组件">二、Apache Commons Chain 核心组件</h2>
+<p><img src="/images/chenlong/apacheCommonsChain1.jpg" alt="apacheCommonsChain1 .jpg" /></p>
+
+<h3 id="1-context接口">1、 Context接口</h3>
+<p><code class="language-plaintext highlighter-rouge">Context</code>表示命令执行的上下文，在命令间实现共享信息的传递。
+extends Map,父接口是Map，它只是一个标记接口。ContextBase实现了Context。对于web环境，可以使用WebContext类及其子类（FacesWebContext、PortletWebContext和ServletWebContext）。</p>
+<h3 id="2command接口">2、Command接口</h3>
+<p>Commons Chain中最重要的接口，表示在Chain中的具体某一步要执行的命令。它只有一个方法：boolean execute(Context context)。如果返回true，那么表示Chain的处理结束，Chain中的其他命令不会被调用；返回false，则Chain会继续调用下一个Command，直到：</p>
+<ul>
+  <li>Command返回true；</li>
+  <li>Command抛出异常；</li>
+  <li>Chain的末尾；
+    <h3 id="3chain接口">3、Chain接口</h3>
+    <p>它表示“命令链”，chain of command,要在其中执行的命令，需要先添加到Chain中，父接口是Command , ChainBase实现了它。</p>
+    <h3 id="4filter接口">4、Filter接口</h3>
+    <p>extends Command，它是一种特殊的Command。除了Command的execute方法之外，还包括了一个方法：boolean postProcess(Context context, Exception exception)。Commons Chain会在执行了Filter的execute方法之后，执行postprocess（不论Chain以何种方式结束）。Filter的执行execute的顺序与Filter出现在Chain中出现的位置一致，但是执行postprocess顺序与之相反。如：如果连续定义了filter1和filter2，那么execute的执行顺序是：filter1 -&gt; filter2；而postprocess的执行顺序是：filter2 -&gt; filter1。</p>
+    <h3 id="5catalog接口">5、Catalog接口</h3>
+    <p>它是逻辑命名的Chain和Command集合。通过使用它，Command的调用者不需要了解具体实现Command的类名，通过配置文件类加载chain of command 或者command。通过catalog.getCommand(commandName)获取Command。</p>
+    <h2 id="三commons-chain-基本使用">三、Commons Chain 基本使用</h2>
+    <p>现在，我们模拟一个购车的例子来看一下chain是工作实现。购车分为：<code class="language-plaintext highlighter-rouge">用户信息的获取</code>、<code class="language-plaintext highlighter-rouge">试车</code>、<code class="language-plaintext highlighter-rouge">销售讨论</code>、<code class="language-plaintext highlighter-rouge">付款</code>以及<code class="language-plaintext highlighter-rouge">结束交易</code>。
+五个工作类如下：</p>
+  </li>
+</ul>
+
+<p><strong>1. GetUserInfo.class</strong></p>
+
+<p><img src="/images/chenlong/getUserInfo.png" alt="getUserInfo.png" /></p>
+
+<p><strong>2. TestDriver.class</strong></p>
+
+<p><img src="/images/chenlong/testDriver.png" alt="testDriver.png" /></p>
+
+<p><strong>3. NegotiateSale.class</strong></p>
+
+<p><img src="/images/chenlong/NegotiateSale.png" alt="NegotiateSale.png" /></p>
+
+<p><strong>4. ArrangeFinancing.class</strong></p>
+
+<p><img src="/images/chenlong/ArrangeFinancing.png" alt="ArrangeFinancing.png" /></p>
+
+<p><strong>5. CloseSale.class</strong></p>
+
+<p><img src="/images/chenlong/closeSale.png" alt="CloseSale.png" /></p>
+
+<p>另外，我们也顺便在添加两个Filter进去，filter代码如下：</p>
+
+<ul>
+  <li>Filter1.class</li>
+</ul>
+
+<p><img src="/images/chenlong/filter1.png" alt="filter1.png" /></p>
+
+<ul>
+  <li>Filter2.class</li>
+</ul>
+
+<p><img src="/images/chenlong/filter2.png" alt="filter2.png" /></p>
+
+<h3 id="要运行上述的流程可以有两种方式分别是采用配置文件和使用注册命令来运行chain">要运行上述的流程可以有两种方式，分别是采用配置文件和使用注册命令来运行chain。</h3>
+<p>首先，我们采用注册命令来运行，代码如下：</p>
+
+<p><img src="/images/chenlong/commandChain.png" alt="commandChain.png" /></p>
+
+<p>运行结果为：</p>
+
+<p><img src="/images/chenlong/result1.png" alt="result1.png" /></p>
+
+<p>通过运行结果可以看出chain链运行的顺序是按照添加command的顺序执行的，而且Filter的执行execute的顺序与Filter出现在Chain中出现的位置一致，但是执行postprocess顺序与之相反。如：如果连续定义了filter1和filter2，那么execute的执行顺序是：filter1 -&gt; filter2；而postprocess的执行顺序是：filter2 -&gt; filter1。</p>
+
+<p>其次，我们再使用配置文件加载Command。
+  对于复杂的Chain，可能需要使用内嵌的Chain，内嵌Chain可以类比一个子过程。此时，可以使用LookupCommand。假设其中的testCommand成为一个子过程,其代码为</p>
+
+<p><img src="/images/chenlong/testCommand.png" alt="testCommand.png" /></p>
+
+<p>扩展后的配置文件为：</p>
+
+<p><img src="/images/chenlong/chaincfg.png" alt="chaincfg.png" /></p>
+
+<p>装配文件的代码如下：</p>
+
+<p><img src="/images/chenlong/cataLogLoader1.png" alt="cataLogLoader1.png" /></p>
+
+<p>运行结果为：</p>
+
+<p><img src="/images/chenlong/result2.png" alt="result2.png" /></p>
+
+<p>配置文件的引入，使得Commons Chain的灵活性大大的提高。在实际的使用过程中，存在着同一个Command被多个Chain使用的情形。如果每次都书写Command的类名，尤其是前面的包名特别长的情况下，是一件比较麻烦而又费时费力的一件事。而<code class="language-plaintext highlighter-rouge">&lt;define&gt;</code>的使用就解决这样的麻烦。通过定义Command和Chain的别名，来简化书写。上面的配置文件，可以书写成：</p>
+
+<p><img src="/images/chenlong/chain-cfg2.png" alt="chain-cfg2.png" /></p>
+
+<h2 id="总结">总结：</h2>
+
+<p>Commons Chain实现了Chain of Responsebility和Command模式，其中的Catalog + 配置文件的方式使得调用方和Command的实现方的耦合度大大的降低，提高了灵活性。对于配置文件，通常可以：</p>
+
+<ul>
+  <li>作为Command的索引表，需要时按名字索引创建实例。</li>
+  <li>利用Chain以及内嵌Chain，完成一组连续任务和Command的复用，引入Filter可以获得与Servlet Filter一样的好处。</li>
+  <li>使用<define>定义别名，简化书写。</define></li>
+</ul>
+:ET

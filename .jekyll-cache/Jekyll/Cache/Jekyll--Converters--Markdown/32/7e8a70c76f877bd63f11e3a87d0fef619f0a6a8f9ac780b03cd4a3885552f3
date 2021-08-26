@@ -1,0 +1,295 @@
+I"�6<h2 id="使用xml配置文件加载quartz">使用xml配置文件加载quartz</h2>
+
+<p>在上节介绍中并没有用到任何的配置文件，而在我们项目工程中常使用xml来加载。Quartz支持配置文件，它的好处是比编写代码简单，且修改后不需要重新编译源码</p>
+
+<ul>
+  <li>配置quartz.properties文件</li>
+</ul>
+
+<p>该文件来配置quartz的各种属性，包括线程数，线程优先级，加载的job文件，扫描的时间间隔等一系列属性</p>
+
+<p>新建quartz.properties在项目的classpath下，加载必要的jar包</p>
+
+<p>项目代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#============================================================================  
+# Configure Main Scheduler Properties  
+#============================================================================
+
+# 实例名
+org.quartz.scheduler.instanceName = QuartzScheduler 
+# 实例ID
+org.quartz.scheduler.instanceId = AUTO
+
+#============================================================================
+# Configure ThreadPool  
+#============================================================================
+org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool
+# 线程个数
+org.quartz.threadPool.threadCount = 3
+org.quartz.threadPool.threadPriority = 5
+
+#============================================================================
+# Configure JobStore  
+#============================================================================
+org.quartz.jobStore.misfireThreshold = 60000
+org.quartz.jobStore.class = org.quartz.simpl.RAMJobStore
+
+#============================================================================
+# Configure Plugins 
+#============================================================================
+org.quartz.plugin.triggHistory.class = org.quartz.plugins.history.LoggingJobHistoryPlugin
+# org.quartz.plugins.xml.JobInitializationPlugin是Quartz自带的插件，
+# 默认时，这个插件会在 classpath 中搜索名为 quartz_jobs.xml 
+# 的文件并从中加载 Job 和 Trigger 信息
+# v1.8之前用JobInitializationPlugin
+#org.quartz.plugin.jobInitializer.class = org.quartz.plugins.xml.JobInitializationPlugin
+org.quartz.plugin.jobInitializer.class = org.quartz.plugins.xml.XMLSchedulingDataProcessorPlugin
+org.quartz.plugin.jobInitializer.fileNames = quartz_jobs.xml
+org.quartz.plugin.jobInitializer.failOnFileNotFound = true
+org.quartz.plugin.jobInitializer.scanInterval =10
+org.quartz.plugin.jobInitializer.wrapInUserTransaction = false
+
+# 关闭quartz新版本检测功能
+org.quartz.scheduler.skipUpdateCheck = true
+</code></pre></div></div>
+
+<ul>
+  <li>配置job.xml</li>
+</ul>
+
+<p>加载触发器类型，定义触发器属性等一系列jobDetail操作</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xmlversion="1.0"encoding="UTF-8"?&gt; 
+&lt;job-scheduling-dataxmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.ogr/xml/job_scheduling_data_1_8.xsd" 
+   version="1.8"&gt; 
+   &lt;pre-processing-commands&gt; 
+       &lt;!--在执行作业和触犯器之前执行的命令--&gt; 
+       &lt;delete-jobs-in-group&gt;*&lt;/delete-jobs-in-group&gt; 
+       &lt;!--删除标示组中的所有作业，如果是“*”,则删除所有组中的作业，同时也会删除与作业有关的触犯器 --&gt; 
+       &lt;delete-triggers-in-group&gt;*&lt;/delete-triggers-in-group&gt; 
+       &lt;!--删除标示组中的所有触犯器，如果是“*”,则删除所有组中的触发器 --&gt; 
+       &lt;delete-job&gt; 
+           &lt;!--删除指定的作业，同时也会删除与它关联的触犯器 --&gt; 
+           &lt;name&gt;&lt;/name&gt; 
+           &lt;group&gt;&lt;/group&gt; 
+       &lt;/delete-job&gt; 
+       &lt;delete-trigger&gt; 
+           &lt;!--删除指定的触犯器 --&gt; 
+           &lt;name&gt;&lt;/name&gt; 
+           &lt;group&gt;&lt;/group&gt; 
+       &lt;/delete-trigger&gt; 
+   &lt;/pre-processing-commands&gt; 
+ 
+   &lt;processing-directives&gt; 
+       &lt;!--在计划作业和触发器是应遵循的命令和原则 --&gt; 
+       &lt;overwrite-existing-data&gt;true or false&lt;/overwrite-existing-data&gt; 
+       &lt;!--是否复写已经存在的任务计划数据，如果为false并且ingore-duplicates非false，那么文件中同名的触发器或作业将会继续存在，则会产生错误--&gt; 
+       &lt;ignore-duplicates&gt;true or false&lt;/ignore-duplicates&gt; 
+       &lt;!--如果为true，计划中的任何同名的作业/触发器将会被忽略，不会产生错误--&gt; 
+   &lt;/processing-directives&gt; 
+ 
+   &lt;schedule&gt; 
+       &lt;job&gt; 
+           &lt;name&gt;JobName&lt;/name&gt; 
+           &lt;group&gt;JobGroup&lt;/group&gt; 
+           &lt;description&gt;&lt;/description&gt; 
+           &lt;job-class&gt;&lt;/job-class&gt; 
+           &lt;job-listener-ref&gt;&lt;/job-listener-ref&gt; 
+           &lt;!-- volatility,durability,recover必须按顺序设定 --&gt; 
+           &lt;volatility&gt;&lt;/volatility&gt; 
+           &lt;durability&gt;&lt;/durability&gt; 
+           &lt;recover&gt;&lt;/recover&gt; 
+           &lt;job-data-map&gt; 
+               &lt;!-- entry可以设定多个--&gt; 
+               &lt;entry&gt; 
+                   &lt;key&gt;&lt;/key&gt; 
+                   &lt;value&gt;&lt;/value&gt; 
+               &lt;/entry&gt; 
+           &lt;/job-data-map&gt; 
+       &lt;/job&gt; 
+       &lt;trigger&gt; 
+           &lt;!-- Trigger分为simple，cron，date-interval三种类型，一个trigger中只能指定一种类型--&gt; 
+           &lt;simple&gt; 
+               &lt;name&gt;&lt;/name&gt; 
+               &lt;group&gt;&lt;/group&gt; 
+               &lt;description&gt;&lt;/description&gt; 
+               &lt;job-name&gt;&lt;/job-name&gt; 
+               &lt;job-group&gt;&lt;/job-group&gt; 
+               &lt;calendar-name&gt;&lt;/calendar-name&gt; 
+               &lt;volatility&gt;&lt;/volatility&gt; 
+               &lt;job-data-map&gt; 
+                   &lt;entry&gt; 
+                       &lt;key&gt;&lt;/key&gt; 
+                       &lt;value&gt;&lt;/value&gt; 
+                   &lt;/entry&gt; 
+               &lt;/job-data-map&gt; 
+               &lt;start-time&gt;&lt;/start-time&gt; 
+               &lt;end-time&gt;&lt;/end-time&gt; 
+               &lt;misfire-instruction&gt;&lt;/misfire-instruction&gt; 
+               &lt;repeat-count&gt;&lt;/repeat-count&gt; 
+               &lt;repeat-interval&gt;&lt;/repeat-interval&gt; 
+           &lt;/simple&gt; 
+           &lt;cron&gt; 
+               &lt;name&gt;&lt;/name&gt; 
+               &lt;group&gt;&lt;/group&gt; 
+               &lt;description&gt;&lt;/description&gt; 
+               &lt;job-name&gt;&lt;/job-name&gt; 
+               &lt;job-group&gt;&lt;/job-group&gt; 
+               &lt;calendar-name&gt;&lt;/calendar-name&gt; 
+               &lt;volatility&gt;&lt;/volatility&gt; 
+               &lt;job-data-map&gt; 
+                   &lt;entry&gt; 
+                       &lt;key&gt;&lt;/key&gt; 
+                       &lt;value&gt;&lt;/value&gt; 
+                   &lt;/entry&gt; 
+               &lt;/job-data-map&gt; 
+               &lt;start-time&gt;&lt;/start-time&gt; 
+               &lt;end-time&gt;&lt;/end-time&gt; 
+               &lt;misfire-instruction&gt;&lt;/misfire-instruction&gt; 
+               &lt;cron-expression&gt;&lt;/cron-expression&gt; 
+               &lt;time-zone&gt;&lt;/time-zone&gt; 
+           &lt;/cron&gt; 
+           &lt;date-interval&gt; 
+               &lt;name&gt;&lt;/name&gt; 
+               &lt;group&gt;&lt;/group&gt; 
+               &lt;description&gt;&lt;/description&gt; &lt;job-group&gt;&lt;/job-group&gt; 
+</code></pre></div></div>
+
+<volatility></volatility>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>              &lt;job-data-map&gt; 
+                   &lt;entry&gt; 
+                       &lt;key&gt;&lt;/key&gt; 
+                       &lt;value&gt;&lt;/value&gt; 
+                   &lt;/entry&gt; 
+               &lt;/job-data-map&gt; 
+               &lt;start-time&gt;&lt;/start-time&gt; 
+               &lt;end-time&gt;&lt;/end-time&gt; 
+               &lt;misfire-instruction&gt;&lt;/misfire-instruction&gt; 
+               &lt;repeat-interval&gt;&lt;/repeat-interval&gt; 
+               &lt;repeat-interval-unit&gt;&lt;/repeat-interval-unit&gt; 
+           &lt;/date-interval&gt; 
+       &lt;/trigger&gt; 
+   &lt;/schedule&gt; 
+&lt;/job-scheduling-data&gt;
+</code></pre></div></div>
+
+<p>本例使用的quartz版本为1.8.6，现在已经更新到2.0以上版本</p>
+
+<p>本例quartz_job.xml</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xmlversion="1.0"encoding="UTF-8"?&gt;  
+&lt;job-scheduling-dataxmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_1_8.xsd" 
+   version="1.8"&gt;  
+      
+   &lt;pre-processing-commands&gt;  
+       &lt;delete-jobs-in-group&gt;*&lt;/delete-jobs-in-group&gt; &lt;!-- clear all jobs in scheduler --&gt;  
+       &lt;delete-triggers-in-group&gt;*&lt;/delete-triggers-in-group&gt;&lt;!-- clear all triggers in scheduler --&gt;  
+   &lt;/pre-processing-commands&gt;  
+      
+   &lt;processing-directives&gt;  
+       &lt;overwrite-existing-data&gt;true&lt;/overwrite-existing-data&gt;  
+       &lt;ignore-duplicates&gt;false&lt;/ignore-duplicates&gt;   
+   &lt;/processing-directives&gt;  
+      
+   &lt;schedule&gt;  
+       &lt;job&gt;  
+           &lt;name&gt;helloQuartzJob&lt;/name&gt;  
+           &lt;group&gt;DEFAULT&lt;/group&gt;  
+           &lt;description&gt;简单的quartz使用&lt;/description&gt;  
+           &lt;job-class&gt;HelloQuartzJob&lt;/job-class&gt;  
+           &lt;volatility&gt;false&lt;/volatility&gt;  
+           &lt;durability&gt;true&lt;/durability&gt;  
+           &lt;recover&gt;false&lt;/recover&gt;  
+       &lt;/job&gt;  
+       &lt;trigger&gt;  
+       &lt;cron&gt;
+                &lt;name&gt;trigger&lt;/name&gt;     
+              &lt;group&gt;DEFAULT&lt;/group&gt;     
+              &lt;job-name&gt;helloQuartzJob&lt;/job-name&gt;     
+              &lt;job-group&gt;DEFAULT&lt;/job-group&gt; 
+             &lt;cron-expression&gt;30/5 * * * * ?&lt;/cron-expression&gt;
+       &lt;/cron&gt;   
+       &lt;/trigger&gt;
+   &lt;/schedule&gt;      
+&lt;/job-scheduling-data&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>建立测试用例</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  public class HelloQuartzScheduling {
+      @Test
+      public void testQuartz() 
+         throws SchedulerException, ParseException {
+         //  加载quartz容器
+         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
+         Scheduler scheduler = schedulerFactory.getScheduler();
+		   
+         scheduler.start();              
+      }   
+  }
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="和spring相结合">和spring相结合</h2>
+
+<p>在spring-content里加入bean</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;!--使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法--&gt;    
+    &lt;!-- 定义目标bean和bean中的方法 --&gt;  
+    &lt;bean id="SpringQtzJob" class="com.chenfan.server.HelloQuartzJob"/&gt;  
+    &lt;bean id="SpringQtzJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"&gt;  
+    &lt;property name="targetObject"&gt;  
+        &lt;ref bean="SpringQtzJob"/&gt;  
+    &lt;/property&gt;  
+    &lt;property name="targetMethod"&gt;  &lt;!-- 要执行的方法名称 --&gt;  
+        &lt;value&gt;execute&lt;/value&gt;  
+    &lt;/property&gt;  
+&lt;/bean&gt;  
+  
+&lt;!-- ======================== 调度触发器 ======================== --&gt;  
+&lt;bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean"&gt;  
+    &lt;property name="jobDetail" ref="SpringQtzJobMethod"&gt;&lt;/property&gt;  
+    &lt;property name="cronExpression" value="0/5 * * * * ?"&gt;&lt;/property&gt;  
+&lt;/bean&gt;  
+  
+&lt;!-- ======================== 调度工厂 ======================== --&gt;  
+&lt;bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"&gt;  
+    &lt;property name="triggers"&gt;  
+        &lt;list&gt;  
+            &lt;ref bean="CronTriggerBean"/&gt;  
+        &lt;/list&gt;  
+    &lt;/property&gt;  
+&lt;/bean&gt;    
+</code></pre></div></div>
+
+<p>在web.xml里加载spring-content.xml</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;  
+&lt;web-app xmlns="http://java.sun.com/xml/ns/javaee"  
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  
+          http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"  
+         version="2.5"&gt;  
+    &lt;welcome-file-list&gt;  
+        &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;  
+    &lt;/welcome-file-list&gt;  
+  
+    &lt;context-param&gt;  
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;  
+        &lt;param-value&gt;/WEB-INF/spring-config.xml&lt;/param-value&gt;  
+    &lt;/context-param&gt;  
+  
+    &lt;listener&gt;  
+        &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;  
+    &lt;/listener&gt;  
+&lt;/web-app&gt;
+</code></pre></div></div>
+:ET

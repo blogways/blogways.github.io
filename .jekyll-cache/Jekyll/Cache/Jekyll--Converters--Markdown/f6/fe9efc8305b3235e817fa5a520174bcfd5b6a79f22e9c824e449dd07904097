@@ -1,0 +1,107 @@
+I"�%<p>—<br />
+layout: post<br />
+title: 学习简记1<br />
+category: 学习简记1<br />
+tags: 学习简记1<br />
+author: 关云泽<br />
+email: gyz18643266515@163.com<br />
+description: 学习简记1<br />
+—<br />
+<br /></p>
+<h1 id="了解熟悉基本的数据库和相对简单的数据表操作后数据表和记录的增删查改操作">了解熟悉基本的数据库和相对简单的数据表操作后，数据表和记录的增删查改操作：<br /></h1>
+<h2 id="一增">一、增<br /></h2>
+<p>INSERT插入语句是主要的记录增加语句，基本语法：<br />
+{insert into 表名 (字段1， 字段2， …) values (值1， 值2， …)}<br />
+可见insert语句也可以一次插入多条记录，只需要字段对应多条即可。注意，记录的字段部分如果碰巧有关键字或保留字，需要在字段部分加英文的反引号“`”，否则报错。<br />
+对于数据表的字段增加，使用<br />
+{alter table 表名 add 字段名 类型 first|after} 语句。<br /></p>
+<h2 id="二删">二、删<br /></h2>
+<p>{drop table 表名}为删除数据表的语句。<br />
+DELETE语句为数据表中记录的删除语句，格式<br />
+{delete from 表名 where and|or|not 条件}，and或者or或者not的选择可理解为与或非的区别。<br /></p>
+<h2 id="三查">三、查<br /></h2>
+<p>对于数据表，基本的查询语句就是SELECT语句，语法：<br />
+{select * from 表名}，其中“*”实际意义表示查询所有列。对于select语句，查询的类型有很多种，除了基本查询，还有条件查询，投影查询，分页查询，聚合查询，多表查询，连接查询，模糊查询，排序，分组等。<br /></p>
+<h3 id="1">1、<br /></h3>
+<p>基本语句：{select 列 from 表where}（条件），<br /></p>
+<h3 id="2">2、<br /></h3>
+<p>limit offset（分页查询）：{select 列 from 表名 limit 条件1 offset 条件2}，<br /></p>
+<h3 id="3">3、<br /></h3>
+<p>order by（排序）：{select 列 from 表名 order by 条件}，<br /></p>
+<h3 id="4">4、<br /></h3>
+<p>like（模糊查询）：{select列 from 表名 where 列 like 条件 }，注意like子句中可有%，代表任意字符，比如需要搜索含0的数据，那么可以用%0代表。<br /></p>
+<h3 id="5">5、<br /></h3>
+<p>union（联合查询）：{select 列 from 表名 where 条件 union all|distinct select 列 from 表名 where 条件}可见，用于将两个以上的select语句结果组合到一个结果的集合中。distinct和all是可选项，用于删除结果中的重复数据/返回所有结果数据。<br /></p>
+<h3 id="6">6、<br /></h3>
+<p>函数有count（）（聚合查询）<br /></p>
+<h3 id="7">7、<br /></h3>
+<p>对于投影查询和多表查询，使用select语句的特殊格式：<br />
+{select 列 from …}和{select * from 表1， 表2…}<br /></p>
+<h3 id="8">8、<br /></h3>
+<p>group by（分组）{select * from 表名 group by条件}，可以根据条件分组。<br /></p>
+<h3 id="9">9、<br /></h3>
+<p>join（连接查询）：join连接有多种类型，大致分为inner join,left join,right join,outer join。<br /><br /><br />
+inner join：获取两个表中字段匹配关系的记录。<br /><br />
+left join：获取左表所有记录，即使右表无对应的匹配记录，即两个表的交集外加左表剩下的数据。<br /><br />
+right join：获取右表所有记录，即使左表没有对应匹配的记录，即两个表的交集外加右表剩下的数据。<br />
+outer join:实际上是求两个集合的并集。<br /></p>
+<h2 id="四改">四、改<br /></h2>
+<p>数据表记录的修改部分主要是INSERT,UPDATE和DELETE三个语句。INSERT已经放在增部分，DELETE放在删的部分，UPDATE<br />
+数据表本身的表名修改用<br />
+{alter table 旧表名 to 新表名}这个语句，字段修改则使用<br />
+{alter table 表名 modify 字段新属性}。<br /></p>
+<h1 id="一些重要的点">一些重要的点<br /></h1>
+<h2 id="五mysql-null值的处理">五、MySQL NULL值的处理<br /></h2>
+<p>在使用select查询的字段为NULL时，该命令很可能无法正常工作，这时就需要使用{IS NULL}、{IS NOT NULL}{&lt;=&gt;}三种运算符。这的意思是说，查询时不可以使用类似“=NULL”或者“！=NULL”的运算符，而是用“IS NULL”或“IS NOT NULL”代替。	另外，NULL值与任何其他的值比较，无论大小，结果都返回NULL。<br /></p>
+<h2 id="一正则表达式">一、正则表达式<br /></h2>
+<p>除了可以使用“like…%”进行模糊的查询，还可以使用正则表达式进行类似的模糊查询。MySQL使用REGEXP操作符进行正则表达式的匹配，使用方法：{SELECT 列 FROM 表名 WHERE 列 REGEXP 正则模式}。常用正则模式有这些：<br />
+^:匹配输入字符串的开始位置。<br />
+$:匹配输入字符串的结束位置。<br />
+.:匹配除“\n”之外的任何单个字符。<br />
+[…]：字符集合，匹配“[]”中包含的任意字符，“[]”不用打出来。<br />
+[^…]：负值字符集合，匹配未包含的任意字符。<br />
+p1|p2|p3：匹配p1或p2或p3。<br />
+*：匹配前面的子表达式零或多次。<br />
++：匹配前面的子表达式一次或多次。<br />
+{n}：匹配非负整数n次，n值确定。<br />
+{n,m}：m、n均非负整数，n&lt;=m。最少匹配n且最多匹配m次。<br />
+使用REGEXP时，注意后面的条件需要加’’号。<br /></p>
+<h2 id="二mysql事务">二、MySQL事务<br /></h2>
+<p>主要用来处理操作量大、复杂度高的数据。一般情况下，事务满足4个条件：不可分割性、一致性、独立性、持久性。只有使用了Innodb数据库引擎的数据库或表才支持事务。事务的控制语句：<br />
+BEGIN或START TRANSACTION:显式地开启事务。<br />
+COMMIT或COMMIT WORK：提交事务，并使已对数据库进行的所有修改成为永久性的。<br />
+ROLLBACK或ROLLBACKWORK：回滚，结束用户的事务，并撤销正在进行的所有未提交的修改。<br />
+SAVEPOINT identifier：在事务中创造一个保存节点，一个事务中与许多个。<br />
+RELEASE SAVEPOINT identifier：删除事务保存点，若无指定保存点则返回一个异常。<br />
+RLOOBACK TO identifier：将事务回滚到标记点。<br />
+SET TRANSACTION：设置事务的隔离级别。有四种隔离级别。<br /></p>
+<h2 id="三mysql-alter命令">三、MySQL ALTER命令<br /></h2>
+<p>在之前的增删查改总结中已经出现过ALTER命令的身影。实际上，ALTER命令可以用来修改数据表名或者修改数据表字段。添加/删除字段：{alter table 表名 add/drop 字段名}<br />
+修改字段类型及名称：{ALTER TABLE 表名 MODIFY/CHANGE 字段 类型};<br />
+修改表名：{ ALTER TABLE 表名 RENAME TO 新表名}<br /></p>
+<h2 id="四mysql索引">四、MySQL索引<br /></h2>
+<p>索引系统可以大大提高MySQL的检索速度，包含单列索引和组合索引。单列索引是一个索引只包含一个列，组合索引包含多个列。索引需要注意使用的必要性，因为索引会建立单独的索引文件，从而造成磁盘空间的更大占用。<br />
+索引创建：{CREATE INDEX 索引名 ON 表名 (列名)}<br />
+添加索引（修改表结构）：{ALTER table 表名 ADD INDEX 索引名(列名)}<br />
+删除索引：{DROP INDEX [索引名] ON 表名}<br /></p>
+<h2 id="五mysql临时表">五、MySQL临时表<br /></h2>
+<p>临时表只在当前连接可见，关闭连接时自动删除并释放所有空间。<br /></p>
+<h2 id="六mysql复制表">六、MySQL复制表<br /></h2>
+<p>如果想完全复制一个完整的表，只使用create table…select命令是不可行的。具体的操作步骤是这样的：<br />
+1、使用 SHOW CREATE TABLE 命令获取创建数据表(CREATE TABLE) 语句，该语句包含了原数据表的结构，索引等。<br />
+2、复制以下命令显示的SQL语句，修改数据表名，并执行SQL语句，通过以上命令 将完全的复制数据表结构。<br />
+3、如果你想复制表的内容，你就可以使用 INSERT INTO … SELECT 语句来实现。<br /></p>
+<h2 id="七mysql序列">七、MySQL序列<br /></h2>
+<p>MySQL的序列是一组整数。一张数据表只能有一个字段自增主键，要想实现其他字段也自动增加，就需要用到序列。最简单的就是使用AUTO_INCREMENT来定义序列。<br /></p>
+<h2 id="八mysql重复数据">八、MySQL重复数据<br /></h2>
+<p>重复记录的出现是很常见的，有时我们需要对重复数据进行各种操作。<br />
+统计重复数据：确定哪一列包含的值可能重复；在列选择列表使用COUNT(*)列出这些列；GROUP BY子句中列出的列；HAVING子句设置重复数大于1。<br />
+过滤重复数据：SELECT语句中使用DISTINCT关键字。<br />
+删除重复数据：可以接连使用以下语句：{CREATE TABLE tmp SELECT 列名 FROM 表名  GROUP BY (列名)；DROP TABLE 表名;ALTER TABLE tmp RENAME TO 表名}。<br /></p>
+<h2 id="九mysql导入导出数据">九、MySQL导入、导出数据<br /></h2>
+<p>命令提示符中导入数据的命令：{mysql -uroot -p密码 &lt; 要导入的数据库文件}<br />
+  数据库中导入命令：{source 详细路径/文件名}<br />
+  从当前目录中读取文件并将文件的数据插入到当前数据库的数据表中：{LOAD DATA LOCAL INFILE ‘文件名.格式’ INTO TABLE 表名}<br />
+  也可以使用mysqlimport导入数据。<br />
+  至于数据导出，可以使用select语句：{select * from 表名 into outfile ‘路径/文件’}。<br /></p>
+:ET

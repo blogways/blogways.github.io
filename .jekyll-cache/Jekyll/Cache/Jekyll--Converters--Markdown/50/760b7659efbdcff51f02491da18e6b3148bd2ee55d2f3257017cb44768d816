@@ -1,0 +1,104 @@
+I"�<h2 id="命名规范">命名规范</h2>
+<ul>
+  <li>master 分支：<code class="language-plaintext highlighter-rouge">master</code>；</li>
+  <li>develop 分支：<code class="language-plaintext highlighter-rouge">develop</code>；</li>
+  <li>release 稳定分支：<code class="language-plaintext highlighter-rouge">release_stable_YYYYMMDD_n</code>，<em>YYYYMMDD</em> 为当前日期（年月日），<em>n</em> 为递增序列号；</li>
+  <li>release 测试分支：<code class="language-plaintext highlighter-rouge">release_nightly_YYYYMMDD_n</code>，<em>YYYYMMDD</em> 为当前日期（年月日），<em>n</em> 为递增序列号；</li>
+  <li>开发人员版分支：<em>bug单号</em>为 bugfree 编号，<em>n</em> 为递增序列号。
+    <ul>
+      <li>修复 bug：<code class="language-plaintext highlighter-rouge">fixbug_bug单号_邮箱前缀_n</code>；</li>
+      <li>需求功能：<code class="language-plaintext highlighter-rouge">feature_bug单号_邮箱前缀_n</code>。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="基本命令">基本命令</h2>
+<p>以下所有命令的开发分支号均以<code class="language-plaintext highlighter-rouge">fixbug_12345_jingyang_1</code>举例，合并均以合并到 <code class="language-plaintext highlighter-rouge">develop</code> 举例。</p>
+
+<ul>
+  <li>切换分支：<code class="language-plaintext highlighter-rouge">git checkout fixbug_12345_jingyang_1</code></li>
+  <li>建立新分支并切换到该分支：<code class="language-plaintext highlighter-rouge">git checkout –b fixbug_12345_jingyang_1</code></li>
+  <li>查看所有分支：<code class="language-plaintext highlighter-rouge">git branch -a</code></li>
+  <li>推送分支到服务器：<code class="language-plaintext highlighter-rouge">git push origin fixbug_12345_jingyang_1</code></li>
+  <li>合并分支：<code class="language-plaintext highlighter-rouge">git merge origin/fixbug_12345_jingyang_1</code></li>
+  <li>删除分支：
+    <ul>
+      <li>本地删除：<code class="language-plaintext highlighter-rouge">git branch -d fixbug_12345_jingyang_1</code></li>
+      <li>远程删除：<code class="language-plaintext highlighter-rouge">git branch –r –d fixbug_12345_jingyang_1</code>，删除后推送到服务器 <code class="language-plaintext highlighter-rouge">git push origin :fixbug_12345_jingyang_1</code></li>
+    </ul>
+  </li>
+  <li>回退版本：<code class="language-plaintext highlighter-rouge">git reset --hard HEAD^</code></li>
+</ul>
+
+<h2 id="基本思路">基本思路</h2>
+<ul>
+  <li>开发人员分支：
+    <ul>
+      <li>从<code class="language-plaintext highlighter-rouge">release 稳定分支</code>签出新分支；</li>
+      <li>自测通过的分支会被合并到<code class="language-plaintext highlighter-rouge">release 测试分支</code>（<strong>合并专员不会合并有冲突的分支</strong>）；</li>
+      <li>最终被合并的无冲突<code class="language-plaintext highlighter-rouge">release 测试分支</code>会合并到 <code class="language-plaintext highlighter-rouge">develop 分支</code>。</li>
+    </ul>
+  </li>
+  <li>测试（QA）环境：测试<code class="language-plaintext highlighter-rouge">develop 分支</code>；
+    <ul>
+      <li>测试结束后重新合并一个<code class="language-plaintext highlighter-rouge">release 测试分支</code>，剔除所有测试不通过的分支；</li>
+      <li>版本会合并到<code class="language-plaintext highlighter-rouge">release 稳定分支</code>。</li>
+    </ul>
+  </li>
+  <li>生产（Prod）环境：进行<em>冒烟测试</em>；
+    <ul>
+      <li>测试结束后重新合并一个<code class="language-plaintext highlighter-rouge">release 稳定分支</code>，剔除所有测试不通过的分支；</li>
+      <li>通过的<code class="language-plaintext highlighter-rouge">release 稳定分支</code>会同步到局方环境；</li>
+    </ul>
+  </li>
+  <li>局方 CUC 环境：运行最终的 <code class="language-plaintext highlighter-rouge">release 稳定分支</code>。</li>
+</ul>
+
+<p><img src="/images/jyjsjd/git.png" alt="git.png" /></p>
+
+<h2 id="注意事项">注意事项</h2>
+<ul>
+  <li>合并<code class="language-plaintext highlighter-rouge">release 测试分支</code>过程中<strong>不进行冲突合并</strong>，遇到冲突即回退到上次提交；</li>
+  <li>开发人员未被合并的分支，将在下一次另建分支合并；</li>
+  <li>release 稳定版应保留<strong>多个</strong>历史版本；</li>
+  <li>应在版本被推送到局方环境<strong>之后</strong>再考虑删除开发人员分支。</li>
+</ul>
+
+<h2 id="场景">场景</h2>
+<p>以下场景均假设有最近稳定版本<code class="language-plaintext highlighter-rouge">release_stable_20171221_1</code>，修改 bug 编号<code class="language-plaintext highlighter-rouge">12345</code>.</p>
+
+<h3 id="1新建分支修改-bug">1、新建分支修改 bug</h3>
+<ul>
+  <li>拉取代码，确保获得最新版本：<code class="language-plaintext highlighter-rouge">git pull</code>；</li>
+  <li>签出<code class="language-plaintext highlighter-rouge">release 稳定分支</code>分支：<code class="language-plaintext highlighter-rouge">git checkout release_stable_20171221_1</code>；</li>
+  <li>在稳定分支基础上，新建自己的分支：<code class="language-plaintext highlighter-rouge">git checkout -b fixbug_12345_jingyang_1</code>；</li>
+  <li>在自己的分支上修改代码，并提交。</li>
+</ul>
+
+<h3 id="2合并分支冲突">2、合并分支冲突</h3>
+<p>合并过程中遇到冲突的分支将不会被合并。由于项目文件较多，冲突并不常见。如果遇有冲突，开发人员应该自己解决。</p>
+
+<p>以下设想了两种场景，但无论是哪种场景，开发人员都应该找到冲突原因，协商解决。</p>
+<ul>
+  <li>如果今天还有合并分支的机会：找到冲突原因，协商解决，确保下次合并没有冲突；如果已经发布了新的稳定版本，合并稳定版本到自己的版本</li>
+  <li>如果赶不上今天的合并：签出最新<code class="language-plaintext highlighter-rouge">release 稳定分支</code>，并合并到自己的分支中，确保代码是最新的。</li>
+  <li>合并<code class="language-plaintext highlighter-rouge">release 稳定分支</code>到自己的分支：<code class="language-plaintext highlighter-rouge">git merge release_stable_20171221_1 fixbug_12345_jingyang_1</code></li>
+</ul>
+
+<h3 id="3测试人员测试不通过">3、测试人员测试不通过</h3>
+<ul>
+  <li>放弃之前的分支<code class="language-plaintext highlighter-rouge">fixbug_12345_jingyang_1</code>；</li>
+  <li>从最新的<code class="language-plaintext highlighter-rouge">release 稳定分支</code>签出新的分支：<code class="language-plaintext highlighter-rouge">git checkout -b fixbug_12345_jingyang_2</code>；</li>
+  <li>把前一个分支合并到新分支 <code class="language-plaintext highlighter-rouge">git merge fixbug_12345_jingyang_1 fixbug_12345_jingyang_2</code>，并重新开始修改。</li>
+</ul>
+
+<h3 id="4局方测试不通过">4、局方测试不通过</h3>
+<p>局方不通过时，通常代码已经被合并到最新<code class="language-plaintext highlighter-rouge">release 稳定分支</code>中。</p>
+<ul>
+  <li>从最新<code class="language-plaintext highlighter-rouge">release 稳定分支</code>签出新分支：<code class="language-plaintext highlighter-rouge">git checkout -b fixbug_12345_jingyang_2</code>；</li>
+  <li>在新分支上进行修改。</li>
+</ul>
+
+<h3 id="5bug修改经历多日">5、bug修改经历多日</h3>
+<p>记得在最终合并分支之前把最新的<code class="language-plaintext highlighter-rouge">release 稳定分支</code>合并到自己的分支。</p>
+:ET

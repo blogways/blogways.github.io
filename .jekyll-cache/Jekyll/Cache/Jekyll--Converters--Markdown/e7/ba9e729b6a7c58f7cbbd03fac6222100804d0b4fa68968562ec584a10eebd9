@@ -1,0 +1,140 @@
+I"8<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><em>目 录</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#1st">什么是D3.js</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#2nd">D3.js安装</a></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#3rd">第一个小程序</a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="#end">小结</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>近年来，可视化越来越流行，许多报刊杂志、门户网站、新闻、媒体都大量使用可视化技术，使得复杂的数据和文字变得十分容易理解，有一句谚语“一张图片价值于一千个字”，的确是名副其实。各种数据可视化工具也如井喷式地发展，D3 正是其中的佼佼者。</p>
+
+<p><a id="1st"></a></p>
+
+<h2 id="1什么是d3js">1.什么是D3.js</h2>
+
+<p>D3.js是一个JavaScript库，它可以通过数据来操作文档。D3可以通过使用HTML、SVG和CSS把数据鲜活形象地展现出来。D3严格遵循Web标准，因而可以让你的程序轻松兼容现代主流浏览器并避免对特定框架的依赖。同时，它提供了强大的可视化组件，可以让使用者以数据驱动的方式去操作DOM。</p>
+
+<h4 id="为什么要数据可视化">为什么要数据可视化</h4>
+
+<p>现在有一组数据， 【 4 ， 32 ， 15 ， 16 ， 42 ， 25 】 ，你能一眼看出它们的大小关系吗？当然这里的数据不算多，有那眼疾手快的家伙站出来说我能一眼看出来！但更直观的是用图形显示，如下图：
+<img src="/images/d3-1-1.png" alt="d3-1-1.png" title="d3-1-1" /></p>
+
+<h4 id="怎么学习d3">怎么学习D3</h4>
+
+<p>以下是几个学习 D3 的站点：</p>
+
+<p>官方网站
+http://d3js.org/</p>
+
+<p>包含有很多示例和 API，要想得心应手的使用 D3，熟悉 API 是避不开的。</p>
+
+<p>Mike Bostock 的博客和作品展示板
+http://bost.ocks.org/mike/</p>
+
+<p><a id="2nd"></a></p>
+
+<h2 id="2d3js的安装">2.D3.js的安装</h2>
+
+<p>使用D3.js有两种方式，一种是官方下载D3.js文件，另外一种是直接使用网络连接</p>
+
+<h4 id="1下载d3js文件">（1）下载D3.js文件</h4>
+
+<p>https://github.com/mbostock/d3/releases/download/v3.4.8/d3.zip</p>
+
+<h4 id="2直接包含网络的链接">（2）直接包含网络的链接</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="http://d3js.org/d3.v3.min.js" charset="utf-8"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p><a id="3rd"></a></p>
+
+<h2 id="3第一个小程序">3.第一个小程序</h2>
+
+<p>学习一切语言的开头：Hello World！</p>
+
+<h4 id="1使用html输出hello-world">（1）使用HTML输出Hello World!</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;html&gt; 
+  &lt;head&gt; 
+        &lt;meta charset="utf-8"&gt; 
+        &lt;title&gt;HelloWorld&lt;/title&gt; 
+  &lt;/head&gt; 
+    &lt;body&gt; 
+        &lt;p&gt;Hello World 1&lt;/p&gt;
+        &lt;p&gt;Hello World 2&lt;/p&gt;
+    &lt;/body&gt; 
+&lt;/html&gt;
+</code></pre></div></div>
+
+<h4 id="2使用js更改hello-world">（2）使用JS更改Hello World</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;html&gt; 
+  &lt;head&gt; 
+        &lt;meta charset="utf-8"&gt; 
+        &lt;title&gt;HelloWorld&lt;/title&gt; 
+  &lt;/head&gt; 
+    &lt;body&gt; 
+    &lt;p&gt;Hello World 1&lt;/p&gt;
+    &lt;p&gt;Hello World 2&lt;/p&gt;
+        &lt;script&gt;
+        var paragraphs = document.getElementsByTagName("p");
+        for (var i = 0; i &lt; paragraphs.length; i++) {
+          var paragraph = paragraphs.item(i);
+          paragraph.innerHTML = "I want to say Hello world";
+        }          
+        &lt;/script&gt; 
+    &lt;/body&gt; 
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>会输出两行 Iwant to say Hello world!</p>
+
+<h4 id="3使用d3js更改hello-world">（3）使用D3.js更改Hello World</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;html&gt; 
+  &lt;head&gt; 
+        &lt;meta charset="utf-8"&gt; 
+        &lt;title&gt;HelloWorld&lt;/title&gt; 
+  &lt;/head&gt; 
+    &lt;body&gt; 
+        &lt;p&gt;Hello World 1&lt;/p&gt;
+        &lt;p&gt;Hello World 2&lt;/p&gt;
+        &lt;script type="text/javascript" src="d3.v3.js](&lt;/script&gt; 
+        &lt;script&gt;  
+        d3.select("body").selectAll("p").text("I want to say Hello world");      
+        &lt;/script&gt; 
+    &lt;/body&gt; 
+&lt;/html&gt; 从上述代码可以看出使用D3.js可以很方便的简化代码，这点有点类似于jQuery，语法结构是链式语法。
+</code></pre></div></div>
+
+<h4 id="4使用d3js更改字体和颜色">（4）使用D3.js更改字体和颜色</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p.style("color","red")
+ .style("font-size","72px");
+</code></pre></div></div>
+
+<p>d3.select() 或 d3.selectAll() 选择元素后返回的对象，就是选择集。</p>
+
+<h2 id="4小结">4.小结</h2>
+
+<p>本文主要介绍了d3.js概念，安装方法和简单的小例子，它可以很方便简化JS语法，当然D3的功能不仅仅是这样，接下我会对D3选择器和在SVG画布中制作可视化图标进行讲解。</p>
+:ET

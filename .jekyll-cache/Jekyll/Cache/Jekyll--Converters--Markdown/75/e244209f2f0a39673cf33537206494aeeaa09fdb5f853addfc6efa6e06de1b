@@ -1,0 +1,65 @@
+I"�<h2 id="应用场景">应用场景</h2>
+
+<p>jstorm的UI相对于storm提供了更为丰富的监控项。UI本身是在tomcat中运行的一个war包，进行二次开发也相对容易。Web UI 可以和Nimbus不在同一个节点，一个UI支持多个storm集群。</p>
+
+<h2 id="示例">示例</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/.jstorm
+</code></pre></div></div>
+
+<p>如果不在一台主机上则将配置文件拷贝到UI所在的主机</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/.jstorm
+vi storm.yaml
+</code></pre></div></div>
+
+<p>内容如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ui.clusters:
+   - {
+   name: "cb",
+   zkRoot: "/cb",
+   zkServers:
+   [ "172.18.50.130", "172.18.50.131", "172.18.50.132", "172.18.50.133", "172.18.50.134"],
+   zkPort: 2181,
+ }
+   - {
+ name: "f2m",
+ zkRoot: "/f2m",
+ zkServers:
+ [ "172.30.126.219", "172.30.126.218", "172.30.126.217", "172.30.126.216", "172.30.126.215"],
+ zkPort: 2181,
+   }
+</code></pre></div></div>
+
+<p>进入tomcat，配置启动war包</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd apache-tomcat-7.0.37
+
+cd webapps
+
+cp $JSTORM_HOME/jstorm-ui-0.9.6.3.war ./
+
+mv ROOT ROOT.old
+
+ln -s jstorm-ui-0.9.6.3 ROOT     
+</code></pre></div></div>
+
+<p><em>另外不是 ln -s jstorm-ui-0.9.6.3.war ROOT 这个要小心</em></p>
+
+<p>启动tomcat上UI服务</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ../bin
+
+./startup.sh
+</code></pre></div></div>
+
+<p>启动对应Jstorm集群上的拓扑并查看结果</p>
+
+<h2 id="结果">结果</h2>
+
+<p><img src="/images/zhaojiajun/2017-12-06-storm-5img1.png" alt="1" /></p>
+
+<p><img src="/images/zhaojiajun/2017-12-06-storm-5img2.png" alt="2" /></p>
+
+:ET

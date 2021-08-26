@@ -1,0 +1,149 @@
+I"�-<h2 id="一xml配置文件">一、XML配置文件</h2>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">ehcache</code> 默认会在 <code class="language-plaintext highlighter-rouge">classpath</code> 下查找名为 <code class="language-plaintext highlighter-rouge">ehcache.xml</code> 的文件，当然也可以自定义名称。</li>
+  <li>如果没有找到 <code class="language-plaintext highlighter-rouge">ehcache.xml</code>，ehcache 会默认试用 <code class="language-plaintext highlighter-rouge">ehcache-failsafe.xml</code>，它被打包在 ehcache 的 <code class="language-plaintext highlighter-rouge">jar</code> 文件中。如果用户使用的是这个文件，ehcache 会报一个<code class="language-plaintext highlighter-rouge">警告</code>，让用户自己定义一个配置文件。</li>
+  <li><code class="language-plaintext highlighter-rouge">defaultCache</code> 配置会被应用到所有没有被显示声明的缓存中。这个配置不是必需的。</li>
+</ol>
+
+<h2 id="二动态改变配置">二、动态改变配置</h2>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">禁用</code>动态改变配置：
+    <ul>
+      <li>在 XML 文件中把属性 dynamicConfig 设置为 false。</li>
+      <li>在代码中禁用：
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nc">Cache</span> <span class="n">cache</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="na">getCache</span><span class="o">(</span><span class="s">"sampleCache"</span><span class="o">);</span>
+  <span class="n">cache</span><span class="o">.</span><span class="na">disableDynamicFeatures</span><span class="o">();</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>可以动态改变的配置：
+    <ul>
+      <li>timeToLive：一个 element 在<code class="language-plaintext highlighter-rouge">缓存中存在</code>的最长时间（秒），不论它是否被访问过都会被清除。</li>
+      <li>timeToIdle：一个 element <code class="language-plaintext highlighter-rouge">未被访问</code>的最长时间（秒），经过这段时间后被清除。</li>
+      <li>maxEntriesLocalHeap</li>
+      <li>maxBytesLocalHeap</li>
+      <li>maxEntriesLocalDisk</li>
+      <li>maxBytesLocalDisk
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nc">Cache</span> <span class="n">cache</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="na">getCache</span><span class="o">(</span><span class="s">"sampleCache"</span><span class="o">);</span>
+  <span class="nc">CacheConfiguration</span> <span class="n">config</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="na">getCacheConfiguration</span><span class="o">();</span>
+  <span class="n">config</span><span class="o">.</span><span class="na">setTimeToIdleSeconds</span><span class="o">(</span><span class="mi">60</span><span class="o">);</span>
+  <span class="n">config</span><span class="o">.</span><span class="na">setTimeToLiveSeconds</span><span class="o">(</span><span class="mi">120</span><span class="o">);</span>
+  <span class="n">config</span><span class="o">.</span><span class="na">setmaxEntriesLocalHeap</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
+  <span class="n">config</span><span class="o">.</span><span class="na">setmaxEntriesLocalDisk</span><span class="o">(</span><span class="mi">1000000</span><span class="o">);</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="三传递拷贝而非引用">三、传递拷贝而非引用</h2>
+<p>默认情况下 <code class="language-plaintext highlighter-rouge">get()</code> 方法会取得缓存中数据的<strong>引用</strong>，之后对这个数据的所有改变都会<strong>立刻</strong>反映到缓存中。有些时候用户想要获得一个缓存数据的<code class="language-plaintext highlighter-rouge">拷贝</code>，对这个拷贝的操作不会影响到缓存。</p>
+
+<ol>
+  <li>XML 配置： 把 <code class="language-plaintext highlighter-rouge">copyOnRead</code> 和 <code class="language-plaintext highlighter-rouge">copyOnWrite</code> 设置为 <code class="language-plaintext highlighter-rouge">true</code></li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;cache</span> <span class="na">name=</span><span class="s">"copyCache"</span>
+ <span class="na">maxEntriesLocalHeap=</span><span class="s">"10"</span>
+ <span class="na">eternal=</span><span class="s">"false"</span>
+ <span class="na">timeToIdleSeconds=</span><span class="s">"5"</span>
+ <span class="na">timeToLiveSeconds=</span><span class="s">"10"</span>
+ <span class="na">copyOnRead=</span><span class="s">"true"</span>
+ <span class="na">copyOnWrite=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;copyStrategy</span> <span class="na">class=</span><span class="s">"com.company.ehcache.MyCopyStrategy"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/cache&gt;</span>
+</code></pre></div></div>
+
+<ol>
+  <li>Java 代码中：</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">CacheConfiguration</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CacheConfiguration</span><span class="o">(</span><span class="s">"copyCache"</span><span class="o">,</span> <span class="mi">1000</span><span class="o">).</span><span class="na">copyOnRead</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="na">copyOnWrite</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="nc">Cache</span> <span class="n">copyCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cache</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>在 <code class="language-plaintext highlighter-rouge">get()</code> 或者 <code class="language-plaintext highlighter-rouge">put()</code> 方法获得拷贝的时候，可以自定义<code class="language-plaintext highlighter-rouge">拷贝策略</code>。</p>
+
+<ol>
+  <li>实现接口 <code class="language-plaintext highlighter-rouge">net.sf.ehcache.store.compound.CopyStrategy</code>。</li>
+  <li>XML 中配置 <code class="language-plaintext highlighter-rouge">&lt;copyStrategy class="com.company.ehcache.MyCopyStrategy"/&gt;</code>。</li>
+  <li>Java 代码中：
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">CacheConfiguration</span> <span class="n">cacheConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CacheConfiguration</span><span class="o">(</span><span class="s">"copyCache"</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+<span class="nc">CopyStrategyConfiguration</span> <span class="n">copyStrategyConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CopyStrategyConfiguration</span><span class="o">();</span>
+<span class="n">copyStrategyConfiguration</span><span class="o">.</span><span class="na">setClass</span><span class="o">(</span><span class="s">"com.company.ehcache.MyCopyStrategy"</span><span class="o">);</span>
+<span class="n">cacheConfiguration</span><span class="o">.</span><span class="na">addCopyStrategy</span><span class="o">(</span><span class="n">copyStrategyConfiguration</span><span class="o">);</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="四存储层级">四、存储层级</h2>
+<ol>
+  <li>内存存储：在<code class="language-plaintext highlighter-rouge">堆内存</code>里存储。从属于 Java GC。</li>
+  <li>非堆存储：受限于 <code class="language-plaintext highlighter-rouge">RAM</code> 的可用空间。
+    <ul>
+      <li>不从属于 Java GC。</li>
+      <li>只能存储<strong>序列化</strong>的数据。</li>
+      <li>为内存存储提供了溢出能力。</li>
+    </ul>
+  </li>
+  <li>磁盘存储。
+    <ul>
+      <li>备份内存存储。</li>
+      <li>为非堆存储提供溢出能力。</li>
+      <li>只能存储<strong>序列化</strong>的数据。</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="五存储详细介绍">五、存储详细介绍</h2>
+<ol>
+  <li>内存存储：在堆内存分配空间。在不引起 GC 停顿的前提下，尽可能分配空间。利用<code class="language-plaintext highlighter-rouge">非堆内存</code>存储溢出的数据（为了不引起 GC 停顿）。
+    <ul>
+      <li>速度是<code class="language-plaintext highlighter-rouge">最快</code>的。</li>
+      <li>接受所有数据，无论有没有实现 <code class="language-plaintext highlighter-rouge">Serializable</code>。</li>
+      <li><code class="language-plaintext highlighter-rouge">线程安全</code>。</li>
+      <li>如果数据量超过了存储最大值：（1）配置了溢出策略，数据可以被保存到其他层级；（2）没有配置，一部分数据被删除。</li>
+      <li>内存回收策略：
+        <ul>
+          <li>LRU（最近最少使用）：<strong>默认策略</strong>。缓存的时间戳<code class="language-plaintext highlighter-rouge">离当前时间最远</code>的将被回收。</li>
+          <li>LFU（最少被使用）：缓存有一个 hit 值，<code class="language-plaintext highlighter-rouge">值最小</code>的被回收。</li>
+          <li>FIFO（先进先出）</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>磁盘存储
+    <ul>
+      <li>仅能存储实现了 <code class="language-plaintext highlighter-rouge">Serializable</code> 接口的数据。其他数据会抛出 <code class="language-plaintext highlighter-rouge">NotSerializableException</code> 异常。</li>
+      <li>磁盘存储是<strong>可选</strong>的，不一定要配置；如果有多个 CacheManager，也没有必要配置多个磁盘存储路径。</li>
+      <li>磁盘存储选项：
+        <ul>
+          <li>localTempSwap：允许缓存存放到磁盘，但重启之后这些<strong>数据就会丢失</strong>。</li>
+          <li>localRestartable：<strong>重启之后数据不会丢失</strong>，会自动加载到内存中。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;persistence</span> <span class="na">strategy=</span><span class="s">"localTempSwap"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>磁盘存储路径：
+    <ul>
+      <li>user.home：用户 <code class="language-plaintext highlighter-rouge">home</code> 目录。</li>
+      <li>user.dir：用户当前的活动目录。</li>
+      <li>java.io.tmpdir：默认的临时目录。</li>
+      <li>ehcache.disk.store.dir：命令行中指定的系统属性。</li>
+    </ul>
+
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;diskStore</span> <span class="na">path=</span><span class="s">"/path/to/store/data"</span><span class="nt">/&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>禁用磁盘存储：不要在文件里配置 <code class="language-plaintext highlighter-rouge">diskStore</code>。</li>
+</ul>
+:ET

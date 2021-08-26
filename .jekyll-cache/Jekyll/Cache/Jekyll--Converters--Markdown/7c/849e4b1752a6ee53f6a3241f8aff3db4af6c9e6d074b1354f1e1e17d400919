@@ -1,0 +1,33 @@
+I"z<p>在之前的一篇<a href="../../06/20/aix-64-lua.html">文章</a>中，我们介绍了IBM AIX下编译64为Lua代码。在这里，我们介绍如何在HP-UX下编译64为Lua源码。</p>
+
+<p>目前，官方默认支持的编译平台是<code class="language-plaintext highlighter-rouge">aix ansi bsd freebsd generic linux macosx mingw posix solaris</code></p>
+
+<p>没关系，我们来修改官方的<code class="language-plaintext highlighter-rouge">Makefile</code>文件，让他支持<code class="language-plaintext highlighter-rouge">hp-ux</code>。</p>
+
+<p>修改一：增加支持的平台代码 <code class="language-plaintext highlighter-rouge">hp</code></p>
+
+<p>源码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris
+</code></pre></div></div>
+
+<p>修改为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris hp
+</code></pre></div></div>
+
+<p>修改二：增加编译命令</p>
+
+<p>在源码中增加：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hp:
+	$(MAKE) all CC="aCC -AC99 +DD64 -z +Z +DSblended" CFLAGS="-O -DLUA_USE_POSIX -DLUA_USE_DLOPEN" MYLIBS="-ldl" MYLDFLAGS="-Wl,+s -Wl,+n"
+</code></pre></div></div>
+
+<p><strong>Ok啦，可以编译了！</strong></p>
+
+<p>编译吧：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make hp
+</code></pre></div></div>
+:ET

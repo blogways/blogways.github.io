@@ -1,0 +1,206 @@
+I"><h2 id="自定义列表分析">自定义列表分析</h2>
+<h4 id="这是一个应用分类软件的截图">这是一个应用分类软件的截图</h4>
+
+<p><img src="/images/st-7.png" alt="应用程序下载页面截图" /></p>
+
+<h4 id="看看-st-里面如何来设计这个界面">看看 ST 里面如何来设计这个界面</h4>
+
+<p><img src="/images/st-8.png" alt="ST 视图设计" /></p>
+
+<p>简单来划分，这个视图分为三块，最外面的 TabPanel（id: tp），面板上面的 TitleBar（id: tb）以及下面主要数据展示的 List（id: ll），下面来看看每个模块的代码：</p>
+
+<h4 id="tabpanelid-tp">TabPanel（id: tp）</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ext.define('myapp.view.MyList', {
+    extend: 'Ext.TabPanel',
+    xtype: 'mylist',
+    config: {
+        tabBarPosition: 'bottom',
+        items: [{
+            title: '首页',
+            iconCls: 'home'
+        },
+        {
+            title: '分类',
+            iconCls: 'info'
+        },
+        {
+            title: '达人',
+            iconCls: 'locate'
+        },
+        {
+            title: '排行',
+            iconCls: 'user'
+        },
+        {
+            title: '管理',
+            iconCls: 'settings'
+        }]
+    }
+})
+</code></pre></div></div>
+
+<h4 id="titlebarid-tb">TitleBar（id: tb）</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    xtype: 'titlebar',
+    docked: 'top',
+    items: [
+        {
+            xtype: 'label',
+            html: '应用分类'
+        },
+        {
+            iconCls: 'search',
+            ui: 'plain',
+            align: 'right'
+        }
+    ]
+}
+</code></pre></div></div>
+
+<h4 id="listid-ll">List（id: ll）</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    xtype: 'list',
+    store: 'MyListStore',
+    itemTpl: ['&lt;div class="mylist"&gt;', 
+                    '&lt;div class="mylist-1"&gt;&lt;image src="{img}"/&gt;&lt;/div&gt;', 
+                    '&lt;div class="mylist-2"&gt;&lt;div class="mylist-2-1"&gt;{title}&lt;/div&gt;', 
+                    '&lt;div class="mylist-2-2"&gt;{subtitle}&lt;/div&gt;&lt;/div&gt;',
+                    '&lt;div class="mylist-3"&gt;{download}&lt;/div&gt;', 
+              '&lt;/div&gt;'].join(''),
+    flex: 1
+}
+</code></pre></div></div>
+
+<p>既然是 list 肯定是有数据源的，这个示例中定义的数据源名是 MyListStore，看下其如何实现的，为了简便起见 model 我没有单独写，跟 store 合到一起了。</p>
+
+<h4 id="myappstoremyliststore">myapp.store.MyListStore</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ext.define('myapp.store.MyListStore', {
+    extend: 'Ext.data.Store',
+    config: {
+        // model: 'myapp.model.MyListModel',
+        fields: ['title', 'subtitle', 'img', 'download'],
+        data: [
+           { title: '游戏', subtitle: '体育、战略、休闲', img: 'resources/icons/Icon.png', download: '22889'},
+           { title: '电子书', subtitle: '小说、笑话、资料', img: 'resources/icons/Icon.png', download: '18621'},
+           { title: '影音播放', subtitle: 'Adobe Flash 播放器', img: 'resources/icons/Icon.png', download: '2088'},
+           { title: '交通导航', subtitle: 'Google 地图，高级地图', img: 'resources/icons/Icon.png', download: '685'},
+           { title: '生活娱乐', subtitle: '大众点评，我查查', img: 'resources/icons/Icon.png', download: '9184'}
+       ]
+    }
+});
+</code></pre></div></div>
+
+<p>看下最后的效果图：</p>
+
+<p><img src="/images/st-9.png" alt="ST 自定义列表效果图" /></p>
+
+<p>最后看下合并后整个视图的代码</p>
+
+<h4 id="myappviewmylist">myapp.view.MyList</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ext.define('myapp.view.MyList', {
+    extend: 'Ext.TabPanel',
+    xtype: 'mylist',
+    requires: [
+        'Ext.Label',
+        'Ext.dataview.List'
+    ],
+    config: {
+        tabBarPosition: 'bottom',
+        items: [{
+            title: '首页',
+            iconCls: 'home',
+            layout: 'vbox',
+            items: [{
+                xtype: 'titlebar',
+                docked: 'top',
+                items: [
+                    {
+                        xtype: 'label',
+                        html: '应用分类'
+                    },
+                    {
+                        iconCls: 'search',
+                        ui: 'plain',
+                        align: 'right'
+                    }
+                ]
+            }, {
+                xtype: 'list',
+                store: 'MyListStore',
+                itemTpl: ['&lt;div class="mylist"&gt;', 
+                                '&lt;div class="mylist-1"&gt;&lt;image src="{img}"/&gt;&lt;/div&gt;', 
+                                '&lt;div class="mylist-2"&gt;&lt;div class="mylist-2-1"&gt;{title}&lt;/div&gt;', 
+                                '&lt;div class="mylist-2-2"&gt;{subtitle}&lt;/div&gt;&lt;/div&gt;',
+                                '&lt;div class="mylist-3"&gt;{download}&lt;/div&gt;', 
+                          '&lt;/div&gt;'].join(''),
+                flex: 1
+            }]
+        },
+        {
+            title: '分类',
+            iconCls: 'info'
+        },
+        {
+            title: '达人',
+            iconCls: 'locate'
+        },
+        {
+            title: '排行',
+            iconCls: 'user'
+        },
+        {
+            title: '管理',
+            iconCls: 'settings'
+        }]
+    }
+})
+</code></pre></div></div>
+
+<p>自定义列表样式</p>
+
+<h4 id="maincss">main.css</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.mylist {
+    height: 60px;
+}
+
+.mylist-1 {
+    display: inline-block;
+    float: left;
+}
+
+.mylist-2 {
+    margin-top: 10px;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.mylist-2-1 {
+    font-size: 1.2em;
+}
+
+.mylist-2-2 {
+    margin-top: 5px;
+    font-size: 0.6em;
+}
+
+.mylist-3 {
+    display: inline-block;
+    float: right;
+    padding-top: 20px;
+    padding-right: 5px;
+    font-size: 0.6em;
+}
+
+.x-list .x-list-item .x-list-item-body, .x-list .x-list-item.x-list-item-tpl .x-innerhtml {
+    padding: 5px 5px;
+}
+</code></pre></div></div>
+
+<p>这个示例的选择相对比较简洁，大家有时候会看到更加复杂的列表，或者自己在开发的时候需要展示的数据更多，样式要求更复杂，其实原理都是一样的，通过定义 itemTpl 节点元素来实现自定义的列表项展示。</p>
+:ET

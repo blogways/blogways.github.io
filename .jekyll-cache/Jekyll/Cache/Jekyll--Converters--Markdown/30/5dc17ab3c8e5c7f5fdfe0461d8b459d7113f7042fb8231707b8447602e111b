@@ -1,0 +1,109 @@
+I"�<h1 id="drupal安装教程">Drupal安装教程</h1>
+
+<h2 id="一下载drupal">一.下载drupal</h2>
+
+<p>访问Drupal官方网站下载Drupal程序（http://drupal.org/download），同时把下载到的压缩包进行解压并上传到空间根目录，在浏览器中输入网站域名，将会自动进入Drupal的安装界面。</p>
+
+<h2 id="二新建数据库">二.新建数据库</h2>
+
+<p>打开phpmyadmin，点击新建数据库，名字为drupal</p>
+
+<p><img src="\images\post\shujuku.jpg" alt="shujuku" /></p>
+
+<h2 id="三选择安装类型">三.选择安装类型</h2>
+
+<p>如图，标准Standard和迷你Minimal，区别是安装系统模块的多少，如果只是普通文章应用选择Minimal即可，此处选择标准型，然后点击Save and continue进入下一步。</p>
+
+<p><img src="\images\post\profile.jpg" alt="shujuku" /></p>
+
+<h2 id="四选择程序的语言">四.选择程序的语言，</h2>
+
+<p>默认即提供英文版，如需其它语言，点击“Learn how to install Drupal in other languages”进入新界面</p>
+
+<p><img src="\images\post\yuyan.jpg" alt="shujuku" /></p>
+
+<blockquote>
+  <p>如需要安装中文可以下载根据说明下载，并将下载的文件放到/profiles/standard/translations/中即可</p>
+</blockquote>
+
+<p><img src="\images\post\zhongwen.jpg" alt="shujuku" /></p>
+
+<h2 id="五安装需求">五.安装需求</h2>
+
+<p>选择语言后，点击确定，会出现下图需求问题</p>
+
+<p><img src="\images\post\requirement.jpg" alt="xuqiu" /></p>
+
+<p>首先目录sites/default/files 不存在，则需要在该目录下建立该文件夹。</p>
+
+<p>进入sites/default，输入：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$mkdir files
+</code></pre></div></div>
+
+<p>并将该文件权限设置为可写</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$sudo chmod -R 777 files
+</code></pre></div></div>
+
+<p>然后复制 ./sites/default/default.settings.php 文件到./sites/default/settings.php</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$cp default.settings.php settings.php
+</code></pre></div></div>
+
+<p>并将其设置成可写</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$sudo chmod 777 settings.php
+</code></pre></div></div>
+
+<h2 id="六设置数据库">六.设置数据库</h2>
+
+<p>设置数据库信息，根据提示设置MYSQL或sqlite数据库的用户名、数据库名和密码。Localhost一般保持默认即可，数据库端口和表前缀没有强制要求，如果同一数据库下安装多个Drupal，要设置表前缀。</p>
+
+<p><img src="\images\post\mysql1.jpg" alt="mysql1" /></p>
+
+<p><img src="\images\post\mysql2.jpg" alt="mysql2" /></p>
+
+<p>进入下一步，系统会自动安装Drupal相关模块，等待安装完成</p>
+
+<h2 id="七设置站点信息">七.设置站点信息</h2>
+
+<p>根据自己的需要自主设置</p>
+
+<p><img src="\images\post\site.jpg" alt="site" /></p>
+
+<h2 id="八安装完成">八.安装完成</h2>
+
+<p>drupal安装完成后会出现如下界面</p>
+
+<p><img src="\images\post\site.jpg" alt="Drupal_Complete" /></p>
+
+<h2 id="九常见问题">九.常见问题</h2>
+
+<p>1.在安装数据库时，没有mysql选项</p>
+
+<p>原因：在没有php没有打开mysql扩展</p>
+
+<p>解决办法：进入php的安装目录</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /usr/local/bin/phpize
+./configure --with-php-config=/usr/local/bin/php-config --with-mysql=/usr/local/mysql/
+make
+make install
+</code></pre></div></div>
+
+<blockquote>
+  <p>在<code class="language-plaintext highlighter-rouge">mysql/modules</code>下会看到mysql.so</p>
+</blockquote>
+
+<p>修改php.ini</p>
+
+<p>将<code class="language-plaintext highlighter-rouge">extensions = "mysql.so"</code>前的分号去掉，打开mysql扩展</p>
+
+<p>将mysql.so拷贝到extension_dir目录下，extension_dir在php.ini中设置</p>
+
+<p>重启apache即可</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apacheclt restart
+</code></pre></div></div>
+:ET

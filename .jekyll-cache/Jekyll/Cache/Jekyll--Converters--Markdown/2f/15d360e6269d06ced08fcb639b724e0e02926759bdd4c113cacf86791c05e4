@@ -1,0 +1,118 @@
+I"�<p>git裸仓库，就是指没有工作目录的仓库。简单点说，裸仓库就是你工作目录下面的 <code class="language-plaintext highlighter-rouge">.git</code> 子目录里面的内容。</p>
+
+<p>远程仓库，一般不需要工作目录，所以通常都是裸仓库。</p>
+
+<p>如何在服务器上创建裸仓库？很简单，跟我来！</p>
+
+<p>如果你还没有代码，直接在服务器上创建裸仓库很简单，一个命令就够了：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git init --bare
+</code></pre></div></div>
+
+<p>但是如果在本机，你已经有了一些代码，如何把这些代码部署到服务器上，并且仅仅部署成一个裸仓库呢？其实，也很简单，因为我们了解了 git 裸仓库实际上就是你工作目录下的 <code class="language-plaintext highlighter-rouge">.git</code> 子目录的内容，拷过去就行了。</p>
+
+<p>所以，下面有三个思路，都可以实现：</p>
+
+<h3 id="思路一在本机生成裸仓库把裸仓库部署到服务器上">思路一：在本机生成裸仓库，把裸仓库部署到服务器上</h3>
+
+<p>具体步骤：</p>
+
+<ol>
+  <li>
+    <p>本机生成裸仓库</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ git clone --bare my_project my_project.git
+
+ $ cp -Rf my_project/.git my_project.git
+</code></pre></div>    </div>
+
+    <p>上面两个命令结果一样，都可以根据现有的仓库生成一个裸仓库。按喜欢选择一个即可。</p>
+  </li>
+  <li>
+    <p>部署到服务器上</p>
+
+    <p>可以用工具部署到远程服务器上，也可以用命令，命令如下：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ scp -r my_project.git user@git.example.com:/opt/git
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>大功告成了</p>
+
+    <p>可以测试一下，获取远程服务器上的版本</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ git clone user@git.example.com:/opt/git/my_project.git
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="思路二把本机的git目录部署到服务器上然后改成裸仓库">思路二：把本机的<code class="language-plaintext highlighter-rouge">.git</code>目录部署到服务器上，然后改成裸仓库</h3>
+
+<ol>
+  <li>
+    <p>将<code class="language-plaintext highlighter-rouge">.git</code>目录部署到服务器上</p>
+
+    <p>可以用工具部署到远程服务器上，也可以用命令，命令如下：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ scp -r my_project/.git user@git.example.com:/opt/git
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>将服务器<code class="language-plaintext highlighter-rouge">.git</code>目录改成裸仓库</p>
+
+    <p>在服务器上执行命令：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd /opt/git
+ mv .git my_project.git
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>大功告成了</p>
+
+    <p>可以测试一下，获取远程服务器上的版本</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ git clone user@git.example.com:/opt/git/my_project.git
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="思路三git-push-到远程仓库">思路三：git push 到远程仓库</h3>
+
+<ol>
+  <li>
+    <p>先在远程主机上建个裸仓库</p>
+
+ 	$ mkdir my_project.git
+ 	$ cd my_project.git
+ 	$ git init –bare
+  </li>
+  <li>
+    <p>给本地仓库添加一个远程仓库</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> # git remote add &lt;远程仓库名字&gt; &lt;地址&gt;
+ $ git remote add ball git@xxx.xxx.xxx.xxx:/path/to/my_project.git
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>将本地仓库内容上传远程仓库</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ git push ball master
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong>注意：</strong>clone版本库的时候，所使用的远程主机自动被Git命名为origin。如果想用其他的主机名，需要用git clone命令的-o选项指定。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone -o jQuery https://github.com/jquery/jquery.git
+</code></pre></div></div>
+
+<h3 id="注意">注意：</h3>
+
+<p>按思路一、思路二创建的远程仓库，如果需要支持其他人<code class="language-plaintext highlighter-rouge">push</code>数据，需要修改仓库下配置文件<code class="language-plaintext highlighter-rouge">config</code>,添加如下内容：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[receive]
+    denyCurrentBranch = ignore
+</code></pre></div></div>
+
+<p>否则，可能会遇到在客户端不被允许向裸仓库<code class="language-plaintext highlighter-rouge">push</code>数据。</p>
+:ET

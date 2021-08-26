@@ -1,0 +1,148 @@
+I"� <h2 id="一css样式">一、CSS样式</h2>
+
+<p>首先，看一下jQuery中提供的修改CSS样式的方法：(1)<code class="language-plaintext highlighter-rouge">.css( key )</code>；(2)<code class="language-plaintext highlighter-rouge">.css( key, value )</code>；(3)<code class="language-plaintext highlighter-rouge">.css( obj )</code>，都是用来修改html的样式的。</p>
+
+<p><strong><em>css( key )</em></strong></p>
+
+<p>取得css属性key的值，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.css('background-color');
+</code></pre></div></div>
+
+<p>取得匹配元素的<code class="language-plaintext highlighter-rouge">background-color</code>元素的值。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.css(['background-color', 'font-size']);
+</code></pre></div></div>
+
+<p>取得匹配元素的<code class="language-plaintext highlighter-rouge">background-color</code>和<code class="language-plaintext highlighter-rouge">font-size</code>属性的值。</p>
+
+<p><strong><em>css( key, value )</em></strong></p>
+
+<p>设置css属性key的只为传入的value，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.css( 'background-color', '#0000ff' );
+</code></pre></div></div>
+
+<p>将匹配元素的<code class="language-plaintext highlighter-rouge">background-color</code>背景颜色设置为<code class="language-plaintext highlighter-rouge">#0000ff</code>蓝色。</p>
+
+<p><strong><em>css( obj )</em></strong></p>
+
+<p>根据传入的key-value参数设置css属性值，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.css({
+	background-color: '#0000ff',
+	font-size: 15px,
+	float: left;
+});
+</code></pre></div></div>
+
+<p>闯入参数为一个<strong>属性 - 值</strong>一一对应的css属性对象，jQuery会为其一一对应的设置对应的css值。</p>
+
+<p>利用两个按钮，调整某段落文字的大小：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// html
+&lt;p class='p1'&gt;段落一，测试文字！！修改CSS样式！&lt;/p&gt;
+&lt;p class='p2'&gt;段落二，测试文字！！修改CSS样式！&lt;/p&gt;
+&lt;button id='bigger'&gt;变大&lt;/button&gt;
+&lt;button id='smaller'&gt;变小&lt;/button&gt;
+
+// script
+var $p = $('p');
+$('button').on('click', functiono(){
+    var num = parseFloat($p.css('font-size'));
+    var tmp = this.id == 'bigger' ? num * 1.1 : num / 1.1; 
+    $p.css('font-size',num);
+});
+</code></pre></div></div>
+
+<p>这段代码很简单，不难，此处不再说明。</p>
+
+<h2 id="二效果方法">二、效果方法</h2>
+<h3 id="1预定义效果">1、预定义效果</h3>
+
+<p><strong><em>显示和隐藏元素</em></strong></p>
+
+<p>基本的<code class="language-plaintext highlighter-rouge">.hide()</code>和<code class="language-plaintext highlighter-rouge">.show()</code>不带任何参数，跟使用<code class="language-plaintext highlighter-rouge">.css('display', 'none')</code>或<code class="language-plaintext highlighter-rouge">.css('display', 'block等其它')</code>类似，用于显示和隐藏匹配元素，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// html
+&lt;p class='p1'&gt;段落一，测试文字！！修改CSS样式！&lt;/p&gt;
+&lt;p class='p2' style='display: none;'&gt;段落二，测试文字！！修改CSS样式！&lt;/p&gt;
+&lt;p class='p3'&gt;段落三，测试文字！！修改CSS样式！&lt;/p&gt;
+
+// script
+$('.p1').hide();	// 隐藏段落一
+</code></pre></div></div>
+
+<p>上面的script代码，运行后会隐藏段落一，</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('.p1').show();	// 显示段落二
+</code></pre></div></div>
+
+<p>在段落二的html代码中，通过style属性为其指定了一个内联的CSS属性<code class="language-plaintext highlighter-rouge">display</code>，并将其设置为none，那么默认情况下，段落二将不会显示出来（默认是隐藏状态），在调用了上面的代码之后，段落二将会显示到界面上。</p>
+
+<p>当为<code class="language-plaintext highlighter-rouge">.show()</code>和<code class="language-plaintext highlighter-rouge">.hide()</code>传递参数时，就会产生像动画一样的，持续性效果。对于jQuery提供的任何效果方法，都可以为其指定两种预设的速度参数：slow和fast。</p>
+
+<p>使用<code class="language-plaintext highlighter-rouge">.show('slow')</code>会在600毫秒(0.6秒)内完成显示隐藏元素的效果，而传递参数为<code class="language-plaintext highlighter-rouge">'fast'</code>时的时间为200毫秒(0.2秒)，而如果不显示的指定速度的参数，jQuery会默认在400毫秒(0.4秒)内完成执行的效果。</p>
+
+<p>而如果想要指定自己需要的运行速度参数，直接传递一个数值参数即可：<code class="language-plaintext highlighter-rouge">.hide(999)</code>。</p>
+
+<p>当然jQuery在隐藏显示元素中，不仅仅只为我们提供了这两个方法，还有一个<code class="language-plaintext highlighter-rouge">toggle()</code>方法，这个方法会显示或隐藏匹配的元素：当隐藏的元素调用此方法后会显示出来，而显示的元素调用此方法后会被隐藏。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('&lt;button&gt;toggle&lt;/button&gt;')
+	.appendTo('body')
+	.click(function(){
+		$('p').toggle('fast');
+	});
+</code></pre></div></div>
+
+<p>上面代码在<code class="language-plaintext highlighter-rouge">&lt;body&gt;</code>元素后面添加一个按钮，绑定一个单击事件，点击显示或隐藏所有段落。</p>
+
+<p>而上面介绍的3个方法在接受一个数值作为显示、隐藏元素速度的同时，还可以传递第二个参数，作为一个回调函数，即当完成了显示、隐藏的任务后，调用该回调函数，原型入下所示：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.show('fast', function(){...});
+.hide('slow', function(){...});
+.toggle(1000, function(){...});
+</code></pre></div></div>
+
+<p><strong><em>淡入、淡出</em></strong></p>
+
+<p>jQuery除了提供简单的隐藏显示的方法之外，还提供了另一些不同持续效果的隐藏显示方法，这里要将的是淡入和淡出。</p>
+
+<p>跟前面的隐藏显示元素一样，提供了三个方法，都能接收数值作为速度参数，同样也可以接收一个函数作为回调函数，原型如下所示：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.fadeIn([speed], [callback])
+.fadeOut([speed], [callback])
+.fadeToggle([speed], [callback])
+</code></pre></div></div>
+
+<p>其使用方法跟前面一样，不再详细给出。</p>
+
+<p>其中还涉及到一个<code class="language-plaintext highlighter-rouge">.fadeTo(speed, opacity, [callback])</code>，这个方法可以调整匹配元素的不透明度，感兴趣的可以尝试一下。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('&lt;button&gt;fadeTo&lt;/button&gt;')
+	.appendTo('body')
+	.click(function(){
+		$('p').fadeTo(1000, 0.2);
+	});
+</code></pre></div></div>
+
+<p>上面的代码，通过想html中添加一个带事件click处理程序的按钮，在其单击事件中，通过<code class="language-plaintext highlighter-rouge">.fadeTo</code>改变所有段落的不透明度(在1秒内，将不透明度由1 -&gt; 0.2)</p>
+
+<p><strong><em>滑入、滑出</em></strong></p>
+
+<p>滑入和滑出是jQuery提供的另一种显示、隐藏元素的方法，接收的参数跟前面两种方法完全一样，只是其持续效果不同，原型如下所示：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.slideDown([speed], [callback])
+.slideUp([speed], [callback])
+.slideToggle([speed], [callback])
+</code></pre></div></div>
+
+<p>使用方法不在给出！</p>
+
+<p>&lt;/br&gt;</p>
+
+<p>===</p>
+
+<p><strong>未完待续。。。</strong></p>
+
+:ET

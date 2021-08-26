@@ -1,0 +1,162 @@
+I"<h2 id="一vertx-web介绍">一、Vert.x-web介绍</h2>
+<p>1、Vert.x-web基于Vert.x core，可以非常简单的构建web应用程序的功能集；</p>
+
+<p>2、Yoke从Node.js中的Express框架和Ruby世界中的Sinatra获得灵感出来的一个基于Vert.x 2.x框架；</p>
+
+<p>3、Vertx-web并不是容器，Vert.x-Web强在设计，内部功能并不是完全嵌入，你只需构建应用时只需使用你所需要的；</p>
+
+<p>4、Vert.x-web可以创建经典的服务器侧Web应用程序、RESTfulweb应用程序、实时(服务器推送)Web应用,或者其他你要实现的某种web应用，应用的类型完全由你决定；</p>
+
+<p>5、Vert.x-Web非常适合编写RESTful HTTP微服务，但是Vert.x不强制你这样编写应用程序</p>
+
+<h2 id="二vertx-web包含的功能">二、Vert.x-web包含的功能</h2>
+
+<ul>
+  <li>路由(基于方法【get,post】,路径，等)</li>
+  <li>路径的正则表达式匹配</li>
+  <li>从路径中抽取参数</li>
+  <li>内容协商</li>
+  <li>请求体处理</li>
+  <li>请求和响应体大小限制</li>
+  <li>Cookie解析与处理</li>
+  <li>多部分表单（指有表单域和上传的表单）</li>
+  <li>多部分文件上传</li>
+  <li>子路由器</li>
+  <li>会话支持——包括本地（粘滞会话）和集群（非粘滞）</li>
+  <li>CORS（跨区域资源共享）支持</li>
+  <li>错误页处理</li>
+  <li>Basic认证</li>
+  <li>基于认证的重定向</li>
+  <li>JWt (Java Web Toolkit) 基本认证</li>
+  <li>用户/角色/权限认证</li>
+  <li>favicon（指浏览器页面上的图标）处理</li>
+  <li>
+    <p>模板支持服务端渲染，支持下列模板引擎</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Handlebars
+  Jade
+  MVEL
+  Thymelea
+  Apache FreeMarker
+</code></pre></div>    </div>
+  </li>
+  <li>响应时间处理器</li>
+  <li>静态文件提供，包括缓存逻辑和目录列表</li>
+  <li>请求超时处理</li>
+  <li>SockJS支持</li>
+  <li>事件总线桥</li>
+  <li>CSRF虚拟跨站请求</li>
+  <li>虚拟主机</li>
+</ul>
+
+<p>Vert.x-web的大多数特性被实现成处理器，所以要以自己编写。随着时间推移，会在vert.x-web中添加更多内容。我们将在此手册中讨认所有这些特性</p>
+
+<h2 id="三vertx-web使用情况调查">三、Vert.x-web使用情况调查</h2>
+
+<p>下图为来自网络调查所得web框架排行榜：</p>
+
+<p><img src="/images/tangsz/vert-web.png" alt="vert-web" /></p>
+
+<p>可以看出Vert.x是仅次于spring MVC排名在第二位的框架，可见Vert.x的活跃程度已经很高了。</p>
+
+<h2 id="四vertx-web简单例子">四、Vert.x-web简单例子</h2>
+<p>Vert.x-web本身包含功能很多，这里的例子只是通过Vert.x-web 基于java8（还有ruby、groovy、JavaScript等）实现简单的功能,详细例子可见：https://github.com/vert-x3/vertx-examples/tree/master/web-examples</p>
+
+<h3 id="简单hello-word">简单Hello Word</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	public class Server extends AbstractVerticle {
+	  public static void main(String[] args) {
+	    Runner.runExample(Server.class);
+	  }
+	
+	  @Override
+	  public void start() throws Exception {
+	    Router router = Router.router(vertx);
+	    router.route().handler(routingContext -&gt; {
+	      routingContext.response().putHeader("content-type", "text/html").end("Hello World!");
+	    });
+	    vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+	  }
+  }
+</code></pre></div></div>
+
+<p>页面展现：</p>
+
+<p><img src="/images/tangsz/vert-http.png" alt="vert-http" /></p>
+
+<h3 id="简单rest微服务">简单rest微服务</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	public class SimpleREST extends AbstractVerticle {
+		  public static void main(String[] args) {
+		    Runner.runExample(SimpleREST.class);
+		  }		
+		  private Map&lt;String, JsonObject&gt; products = new HashMap&lt;&gt;();
+		
+		  @Override
+		  public void start() {			
+		    setUpInitialData();			
+		    Router router = Router.router(vertx);
+		    router.route().handler(BodyHandler.create());
+		    router.get("/products/:productID").handler(this::handleGetProduct);
+		    router.put("/products/:productID").handler(this::handleAddProduct);
+		    router.get("/products").handler(this::handleListProducts);
+		    vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+		  }
+		
+		  private void handleGetProduct(RoutingContext routingContext) {
+		    String productID = routingContext.request().getParam("productID");
+		    HttpServerResponse response = routingContext.response();
+		    if (productID == null) {
+		      sendError(400, response);
+		    } else {
+		      JsonObject product = products.get(productID);
+		      if (product == null) {
+		        sendError(404, response);
+		      } else {
+		        response.putHeader("content-type", "application/json").end(product.encodePrettily());
+		      }
+		    }
+		  }
+		
+		  private void handleAddProduct(RoutingContext routingContext) {
+		    String productID = routingContext.request().getParam("productID");
+		    HttpServerResponse response = routingContext.response();
+		    if (productID == null) {
+		      sendError(400, response);
+		    } else {
+		      JsonObject product = routingContext.getBodyAsJson();
+		      if (product == null) {
+		        sendError(400, response);
+		      } else {
+		        products.put(productID, product);
+		        response.end();
+		      }
+		    }
+		  }
+		
+		  private void handleListProducts(RoutingContext routingContext) {
+		    JsonArray arr = new JsonArray();
+		    products.forEach((k, v) -&gt; arr.add(v));
+		    routingContext.response().putHeader("content-type", "application/json").end(arr.encodePrettily());
+		  }
+		
+		  private void sendError(int statusCode, HttpServerResponse response) {
+		    response.setStatusCode(statusCode).end();
+		  }
+		
+		  private void setUpInitialData() {
+		    addProduct(new JsonObject().put("id", "prod3568").put("name", "Egg Whisk").put("price", 3.99).put("weight", 150));
+		    addProduct(new JsonObject().put("id", "prod7340").put("name", "Tea Cosy").put("price", 5.99).put("weight", 100));
+		    addProduct(new JsonObject().put("id", "prod8643").put("name", "Spatula").put("price", 1.00).put("weight", 80));
+		  }
+		
+		  private void addProduct(JsonObject product) {
+		    products.put(product.getString("id"), product);
+        }
+  }
+</code></pre></div></div>
+
+<p>页面展现：</p>
+
+<p><img src="/images/tangsz/vert-rest.png" alt="vert-rest" /></p>
+
+:ET

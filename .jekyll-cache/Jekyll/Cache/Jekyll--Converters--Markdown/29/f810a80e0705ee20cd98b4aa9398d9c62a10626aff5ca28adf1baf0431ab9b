@@ -1,0 +1,39 @@
+I"z<p>使用过<code class="language-plaintext highlighter-rouge">connect</code>或者<code class="language-plaintext highlighter-rouge">express</code>的同学必须要知道<code class="language-plaintext highlighter-rouge">debug</code>。这三个的主要作者都是同一个人。</p>
+
+<p><code class="language-plaintext highlighter-rouge">debug</code>模块使用起来很方便，可以分为下面三步：</p>
+
+<ol>
+  <li>
+    <p><strong>在程序中引入<code class="language-plaintext highlighter-rouge">debug</code>时，需要配置一个日志名字空间。</strong>如下：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> var debug = require('debug')('namespace')
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>代码中使用<code class="language-plaintext highlighter-rouge">debug</code>打印日志。</strong> 
+ debug的内核是使用<code class="language-plaintext highlighter-rouge">console.error</code>来打印日志的。所以，<code class="language-plaintext highlighter-rouge">console</code>支持的通配符<code class="language-plaintext highlighter-rouge">debug</code>都可以使用，比如<code class="language-plaintext highlighter-rouge">'%s'</code>、<code class="language-plaintext highlighter-rouge">'%j'</code>等等。打印<code class="language-plaintext highlighter-rouge">json</code>数据就可以使用通配符<code class="language-plaintext highlighter-rouge">%j</code>，比如：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> debug("obj:%j", {name:'test'})
+</code></pre></div>    </div>
+
+    <p>但是，使用通配符<code class="language-plaintext highlighter-rouge">%j</code>打印出来的<code class="language-plaintext highlighter-rouge">json</code>格式不太漂亮，看不出缩进。如果为了方便阅读，也可以使用<code class="language-plaintext highlighter-rouge">nodeJS</code>的自带模块<code class="language-plaintext highlighter-rouge">util</code>，举例如下：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> util = require('util')
+ debug("object:%s", util.inspect(obj))
+</code></pre></div>    </div>
+
+    <p>这种方式打印出来的<code class="language-plaintext highlighter-rouge">json</code>对象，其格式缩进有度，很容易查看。</p>
+  </li>
+  <li>
+    <p><strong>配置环境变量<code class="language-plaintext highlighter-rouge">DEBUG</code>.</strong>如果仅做了上面两步，运行时默认是没有日志的，必须配置环境变量<code class="language-plaintext highlighter-rouge">DEBUG</code>.比如：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> export DEBUG=connect*,express*
+ export DEBUG=*,-send,-connect:dispatcher
+</code></pre></div>    </div>
+
+    <p>需要简单说明一下，多个日志名字空间可以使用<code class="language-plaintext highlighter-rouge">,</code>号或空格分隔，也支持使用<code class="language-plaintext highlighter-rouge">*</code>号来进行通配。日志名字空间前加<code class="language-plaintext highlighter-rouge">-</code>号，标记不打印该类型日志。</p>
+  </li>
+</ol>
+
+<h3 id="上面内容是不是很简单那就试试吧">上面内容是不是很简单，那就试试吧！</h3>
+:ET
