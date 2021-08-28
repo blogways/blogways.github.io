@@ -1,0 +1,51 @@
+I"<p>RequireJS，谁用谁知道。</p>
+
+<p>在浏览器环境下使用<code class="language-plaintext highlighter-rouge">requireJS</code>，其加载js文件的方式，采用的是通过创建<code class="language-plaintext highlighter-rouge">script</code>节点，及设置其<code class="language-plaintext highlighter-rouge">src</code>属性来实现。但在chrome extensions中，这项做法被认为是不安全的，而被默认禁止，这样就导致了<code class="language-plaintext highlighter-rouge">RequireJS</code>无法生效。</p>
+
+<p>要想解决这个问题，有两个方案。</p>
+
+<h2 id="方案一使用cajon替代requirejs">方案一：使用cajon替代requirejs</h2>
+
+<h3 id="1-关于cajon的简介">1. 关于cajon的简介</h3>
+
+<p><a href="https://github.com/requirejs/cajon">cajon</a>和<code class="language-plaintext highlighter-rouge">RequireJS</code>是相同的<a href="https://github.com/jrburke">作者</a>.</p>
+
+<p>cajon的工作原理：基于<code class="language-plaintext highlighter-rouge">RequireJS</code>，而重写了<code class="language-plaintext highlighter-rouge">requirejs.load</code>方法。重写的<code class="language-plaintext highlighter-rouge">requirejs.load</code>方法，默认判断逻辑，依赖相同网站的js文件，则通过异步<code class="language-plaintext highlighter-rouge">XHR</code>请求方式获取，并通过<code class="language-plaintext highlighter-rouge">eval</code>方法使之生效。如果依赖的是其他网站js文件，则仍用原来加载方式（生成一个<code class="language-plaintext highlighter-rouge">script</code>标签）进行加载。</p>
+
+<p>cajon还支持自定义哪种规则的依赖文件，需要采用<code class="language-plaintext highlighter-rouge">XHR+eval</code>方式加载。</p>
+
+<h3 id="2-具体解决方案">2. 具体解决方案</h3>
+
+<p>直接将原来<code class="language-plaintext highlighter-rouge">require.js</code>文件替换为<code class="language-plaintext highlighter-rouge">cajon.js</code>文件。</p>
+
+<p>示例：</p>
+
+<p>原来使用<code class="language-plaintext highlighter-rouge">requirejs</code>的代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script data-main="js/main" src="js/require/require.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p>使用<code class="language-plaintext highlighter-rouge">cajon.js</code>替换为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script data-main="js/main" src="js/require/cajon.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p>Ok了，是不是很简单？！</p>
+
+<h2 id="方案二设置content-security-policy参数">方案二：设置content security policy参数</h2>
+
+<h3 id="1-关于content-security-policy的简介">1. 关于content security policy的简介</h3>
+
+<p>这个，可以看看我的另外一篇博文，原文见：www.blogways.net。</p>
+
+<h3 id="2-具体解决方案-1">2. 具体解决方案</h3>
+
+<p>在<code class="language-plaintext highlighter-rouge">manifest.json</code>文件中添加如下代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+</code></pre></div></div>
+
+<p>是的，这样就搞定了！这里，关键参数是<code class="language-plaintext highlighter-rouge">unsafe-eval</code>。</p>
+
+<p>试试吧！</p>
+:ET

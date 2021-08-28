@@ -1,0 +1,76 @@
+I"�<p>上一节我们在演示查询的时候只使用一个 <code class="language-plaintext highlighter-rouge">title:step</code> 就查出了所有 title 包含 step 的记录，感觉有点类似数据库的 like 功能，主要是分词的匹配的原因，实际上分词匹配功能要远强于 sql 的 like 功能。既然分词这么重要在国内使用那肯定离不开中文分词，本文介绍如何配置使用（smartcn）</p>
+<h3 id="简介">简介</h3>
+<p>solr5.0 默认的分词器是一元分词器，这个本来就是对英文进行分词的，英文大部分就是典型的根据空格进行分词，而中文如果按照这个规则，那么显然是要有很多的冗余词被分出来，一些没有用的虚词，数词，都会被分出来，影响效率不说，关键是分词效果不好，所以可以利用 solr 的同步发行包 smartcn 进行中文切词，smartcn 的分词准确率不错，但就是不能自己定义新的词库，不过 smartcn 是跟 solr 同步的，所以不需要额外的下载，只需在 solr 的例子中拷贝进去即可，下面给出路径图和安装 solr5.0 的 smartcn 分词过程</p>
+
+<p>无论安装那种分词器，大部分都有2个步骤</p>
+
+<ol>
+  <li>
+    <p>拷贝jar包到solr的lib中</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 将 `solr-5.0.0\server\solr\test\contrib\analysis-extras\lucene-libs\lucene-analyzers-smartcn-5.0.0.jar` 拷贝到 `solr-5.0.0\server\solr\test\contrib\analysis-extras\lib` 目录下
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>修改相关配置</p>
+  </li>
+</ol>
+
+<h4 id="solr-500serversolrtestconfsolrconfigxml"><code class="language-plaintext highlighter-rouge">solr-5.0.0\server\solr\test\conf\solrconfig.xml</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- annotating for smartcn, replaced by the blow config
+  &lt;lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" /&gt;
+  &lt;lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" /&gt;
+
+  &lt;lib dir="${solr.install.dir:../../../..}/contrib/clustering/lib/" regex=".*\.jar" /&gt;
+  &lt;lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-clustering-\d.*\.jar" /&gt;
+
+  &lt;lib dir="${solr.install.dir:../../../..}/contrib/langid/lib/" regex=".*\.jar" /&gt;
+  &lt;lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-langid-\d.*\.jar" /&gt;
+
+  &lt;lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" /&gt;
+  &lt;lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" /&gt;
+  --&gt;
+  
+&lt;!-- smartcn config, instead of the previous code --&gt;
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\contrib\analysis-extras\lib" regex=".*\.jar" /&gt;  
+  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\contrib\extraction\lib" regex=".*\.jar" /&gt;  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\dist\" regex="solr-cell-\d.*\.jar" /&gt;  
+  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\contrib\clustering\lib\" regex=".*\.jar" /&gt;  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\dist\" regex="solr-clustering-\d.*\.jar" /&gt;  
+  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\contrib\langid\lib\" regex=".*\.jar" /&gt;  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\dist\" regex="solr-langid-\d.*\.jar" /&gt;  
+  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\contrib\velocity\lib" regex=".*\.jar" /&gt;  
+&lt;lib dir="E:\tools\solr-5.0.0\server\solr\test\dist\" regex="solr-velocity-\d.*\.jar" /&gt;
+</code></pre></div></div>
+
+<h4 id="solr-500serversolrtestconfschemaxml"><code class="language-plaintext highlighter-rouge">solr-5.0.0\server\solr\test\conf\schema.xml</code></h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Smartcn --&gt;
+&lt;fieldType name="text_smartcn" class="solr.TextField" positionIncrementGap="0"&gt;  
+  &lt;analyzer type="index"&gt;  
+    &lt;tokenizer class="org.apache.lucene.analysis.cn.smart.SmartChineseSentenceTokenizerFactory"/&gt;  
+    &lt;filter class="org.apache.lucene.analysis.cn.smart.SmartChineseWordTokenFilterFactory"/&gt;  
+		&lt;/analyzer&gt;  
+  &lt;analyzer type="query"&gt;  
+     &lt;tokenizer class="org.apache.lucene.analysis.cn.smart.SmartChineseSentenceTokenizerFactory"/&gt;  
+    &lt;filter class="org.apache.lucene.analysis.cn.smart.SmartChineseWordTokenFilterFactory"/&gt;  
+  &lt;/analyzer&gt;  
+&lt;/fieldType&gt; 
+</code></pre></div></div>
+
+<p>将需要使用中文分词的字段类型改成 <code class="language-plaintext highlighter-rouge">text_smartcn</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;field name="goods_name" type="text_smartcn" indexed="true" stored="true"/&gt;
+</code></pre></div></div>
+
+<p>最后来验证下中文分词安装是否成功</p>
+
+<p><img src="/images/solr-5-1.png" alt="Web 控制台 中文分词测试" /></p>
+
+<p>除了中文分词，另外还有一个拼音分词，这个网上可以搜到，需要下载一个 jar 包，其他配置、使用都跟上面类似，有兴趣的可以自己去试下。</p>
+:ET

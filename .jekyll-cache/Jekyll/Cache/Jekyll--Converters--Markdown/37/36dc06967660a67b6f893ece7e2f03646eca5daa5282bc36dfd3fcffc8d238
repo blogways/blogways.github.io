@@ -1,0 +1,264 @@
+I"F,<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><em>目 录</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#1st">Swagger介绍</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#2nd">Swagger UI与SpringMVC的整合</a></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#3nd">应用实例</a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="#end">注意事项</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="1st"></a></p>
+
+<h2 id="一swagger介绍">一、Swagger介绍</h2>
+
+<blockquote>
+  <p>Swagger API框架用于管理项目中API接口，属当前最流行的API接口管理工具。Swagger是一个开源框架(Web框架)，是一个规范和完整的框架，用于生成、描述、调用和可视化RESTful风格的Web服务，方便的管理项目中API接口，功能强大，UI界面漂亮，并且支持在线测试等。</p>
+
+  <p>后端通过提供一套标准的RESTful API，让网站、移动端和第三方系统都可以基于API进行数据交互和对接，极大的提高系统的开发效率，也使得前后端分离架构成为可能。</p>
+</blockquote>
+
+<p><a id="2nd"></a></p>
+<h2 id="二swagger-ui与springmvc的整合">二、Swagger UI与SpringMVC的整合</h2>
+
+<h3 id="1从githubhttpsgithubcomwordnikswagger-ui上下载swagger-ui">1.从github(<a href="https://github.com/wordnik/swagger-ui">https://github.com/wordnik/swagger-ui</a>)上下载Swagger-UI</h3>
+
+<p><img src="/images/zhaojiajun/20160908img01.jpg" alt="20160908img01" /></p>
+
+<blockquote>
+  <p>修改dist目录下index.html文件，将url修改为应用服务url</p>
+</blockquote>
+
+<p><img src="/images/zhaojiajun/20160908img07.jpg" alt="20160908img07" /></p>
+
+<blockquote>
+  <p>把该项目dist目录的内容拷贝到项目的webapp的目录下，修改dist目录的名称(也可以不修改)，如改为“swagger”。</p>
+</blockquote>
+
+<p><img src="/images/zhaojiajun/20160908img02.jpg" alt="20160908img02" /></p>
+
+<h3 id="2与springmvc整合搭建">2.与SpringMVC整合搭建</h3>
+
+<blockquote>
+  <p>Maven引入swagger所需的包，SpringMVC的配置这里不做说明。</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt;
+    &lt;version&gt;1.9.13&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-core-asl&lt;/artifactId&gt;
+    &lt;version&gt;1.9.13&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;com.mangofactory&lt;/groupId&gt;
+	&lt;artifactId&gt;swagger-springmvc&lt;/artifactId&gt;
+	&lt;version&gt;1.0.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></div></div>
+
+<blockquote>
+  <p>SpringMVC通过注解说明API接口的功能描述、参数含义以及校验等</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package home.action;
+
+import home.model.CrmCar;
+import home.service.CrmCarService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import base.action.BaseAction;
+import base.exception.BusinessException;
+
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+
+@Controller
+@RequestMapping("/crmCar/*")  // 父request请求url
+public class CrmCarAction extends BaseAction {
+
+	@Autowired
+    private CrmCarService crmCarService; 
+
+	@ApiOperation(value = "车辆信息", notes = "根据ID获取车辆对象信息,返回页面对象")  
+	@RequestMapping(value = "view/{carId}", method = RequestMethod.GET)
+    public ModelAndView getCrmCarView(@ApiParam(value = "填写车辆ID",allowableValues = "range[1,5]",required = true) @PathVariable("carId") int carId){   
+		ModelAndView mav = new ModelAndView("index"); 
+		CrmCar crmCar = crmCarService.getCrmCar(carId);
+        mav.addObject("crmCar", crmCar); 
+        return mav; 
+    }
+	
+	@ApiOperation(value = "车辆信息 GET", notes = "根据ID获取车辆对象信息,返回JSON格式")  
+	@ResponseBody
+	@RequestMapping(value = "get/{carId}", method = RequestMethod.GET)
+    public CrmCar getCrmCarGet(@ApiParam(value = "填写车辆ID",allowableValues = "range[1,5]",required = true) @PathVariable("carId") int carId){   
+		CrmCar crmCar = crmCarService.getCrmCar(carId);
+        return crmCar;
+    }
+	
+	@ApiOperation(value = "车辆信息 POST", notes = "根据ID获取车辆对象信息,返回JSON格式")  
+	@ResponseBody
+	@RequestMapping(value = "post/{carId}", method = RequestMethod.POST)
+    public CrmCar getCrmCarPost(@ApiParam(value = "填写车辆ID",allowableValues = "range[1,5]",required = true) @PathVariable("carId") int carId){   
+		CrmCar crmCar = crmCarService.getCrmCar(carId);
+        return crmCar;
+    }
+}
+</code></pre></div></div>
+
+<h4 id="api相关注解参数说明如下">API相关注解参数说明如下：</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ApiOperation(value = "接口名称", notes = "接口功能详细说明")  
+@RequestMapping(value = "接口请求URL", method = "接口请求方式get/post")
+@ApiParam(value = "参数名称",allowableValues = "参数约束",required = "是否必须参数")
+@PathVariable("绑定参数")
+@ResponseBody注解一般在异步获取数据时使用，在springMVC框架时，使用@RequestMapping后，返回值通常解析为跳转路径，加上@ResponseBody后返回结果不会被解析为跳转路径，而是直接写入HTTP response body中。比如异步获取json数据，加上@ResponseBody后，会直接返回json数据。
+</code></pre></div></div>
+
+<h4 id="springswagger的配置有两种方式本文以第二种方式实现案例">SpringSwagger的配置有两种方式，本文以第二种方式实现案例</h4>
+
+<h4 id="1自定义配置类">（1）自定义配置类</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package common;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
+import com.mangofactory.swagger.models.dto.ApiInfo;
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
+
+@Configuration
+@EnableSwagger
+public class MySwaggerConfig
+{
+    private SpringSwaggerConfig springSwaggerConfig;
+
+    /**
+     * Required to autowire SpringSwaggerConfig
+     */
+    @Autowired
+    public void setSpringSwaggerConfig(SpringSwaggerConfig springSwaggerConfig)
+    {
+        this.springSwaggerConfig = springSwaggerConfig;
+    }
+
+    /**
+     * Every SwaggerSpringMvcPlugin bean is picked up by the swagger-mvc
+     * framework - allowing for multiple swagger groups i.e. same code base
+     * multiple swagger resource listings.
+     */
+    @Bean
+    public SwaggerSpringMvcPlugin customImplementation()
+    {
+        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig).apiInfo(apiInfo()).includePatterns(
+                ".*?");
+    }
+
+    private ApiInfo apiInfo()
+    {
+        ApiInfo apiInfo = new ApiInfo(
+                "My Apps API Title", 
+                "My Apps API Description",
+                "My Apps API terms of service", 
+                "My Apps API Contact Email", 
+                "My Apps API Licence Type",
+                "My Apps API License URL");
+        return apiInfo;
+    }
+}
+</code></pre></div></div>
+
+<h4 id="在-spring-配置文件中添加">在 spring 配置文件中添加</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;bean class="common.MySwaggerConfig" /&gt;
+</code></pre></div></div>
+
+<h4 id="2自己不写配置类直接使用默认的实现类在spring的配置文件中配置">（2）自己不写配置类，直接使用默认的实现类，在Spring的配置文件中配置</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;mvc:annotation-driven/&gt;
+&lt;!-- Required so swagger-springmvc can access spring‘s RequestMappingHandlerMapping  --&gt; 
+&lt;bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" /&gt; 
+</code></pre></div></div>
+
+<p><a id="3nd"></a></p>
+
+<h3 id="3启动服务如果swagger-ui是单独的工程需要保证swagger-ui和web-应用服务在同一个容器中否则不能显示具体原因在后面说明">3.启动服务，如果swagger ui是单独的工程，需要保证swagger ui和web 应用服务在同一个容器中，否则不能显示，具体原因在后面说明。###</h3>
+
+<p><img src="/images/zhaojiajun/20160908img06.jpg" alt="20160908img06" /></p>
+
+<h3 id="4查看web应用服务的api并进行测试">4.查看web应用服务的API并进行测试</h3>
+
+<h4 id="1接口列表">（1）接口列表</h4>
+
+<p><img src="/images/zhaojiajun/20160908img08.jpg" alt="20160908img08" /></p>
+
+<h4 id="2接口说明及测试">（2）接口说明及测试</h4>
+
+<p><img src="/images/zhaojiajun/20160908img09.jpg" alt="20160908img09" /></p>
+
+<h4 id="3测试结果">（3）测试结果</h4>
+
+<p><img src="/images/zhaojiajun/20160908img10.jpg" alt="20160908img10" /></p>
+
+<p><img src="/images/zhaojiajun/20160908img11.jpg" alt="20160908img11" /></p>
+
+<p><a id="end"></a></p>
+
+<h3 id="4注意事项">4.注意事项</h3>
+
+<blockquote>
+  <p>（1）swagger ui读取应用服务的接口描述是通过JSON方式传输，所以存在跨域问题，这就是上面提到需要放到同一个容器的原因。当然，不是说不能跨域就不能分离swagger ui，可以通过nginx代理URL，将swagger和应用服务保持在同一个域名下即可。</p>
+
+  <p>（2）swagger ui是纯静态的，可以不必放到服务容器中使用，可以使用nginx配置站点访问，后续再做讲解说明。</p>
+</blockquote>
+
+<h2 id="结束语">结束语</h2>
+
+<blockquote>
+  <p>本文主要就swagger ui和springmvc整合做了说明，除此swagger ui之外还有其他应用，
+Swagger是一组开源项目，其中主要要项目如下：</p>
+
+  <p>Swagger-tools:提供各种与Swagger进行集成和交互的工具。例如模式检验、Swagger 1.2文档转换成Swagger 2.0文档等功能。</p>
+
+  <p>Swagger-core: 用于Java/Scala的的Swagger实现。与JAX-RS(Jersey、Resteasy、CXF…)、Servlets和Play框架进行集成。</p>
+
+  <p>Swagger-js: 用于JavaScript的Swagger实现。</p>
+
+  <p>Swagger-node-express: Swagger模块，用于node.js的Express web应用框架。</p>
+
+  <p>Swagger-ui：一个无依赖的HTML、JS和CSS集合，可以为Swagger兼容API动态生成优雅文档。</p>
+
+  <p>可请各位一起研究探讨，谢谢！</p>
+</blockquote>
+:ET

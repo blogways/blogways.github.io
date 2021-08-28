@@ -1,0 +1,363 @@
+I"�-<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><em>目 录</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#part1">文本 Text</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#part2">图像 Images</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="part1"></a></p>
+
+<h2 id="1-文本-text">1. 文本 Text</h2>
+
+<h3 id="11-绘制文本">1.1 绘制文本</h3>
+
+<p>canvas 提供了两种方法来渲染文本：</p>
+
+<ul>
+  <li>
+    <p>fillText(text, x, y [, maxWidth])</p>
+
+    <p>在指定的(x,y)位置填充指定的文本，绘制的最大宽度是可选的.</p>
+  </li>
+  <li>
+    <p>strokeText(text, x, y [, maxWidth])</p>
+
+    <p>在指定的(x,y)位置绘制文本边框，绘制的最大宽度是可选的.</p>
+  </li>
+</ul>
+
+<p>下面是绘制文本和文本边框的示例：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function draw1() {
+	var ctx = document.getElementById('cvs1').getContext('2d');
+	ctx.font = "48px serif";
+	ctx.fillText("Blog Ways", 10, 50);
+	ctx.font = "48px serif";
+	ctx.strokeText("Blog Ways", 10, 100);
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">font</code>用于指定文本的大小和字体，具体效果如下：</p>
+
+<div style="text-align: center;">
+	<canvas id="cvs1"></canvas>
+</div>
+
+<script>
+	function draw1() {
+		var ctx = document.getElementById('cvs1').getContext('2d');
+		ctx.font = "48px serif";
+		ctx.fillText("Blog Ways", 10, 50);
+		ctx.font = "48px serif";
+  		ctx.strokeText("Blog Ways", 10, 100);
+	}
+	draw1();
+</script>
+
+<h3 id="12-文本样式">1.2 文本样式</h3>
+
+<p>在上面的例子使用了 font 来改变文本的大小和字体，除此外还有更多属性可以改变canvas显示文本的方式：</p>
+
+<ul>
+  <li>
+    <p>font = value</p>
+
+    <p>当前用来绘制文本的样式，value的使用和 CSS font 属性相同的语法. 默认的字体是 10px sans-serif。</p>
+  </li>
+  <li>
+    <p>textAlign = value</p>
+
+    <p>文本对齐选项. 可选项包括：start, end, left, right 或者 center. 默认值是 start。</p>
+  </li>
+  <li>
+    <p>textBaseline = value</p>
+
+    <p>基线对齐选项. 可选项包括：top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic。</p>
+  </li>
+  <li>
+    <p>direction = value</p>
+
+    <p>文本方向。可选项包括：ltr, rtl, inherit。默认值是 inherit。</p>
+  </li>
+</ul>
+
+<p>可以在下面例子的textarea中编辑尝试不同选项的效果。</p>
+
+<p><code class="language-plaintext highlighter-rouge">textBaseLine 可选值 top, hanging, middle, alphabetic, ideographic, bottom;</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">direction 可选值 ltr, rtl, inherit;</code></p>
+
+<div style="text-align: center;">
+
+<canvas id="cvs2" width="800px"></canvas>
+
+<textarea id="area1" style="width:80%; height: 150px; font: 16px serif">
+ctx.font = "48px serif";
+ctx.textAlign = "start";
+ctx.textBaseline = "hanging";
+ctx.direction = "inherit";
+</textarea>
+
+</div>
+
+<script>
+var area1 = document.getElementById('area1');
+function draw2() {
+  var ctx = document.getElementById('cvs2').getContext('2d');
+  var option = document.getElementById('area1').value;
+  ctx.clearRect(0, 0, 800, 200);
+  eval(option);
+  ctx.fillText("Blog Way", 200, 50);
+}
+area1.oninput = draw2;
+area1.onpropertychange = draw2;
+draw2();
+</script>
+
+<p><a id="part2"></a></p>
+
+<h2 id="2-图像-images">2. 图像 Images</h2>
+
+<p>canvas 对图像的处理功能可以用于动态的图片合成或者作背景，以及用于游戏界面（Sprites）等等。浏览器支持的任意格式的外部图片都可以使用，比如PNG、GIF或者JPEG，也可以将同一个页面中其他canvas元素生成的图片作为图片源。</p>
+
+<p>引入图像到canvas里需要以下两步基本操作：</p>
+
+<ol>
+  <li>获得一个指向HTMLImageElement的对象或者另一个canvas元素的引用作为源，也可以通过提供一个URL的方式来使用图片；</li>
+  <li>使用drawImage()函数将图片绘制到画布上。</li>
+</ol>
+
+<h3 id="21-图像获取方式">2.1 图像获取方式</h3>
+
+<p>canvas可以使用下面的方法来获取图片：</p>
+
+<ul>
+  <li>
+    <p>HTMLImageElement</p>
+
+    <p>这些图片是由Image()函数构造出来的，或者任何的img元素；</p>
+  </li>
+  <li>
+    <p>HTMLVideoElement</p>
+
+    <p>选择一个HTML的video元素作为图片源，此方法可以从视频中抓取当前帧作为一个图像；</p>
+  </li>
+  <li>
+    <p>HTMLCanvasElement</p>
+
+    <p>使用同一页面中的canvas元素作为你的图片源。</p>
+  </li>
+</ul>
+
+<p>下面来分别介绍。</p>
+
+<h3 id="22-绘制图像">2.2 绘制图像</h3>
+
+<p>使用脚本创建一个新的 HTMLImageElement 对象，设置图片路径。</p>
+
+<p><code class="language-plaintext highlighter-rouge">
+var img = new Image();   // 创建一个&lt;img&gt;元素
+img.src = '/images/wanghui/canvas3/img.jpg'; // 设置图片源地址
+</code></p>
+
+<p>当脚本执行后，图片开始加载。</p>
+
+<p>若调用drawImage()的时候图片还没加载完，那么将不会生成图片（在一些旧的浏览器中可能会抛出异常）。因此应该用load事件来保证图片加载完毕。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var img = new Image();   // 创建img元素
+img.onload = function(){
+  // 执行drawImage语句
+}
+img.src = 'myImage.png'; // 设置图片源地址
+</code></pre></div></div>
+
+<p>出了使用路径加载外，还可以通过 data:url 的方式来引用图像。Data urls 允许用一串 Base64 编码的字符串的方式来定义一个图片，例如：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>img.src = 'data:image/gif;base64,R0lGODlhCwALAIAAAAAA3pn/ZiH5BAEAAAEALAAAAAALAAsAAAIUhA+hkcuO4lmNVindo7qyrIXiGBYAOw==';
+</code></pre></div></div>
+
+<p>这种方式的优点是图片内容即时可用，无须再到服务器兜一圈。（还有一个优点是，可以将 CSS，JavaScript，HTML 和 图片全部封装在一起，迁移起来十分方便。）缺点就是图像没法缓存，图片大的话内嵌的 url 数据会相当的长。</p>
+
+<p>下面来看看具体的绘制示例。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function draw4() {
+	   var ctx = document.getElementById('cvs4').getContext('2d');
+	   var img = new Image();
+	   img.onload = function() {
+	     ctx.drawImage(img, 0, 0);
+	   };
+	   img.src = '/images/wanghui/canvas3/img1.png';
+	}
+</code></pre></div></div>
+
+<p>这是基本的加载并绘制图片的方式，通过监听load事件确保图片加载完毕。</p>
+
+<div style="text-align: center;">
+
+<canvas id="cvs4" height="200px"></canvas>
+
+</div>
+
+<script>
+	function draw4() {
+	   var ctx = document.getElementById('cvs4').getContext('2d');
+	   var img = new Image();
+	   img.onload = function() {
+	     ctx.drawImage(img, 0, 0);
+	   };
+	   img.src = '/images/wanghui/canvas3/img1.png';
+	}
+	draw4();
+</script>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function draw5() {
+	   var ctx = document.getElementById('cvs5').getContext('2d');
+	   var img = new Image();
+	   img.onload = function() {
+	      for (var i=0;i&lt;3;i++){
+            for (var j=0;j&lt;3;j++){
+              ctx.drawImage(img,j*50,i*50,50,38);
+            }
+          }
+	   };
+	   img.src = '/images/wanghui/canvas3/img1.png';
+	}
+
+</code></pre></div></div>
+
+<p>本例使用了drawImage方法的一种重载，增加了两个用于控制图像在canvas中缩放的参数。</p>
+
+<ul>
+  <li>
+    <p>drawImage(image, x, y, width, height)</p>
+
+    <p>这个方法多了2个参数：width 和 height，这两个参数用来控制 当像canvas画入时应该缩放的大小。</p>
+  </li>
+</ul>
+
+<p>使用此方式可以实现图像的平铺，具体示例如下：</p>
+
+<div style="text-align: center;">
+
+<canvas id="cvs5" height="200px"></canvas>
+
+</div>
+
+<script>
+	function draw5() {
+	   var ctx = document.getElementById('cvs5').getContext('2d');
+	   var img = new Image();
+	   img.onload = function() {
+	      for (var i=0;i<3;i++){
+            for (var j=0;j<3;j++){
+              ctx.drawImage(img,j*50,i*50,50,38);
+            }
+          }
+	   };
+	   img.src = '/images/wanghui/canvas3/img1.png';
+	}
+	draw5();
+</script>
+
+<p>drawImage 方法的另一个重载，也是最后一个变种，共有8个参数，用于控制做切片显示。</p>
+
+<ul>
+  <li>
+    <p>drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)</p>
+
+    <p>第一个参数和其它的是相同的，都是一个图像或者另一个 canvas 的引用。前4个是定义图像源的切片位置和大小，后4个则是定义切片的目标显示位置和大小。</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function draw67() {
+   var ctx6 = document.getElementById('cvs6').getContext('2d');
+   var ctx7 = document.getElementById('cvs7').getContext('2d');
+   var img = new Image();
+   img.onload = function() {
+     ctx6.drawImage(img, 0, 0);
+     ctx7.drawImage(img, 55,65, 85,85, 10,45, 100,100);
+   };
+   img.src = '/images/wanghui/canvas3/img1.png';
+}
+
+</code></pre></div></div>
+
+<p>可以对比两张图片来看，8个参数中：</p>
+
+<ul>
+  <li>sx - 定义切片的x坐标；</li>
+  <li>sy - 定义切片的y坐标；</li>
+  <li>sWidth - 定义切片的长度；</li>
+  <li>sHeight - 定义切片的高度；</li>
+  <li>dx - 定义切片生成后，位于canvas中的x坐标位置；</li>
+  <li>dy - 定义切片生成后，位于canvas中的y坐标位置；</li>
+  <li>dWidth - 定义切片后生成图片的长度；</li>
+  <li>dHeight - 定义切片后生成图片的高度。</li>
+</ul>
+
+<div style="text-align: center;">
+
+<canvas id="cvs6" height="200px"></canvas>
+<canvas id="cvs7" height="200px"></canvas>
+</div>
+
+<script>
+	function draw67() {
+	   var ctx6 = document.getElementById('cvs6').getContext('2d');
+	   var ctx7 = document.getElementById('cvs7').getContext('2d');
+	   var img = new Image();
+	   img.onload = function() {
+	     ctx6.drawImage(img, 0, 0);
+        ctx7.drawImage(img, 55,65, 85,85, 10,45, 100,100);
+	   };
+	   img.src = '/images/wanghui/canvas3/img1.png';
+	}
+	draw67();
+</script>
+
+<p>除了引用图片，还可以引用 video中的视频帧。例如：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function draw3() {
+  		 var ctx = document.getElementById('cvs3').getContext('2d');
+  		 var video = document.getElementById('v1');
+  		 video.addEventListener("timeupdate", function(){
+		    ctx.drawImage(video, 0, 0);
+		 }, true);
+	}
+</code></pre></div></div>
+
+<p>代码监听了视频的timeudate事件，并在canvas里实时绘制视频图像。第一个是video元素加载的视频，第二个是canvas实时绘制的内容。</p>
+
+<div style="text-align: center;">
+
+<video id="v1" src="/images/wanghui/canvas3/video1.mp4" controls="controls"></video>
+
+<canvas id="cvs3" width="568px" height="320px"></canvas>
+
+</div>
+
+<script>
+	function draw3() {
+  		 var ctx = document.getElementById('cvs3').getContext('2d');
+  		 var video = document.getElementById('v1');
+  		 video.addEventListener("timeupdate", function(){
+		    ctx.drawImage(video, 0, 0);
+		 }, true);
+	}
+	draw3();
+</script>
+
+<p>文本与图像的内容就介绍到这里，下一篇将介绍变形、合成与裁剪。</p>
+:ET

@@ -1,0 +1,301 @@
+I"�+<h2 id="一问题场景">一、问题场景</h2>
+<p>现在做的项目说起来应该算我的处女项目。首次处理复杂表单，参数封装已经让我有点措手不及，参数的合法性验证更是让人头疼。</p>
+
+<p>之前简单表单参数校验都是徒手写js，简单表单验证尚可，复杂表单的验证可能是要另辟蹊径了。</p>
+
+<p>网上一搜，表单验证插件琳琅满目，要不怎么说咱们现在都是站在巨人的肩膀上开发。</p>
+
+<p>今天要介绍的是jQuery的validate插件。Validate给我的使用感受是：使用简单粗暴，规则内置丰富，随心所欲易于扩展。</p>
+
+<h2 id="二-快速开始">二、 快速开始</h2>
+
+<p><strong>扯了那么多，动手试试吧！</strong></p>
+
+<h3 id="21-引入jquery和validate">2.1 引入jQuery和Validate</h3>
+<ul>
+  <li>本项目中jQuery版本为v1.12.4，validate版本为v1.17.0</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script type="text/javascript" src="${resourceRootPath}/static/frame/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script stype="text/javascript" src="${resourceRootPath}/static/frame/jquery-validation/dist/jquery.validate.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
+<h3 id="22-使用前热身">2.2 使用前热身</h3>
+
+<ul>
+  <li>表单验证核心无非以下两点：</li>
+</ul>
+
+<h5 id="1-规则rule">1. 规则Rule</h5>
+
+<p>validate内置默认规则：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>规则</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>required:true</td>
+      <td>必须输入的字段。</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>remote:”check.php”</td>
+      <td>使用 ajax 方法调用 check.php 验证输入值。</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>email:true</td>
+      <td>必须输入正确格式的电子邮件。</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>url:true</td>
+      <td>必须输入正确格式的网址。</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>date:true</td>
+      <td>必须输入正确格式的日期。日期校验 ie6 出错，慎用。</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>dateISO:true</td>
+      <td>必须输入正确格式的日期（ISO），例如：2009-06-23，1998/01/22。只验证格式，不验证有效性。</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>number:true</td>
+      <td>必须输入合法的数字（负数，小数）。</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>digits:true</td>
+      <td>必须输入整数。</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>creditcard:</td>
+      <td>必须输入合法的信用卡号。</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>equalTo:”#field”</td>
+      <td>输入值必须和 #field 相同。</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>accept:</td>
+      <td>输入拥有合法后缀名的字符串（上传文件的后缀）。</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>maxlength:5</td>
+      <td>输入长度最多是 5 的字符串（汉字算一个字符）。</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>minlength:10</td>
+      <td>输入长度最小是 10 的字符串（汉字算一个字符）。</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>rangelength:[5,10]</td>
+      <td>输入长度必须介于 5 和 10 之间的字符串（汉字算一个字符）。</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>range:[5,10]</td>
+      <td>输入值必须介于 5 和 10 之间。</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>max:5</td>
+      <td>输入值不能大于 5。</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>min:10</td>
+      <td>输入值不能小于 10。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="2-提示信息message">2. 提示信息message</h5>
+
+<p>validate内置默认提示消息：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>messages: {
+    required: "This field is required.",
+    remote: "Please fix this field.",
+    email: "Please enter a valid email address.",
+    url: "Please enter a valid URL.",
+    date: "Please enter a valid date.",
+    dateISO: "Please enter a valid date ( ISO ).",
+    number: "Please enter a valid number.",
+    digits: "Please enter only digits.",
+    creditcard: "Please enter a valid credit card number.",
+    equalTo: "Please enter the same value again.",
+    maxlength: $.validator.format( "Please enter no more than {0} characters." ),
+    minlength: $.validator.format( "Please enter at least {0} characters." ),
+    rangelength: $.validator.format( "Please enter a value between {0} and {1} characters long." ),
+    range: $.validator.format( "Please enter a value between {0} and {1}." ),
+    max: $.validator.format( "Please enter a value less than or equal to {0}." ),
+    min: $.validator.format( "Please enter a value greater than or equal to {0}." )
+}
+</code></pre></div></div>
+
+<p>validate默认提示位置是为表单元素后面：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>errorPlacement: function(error, element) {  
+    error.appendTo(element.parent());  
+}
+</code></pre></div></div>
+
+<ul>
+  <li>其他一些参数：</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	ignore: ":hidden",//忽略的元素
+    doNotHideMessage: true, // this option enables to show the error/success messages on tab switch.
+	//错误消息容器
+    errorElement: 'span', // default input error message container
+    //错误消息class
+	errorClass: 'help-block help-block-error', // default input error message class
+    focusInvalid: false, // do not focus the last invalid input
+    //错误消息高亮显示
+	highlight: function highlightCbFunc(element) { // hightlight error inputs
+      $(element)
+        .closest('.form-group')
+        .removeClass('has-success')
+        .addClass('has-error');
+      // set error class to the control group
+    },
+	//输入合法内容后取消高亮显示
+    unhighlight: function unhighlightCbFunc(element) { // revert the change done by hightlight
+      $(element)
+        .closest('.form-group')
+        .removeClass('has-error'); // set error class to the control group
+    },
+
+	//失去焦点事件
+    onfocusout: function(element) {
+      $(element).valid();
+    },
+
+	//按键弹起事件
+    onkeyup: function(element) {
+      var currentValue = $(element).val();
+      if (!$(element).valid()){
+        $(element).val(currentValue.substr(0,currentValue.length-1));
+      }
+    }
+</code></pre></div></div>
+<h3 id="23-简单使用">2.3 简单使用</h3>
+
+<p>了解上面三要素和一些参数后我们就可以开始简单使用了（其实甚至可以只知道一些默认的规则就可以拿来使用了）。</p>
+
+<p>项目中提交表单多为ajax提交，用法如下：</p>
+
+<ul>
+  <li>将校验规则写到控件中</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="baseInfoForm"&gt;
+	&lt;div class="form-group"&gt;
+	    &lt;label class="control-label col-md-5"&gt;账户名（必填）&lt;/label&gt;
+	    &lt;div class="col-md-7"&gt;
+	        &lt;select class="form-control input-sm select-remote" data-selectconf="account" name="account" required&gt;
+	            &lt;option value=""&gt;&lt;/option&gt;
+	        &lt;/select&gt;
+	    &lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="form-group"&gt;
+	    &lt;label class="control-label col-md-5"&gt;计划名称（必填）&lt;/label&gt;
+	    &lt;div class="col-md-7"&gt;
+	        &lt;input type="text" class="form-control-static" name="rateplanName" required /&gt;
+	    &lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="form-group"&gt;
+	    &lt;label class="control-label col-md-5"&gt;E-mail（必填）&lt;/label&gt;
+	    &lt;div class="col-md-7"&gt;
+	        &lt;input type="email" class="form-control-static" name="email" required /&gt;
+	    &lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="form-group"&gt;
+	    &lt;label class="control-label col-md-5"&gt;账户费用：&lt;/label&gt;
+	    &lt;div class="col-mc-7"&gt;
+	        &lt;input id="account_charge" type="number" name="ACCOUNT_CHARGE" min="0" step="0.01"/&gt;
+	    &lt;/div&gt;
+	&lt;/div&gt;
+&lt;/form&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>提交前验证</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$('#baseInfoForm').valid();//通过验证返回true，不通过返回false
+</code></pre></div></div>
+<p><strong>是不是简单粗暴？</strong></p>
+
+<h3 id="24-扩展">2.4 扩展</h3>
+
+<blockquote>
+  <p>业务中某个表单元素只允许填IP地址或者域名，默认规则里面没有怎么办？没关系，validate具有非常良好的扩展性。</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form id="exampleForm"&gt;
+	&lt;div class="form-group"&gt;
+	    &lt;label class="control-label col-md-5"&gt;IP地址范围(必填)&lt;/label&gt;
+	    &lt;div class="col-md-7"&gt;
+	        &lt;input id="account_charge" type="text" name="ipRange" required /&gt;
+	    &lt;/div&gt;
+	&lt;/div&gt;
+&lt;/form&gt;
+
+</code></pre></div></div>
+
+<ul>
+  <li>首先添加方法（method）
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  jQuery.validator.addMethod("ipValidate", function (value, element) {
+    var ipReg = /((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))/;
+    var domainReg = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/;
+    return this.optional(element) || (ipReg.test(value) || (domainReg.test(value));
+  }, '请输入ip或者域名');
+</code></pre></div>    </div>
+  </li>
+  <li>添加规则(rule)
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rules : {
+    ipRange : {//ip地址范围
+      ipValidate:'请输入ip或者域名'
+    },
+</code></pre></div>    </div>
+  </li>
+  <li>添加消息
+其实我们在上面定义方法和规则都已经定义了提示消息，此步骤可选。
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  messages: {
+      ipRange:"请输入IP地址或者域名"
+  }
+</code></pre></div>    </div>
+  </li>
+  <li>将上述扩展内容写入 jquery.validate.js或者自定一个js文件validate.extend.js,建议后者
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  //变量myValidateOpts包含了自定义的一些属性
+  var validateOpts = $.extend(true, {}, myValidateOpts, {});
+  //初始化
+  $('#exampleForm').validate(validateOpts);
+  //验证
+  $('#exampleForm').valid();
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="三参考文献">三、参考文献</h2>
+<ul>
+  <li>http://www.runoob.com/jquery/jquery-plugin-validate.html</li>
+</ul>
+:ET

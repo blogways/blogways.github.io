@@ -1,0 +1,1081 @@
+I"�
+<p>这几天在学习Meteor，当前版本为:<code class="language-plaintext highlighter-rouge">1.2.1</code>。学习的主要资料来自官网，笔记如下.</p>
+
+<h2 id="一创建一个应用">一、创建一个应用</h2>
+
+<p>在这里，我们将要创建一个简单的应用，管理一个任务清单。这样就可以和其他人一起使用这个任务清单，进行合作了。</p>
+
+<p>为了创建这个应用，需要打开终端，输入命令：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor create simple-todos
+</code></pre></div></div>
+
+<p>这个命令会创建一个名为<code class="language-plaintext highlighter-rouge">simple-todos</code>的目录，目录里面有Meteor应用所需要的一些文件，列表如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>simple-todos.js     #一个被服务器和客户端都使用的javascript文件
+simple-todos.html   #一个html文件，里面定义了页面视图模版
+simple-todos.css    #一个css文件，定义了应用的式样
+.meteor             #一个隐藏目录，里面有meteor运行需要的文件
+</code></pre></div></div>
+
+<p>运行这个应用，可以输入命令：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>simple-todos
+meteor
+</code></pre></div></div>
+
+<p>好了，打开你的浏览器，然后输入<code class="language-plaintext highlighter-rouge">http://localhost:3000</code>。</p>
+
+<p>如果你修改了simple-todos.html，你会发现几秒后，浏览器上打开的页面内容也会自动发生相应的变化。这就是Meteor所谓的“代码热部署”。</p>
+
+<h2 id="二使用模版来定义页面视图">二、使用模版来定义页面视图</h2>
+
+<p>好了，我们继续制作我们的任务清单程序。</p>
+
+<h3 id="21-修改代码">2.1 修改代码</h3>
+<p>我们用下面的代码替代之前Meteor默认生成的代码。</p>
+
+<p><code class="language-plaintext highlighter-rouge">simple-todos.html</code>的代码修改如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Todo List<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+ 
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Todo List<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+ 
+    <span class="nt">&lt;ul&gt;</span>  
+      {{#each tasks}}
+        {{&gt; task}}
+      {{/each}}
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+ 
+<span class="nt">&lt;template</span> <span class="na">name=</span><span class="s">"task"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li&gt;</span>{{text}}<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">simple-todos.js</code>的代码修改如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isClient</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is task 1</span><span class="dl">"</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is task 2</span><span class="dl">"</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="na">text</span><span class="p">:</span> <span class="dl">"</span><span class="s2">This is task 3</span><span class="dl">"</span> <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>替换完上面的代码，静待几秒，浏览器中展现的内容就会发生变化，类似如下：</p>
+
+<blockquote>
+
+  <h1 id="todo-list">Todo List</h1>
+
+  <ul>
+    <li>This is task 1</li>
+    <li>This is task 2</li>
+    <li>This is task 3</li>
+  </ul>
+
+</blockquote>
+
+<p>挺有意思的，不是吗？好吧，让我们看看它们是怎么工作的。</p>
+
+<h3 id="22-meteor使用html文件来定义模版">2.2 Meteor使用HTML文件来定义模版</h3>
+
+<p>Meteor解析你的应用目录下的所有HTML文件。识别出三个顶级标签:<code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>、<code class="language-plaintext highlighter-rouge">&lt;body&gt;</code>和<code class="language-plaintext highlighter-rouge">&lt;template&gt;</code>。</p>
+
+<p>其中,<code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>标签和<code class="language-plaintext highlighter-rouge">&lt;body&gt;</code>标签里的内容都会被发送到客户端页面中，对应的标签下面去。</p>
+
+<p>而<code class="language-plaintext highlighter-rouge">&lt;template&gt;</code>标签里面的内容，会被编译成Meteor模版。Meteor模版或者被HTML中的<code class="language-plaintext highlighter-rouge">{{&gt;templateName}}</code>引用，或者被JavaScript程序中的<code class="language-plaintext highlighter-rouge">Template.templateName</code>所引用。</p>
+
+<h3 id="23-给模版添加逻辑和数据">2.3 给模版添加逻辑和数据</h3>
+
+<p>Meteor使用Spacebars来编译HTML文件中的代码。Spacebars用双括号将语句括起来，比如：<code class="language-plaintext highlighter-rouge">{{#each}}</code>和<code class="language-plaintext highlighter-rouge">{{#if}}</code>。使用这种方式给模版添加逻辑和数据。</p>
+
+<p>我们可以借用<code class="language-plaintext highlighter-rouge">helpers</code>从JavsScript代码中把数据传给模版。在上面的代码中，我们在<code class="language-plaintext highlighter-rouge">Template.body</code>上定义了一个名为<code class="language-plaintext highlighter-rouge">tasks</code>的帮助器(helper)。它返回的是一个数组。在HTML的body标签内，我们可以使用<code class="language-plaintext highlighter-rouge">{{#each}}</code>来遍历整个数组，插入一个<code class="language-plaintext highlighter-rouge">task</code>模版来显示数组中的每个值。在<code class="language-plaintext highlighter-rouge">#each</code>语句块内，我们可以使用<code class="language-plaintext highlighter-rouge">{{text}}</code>来显示数组中每项的<code class="language-plaintext highlighter-rouge">text</code>属性值。</p>
+
+<p>关于模版的更多内容：https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md</p>
+
+<h3 id="24-添加css">2.4 添加CSS</h3>
+
+<p>这个应用不添加额外的css式样，也可以正常运行，但是为了更加美观，我们给这个应用添加一些CSS式样。</p>
+
+<p><code class="language-plaintext highlighter-rouge">simple-todos.css</code>文件内容修改如下：</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/* CSS declarations go here */</span>
+<span class="nt">body</span> <span class="p">{</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="nb">sans-serif</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#315481</span><span class="p">;</span>
+  <span class="nl">background-image</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="n">to</span> <span class="nb">bottom</span><span class="p">,</span> <span class="m">#315481</span><span class="p">,</span> <span class="m">#918e82</span> <span class="m">100%</span><span class="p">);</span>
+  <span class="nl">background-attachment</span><span class="p">:</span> <span class="nb">fixed</span><span class="p">;</span>
+
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">top</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">bottom</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">right</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.container</span> <span class="p">{</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">600px</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="nb">auto</span><span class="p">;</span>
+  <span class="nl">min-height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">header</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="m">#d2edf4</span><span class="p">;</span>
+  <span class="nl">background-image</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="n">to</span> <span class="nb">bottom</span><span class="p">,</span> <span class="m">#d0edf5</span><span class="p">,</span> <span class="m">#e1e5f0</span> <span class="m">100%</span><span class="p">);</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span> <span class="m">15px</span> <span class="m">15px</span> <span class="m">15px</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#login-buttons</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">h1</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">1.5em</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">inline-block</span><span class="p">;</span>
+  <span class="nl">margin-right</span><span class="p">:</span> <span class="m">1em</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">form</span> <span class="p">{</span>
+  <span class="nl">margin-top</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">-10px</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.new-task</span> <span class="nt">input</span> <span class="p">{</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nb">transparent</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">padding-right</span><span class="p">:</span> <span class="m">80px</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">1em</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.new-task</span> <span class="nt">input</span><span class="nd">:focus</span><span class="p">{</span>
+  <span class="nl">outline</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ul</span> <span class="p">{</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.delete</span> <span class="p">{</span>
+  <span class="nl">float</span><span class="p">:</span> <span class="nb">right</span><span class="p">;</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">bold</span><span class="p">;</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">1em</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">li</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+  <span class="nl">list-style</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+  <span class="nl">border-bottom</span><span class="p">:</span> <span class="m">#eee</span> <span class="nb">solid</span> <span class="m">1px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">li</span> <span class="nc">.text</span> <span class="p">{</span>
+  <span class="nl">margin-left</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">li</span><span class="nc">.checked</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#888</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">li</span><span class="nc">.checked</span> <span class="nc">.text</span> <span class="p">{</span>
+  <span class="nl">text-decoration</span><span class="p">:</span> <span class="nb">line-through</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">li</span><span class="nc">.private</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="m">#eee</span><span class="p">;</span>
+  <span class="nl">border-color</span><span class="p">:</span> <span class="m">#ddd</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">header</span> <span class="nc">.hide-completed</span> <span class="p">{</span>
+  <span class="nl">float</span><span class="p">:</span> <span class="nb">right</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.toggle-private</span> <span class="p">{</span>
+  <span class="nl">margin-left</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">600px</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nt">li</span> <span class="p">{</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">12px</span> <span class="m">15px</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.search</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+    <span class="nl">clear</span><span class="p">:</span> <span class="nb">both</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nc">.new-task</span> <span class="nt">input</span> <span class="p">{</span>
+    <span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="三使用集合来存储数据">三、使用集合来存储数据</h2>
+
+<p>集合是Meteor用来存储持久化数据的方法。其特殊之处在于，它既可被服务端访问，也可被客户端访问。这样就很容易做到，无需编写大量服务端代码就可以实现页面逻辑。他们也可以自动更新，所以由集合支持的页面视图组件可以自动显示最新数据。</p>
+
+<p>在你的JavaScript代码里，通过调用<code class="language-plaintext highlighter-rouge">MyCollection = new Mongo.Collection("my-collection");</code>，可以很容易地创建一个新的集合。在服务器端，这行代码会设置一个名为<code class="language-plaintext highlighter-rouge">my-collection</code>的MongoDB集合；在客户端，这行代码会创建一个缓存，这个缓存和服务器端集合存在连接。后面，我们会了解的更多详情，现在就让我们假设整个数据库都存在于客户端。</p>
+
+<p>下面我们修改JavaScript代码，从数据库集合中获取任务：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mongo</span><span class="p">.</span><span class="nx">Collection</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">);</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isClient</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({});</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>使用上面代码后，静待几秒钟，等待Meteor“热部署”完成。我们会发现任务列表中的记录消失了，这是因为数据库集合是空的。我们需要向数据库集合中插入一些任务数据。</p>
+
+<h3 id="从服务器端数据库控制台插入任务数据">从服务器端数据库控制台插入任务数据</h3>
+
+<p>数据库集合里的数据被称为文档。下面，我们在服务器端使用数据库的控制台插入一些文档到任务集合中去。</p>
+
+<p>打开一个新的终端页，进入应用所在目录，然后输入命令:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor mongo
+</code></pre></div></div>
+<p>当前控制台会连上应用的本地开发数据库，在数据库的交互模式下，输入命令：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">db</span><span class="p">.</span><span class="nx">tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span> <span class="na">text</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello world!</span><span class="dl">"</span><span class="p">,</span> <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>再看看浏览器，你将发现应用界面立刻显示出了新任务记录。你会发现我们在客户端和服务端之间并没有写什么连接代码，但是数据恰恰自动更新了。</p>
+
+<p>在数据库控制台上，用相同的方法，再插入一些不同内容的任务记录。</p>
+
+<p>下面，我们看看怎么给应用页面增加功能，不通过后端数据库控制台，直接通过前端页面增加任务记录。</p>
+
+<h2 id="四通过页面添加任务">四、通过页面添加任务</h2>
+
+<p>在这一环节，我们要提供一个输入框给用户，以便向任务清单中添加任务记录。</p>
+
+<p>首先，我们在HTML里添加一个form。完整的simple-todos.html如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>Todo List<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+ 
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Todo List<span class="nt">&lt;/h1&gt;</span>
+
+      <span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"new-task"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"text"</span> <span class="na">placeholder=</span><span class="s">"Type to add new tasks"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/form&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+ 
+    <span class="nt">&lt;ul&gt;</span>
+      {{#each tasks}}
+        {{&gt; task}}
+      {{/each}}
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+ 
+<span class="nt">&lt;template</span> <span class="na">name=</span><span class="s">"task"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li&gt;</span>{{text}}<span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+</code></pre></div></div>
+
+<p>在Javascript代码中，我们需要增加对页面form的<code class="language-plaintext highlighter-rouge">submit</code>事件的监听方法。完整的simple-todos.js文件如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mongo</span><span class="p">.</span><span class="nx">Collection</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">);</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isClient</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({});</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">submit .new-task</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Prevent default browser form submit</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+ 
+      <span class="c1">// Get value from form element</span>
+      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+ 
+      <span class="c1">// Insert a task into the collection</span>
+      <span class="nx">Tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+        <span class="na">text</span><span class="p">:</span> <span class="nx">text</span><span class="p">,</span>
+        <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="c1">// current time</span>
+      <span class="p">});</span>
+ 
+      <span class="c1">// Clear form</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>现在应用有了一个新的输入框。要添加任务记录，只需要在输入框输入内容，然后点击回车就好了。如果你另外打开一个浏览器窗口，并新窗口中打开应用，你会发现多个客户端上的任务记录是自动同步的！</p>
+
+<p>###给模版绑定事件</p>
+
+<p>给模版添加事件的方式如同helpers方法的使用：调用<code class="language-plaintext highlighter-rouge">Template.templateName.events(...)</code>，传入一个key-value字典类型参数。其中key描述监听的事件，其中value是事件句柄方法。</p>
+
+<p>在上面的例子中，我们监听CSS选择器<code class="language-plaintext highlighter-rouge">.new-task</code>匹配的任意元素的<code class="language-plaintext highlighter-rouge">submit</code>事件。当用户在输入框内按下回车键时，将会触发这个事件，我们设置的事件方法就会被调用。</p>
+
+<p>被调用的事件方法有一个输入参数<code class="language-plaintext highlighter-rouge">event</code>，这个参数包含了被触发的事件的一些信息。在这里，<code class="language-plaintext highlighter-rouge">event.target</code>是我们这个页面上的form元素，我们可以通过<code class="language-plaintext highlighter-rouge">event.target.text.value</code>来获取输入框中的输入值。你可以在浏览器的控制台，通过<code class="language-plaintext highlighter-rouge">console.log(event)</code>来查看<code class="language-plaintext highlighter-rouge">event</code>的各个属性。</p>
+
+<p>最好，在这个事件方法的最后一行，我们清除了输入框中的内容，准备下一次输入。</p>
+
+<p>###向集合中插入数据</p>
+
+<p>在这个事件方法中，我们通过调用<code class="language-plaintext highlighter-rouge">Tasks.insert()</code>来向<code class="language-plaintext highlighter-rouge">tasks</code>集合中添加一条任务记录。我们不需要事先定义集合的结构，就可以向集合中的记录添加各种属性字段，比如：被创建的时间。</p>
+
+<p>###排序查询结果</p>
+
+<p>现在，所有新的任务记录都显示在页面的底部。这种体验不是太好，我们更希望先看到最新的任务。</p>
+
+<p>我们可以利用<code class="language-plaintext highlighter-rouge">createdAt</code>字段来排序查询结果。所需做的，仅是给<code class="language-plaintext highlighter-rouge">find</code>方法添加一个排序选项。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Show newest tasks at the top</span>
+      <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="五已处理与删除任务">五、已处理与删除任务</h2>
+
+<p>前面，我们学习了怎么向集合中插入数据，下面学习如何更新及删除数据。</p>
+
+<p>我们先给<code class="language-plaintext highlighter-rouge">task</code>模版增加两个页面元素：一个复选框和一个删除按钮。</p>
+
+<p>替换simple-todos.html文件中的<code class="language-plaintext highlighter-rouge">task</code>模版，内容如下:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;template</span> <span class="na">name=</span><span class="s">"task"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"{{#if checked}}checked{{/if}}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"delete"</span><span class="nt">&gt;</span><span class="ni">&amp;times;</span><span class="nt">&lt;/button&gt;</span>
+ 
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">checked=</span><span class="s">"{{checked}}"</span> <span class="na">class=</span><span class="s">"toggle-checked"</span> <span class="nt">/&gt;</span>
+ 
+    <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text"</span><span class="nt">&gt;</span>{{text}}<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+</code></pre></div></div>
+
+<p>仅添加UI元素，页面发生了变化，但是新元素不能使用。我们需要添加相应的事件。</p>
+
+<p>修改simple-todos.js文件，增加相关事件：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Template</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">click .toggle-checked</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Set the checked property to the opposite of its current value</span>
+      <span class="nx">Tasks</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">$set</span><span class="p">:</span> <span class="p">{</span><span class="na">checked</span><span class="p">:</span> <span class="o">!</span> <span class="k">this</span><span class="p">.</span><span class="nx">checked</span><span class="p">}</span>
+      <span class="p">});</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">click .delete</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Tasks</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>好了，静待Meteor“热部署”后，点击页面上的复选框或者删除按钮。看看效果吧！</p>
+
+<h3 id="在事件方法中获取数据">在事件方法中获取数据</h3>
+
+<p>在事件方法中，<code class="language-plaintext highlighter-rouge">this</code>指向当前这个任务对象。在数据库集合中，每个插入的文档都有一个唯一值<code class="language-plaintext highlighter-rouge">_id</code>字段，可以使用这个字段找到每个文档。我们可以使用<code class="language-plaintext highlighter-rouge">this.id</code>来获取当前任务记录的<code class="language-plaintext highlighter-rouge">_id</code>字段。一旦有了<code class="language-plaintext highlighter-rouge">_id</code>，那么我们就可以使用<code class="language-plaintext highlighter-rouge">update</code>或者<code class="language-plaintext highlighter-rouge">remove</code>方法来修改对应的任务记录了。</p>
+
+<h3 id="更新">更新</h3>
+
+<p>集合的<code class="language-plaintext highlighter-rouge">update</code>方法有两个参数。第一个参数，是选择器，可以筛选出集合的子集；第二个参数是个更新参数，列出匹配的结果都做如何修改。</p>
+
+<p>在上面这个例子中，选择器就是任务的<code class="language-plaintext highlighter-rouge">_id</code>字段值；更新参数使用<code class="language-plaintext highlighter-rouge">$set</code>去切换<code class="language-plaintext highlighter-rouge">checked</code>字段的值，来代表当前任务记录是否处理完成。</p>
+
+<h3 id="删除">删除</h3>
+
+<p>集合的<code class="language-plaintext highlighter-rouge">remove</code>方法只有一个参数——选择器，它决定了集合中的哪项记录被删除。</p>
+
+<p>###使用对象的属性(或者使用helpers)去添加/删除页面式样</p>
+
+<p>你如果标记某些任务已经完成，你会发现被标记处理完成的任务都有一条删除线。这个效果由下面代码实现：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"{{#if checked}}checked{{/if}}"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>如果任务的<code class="language-plaintext highlighter-rouge">checked</code>属性为<code class="language-plaintext highlighter-rouge">true</code>，那么<code class="language-plaintext highlighter-rouge">checked</code>式样类，就要加到这个<code class="language-plaintext highlighter-rouge">li</code>元素上。使用这个类，我们可以让完成处理的任务项很容易识别出来。</p>
+
+<h2 id="六发布应用">六、发布应用</h2>
+
+<p>现在，我们已经有了一个可以工作的任务清单应用了。我们可以把他分享给朋友们。Meteor很容易地支持把应用发布到网络上，让网络上的其他人使用。</p>
+
+<p>进入你的应用所在目录，输入：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor deploy my_app_name.meteor.com
+</code></pre></div></div>
+
+<p>一旦你回答完所有交互问题，并上传成功。你就可以通过访问<code class="language-plaintext highlighter-rouge">http://my_app_name.meteor.com</code>，来在互联网上使用你的应用了。</p>
+
+<h2 id="七在android或ios上运行你的应用">七、在Android或iOS上运行你的应用</h2>
+
+<blockquote>
+  <p>目前，Meteor不支持在Windows上创建移动端应用。如果，你是在Windows上使用Meteor，请跳过本节。</p>
+
+</blockquote>
+
+<p>此处省去若干内容，有待日后另起篇章记录。</p>
+
+<h2 id="八使用session变量去存储临时的ui状态">八、使用Session变量去存储临时的UI状态</h2>
+
+<p>在这里，我们要给应用增加一个客户端筛选功能，以便用户可以点击一个复选框去查看待处理的任务。我们学着在客户端使用<code class="language-plaintext highlighter-rouge">Session</code>变量去存储临时变化的状态。</p>
+
+<p>首先，我们需要在页面模版中增加一个复选框，simple-todos.html页面中<code class="language-plaintext highlighter-rouge">body</code>模版的代码如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;header&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Todo List<span class="nt">&lt;/h1&gt;</span>
+
+      <span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"hide-completed"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">checked=</span><span class="s">"{{hideCompleted}}"</span> <span class="nt">/&gt;</span>
+        Hide Completed Tasks
+      <span class="nt">&lt;/label&gt;</span>
+
+      <span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"new-task"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"text"</span> <span class="na">placeholder=</span><span class="s">"Type to add new tasks"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/form&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+ 
+    <span class="nt">&lt;ul&gt;</span>
+      {{#each tasks}}
+        {{&gt; task}}
+      {{/each}}
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div></div>
+
+<p>接着，我们需要添加一个事件处理方法，在复选框的状态发生变化时，去更新<code class="language-plaintext highlighter-rouge">Session</code>变量。<code class="language-plaintext highlighter-rouge">Session</code>是一个非常好的可以存放临时UI状态的地方。如同集合一样，可以在helpers方法中被调用。</p>
+
+<p>修改simple-todos.js文件中的<code class="language-plaintext highlighter-rouge">Template.body.events(...)</code>，修改后内容如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">submit .new-task</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Prevent default browser form submit</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+ 
+      <span class="c1">// Get value from form element</span>
+      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+ 
+      <span class="c1">// Insert a task into the collection</span>
+      <span class="nx">Tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+        <span class="na">text</span><span class="p">:</span> <span class="nx">text</span><span class="p">,</span>
+        <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span> <span class="c1">// current time</span>
+      <span class="p">});</span>
+ 
+      <span class="c1">// Clear form</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="dl">"</span><span class="s2">change .hide-completed input</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Session</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">checked</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>现在，我们需要修改<code class="language-plaintext highlighter-rouge">Template.body.helpers</code>。下面这段代码增加了一个新的<code class="language-plaintext highlighter-rouge">if</code>语句块，去实现当复选框被选中时对任务清单的过滤；增加了一个新的方法，去获取Session变量中记录的复选框状态。</p>
+
+<p>修改simple-todos.js文件中的<code class="language-plaintext highlighter-rouge">Template.body.helpers(...)</code>，修改为：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// If hide completed is checked, filter tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Otherwise, return all of the tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">hideCompleted</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>现在如果你选中复选框，那么任务清单中只显示没有完成的任务了！</p>
+
+<h3 id="session是客户端的一个响应式数据存储">Session是客户端的一个响应式数据存储</h3>
+
+<p>截止目前，我们已经把所有数据都存储到集合中去了，当数据库集合中的数据发生变化，前端页面也会自动更新。这是因为Mongo的集合是Meteor公认的响应式数据源，这意味着，一旦其中的数据发生变化，Meteor就知道了。Session也同样如此，但它不和服务器端通讯，这点与集合不同。因此，Session非常适合存放UI的一些临时状态，比如上例中的复选框。如同集合，当Session变量发生变化后，我们无需编写太多的编码。仅需要在帮助器（helper)方法里调用<code class="language-plaintext highlighter-rouge">Session.get(...)</code>就足够了。</p>
+
+<h3 id="更多显示待处理任务总数">更多：显示待处理任务总数</h3>
+
+<p>现在我们写了一个查询，可以筛选待处理的任务，我们也可以使用同样的查询，去显示待处理任务的总数。在JavaScript文件中增加一个方法，修改HTML一行代码就可以实现了。</p>
+
+<p>在simple-todos.js中修改<code class="language-plaintext highlighter-rouge">Template.body.helpers(...)</code>，增加一个<code class="language-plaintext highlighter-rouge">incompleteCount</code>方法，修改后的如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// If hide completed is checked, filter tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Otherwise, return all of the tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">hideCompleted</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">incompleteCount</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}}).</span><span class="nx">count</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>修改simple-todos.html文件，显示待处理记录总数:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>Todo List ({{incompleteCount}})<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div></div>
+
+<h2 id="九添加账号管理功能">九、添加账号管理功能</h2>
+
+<p>Meteor自带一个账号系统，以及下拉式登录页面。可以让你的应用在几分钟内添加多用户功能。</p>
+
+<p>为了可以使用账号系统以及相关的UI，我们需要添加相关的包。在你的应用所在目录，执行下面命令：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor add accounts-ui accounts-password
+</code></pre></div></div>
+
+<p>上述命令运行完后，原先的meteor服务会自动更新部署。我们继续下面操作。</p>
+
+<p>在HTML文件中，复选框的正下方，添加一个用户登录代码，代码片段如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;header&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>Todo List ({{incompleteCount}})<span class="nt">&lt;/h1&gt;</span>
+
+      <span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"hide-completed"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">checked=</span><span class="s">"{{hideCompleted}}"</span> <span class="nt">/&gt;</span>
+        Hide Completed Tasks
+      <span class="nt">&lt;/label&gt;</span>
+
+      {{&gt; loginButtons}}
+
+      <span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"new-task"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"text"</span> <span class="na">placeholder=</span><span class="s">"Type to add new tasks"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/header&gt;</span>
+</code></pre></div></div>
+
+<p>默认的登录界面是使用邮箱及密码登录，我们修改JavaScript文件，增加下面的代码来配置登录界面，使用用户名代替邮箱登录。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Accounts</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+  <span class="na">passwordSignupFields</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USERNAME_ONLY</span><span class="dl">"</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>现在，使用者可以创建账号登录你的应用了！只是登录登出并没有什么效果。让我们增加两个功能：</p>
+
+<ol>
+  <li>只对登陆用户显示新任务输入框；</li>
+  <li>显示我们创建的每个任务</li>
+</ol>
+
+<p>为此，我们需要在<code class="language-plaintext highlighter-rouge">task</code>集合中增加两个新的字段：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">owner</code> - 创建此任务的账号的<code class="language-plaintext highlighter-rouge">_id</code>；</li>
+  <li><code class="language-plaintext highlighter-rouge">username</code> - 创建此任务的账号的<code class="language-plaintext highlighter-rouge">username</code>。我们直接把<code class="language-plaintext highlighter-rouge">username</code>保存在任务对象中，以便在显示任务时，无需每次都去关联账号信息查询用户名。</li>
+</ol>
+
+<p>首先，我们在<code class="language-plaintext highlighter-rouge">submit .new-task</code>事件处理方法中，增加一些代码去保存新增的字段，修改的代码片段如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+  <span class="na">text</span><span class="p">:</span> <span class="nx">text</span><span class="p">,</span>
+  <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>            <span class="c1">// current time</span>
+  <span class="na">owner</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">(),</span>           <span class="c1">// _id of logged in user</span>
+  <span class="na">username</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">user</span><span class="p">().</span><span class="nx">username</span>  <span class="c1">// username of logged in user</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>接着，修改HTML文件，增加一个<code class="language-plaintext highlighter-rouge">#if</code>判断语句，仅当账号登录后才显示任务添加框。simple-todos.html中相关代码片段如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{#if currentUser}}
+  <span class="nt">&lt;form</span> <span class="na">class=</span><span class="s">"new-task"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"text"</span> <span class="na">placeholder=</span><span class="s">"Type to add new tasks"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/form&gt;</span>
+{{/if}}
+</code></pre></div></div>
+
+<p>最后，在每个任务信息的左边增加一个Spacebars语句去显示用户名(<code class="language-plaintext highlighter-rouge">username</code>)字段。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text"</span><span class="nt">&gt;&lt;strong&gt;</span>{{username}}<span class="nt">&lt;/strong&gt;</span> - {{text}}<span class="nt">&lt;/span&gt;</span>
+</code></pre></div></div>
+
+<p>好了，大功告成了！</p>
+
+<h3 id="自动账号ui">自动账号UI</h3>
+
+<p>如果应用添加了<code class="language-plaintext highlighter-rouge">accounts-ui</code>包，想增加一个下拉式登录窗口，只需使用<code class="language-plaintext highlighter-rouge">{{&gt; loginButtons}}</code>语句来调用<code class="language-plaintext highlighter-rouge">loginButtons</code>模版。这个模版会自动判断支持哪些登录方式及显示相关的控制。在这个例子中，我们仅开启了账号密码(<code class="language-plaintext highlighter-rouge">accounts-password</code>)登录方式，所以下拉窗口中只有密码字段。如果你想做更多的尝试，你可以添加<code class="language-plaintext highlighter-rouge">accounts-facebook</code>包，来给你的应用开启Facebook账号登录功能，这样，Facebook的案例就会自动出现在下拉界面中了。</p>
+
+<p>想尝试就执行下面的命令:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor add accounts-facebook
+</code></pre></div></div>
+
+<h3 id="关于登录用户的更多信息">关于登录用户的更多信息</h3>
+
+<p>在HTML中，我们可以使用内置的帮助器(helper)<code class="language-plaintext highlighter-rouge">{{currentUser}}</code>去检查账号是否登录，及获取账号相关信息。比如：<code class="language-plaintext highlighter-rouge">{{currentUser.username}}</code>可以显示登录账号的用户名。</p>
+
+<p>在JavaScript代码中，可以使用<code class="language-plaintext highlighter-rouge">Meteor.userId()</code>获取当前账号的<code class="language-plaintext highlighter-rouge">_id</code>，使用<code class="language-plaintext highlighter-rouge">Meteor.user()</code>获取整个账号信息。</p>
+
+<h2 id="十使用methods方法实现安全控制">十、使用<code class="language-plaintext highlighter-rouge">methods</code>方法实现安全控制</h2>
+
+<p>在这之前，应用的每个账号都能编辑数据库中的信息。这对一个内部小应用或者实例而言，可能没有什么问题。但任何一个实时应用都需要对它的数据进行权限控制。在Meteor中，最好的办法就是定义<code class="language-plaintext highlighter-rouge">methods</code>方法，代替客户端直接调用<code class="language-plaintext highlighter-rouge">insert</code>、<code class="language-plaintext highlighter-rouge">update</code>和<code class="language-plaintext highlighter-rouge">remove</code>方法。它将检查账号是否有权限进行当前操作，有权限则以客户端名义修改数据库中数据。</p>
+
+<h3 id="移除insecure包">移除<code class="language-plaintext highlighter-rouge">insecure</code>包</h3>
+
+<p>每个新创建的Meteor工程都会默认添加<code class="language-plaintext highlighter-rouge">insecure</code>包。这个包容许用户从客户端修改数据库数据。</p>
+
+<p>使用下面命令可以删除这个包：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor remove insecure
+</code></pre></div></div>
+
+<p>移除这个包后，再使用应用，你将发现输入框和按钮不再正常工作了。这是因为客户端所有数据库权限都被终止了。我们需要使用<code class="language-plaintext highlighter-rouge">methods</code>重写应用的部分功能。</p>
+
+<h3 id="定义methods">定义methods</h3>
+
+<p>首先，我们需要定义一些方法.我们需要为在客户端执行的每个数据库操作定义一个方法。这些方法被定义在即被服务端执行，也被客户端执行的代码中。</p>
+
+<p>修改simple-todos.js，增加以下代码片段：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span><span class="p">({</span>
+  <span class="na">addTask</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Make sure the user is logged in before inserting a task</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+      <span class="na">text</span><span class="p">:</span> <span class="nx">text</span><span class="p">,</span>
+      <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
+      <span class="na">owner</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">(),</span>
+      <span class="na">username</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">user</span><span class="p">().</span><span class="nx">username</span>
+    <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="na">deleteTask</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="na">setChecked</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="nx">setChecked</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="p">{</span> <span class="na">$set</span><span class="p">:</span> <span class="p">{</span> <span class="na">checked</span><span class="p">:</span> <span class="nx">setChecked</span><span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>好了，方法都定义好了。我们把之前对集合操作的代码都用这些方法替换。</p>
+
+<p>修改后的完整的simple-todos.js文件内容如下:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mongo</span><span class="p">.</span><span class="nx">Collection</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">);</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isClient</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// If hide completed is checked, filter tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Otherwise, return all of the tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">hideCompleted</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">incompleteCount</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}}).</span><span class="nx">count</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">submit .new-task</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Prevent default browser form submit</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+ 
+      <span class="c1">// Get value from form element</span>
+      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+ 
+      <span class="c1">// Insert a task into the collection</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">addTask</span><span class="dl">"</span><span class="p">,</span> <span class="nx">text</span><span class="p">);</span>
+ 
+      <span class="c1">// Clear form</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="dl">"</span><span class="s2">change .hide-completed input</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Session</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">checked</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">click .toggle-checked</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Set the checked property to the opposite of its current value</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">setChecked</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span> <span class="o">!</span> <span class="k">this</span><span class="p">.</span><span class="nx">checked</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">click .delete</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">deleteTask</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Accounts</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+    <span class="na">passwordSignupFields</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USERNAME_ONLY</span><span class="dl">"</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span><span class="p">({</span>
+  <span class="na">addTask</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Make sure the user is logged in before inserting a task</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+      <span class="na">text</span><span class="p">:</span> <span class="nx">text</span><span class="p">,</span>
+      <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
+      <span class="na">owner</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">(),</span>
+      <span class="na">username</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">user</span><span class="p">().</span><span class="nx">username</span>
+    <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="na">deleteTask</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="na">setChecked</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="nx">setChecked</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="p">{</span> <span class="na">$set</span><span class="p">:</span> <span class="p">{</span> <span class="na">checked</span><span class="p">:</span> <span class="nx">setChecked</span><span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>好了，我们的输入框和按钮又可以正常工作了！稍微总结一下本章节收获：</p>
+
+<ol>
+  <li>当我们向数据库插入任务时，我们可以做一些安全性校验，比如：用户是否登录；创建时间、用户名等字段是否正确。使用者无法假冒任何人。</li>
+  <li>当任务被私有化时，我们可以在<code class="language-plaintext highlighter-rouge">setChecked</code>和<code class="language-plaintext highlighter-rouge">deleteTask</code>方法中增加一些逻辑校验。（后文会介绍）</li>
+  <li>客户端代码与数据库逻辑更加分离了。我们提炼一些方法可以在各处被调用，而不再是大量逻辑都放在页面的事件处理方法里了。</li>
+</ol>
+
+<h3 id="optimistic-ui">Optimistic UI</h3>
+
+<p>那么我们为什么要同时定义我们的方法在客户端和服务器端？我们这样做是为了实现一个我们称之为“optimistic UI”的特效。</p>
+
+<p>当我们在客户端使用<code class="language-plaintext highlighter-rouge">Meteor.call</code>调用一个方法时，Meteor会同时做两件事：</p>
+
+<ol>
+  <li>客户端发送请求至服务器端，在一个安全的环境下去运行这个方法，如同AJAX请求一样工作；</li>
+  <li>试图预测服务器端正常的处理结果，而在客户端模仿这个方法运行。</li>
+</ol>
+
+<p>这就意味着，一个新创建的任务，还未从服务器端接收反馈结果，就立刻出现在页面上了。</p>
+
+<p>如果服务端返回的结果和客户端模拟的结果一致，那么不再做任何处理；不一致，那么UI将按照服务端返回结果进行修正。</p>
+
+<p>利用Meteor的方法（methods）和optimistic UI，我们可以鱼与熊掌兼得——服务端代码安全与无延迟交互！</p>
+
+<h2 id="十一利用发布与订阅来过滤数据">十一、利用发布与订阅来过滤数据</h2>
+
+<p>我们已经把应用的所有敏感代码都移到了Methods里了，我们还需要了解一些Meteor其他的安全知识。截止目前，我们的工作都是基于假设整个数据库都在客户端的基础上的，这意味着，如果调用<code class="language-plaintext highlighter-rouge">Tasks.find()</code>，我们将从集合中查询所有数据。如果应用的使用者想存储一些隐私数据，这个机制就不合适了。我们需要一个方案去控制哪些数据可以发送到客户端数据库。</p>
+
+<p>如同<code class="language-plaintext highlighter-rouge">insecure</code>包一样，Meteor新创建的每个新应用都会自带一个<code class="language-plaintext highlighter-rouge">autopublish</code>包。</p>
+
+<p>我们删除这个包，看看发生了什么：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>meteor remove autopublish
+</code></pre></div></div>
+
+<p>当应用刷新后，任务清单就空了。没有了这个包，我们需要显示地列出需要服务器端发送哪些数据到客户端。Meteor中实现这个功能的函数是<code class="language-plaintext highlighter-rouge">Meteor.publish</code>和<code class="language-plaintext highlighter-rouge">Meteor.subscrib</code>.</p>
+
+<p>在simple-todos.js文件中增加以下代码片段:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isServer</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the server</span>
+  <span class="nx">Meteor</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isClient</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Meteor</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>等待代码”热部署“后，页面的任务清单又出现了。</p>
+
+<p>服务器端通过调用<code class="language-plaintext highlighter-rouge">Meteor.publish</code>方法，注册了一个名为<code class="language-plaintext highlighter-rouge">"tasks"</code>的发布。在客户端，使用这个发布名调用<code class="language-plaintext highlighter-rouge">Meteor.subscribe</code>方法，这个客户端就订阅了所有来自发布发布的数据，在这个例子中，就所有的任务清单。</p>
+
+<p>为了真实地展示发布/订阅模式的强大之处，我们来实现一个功能，容许账号去标记任务为”私人的”，以便不被其他账号看见。</p>
+
+<h3 id="实现私人任务">实现私人任务</h3>
+
+<p>首先，我们给任务记录增加一个名为”private”的属性，给用户提供一个按钮，去标记任务是否是私人的。这个按钮只显示给任务的所有者，并且将显示任务当前所处的状态。</p>
+
+<p>另外，我们还要给任务记录增加一个式样类，用来标记这个任务是否为私人的。</p>
+
+<p>simple-todos.html中task模版修改后的代码如下：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;template</span> <span class="na">name=</span><span class="s">"task"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"{{#if checked}}checked{{/if}}  {{#if private}}private{{/if}}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"delete"</span><span class="nt">&gt;</span><span class="ni">&amp;times;</span><span class="nt">&lt;/button&gt;</span>
+ 
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">checked=</span><span class="s">"{{checked}}"</span> <span class="na">class=</span><span class="s">"toggle-checked"</span> <span class="nt">/&gt;</span>
+
+    {{#if isOwner}}
+      <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"toggle-private"</span><span class="nt">&gt;</span>
+        {{#if private}}
+          Private
+        {{else}}
+          Public
+        {{/if}}
+      <span class="nt">&lt;/button&gt;</span>
+    {{/if}}
+ 
+    <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text"</span><span class="nt">&gt;&lt;strong&gt;</span>{{username}}<span class="nt">&lt;/strong&gt;</span> - {{text}}<span class="nt">&lt;/span&gt;</span>
+  <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+</code></pre></div></div>
+
+<p>结合页面所做的修改，我们需要同时修改三处JavaScript代码：</p>
+
+<ol>
+  <li>
+    <p>增加一个名为<code class="language-plaintext highlighter-rouge">isOwner</code>的帮助器(helper)</p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">Template</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+   <span class="na">isOwner</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+   	<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">owner</span> <span class="o">===</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">();</span>
+   <span class="p">}</span>
+  	<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>增加一个名为<code class="language-plaintext highlighter-rouge">setPrivate</code>的Meteor方法。</p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">setPrivate</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="nx">setToPrivate</span><span class="p">)</span> <span class="p">{</span>
+   <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+ 
+   <span class="c1">// Make sure only the task owner can make a task private发布</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!==</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+     <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+   <span class="p">}</span>
+ 
+   <span class="nx">Tasks</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="p">{</span> <span class="na">$set</span><span class="p">:</span> <span class="p">{</span> <span class="na">private</span><span class="p">:</span> <span class="nx">setToPrivate</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>增加一个按钮点击事件方法。</p>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="dl">"</span><span class="s2">click .toggle-private</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+   <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">setPrivate</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span> <span class="o">!</span> <span class="k">this</span><span class="p">.</span><span class="kr">private</span><span class="p">);</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="基于隐私状态有选择地发布任务">基于隐私状态有选择地发布任务</h3>
+
+<p>我们已经可以设置哪些任务是私人的了，我们继续完善我们的发布程序，只发送数据给有权限的用户浏览。</p>
+
+<p>修改simple-todos.js中相关代码，相关代码片段如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isServer</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the server</span>
+  <span class="c1">// Only publish tasks that are public or belong to the current user</span>
+  <span class="nx">Meteor</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
+      <span class="na">$or</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="na">private</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="na">owner</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">userId</span> <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>我们可以打开两个浏览器，使用不同的账号登录，来测试效果。</p>
+
+<h3 id="完善安全控制">完善安全控制</h3>
+
+<p>为了完善我们的私人任务功能，我们需要给<code class="language-plaintext highlighter-rouge">deleteTask</code>和<code class="language-plaintext highlighter-rouge">setChecked</code>俩方法增加检查，以便任务的所有者可以删除或完成一个私人任务。</p>
+
+<p>完整的simple-todos.js文件代码如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mongo</span><span class="p">.</span><span class="nx">Collection</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isServer</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the server</span>
+  <span class="c1">// Only publish tasks that are public or belong to the current user</span>
+  <span class="nx">Meteor</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span>
+      <span class="na">$or</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="na">private</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="na">owner</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">userId</span> <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nx">Meteor</span><span class="p">.</span><span class="nx">isClient</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// This code only runs on the client</span>
+  <span class="nx">Meteor</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">"</span><span class="s2">tasks</span><span class="dl">"</span><span class="p">);</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">tasks</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// If hide completed is checked, filter tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Otherwise, return all of the tasks</span>
+        <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="p">{</span><span class="na">sort</span><span class="p">:</span> <span class="p">{</span><span class="na">createdAt</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}});</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">hideCompleted</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Session</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">incompleteCount</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="na">checked</span><span class="p">:</span> <span class="p">{</span><span class="na">$ne</span><span class="p">:</span> <span class="kc">true</span><span class="p">}}).</span><span class="nx">count</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">submit .new-task</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Prevent default browser form submit</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+ 
+      <span class="c1">// Get value from form element</span>
+      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+ 
+      <span class="c1">// Insert a task into the collection</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">addTask</span><span class="dl">"</span><span class="p">,</span> <span class="nx">text</span><span class="p">);</span>
+ 
+      <span class="c1">// Clear form</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">text</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="dl">"</span><span class="s2">change .hide-completed input</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Session</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">"</span><span class="s2">hideCompleted</span><span class="dl">"</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">checked</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">helpers</span><span class="p">({</span>
+    <span class="na">isOwner</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">owner</span> <span class="o">===</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Template</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">events</span><span class="p">({</span>
+    <span class="dl">"</span><span class="s2">click .toggle-checked</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// Set the checked property to the opposite of its current value</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">setChecked</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span> <span class="o">!</span> <span class="k">this</span><span class="p">.</span><span class="nx">checked</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">click .delete</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">deleteTask</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="dl">"</span><span class="s2">click .toggle-private</span><span class="dl">"</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="dl">"</span><span class="s2">setPrivate</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span> <span class="o">!</span> <span class="k">this</span><span class="p">.</span><span class="kr">private</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">Accounts</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+    <span class="na">passwordSignupFields</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USERNAME_ONLY</span><span class="dl">"</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span><span class="p">({</span>
+  <span class="na">addTask</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Make sure the user is logged in before inserting a task</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span>
+      <span class="na">text</span><span class="p">:</span> <span class="nx">text</span><span class="p">,</span>
+      <span class="na">createdAt</span><span class="p">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span>
+      <span class="na">owner</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">(),</span>
+      <span class="na">username</span><span class="p">:</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">user</span><span class="p">().</span><span class="nx">username</span>
+    <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="na">deleteTask</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="kr">private</span> <span class="o">&amp;&amp;</span> <span class="nx">task</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!==</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+      <span class="c1">// If the task is private, make sure only the owner can delete it</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+  <span class="p">},</span>
+  <span class="na">setChecked</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="nx">setChecked</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="kr">private</span> <span class="o">&amp;&amp;</span> <span class="nx">task</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!==</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+      <span class="c1">// If the task is private, make sure only the owner can check it off</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="p">{</span> <span class="na">$set</span><span class="p">:</span> <span class="p">{</span> <span class="na">checked</span><span class="p">:</span> <span class="nx">setChecked</span><span class="p">}</span> <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="na">setPrivate</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="nx">setToPrivate</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="nx">Tasks</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+ 
+    <span class="c1">// Make sure only the task owner can make a task private</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="nx">owner</span> <span class="o">!==</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">userId</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">not-authorized</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">Tasks</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">taskId</span><span class="p">,</span> <span class="p">{</span> <span class="na">$set</span><span class="p">:</span> <span class="p">{</span> <span class="na">private</span><span class="p">:</span> <span class="nx">setToPrivate</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>“注意现在任何人都可以删除公共任务，代码再做一些微调，就可以实现仅任务的所有者才能删除他们”</p>
+</blockquote>
+
+<p>好了，我们完成了个人任务功能！现在我们的应用已经安全了，可以防止攻击者浏览或者修改他人的任务了！</p>
+
+:ET

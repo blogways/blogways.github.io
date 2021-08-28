@@ -1,0 +1,68 @@
+I":<p>我正在使用的Junit的版本为4.11,其中测试类的执行顺序有三种指定方式：默认、按方法名顺序和JVM顺序。</p>
+
+<p>如果你不做任何指定，那么就是由默认顺序来执行，那么默认顺序是怎么确定的？他是由方法名的hash值的大小来确定，如果hash值大小一致，则按名字顺序确定。</p>
+
+<p>看下面Junit的实现代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/**
+ * DEFAULT sort order
+ */
+public static Comparator&lt;Method&gt; DEFAULT = new Comparator&lt;Method&gt;() {
+    public int compare(Method m1, Method m2) {
+        int i1 = m1.getName().hashCode();
+        int i2 = m2.getName().hashCode();
+        if (i1 != i2) {
+            return i1 &lt; i2 ? -1 : 1;
+        }
+        return NAME_ASCENDING.compare(m1, m2);
+    }
+};
+</code></pre></div></div>
+
+<p>除了默认顺序，我们可以指定按方法的名字顺序来执行。指定方法是在测试类上加一个注释<code class="language-plaintext highlighter-rouge">FixMethodOrder(MethodSorters.NAME_ASCENDING)</code>，代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class MyTest {
+	
+	@Test
+	public void test2() {
+	...
+	}
+	
+	@Test
+	public void test1() {
+	…
+	}
+}
+</code></pre></div></div>
+
+<p>这样执行顺序就是，先<code class="language-plaintext highlighter-rouge">test1</code>再<code class="language-plaintext highlighter-rouge">test2</code>。</p>
+
+<p>除了上述两种顺序，还有<code class="language-plaintext highlighter-rouge">JVM</code>顺序，<code class="language-plaintext highlighter-rouge">JVM</code>顺序使之按调用反射API的顺序来执行。什么意思？看代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Method[] methods = testClass.getDeclaredMethods();
+</code></pre></div></div>
+
+<p>也即是说,通过上面语句获取测试类的方法，返回的顺序就是测试的顺序。这种顺序，会由JVM的实现不同而顺序不同。一般情况下，是一个未明确的但是固定的顺序。</p>
+
+<p>使用时,也是在测试类上加一个注释<code class="language-plaintext highlighter-rouge">FixMethodOrder(MethodSorters.JVM)</code>,方法如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@FixMethodOrder(MethodSorters.JVM)
+public class MyTest {
+	
+	@Test
+	public void test2() {
+	...
+	}
+	
+	@Test
+	public void test1() {
+	…
+	}
+}
+</code></pre></div></div>
+
+<p>在我的机器上，上面代码执行顺序是：先<code class="language-plaintext highlighter-rouge">test2</code>再<code class="language-plaintext highlighter-rouge">test1</code>。</p>
+
+<p>通过上面的了解，如果你想指定你的测试类中方法的执行顺序，那么最好使用名字顺序(<code class="language-plaintext highlighter-rouge">MethodSorters.NAME_ASCENDING</code>)，这样最方便最可靠。</p>
+:ET

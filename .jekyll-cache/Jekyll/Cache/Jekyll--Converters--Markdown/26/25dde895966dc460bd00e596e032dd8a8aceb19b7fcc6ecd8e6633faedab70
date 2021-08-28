@@ -1,0 +1,316 @@
+I"�4<div class="code fl">
+    <dl>
+    <dt>目录</dt>
+    <dd>
+    <ol>
+        <li><a href="#1">简介</a></li>
+        <li><a href="#2">下载安装</a></li>
+        <li><a href="#3">一个简单的模版</a></li>
+        <li><a href="#4">运行测试</a></li>
+        <li><a href="#5">JUnit4的核心之一是断言</a></li>
+        <li><a href="#6">小结</a></li>
+    </ol>
+    </dd>
+    </dl>
+</div>
+
+<h3 id="一简介"><a name="1"></a>一、简介</h3>
+
+<p>JUnit是一个Java语言的单元测试框架。它由Kent Beck和Erich Gamma建立，逐渐成为源于Kent Beck的sUnit的xUnit家族中为最成功的一个。来自JUnit的体验对测试驱动开发是很重要的，所以一些 JUnit知识经常 和测试驱动开发的讨论融合在一起。可以参考Kent Beck的 <a href="http://book.douban.com/subject/1771049/">《Test-Driven Development: By Example》</a>一书（有中文版和影印版）。</p>
+
+<p>本文，对JUnit4的下载安装、基本测试方法及运行，配合实例进行基础介绍。帮助读者看完之后，就可以将JUnit4运用到单元测试中去。而JUnit4的更多功能可以参考后续的<a href="junit-usage-2.html">JUnit4使用进阶二</a>。</p>
+
+<h3 id="二下载安装"><a name="2"></a>二、下载安装</h3>
+
+<p>JUnit当前版本是4.11，如果，你的工程是使用Maven进行管理构建，那么只需要在工程的pom.xml文件中添加如下依赖信息：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependency&gt;
+  		&lt;groupId&gt;junit&lt;/groupId&gt;
+  		&lt;artifactId&gt;junit&lt;/artifactId&gt;
+  		&lt;version&gt;4.11&lt;/version&gt;
+  		&lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre></div></div>
+
+<p>否则，在你的测试classpath中放置下面两个jar:<code class="language-plaintext highlighter-rouge">junit.jar</code>和<code class="language-plaintext highlighter-rouge">hamcrest-core.jar</code>，这两个jar可以在<a href="http://search.maven.org/">这里</a>找到并下载。</p>
+
+<h3 id="三一个简单的模版"><a name="3"></a>三、一个简单的模版</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package com.example.foo;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+/**
+ * Tests for {@link Foo}.
+ *
+ * @author user@example.com (John Doe)
+ */
+@RunWith(JUnit4.class)
+public class FooTest {
+
+	@Test
+	public void thisAlwaysPasses() {
+	}
+
+	@Test
+	@Ignore
+	public void thisIsIgnored() {
+	}
+}
+</code></pre></div></div>
+
+<p>这个模版是不是很简单！</p>
+
+<ul>
+  <li>
+    <p>需要测试的方法，只需要通过<code class="language-plaintext highlighter-rouge">@Test</code>标注出来就可以了。</p>
+  </li>
+  <li>
+    <p>测试类只需要添加<code class="language-plaintext highlighter-rouge">@RunWith</code>注释，不再需要继承<code class="language-plaintext highlighter-rouge">junit.framework.TestCase</code>这个父类了。</p>
+  </li>
+</ul>
+
+<p>当然了，JUnit4还提供了很多特色功能，后面我们会一一介绍。</p>
+
+<h3 id="四运行测试"><a name="4"></a>四、运行测试</h3>
+
+<ul>
+  <li>
+    <p>在命令行，对写好的测试类，进行测试很简单，只需要下面一个命令就ok了：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  java -cp .:/usr/share/java/junit.jar org.junit.runner.JUnitCore [test class name]
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>在IDE里面进行测试就更简单了，<code class="language-plaintext highlighter-rouge">Netbeans</code>, <code class="language-plaintext highlighter-rouge">Eclipse</code> 和 <code class="language-plaintext highlighter-rouge">IntelliJ Idea</code>都内置了图形化的测试运行器。</p>
+  </li>
+</ul>
+
+<p>测试类如何运行，是由<code class="language-plaintext highlighter-rouge">@RunWith</code>注释来决定。JUnit4当前版本的默认基本测试方式是<code class="language-plaintext highlighter-rouge">JUnit4.class</code>。除此之外，还有一些其他特殊的，我们将在<a href="junit-usage-4.html">JUnit4 使用进阶四</a>中进行介绍。</p>
+
+<h3 id="五junit4的核心之一是断言"><a name="5"></a>五、JUnit4的核心之一是断言</h3>
+
+<p>JUnit4框架主要是通过断言来判断运行结果正确与否，针对Java的原生类型(long,boolean,float…)或者Objects或者数组，JUnit都提供了对应的断言方法。</p>
+
+<p>下面，我们先来看个例子：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.both;
+import static org.junit.matchers.JUnitMatchers.containsString;
+import static org.junit.matchers.JUnitMatchers.everyItem;
+import static org.junit.matchers.JUnitMatchers.hasItems;
+
+import java.util.Arrays;
+
+import org.hamcrest.core.CombinableMatcher;
+import org.junit.Test;
+
+public class AssertTests {
+  @Test
+  public void testAssertArrayEquals() {
+    byte[] expected = "trial".getBytes();
+    byte[] actual = "trial".getBytes();
+    org.junit.Assert.assertArrayEquals("failure - byte arrays not same", expected, actual);
+  }
+
+  @Test
+  public void testAssertEquals() {
+    org.junit.Assert.assertEquals("failure - strings not same", 5l, 5l);
+  }
+
+  @Test
+  public void testAssertFalse() {
+    org.junit.Assert.assertFalse("failure - should be false", false);
+  }
+
+  @Test
+  public void testAssertNotNull() {
+    org.junit.Assert.assertNotNull("should not be null", new Object());
+  }
+
+  @Test
+  public void testAssertNotSame() {
+    org.junit.Assert.assertNotSame("should not be same Object", new Object(), new Object());
+  }
+
+  @Test
+  public void testAssertNull() {
+    org.junit.Assert.assertNull("should be null", null);
+  }
+
+  @Test
+  public void testAssertSame() {
+    Integer aNumber = Integer.valueOf(768);
+    org.junit.Assert.assertSame("should be same", aNumber, aNumber);
+  }
+
+  // JUnit Matchers assertThat
+  @Test
+  public void testAssertThatBothContainsString() {
+    org.junit.Assert.assertThat("albumen", both(containsString("a")).and(containsString("b")));
+  }
+
+  @Test
+  public void testAssertThathasItemsContainsString() {
+    org.junit.Assert.assertThat(Arrays.asList("one", "two", "three"), hasItems("one", "three"));
+  }
+
+  @Test
+  public void testAssertThatEveryItemContainsString() {
+    org.junit.Assert.assertThat(Arrays.asList(new String[] { "fun", "ban", "net" }), everyItem(containsString("n")));
+  }
+
+  // Core Hamcrest Matchers with assertThat
+  @Test
+  public void testAssertThatHamcrestCoreMatchers() {
+    assertThat("good", allOf(equalTo("good"), startsWith("good")));
+    assertThat("good", not(allOf(equalTo("bad"), equalTo("good"))));
+    assertThat("good", anyOf(equalTo("bad"), equalTo("good")));
+    assertThat(7, not(CombinableMatcher.&lt;Integer&gt; either(equalTo(3)).or(equalTo(4))));
+    assertThat(new Object(), not(sameInstance(new Object())));
+  }
+}
+</code></pre></div></div>
+
+<p><strong>注意：</strong></p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">assertEquals</code>和<code class="language-plaintext highlighter-rouge">assertSame</code> 的区别在于，前者是调用<code class="language-plaintext highlighter-rouge">期待值</code>的<code class="language-plaintext highlighter-rouge">equals</code>方法来判断<code class="language-plaintext highlighter-rouge">真实值</code>(<code class="language-plaintext highlighter-rouge">expected.equals(actual)</code>)，而后者是判断<code class="language-plaintext highlighter-rouge">期待值</code>和<code class="language-plaintext highlighter-rouge">真实值</code>是否是同一个对象(<code class="language-plaintext highlighter-rouge">expected == actual</code>)。</li>
+  <li>例子中，这样调用<code class="language-plaintext highlighter-rouge">org.junit.Assert.assertEquals("failure - strings not same", 5l, 5l);</code>是不是觉得有点累，没关系，我们可以通过JDK1.5中的静态导入(<code class="language-plaintext highlighter-rouge">import static</code>)来简化这一切，看下面的代码。</li>
+</ol>
+
+<p>简化后的例子：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package tangzhi.mytest;
+
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.both;
+import static org.junit.matchers.JUnitMatchers.containsString;
+import static org.junit.matchers.JUnitMatchers.everyItem;
+import static org.junit.matchers.JUnitMatchers.hasItems;
+
+import static org.junit.Assert.*;
+    
+import java.util.Arrays;
+
+import org.hamcrest.core.CombinableMatcher;
+import org.junit.Test;
+
+public class AppTest {
+  @Test
+  public void testAssertArrayEquals() {
+    byte[] expected = "trial".getBytes();
+    byte[] actual = "trial".getBytes();
+    assertArrayEquals("failure - byte arrays not same", expected, actual);
+  }
+
+  @Test
+  public void testAssertEquals() {
+    assertEquals("failure - strings not same", 5l, 5l);
+  }
+
+  @Test
+  public void testAssertFalse() {
+    assertFalse("failure - should be false", false);
+  }
+
+  @Test
+  public void testAssertNotNull() {
+    assertNotNull("should not be null", new Object());
+  }
+
+  @Test
+  public void testAssertNotSame() {
+    assertNotSame("should not be same Object", new Object(), new Object());
+  }
+
+  @Test
+  public void testAssertNull() {
+    assertNull("should be null", null);
+  }
+
+  @Test
+  public void testAssertSame() {
+    Integer aNumber = Integer.valueOf(768);
+    assertSame("should be same", aNumber, aNumber);
+  }
+
+  // JUnit Matchers assertThat
+  @Test
+  public void testAssertThatBothContainsString() {
+    assertThat("albumen", both(containsString("a")).and(containsString("b")));
+  }
+
+  @Test
+  public void testAssertThathasItemsContainsString() {
+    assertThat(Arrays.asList("one", "two", "three"), hasItems("one", "three"));
+  }
+
+  @Test
+  public void testAssertThatEveryItemContainsString() {
+    assertThat(Arrays.asList(new String[] { "fun", "ban", "net" }), everyItem(containsString("n")));
+  }
+
+  // Core Hamcrest Matchers with assertThat
+  @Test
+  public void testAssertThatHamcrestCoreMatchers() {
+    assertThat("good", allOf(equalTo("good"), startsWith("good")));
+    assertThat("good", not(allOf(equalTo("bad"), equalTo("good"))));
+    assertThat("good", anyOf(equalTo("bad"), equalTo("good")));
+    assertThat(7, not(CombinableMatcher.&lt;Integer&gt; either(equalTo(3)).or(equalTo(4))));
+    assertThat(new Object(), not(sameInstance(new Object())));
+  }
+}
+</code></pre></div></div>
+
+<p>在上面的代码中，我们静态导入了<code class="language-plaintext highlighter-rouge">import static org.junit.Assert.*;</code>后，在测试类中就可以直接使用<code class="language-plaintext highlighter-rouge">assertEquals</code>这些方法了。是不是很方便！</p>
+
+<p><strong>常用的断言方法有：</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>assertTrue([message ,] condition);
+assertFalse([message ,] condition);
+assertEquals([message ,] expected, actual);
+assertNotEquals([message ,] first, second);
+assertArrayEquals([message ,] expecteds, actuals);
+assertNotNull([message ,] object);
+assertNull([message ,] object);
+assertSame([message ,] expected, actual);
+assertNotSame([message ,] unexpected, actual);
+assertThat([message ,] actual, matcher);
+</code></pre></div></div>
+
+<p><strong>从上面的列表可以看出：</strong></p>
+
+<ol>
+  <li>
+    <p>大部分断言方法的参数顺序都是:<code class="language-plaintext highlighter-rouge">[Message] 期待值  真实值</code>，第一个参数是个可选字符串，出错时的描述信息。第二个参数是期待值，第三个参数是真实值。</p>
+  </li>
+  <li>
+    <p>只有一个断言方法<code class="language-plaintext highlighter-rouge">assertThat</code>的参数顺序例外：可选的出错提示信息、真实值和一个<code class="language-plaintext highlighter-rouge">Matcher</code>对象。它参数中的期待值与真实值的顺序，与其他断言方法的参数顺序正好相反。</p>
+  </li>
+</ol>
+
+<p>这个<code class="language-plaintext highlighter-rouge">assertThat</code>方法是断言中的神器，后面我们会在<a href="junit-usage-3.html">进阶三</a>介绍！敬请期待吧！</p>
+
+<h3 id="六小结"><a name="6"></a>六、小结</h3>
+
+<p>前面我们介绍了JUnit4的基本知识。至此，你已经可以使用JUnit4进行代码测试了。如果你想知道更多信息，可以继续看看<a href="junit-usage-2.html">JUnit 使用进阶二</a>。</p>
+
+:ET

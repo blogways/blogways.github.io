@@ -1,0 +1,92 @@
+I"<h2 id="solr-初次应用体验">Solr 初次应用体验</h2>
+<p>前一节主要介绍了 Solr5.0 的简介以及安装部署，本次主要介绍如何使用 Solr 做一些简单的搜索任务</p>
+<h3 id="创建搜索实例">创建搜索实例</h3>
+
+<hr />
+
+<h4 id="命令创建实例">命令创建实例</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ bin/solr create -c test
+</code></pre></div></div>
+
+<h4 id="查看创建可选参数">查看创建可选参数</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ bin/solr create -help
+</code></pre></div></div>
+
+<hr />
+
+<p>Web 控制台创建</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Core Admin / Add Core
+</code></pre></div></div>
+
+<p><img src="/images/solr-2-1.png" alt="Web 控制台创建索引" /></p>
+
+<p>这里我们创建一个 test 测试实例</p>
+
+<hr />
+
+<h3 id="导入测试文档">导入测试文档</h3>
+<p>导入一些 solr 自带的 json 测试文档数据</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ bin/post -c test example/exampledocs/*.json
+SimplePostTool version 5.0.0
+Posting files to [base] url http://localhost:8983/solr/gettingstarted/update...
+Entering auto mode. File endings considered are
+xml,json,csv,pdf,doc,docx,ppt,pptx,xls,xlsx,odt,odp,ods,ott,otp,ots,rtf,htm,html,txt,log
+POSTing file books.json (application/json) to [base]
+1 files indexed.
+COMMITting Solr index changes to http://localhost:8983/solr/gettingstarted/update...
+Time spent: 0:00:00.450
+</code></pre></div></div>
+
+<h3 id="web-控制台搜索体验">Web 控制台搜索体验</h3>
+<p>例如：查询作者为 <code class="language-plaintext highlighter-rouge">Rick Riordan</code> 所有的书</p>
+
+<p><img src="/images/solr-2-2.png" alt="Web 控制台 query 测试" /></p>
+
+<p>http://localhost:8983/solr/test/select?q=author%3A%22Rick+Riordan%22&amp;wt=json&amp;indent=true</p>
+
+<p>返回结果如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "responseHeader":{
+    "status":0,
+    "QTime":1,
+    "params":{
+      "indent":"true",
+      "q":"author:\"Rick Riordan\"",
+      "wt":"json"}},
+  "response":{"numFound":2,"start":0,"docs":[
+      {
+        "id":"978-0641723445",
+        "cat":["book",
+          "hardcover"],
+        "name":["The Lightning Thief"],
+        "author":["Rick Riordan"],
+        "series_t":["Percy Jackson and the Olympians"],
+        "sequence_i":1,
+        "genre_s":"fantasy",
+        "inStock":[true],
+        "price":[12.5],
+        "pages_i":384,
+        "_version_":1497865383114178560},
+      {
+        "id":"978-1423103349",
+        "cat":["book",
+          "paperback"],
+        "name":["The Sea of Monsters"],
+        "author":["Rick Riordan"],
+        "series_t":["Percy Jackson and the Olympians"],
+        "sequence_i":2,
+        "genre_s":"fantasy",
+        "inStock":[true],
+        "price":[6.49],
+        "pages_i":304,
+        "_version_":1497865383259930624}]
+  }}
+</code></pre></div></div>
+
+<p>当然，这个只是简单的查询示例，可以只输入一部分查询，或者按价钱区间来查询（例：查询 10-20 这个价钱区间的书就可以写成 <code class="language-plaintext highlighter-rouge">price:[ 10 TO 20 ]</code>），也可以组合条件查询，当然也可以限制查询结果只返回需要的字段，或者高亮显示匹配部分等等。</p>
+:ET

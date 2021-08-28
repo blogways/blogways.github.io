@@ -1,0 +1,246 @@
+I"�3<h1 id="一简介">一、简介</h1>
+<p>cucumber是BDD(Behavior-driven development，行为驱动开发)的一个自动化测试的副产品。它使用自然语言来描述测试，使得非程序员可以理解他们。Gherkin是这种自然语言测试的简单语法，而Cucumber是可以执行它们的工具。关于BDD有兴趣自行了解。附cucumber<a href="https://cucumber.io/" title="cucumber官网">官网链接</a>，里面也有关于BDD的信息。
+cucumber本质上是使用根据正则表达式匹配自然语言，然后依次执行对应的方法，以达到测试的目的。</p>
+
+<h1 id="二安装">二、安装</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cucumber支持JDK8，创建一个mvn工程，在pom.xml文件引入以下依赖即可。
+另外如果测试框架采用的是junit，则需要多一个cucumber-junit。
+如果集成spring,则还需要引入cucumber-spring ```
+</code></pre></div></div>
+<dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>1.2.4</version>
+        <scope>test</scope>
+    </dependency>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependency&gt;
+    &lt;groupId&gt;info.cukes&lt;/groupId&gt;
+    &lt;artifactId&gt;cucumber-junit&lt;/artifactId&gt;
+    &lt;version&gt;1.2.4&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;info.cukes&lt;/groupId&gt;
+    &lt;artifactId&gt;cucumber-spring&lt;/artifactId&gt;
+    &lt;version&gt;1.2.4&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt; ```
+
+也可以根据mvn骨架创建cucumber项目。打开终端，转到要创建项目的目录（比如本文是hellocucumber)，运行以下命令  ```
+mvn archetype:generate                      -DarchetypeGroupId=io.cucumber               -DarchetypeArtifactId=cucumber-archetype     -DarchetypeVersion=2.3.1.2                   -DgroupId=hellocucumber                      -DartifactId=hellocucumber                  -Dpackage=hellocucumber                      -Dversion=1.0.0-SNAPSHOT                     -DinteractiveMode=false  ```
+
+应该得到如下结果:
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [INFO] Project created from Archetype in dir:   hellocucumber/cucumber
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>但是不支持jdk8 U51之后的新版本！每次都报错说"Wrong type at constant pool index"。
+</code></pre></div></div>
+
+<h1 id="三基本语法">三、基本语法</h1>
+
+<h2 id="31-gherkin">3.1 Gherkin</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cucumber 执行 .feature 文件，而这些文件包含可执行的规范，用被称为 Gherkin 的语言写成。.featur文件一般放在src/test/resources/[项目名称xxx]目录下或者其子目录下。
+
+Gherkin 是带有一点额外结构的纯文本的英文(或者替他60多种语言). Gherkin 设计为容易被非编程人员学习，但有足够的组织结构来容许简洁的范例描述，以说明大多数实际领域中的业务规则。
+下面是一个简单的.feature 文件的例子 ```
+Feature: Refund item
+
+Scenario: Jeff returns a faulty microwave
+    Given Jeff has bought a microwave for $100
+    And he has a receipt
+    When he returns the microwave
+    Then Jeff should be refunded $100 ```
+在 Gherkin 中, 每行必须以 Gherkin 关键字开头, 然后跟随有任意的文本。主要的关键字有：
+</code></pre></div></div>
+
+<ul>
+  <li>Feature / 特性</li>
+  <li>Scenario / 场景</li>
+  <li>Given, When, Then, And, But (Steps/步骤)</li>
+  <li>Background / 背景</li>
+  <li>Scenario Outline / 场景大纲</li>
+  <li>
+    <p>Examples / 示例</p>
+
+    <p>还有其他一些额外的关键字:</p>
+  </li>
+  <li>””” (Doc Strings)</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>(Data Tables)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>@ (Tags)</li>
+  <li># Comments</li>
+</ul>
+
+<hr />
+<h2 id="32-feature--特性">3.2 Feature / 特性</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.feature 文件用来描述系统的一个单一特性，或者某个特性的一个独特方面。这仅仅是一个提供软件特性的高级描述的方法，并用于组织相关的场景(scenarios)。
+feature有三个基本元素：
+1.Feature: 关键字
+2.name： 名称, 在同一行
+3.description：描述, 可选（但是强烈推荐），可以占据多行   
+例如：
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Feature: Refund item
+
+  Sales assistants should be able to refund customers' purchases.
+  This is required by the law, and is also essential in order to
+  keep customers happy.
+
+  Rules:
+  - Customer must present proof of purchase
+  - Purchase must be less than 30 days ago
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="33-scenario--场景">3.3 Scenario / 场景</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Scenario 是具体的实例，描述一个业务规则。它由步骤列表组成。
+可以有任意多个步骤，但是推荐数量保持在每个场景3-5个步骤。如果太长，他们将丧失作为规范和文档的表单能力。
+在作为规范和文档之外，场景也同样是测试。作为一个整体，场景是系统的可执行规范。
+场景遵循同样的模式：
+1、 描述一个初始化上下文
+2、 描述一个时间
+3、 描述一个期望的产出
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="34-steps--步骤">3.4 Steps / 步骤</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>步骤通常以 Given, When 或 Then 开头。如果有多个 Given 或者 When 步骤连在一
+起，可以使用 And 或者 But。Cucumber不区分这些关键字，但是选择正确的关键字对于
+场景整体的可读性很重要。
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="35-given--假设">3.5 Given / 假设</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Given 步骤用于描述系统的初始化上下文 - 场景的一幕(scene of Scenario)。它通常是某些已经发生在过去的东西。
+当cucumber执行 Given 步骤时，它将配置系统到一个定义良好的状态，例如创建并配置对象或者添加数据到测试数据库。
+可以有多个 Given 步骤（可以使用 And 或者 But 来变的更可读）
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="36-then--那么">3.6 Then / 那么</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Then 步骤用于描述期望的产出，或者结果。
+Then 步骤的 步骤定义 应该使用断言来比较实际产出(系统实际行为)和期待产出(步骤所述的系统应有的行为)
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="37-background--背景">3.7 Background / 背景</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>发现一个feature文件中的所有场景都在重复同样的 Given 步骤。既然它在每个场景
+可以将这样的 Given 步骤移动到background中，在第一个场景之前，用一个 Background 块组织他们： ```
+Background:
+  Given a $100 microwave was sold on 2015-11-03
+  And today is 2015-11-18 ```
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="38-scenario-outline--场景大纲">3.8 Scenario Outline / 场景大纲</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>当有复杂业务规则，带有多个输入或者输出，可以最终创建仅仅是值有差别的多个场景。举个例子: ```
+Scenario: feeding a small suckler cow
+    Given the cow weighs 450 kg
+    When we calculate the feeding requirements
+    Then the energy should be 26500 MJ
+    And the protein should be 215 kg
+
+Scenario: feeding a medium suckler cow
+    Given the cow weighs 500 kg
+    When we calculate the feeding requirements
+    Then the energy should be 29500 MJ
+    And the protein should be 245 kg
+
+# 还有两个例子 --- 已经令人厌烦了 ```
+如果有很多例子，将会很乏味。可以通过使用场景大纲来简化： ```
+Scenario Outline: feeding a suckler cow
+    Given the cow weighs &lt;weight&gt; kg
+    When we calculate the feeding requirements
+    Then the energy should be &lt;energy&gt; MJ
+    And the protein should be &lt;protein&gt; kg
+
+    Examples:
+        | weight | energy | protein |
+        |    450 |  26500 |     215 |
+        |    500 |  29500 |     245 |
+        |    575 |  31500 |     255 |
+        |    600 |  37000 |     305 | ```
+这更易于阅读。场景大纲步骤中的变量通过使用 &lt; 和 &gt; 来标记。
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="39-examples--示例">3.9 Examples / 示例</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>场景大纲部分总被带有一个或者多个 Examples / 示例 部分，用于包含一个表格。
+表格必须有header 行，对应场景大纲步骤中的变量。
+下面的每一行将创建一个新的场景，使用变量的值填充。
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="310-执行步骤">3.10 执行步骤</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>当cucumber执行场景中的步骤时，它将查找匹配的步骤定义来执行。
+步骤定义是带有正则表达式的小段代码。正则表达式用于连接步骤定义到所有匹配的步骤，而代码是cucumber要执行的内容。
+例如一下场景： ```
+Scenario: Some cukes
+    Given I have 48 cukes in my belly ```
+步骤的 I have 48 cukes in my belly 部分（Given关键字后面的文本）将匹配下面的步骤定义： ```
+@Given("I have (\\d+) cukes in my belly")
+public void I_have_cukes_in_my_belly(int cukes){
+    System.out.format("Cukes: %n\n", cukes);
+} ```
+当cucumber匹配步骤到一个步骤定义中的正则表达式时，它传递所有捕获组（capture group）的值到步骤定义的参数。捕获组是字符串(即使他们匹配数字如 \d+ )。对于静态类型语言，cucumber将自动转换这些字符串到合适的类型。对于动态类型语言，默认不转换，因为他们没有类型信息。
+Cucumber不区分这五个步骤关键字 Given， When， Then， And 和 But。
+</code></pre></div></div>
+
+<h1 id="四实践">四、实践</h1>
+
+<h2 id="41编写feature文件">4.1编写.feature文件</h2>
+
+<p><img src="/images/linmingxing/cucumber1.png" alt="cucumber1" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.features文件一般放在test/resources/features目录下。
+图中使用的是中文来编写的，这样写的前提是在首行加上 # language: zh-CN
+一个场景为一个执行单位，一般用于测试一个接口。每个步骤都会通过正则匹配一个方法。
+步骤写好后，鼠标点击黄色色块上，按下自动提示快捷键，编译器会提示定义step。按提示创建即可。
+</code></pre></div></div>
+
+<h2 id="42编写步骤steps类">4.2编写步骤steps类</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>如下图：
+</code></pre></div></div>
+
+<p><img src="/images/linmingxing/cucumber2.png" alt="cucumber2" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 图中@cucumber.api.java.zh_CN报红，只要将cucumber.api.java.zh_CN删除，重新导入即可。或者将CN改为小写的cn。
+steps类一般放在test/java/项目包名/目录下的一个文件夹中。
+每个方法中编写测试代码，去测试某个接口。接口的访问可以使用RestTemplate。使用Assert判断接口返回是否与预期的一样。
+
+一个完整的场景，包括以下几个步骤：
+1、新建测试数据
+2、调用接口进行测试
+3、删除测试数据
+这样可以重复测试，不会产生多余的测试数据。
+</code></pre></div></div>
+
+<h2 id="43-启动测试">4.3 启动测试</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>启动测试有两种方法，
+1、右键.feature文件，选择Debug Feature执行
+2、如下图，编写测试类去启动@CucumberOptions注解的features属性对应.feature文件
+</code></pre></div></div>
+
+<p><img src="/images/linmingxing/cucumber3.png" alt="cucumber3" /></p>
+
+:ET

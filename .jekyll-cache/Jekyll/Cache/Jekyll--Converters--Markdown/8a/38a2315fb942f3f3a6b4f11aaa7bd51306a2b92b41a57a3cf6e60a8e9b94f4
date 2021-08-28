@@ -1,0 +1,1132 @@
+I"��<p>原文：<a href="http://expressjs.com/en/3x/api.html">http://expressjs.com/en/3x/api.html</a></p>
+
+<h2 id="一express">一、express()</h2>
+
+<p>创建一个express应用程序，express()函数是一个顶层函数express模块的导出。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var express = require('express');	
+var app = express();	
+
+app.get('/', function(req, res){	
+res.send('hello world');	
+});	
+
+app.listen(3000);	
+</code></pre></div></div>
+
+<h2 id="二application应用">二、Application（应用）</h2>
+
+<h3 id="appsetnamevalue">app.set(name,value)</h3>
+
+<p>用用于指定变量的值。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.set('title', 'My Site');    
+app.get('title');	
+// =&gt; "My Site"		
+</code></pre></div></div>
+
+<h3 id="appgetname">app.get(name)</h3>
+
+<p>获得设置项的值</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.get('title');    
+// =&gt; undefined		
+
+app.set('title', 'My Site');  
+app.get('title');  
+// =&gt; "My Site"	
+</code></pre></div></div>
+
+<h3 id="appenablename">app.enable(name)</h3>
+
+<p>将设置项 name 的值设为 true 。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.enable('trust proxy');  
+app.get('trust proxy');  
+// =&gt; true	
+</code></pre></div></div>
+
+<h3 id="appdisablename">app.disable(name)</h3>
+
+<p>将设置项 name 的值设为 false 。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.disable('trust proxy');  
+app.get('trust proxy');  
+// =&gt; false	
+</code></pre></div></div>
+
+<h3 id="appenabledname">app.enabled(name)</h3>
+
+<p>检查设置项 name 是否已启用。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.enabled('trust proxy');	  
+// =&gt; false	  
+app.enable('trust proxy');  
+app.enabled('trust proxy');	  
+// =&gt; true	
+</code></pre></div></div>
+
+<h3 id="appdisabledname">app.disabled(name)</h3>
+
+<p>检查设置项 name 是否已禁用。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.disabled('trust proxy');  
+// =&gt; true	
+
+app.enable('trust proxy');	
+app.disabled('trust proxy');  	
+// =&gt; false	
+</code></pre></div></div>
+
+<h3 id="appconfigureenv-callback">app.configure([env], callback)</h3>
+
+<p>当 env 和 app.get(‘env’) (也就是 process.env.NODE_ENV) 匹配时, 调用 callback 。		
+保留这个方法是出于历史原因，后面列出的 if 语句的代码其实更加高效、直接。  		
+使用 app.set 配合其它一些配置方法后,没有必要再使用这个方法。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	// 所有环境  
+
+	app.configure(function(){    
+	app.set('title', 'My Application');		
+	})		
+	
+	// 开发环境  
+	app.configure('development', function(){  
+	app.set('db uri', 'localhost/dev');  
+	})	
+
+	// 只用于生产环境	
+	app.configure('production', function(){	
+	app.set('db uri', 'n.n.n.n/prod');  
+	})	
+</code></pre></div></div>
+
+<p>更高效且直接的代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	// 所有环境	
+	app.set('title', 'My Application');	
+	// 只用于开发环境	
+	if ('development' == app.get('env')) {	
+	app.set('db uri', 'localhost/dev');	
+	}	
+	// 只用于生产环境	
+	if ('production' == app.get('env')) {	
+	app.set('db uri', 'n.n.n.n/prod');	
+	}	
+</code></pre></div></div>
+
+<h3 id="appusepath-function">app.use([path], function)</h3>
+
+<p>使用中间件 function，可选参数 path 默认是 “/”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	var express = require('express');  
+	var app = express();	
+	
+	// 一个简单的 logger  
+	app.use(function(req, res, next){	
+	console.log('%s %s', req.method, req.url);	
+  	next();	
+	});	
+	
+	// 响应
+	app.use(function(req, res, next){  
+	res.send('Hello World');	
+	});  
+	
+	app.listen(3000);  
+</code></pre></div></div>
+
+<p>挂载路径被剥离出来，对于中间件函数来说是不可见的。	
+这么设计是为了让中间件在不用修改任何代码的情况下就可以在任意前缀的路径下执行。</p>
+
+<p>路由将匹配任何路径，以遵循“/”、“./”。	
+例如：app.use(‘/apple’,…)将会匹配 /apple, /apple/images, /apple/images/news, /apple.html,/apple.html.txt等等。</p>
+
+<p>这里有一个具体的例子，通过express.static()方法使用./public来管理文件服务用例的中间件：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// GET /javascripts/jquery.js	
+// GET /style.css	
+// GET /favicon.ico	
+app.use(express.static(__dirname + '/public'));	
+</code></pre></div></div>
+
+<p>例如你想为自有的静态文件增加前缀’/static’，你可以使用’mounting’功能。	
+挂载的中间件函数不会被调用，除非req.url包含这个前缀，当函数被调用时，前缀是被剥离出去的。	
+当然这只会影响到这个函数，挂载好后随后的中间件还是会通过包含/static的req.url查看到。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// GET /static/javascripts/jquery.js	
+// GET /static/style.css	
+// GET /static/favicon.ico	
+app.use('/static', express.static(__dirname + '/public'));
+</code></pre></div></div>
+
+<p>中间件使用app.use()定义的顺序是非常重要的，它们依次被调用，因此这个决定了中间件的优先级。	
+例如，一般来说日志中间件是你要用到的第一个中间件：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.logger());	
+app.use(express.static(__dirname + '/public'));
+app.use(function(req, res){
+res.send('Hello');
+});	
+</code></pre></div></div>
+
+<p>现在假设你想忽略静态文件的请求日志，	
+但又想在logger()定义之后继续使用日志路由，你只需要将static()移动前面就可以了：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.static(__dirname + '/public'));	
+app.use(logger());	
+app.use(function(req, res){	
+res.send('Hello');	
+});	
+</code></pre></div></div>
+
+<p>另一个具体的例子是从众多的目录文件服务中，给予”./public”最高的优先级：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.static(__dirname + '/public'));		
+app.use(express.static(__dirname + '/files'));			
+app.use(express.static(__dirname + '/uploads'));  	
+</code></pre></div></div>
+
+<h3 id="settings">settings</h3>
+
+<p>下面的内建的可以改变 Express 行为的设置：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>env 运行时环境，默认为 process.env.NODE_ENV 或者 “development”
+trust proxy 激活反向代理，默认是未激活状态
+jsonp callback name 修改 ?callback= 的默认 callback 的名字
+json replacer JSON 替换时的回调, 默认为 null
+json spaces JSON 响应被格式化时的空格数量，开发环境下是 2 ，生产环境是 0
+case sensitive routing 路由的大小写敏感, 默认是关闭状态，”/Foo” 和 “/foo” 被认为是一样的
+strict routing路由的严格格式, 默认情况下 “/foo” 和 “/foo/” 被路由认为是一样的
+view cache E模板缓存，在生产环境中是默认开启的
+view engine 默认的模板引擎
+views 模板的目录, 默认是 “process.cwd() + ‘/views’” 
+</code></pre></div></div>
+
+<h3 id="appengineext-callback">app.engine(ext, callback)</h3>
+
+<p>注册模板引擎的 callback 用来处理 ext 扩展名的文件。
+注册给定的模板引擎的callback默认用来处理扩展名为ext的文件。
+例如，如果你试图渲染一个”foo.jade”文件，Express将在内部调用以下代码，并缓存require()给后续调用以提高性能。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.engine('jade', require('jade').__express);
+</code></pre></div></div>
+
+<p>引擎没有提供._express渲染方法，或者你想映射一个不一样的扩展名在模板引擎上，你可以用这个方法。
+例如映射EJS模板引擎来渲染”.html”文件。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.engine('html', require('ejs').renderFile);
+</code></pre></div></div>
+
+<p>在这种情况下，EJS提供.renderFile()方法使用Express定义的参数：(path, options, callback)，
+但要注意这个方法是在内部给ejs._express取一个别名，如果你使用”.ejs”可以什么都不要做。</p>
+
+<p>有些模板引擎并不遵循这一规则，consolidate.js库的建立是为了映射所有的node流行模板引擎遵循这一规则，
+从而使得他们在Express内无缝工作。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var engines = require('consolidate');
+app.engine('haml', engines.haml);
+app.engine('html', engines.hogan);  
+</code></pre></div></div>
+
+<h3 id="appparamname-callback">app.param([name], callback)</h3>
+<p>映射路由参数规则。<br />
+例如当:user存在于一个路由路径中，你需要自动提供req.user给路由映射启动逻辑，或者执行输入参数验证。</p>
+
+<p>下面的代码说明了如果callback很像中间件，从而支持异常操作，
+但却增加了一个参数，这里命名为id。然后尝试执行加载用户信息，赋值给req.user，否则传递一个错误到next(err)。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.param('user', function(req, res, next, id){
+	User.find(id, function(err, user){
+		if (err) {
+  		next(err);
+			} else if (user) {
+  				req.user = user;
+  				next();
+			} else {
+  					next(new Error('failed to load user'));
+					}
+				});
+});  
+</code></pre></div></div>
+
+<p>另外，你可能只传递一个回调函数，
+在这种情况下你有机会改变app.param()API。例如express-params定义了下面的回调函数，它允许你使用给定的正则表达式限制参数。</p>
+
+<p>这个例子有点更先进，检查当第二个参数是正则表达式，返回回调函数很像”user”参数例子。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.param(function(name, fn){
+	if (fn instanceof RegExp) {
+	return function(req, res, next, val){
+  	var captures;
+  	if (captures = fn.exec(String(val))) {
+    req.params[name] = captures;
+    next();
+  	} else {
+    		next('route');
+  			}
+		}
+	}
+}); 该方法可以被用来有效的验证参数，或者解析提供匹配分组：
+
+app.param('id', /^\d+$/);  
+
+app.get('/user/:id', function(req, res){
+res.send('user ' + req.params.id);
+});
+app.param('range', /^(\w+)\.\.(\w+)?$/);
+
+app.get('/range/:range', function(req, res){
+	var range = req.params.range;
+res.send('from ' + range[1] + ' to ' + range[2]);
+});
+</code></pre></div></div>
+
+<h3 id="appverbpath-callback-callback">app.VERB(path, [callback…], callback)</h3>
+
+<p>Express中App.WEB()方法提供了路由功能，其中VERB是一个HTTP动作，跟app.post()类似。
+可提供多个回调函数，都是一视同仁，表现跟中间件一样，唯一不一样的是通过调用next(‘route’)来继续其余的路由回调。
+这个机制可以用来执行路由的前提条件，然后将控制权传递给随后的路由，没有理由进行路由的匹配。</p>
+
+<p>下面的代码说明了多个简单路由定义的可行性。Express将路径字符串转换成正由表达式，用来在内部匹配到来的请求。
+在执行这些匹配时查询字符串不考虑，例如”GET /”将匹配以下的路由，如”GET /?name=tobi”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.get('/', function(req, res){
+	res.send('hello world');
+});
+</code></pre></div></div>
+
+<p>正由表达式也可以使用，如果你有非常特殊的限制可能是有用的，
+例如下面的”GET /commits/71dbb9c”表达式将很好的匹配”GET /commits/71dbb9c..4c084f9”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.get(/^\/commits\/(\w+)(?:\.\.(\w+))?$/, function(req, res){
+	var from = req.params[0];
+	var to = req.params[1] || 'HEAD';
+res.send('commit range ' + from + '..' + to);
+});
+</code></pre></div></div>
+
+<p>可以传递一些回调函数，对于利用中间件加载资源、执行验证等很有用。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.get('/user/:id', user.load, function(){
+// ... 
+})
+</code></pre></div></div>
+
+<p>如果你有多个共同的中间件路由，可以使用路由api的all。两个中间件将用来处理GET和POST请求</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var middleware = [loadForum, loadThread];
+
+app.route('/forum/:fid/thread/:tid')
+	.all(loadForum)
+	.all(loadThread)
+	.get(function() { //... });
+	.post(function() { //... });
+</code></pre></div></div>
+
+<h3 id="appallpath-callback-callback">app.all(path, [callback…], callback)</h3>
+
+<p>此方法功能就像app.VERB()方法，但它匹配所有HTTP的动作。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.all('*', requireAuthentication, loadUser);
+</code></pre></div></div>
+
+<p>等价于：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.all('*', requireAuthentication)
+app.all('*', loadUser);
+</code></pre></div></div>
+
+<p>另一个非常赞的例子是“全局”白名单函数。
+这里有一个例子跟前一个很像，但是它限制前缀为 “/api”:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.all('/api/*', requireAuthentication);
+</code></pre></div></div>
+
+<h3 id="applocals">app.locals</h3>
+
+<p>应用本地变量会附加给所有的在这个应用程序内渲染的模板。这是一个非常有用的模板函数，就像应用程序级数据一样。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.locals.title = 'My App';
+app.locals.strftime = require('strftime');
+</code></pre></div></div>
+
+<p>app.locals 对象是一个 JavaScript Function，执行的时候它会把属性合并到它自身，
+提供了一种简单展示已有对象作为本地变量的方法。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.locals({
+  title: 'My App',
+  phone: '1-250-858-9990',
+  email: 'me@myapp.com'
+});
+
+app.locals.title
+// =&gt; 'My App'
+
+app.locals.email
+// =&gt; 'me@myapp.com'
+</code></pre></div></div>
+
+<p>app.locals 对象最终会是一个 Javascript 函数对象，你不可以使用 Functions 和 Objects 内置的属性，
+比如 name、apply、bind、call、arguments、length、constructor。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.locals({name: 'My App'});
+
+app.locals.name
+// =&gt; 返回 'app.locals' 而不是 'My App' (app.locals 是一个函数 !)
+// =&gt; 如果 name 变量用在一个模板里，则返回一个 ReferenceError 。
+</code></pre></div></div>
+
+<p>全部的保留字列表可以在很多规范里找到。 JavaScript 规范介绍了原来的属性，
+有一些还会被现代的 JavaScript 引擎识别，EcmaScript 规范在它的基础上，
+统一了值，添加了一些，删除了一些废弃的。如果感兴趣，可以看看 Functions 和 Objects 的属性值。</p>
+
+<p>默认情况下Express只有一个应用程序级本地变量，它是 settings。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.set('title', 'My App');
+// 在 view 里使用 settings.title
+</code></pre></div></div>
+
+<h3 id="apprenderview-options-callback">app.render(view, [options], callback)</h3>
+
+<p>使用回调函数返回的渲染字符串渲染视图。这是res.render()的应用程序级别的版本，它们的行为是一样的。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.render('email', function(err, html){
+  // ...
+});
+
+app.render('email', { name: 'Tobi' }, function(err, html){
+  // ...
+});
+</code></pre></div></div>
+
+<h3 id="approutes">app.routes</h3>
+
+<p>The app.routes 对象存储了所有的被 HTTP 动作定义的路由。这个对象可以用在一些内部功能上，
+比如 Express 不仅用它来做路由分发，同时在没有 app.options() 定义的情况下用它来处理默认的
+OPTIONS
+行为。你的应用程序或者框架也可以很轻松的通过在这个对象里移除路由来达到删除路由的目的。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>console.log(app.routes)
+
+{ get: 
+   [ { path: '/',
+       method: 'get',
+       callbacks: [Object],
+       keys: [],
+       regexp: /^\/\/?$/i },
+     { path: '/user/:id',
+       method: 'get',
+       callbacks: [Object],
+       keys: [{ name: 'id', optional: false }],
+       regexp: /^\/user\/(?:([^\/]+?))\/?$/i } ],
+  delete: 
+   [ { path: '/user/:id',
+       method: 'delete',
+       callbacks: [Object],
+       keys: [Object],
+       regexp: /^\/user\/(?:([^\/]+?))\/?$/i } ] }
+
+app.listen()
+</code></pre></div></div>
+
+<p>在给定的主机和端口上监听请求，这个和 node 文档中的 http.Server#listen() 是一致的。
+	var express = require(‘express’);
+	var app = express();
+	app.listen(3000);</p>
+
+<p>express() 返回的 app 实际上是一个 JavaScript  Function,它被设计为传给 node 的 http servers 作为处理请求的回调函数。
+因为 app 不是从 HTTP 或者 HTTPS 继承来的，它只是一个简单的回调函数，你可以以同一份代码同时处理 HTTP 和 HTTPS 版本的服务。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var express = require('express');
+var https = require('https');
+var http = require('http');
+var app = express();
+
+http.createServer(app).listen(80);
+https.createServer(options, app).listen(443);
+</code></pre></div></div>
+
+<h2 id="三request">三、Request</h2>
+
+<h3 id="reqparams">req.params</h3>
+
+<p>此属性是一个包含映射路由”parameters”的对象。例如你使用/user/:name路由，那么”name”属性对你来说就是一个req.params.name变量。
+该对象默认为{}。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// GET /user/tj
+req.params.name
+// =&gt; "tj"
+</code></pre></div></div>
+
+<p>当在定义路由规则时使用了正则表达式，使用req.params[N]获取所有参数匹配数组，其中N表示数组的第几个。此规则适用于包含未定义的通配符的路由字符串，例如/file/*：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// GET /file/javascripts/jquery.js
+req.params[0]
+// =&gt; "javascripts/jquery.js"
+
+req.query 此属性是一个包含解析查询字符串的对象，默认为{}。
+
+// GET /search?q=tobi+ferret
+req.query.q
+// =&gt; "tobi ferret"
+
+// GET /shoes?order=desc&amp;shoe[color]=blue&amp;shoe[type]=converse
+req.query.order
+// =&gt; "desc"
+
+req.query.shoe.color
+// =&gt; "blue"
+
+req.query.shoe.type
+// =&gt; "converse"
+</code></pre></div></div>
+
+<h3 id="reqbody">req.body</h3>
+
+<p>此属性是一个包含解析的请求体的对象。它的特点是提供一个bodyParser()中间件。虽然其他的体解析中间件也遵循此约定，
+当使用bodyparser（）使用时，默认值为{}。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// POST user[name]=tobi&amp;user[email]=tobi@learnboost.com
+req.body.user.name
+// =&gt; "tobi"
+
+req.body.user.email
+// =&gt; "tobi@learnboost.com"
+
+// POST { "name": "tobi" }
+req.body.name
+// =&gt; "tobi"
+</code></pre></div></div>
+
+<h3 id="reqfiles">req.files</h3>
+<p>这个属性是一个上传文件的对象，它的特点是提供一个bodyParser()中间件。虽然其他的体解析中间件也遵循此约定，
+当使用bodyparser（）使用时，默认值为{}。</p>
+
+<p>例如一个文件字段被命名为“image”，和一个文件被上传，req.files.image包含如下文件对象：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ size: 74643,
+  path: '/tmp/8ef9c52abe857867fd0a4e9a819d1876',
+  name: 'edge.png',
+  type: 'image/png',
+  hash: false,
+  lastModifiedDate: Thu Aug 09 2012 20:07:51 GMT-0700 (PDT),
+  _writeStream: 
+   { path: '/tmp/8ef9c52abe857867fd0a4e9a819d1876',
+     fd: 13,
+     writable: false,
+     flags: 'w',
+     encoding: 'binary',
+     mode: 438,
+     bytesWritten: 74643,
+     busy: false,
+     _queue: [],
+     _open: [Function],
+     drainable: true },
+  length: [Getter],
+  filename: [Getter],
+  mime: [Getter] }
+</code></pre></div></div>
+
+<p>bodyparser()中间件利用节点强大的模块内部，并接受相同的选项。一个例子是keepextensions强大的选项，
+在给出文件名“/tmp/8ef9c52abe857867fd0a4e9a819d1876”.png扩展名的情况下默认值是false。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.bodyParser({ keepExtensions: true, uploadDir: '/my/files' }));
+</code></pre></div></div>
+
+<h3 id="reqparamname">req.param(name)</h3>
+<p>返回当前参数name的值
+		// ?name=tobi
+		req.param(‘name’)
+		// =&gt; “tobi”</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	// POST name=tobi
+	req.param('name')
+	// =&gt; "tobi"
+
+	// /user/tobi for /user/:name 
+	req.param('name')
+	// =&gt; "tobi"
+</code></pre></div></div>
+
+<p>查找优先级如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	req.params
+	req.body
+	req.query
+</code></pre></div></div>
+
+<p>直接使用req.body，req.params，和req.query应该更新清晰，除非你确实需要接收每个对象的输入。</p>
+
+<h3 id="reqroute">req.route</h3>
+
+<p>当前匹配的路由包含多个属性，如路由的原始路径字符串以及转换后的正则表达式等。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.get('/user/:id?', function(req, res){
+  console.log(req.route);
+});
+上面的代码输出结果：
+
+{ path: '/user/:id?',
+  keys: [ { name: 'id', optional: true } ],
+  regexp: /^\/user(?:\/([^\/]+?))?\/?$/i,
+  params: [ id: '12' ] }
+</code></pre></div></div>
+
+<h3 id="reqcookies">req.cookies</h3>
+
+<p>当cookieParser()中间件使用时该对象默认为{}，除此之外还包含由用户代理发送的cookies。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Cookie: name=tj
+req.cookies.name
+// =&gt; "tj" 如有任何问题或者疑问请参阅cookie-parser附加文档。
+</code></pre></div></div>
+
+<h3 id="reqsignedcookies">req.signedCookies</h3>
+
+<p>当cookieParser(secret)中间件使用该对象默认为{}，还包括用户代理发送的签名cookies，未签名以及准备使用的。签名cookies存放于一个单独的对象，以显示开发者的意图，否则可以通过在req.cookie设置值发起恶意攻击，从而很轻易的欺骗。需要注意的是签名的cookie并不意味着它是隐藏的或者是加密的，这个防止篡改的秘密只是简单的将签名私有化。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Cookie: user=tobi.CP7AWaXDfAKIRfH49dQzKJx7sKzzSoPq7/AcBBRVwlI3
+req.signedCookies.user
+// =&gt; "tobi" 如有任何问题或者疑问请参阅cookie-parser附加文档。
+</code></pre></div></div>
+
+<h3 id="reqgetfield">req.get(field)</h3>
+<p>获取请求头内的field字段，不区分大小写。Referrer和Referer字段可以互换。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	req.get('Content-Type');
+	// =&gt; "text/plain"
+	
+	req.get('content-type');
+	// =&gt; "text/plain"
+	
+	req.get('Something');
+	// =&gt; undefined 别名为req.header(field)。
+</code></pre></div></div>
+
+<p>检查给定的types是不是可以接受的，当结果为true时返回最佳匹配，否则返回undefined，在这种情况下你应该返回406”Not Acceptable”。</p>
+
+<p>type可以是单一的mine类型的字符串，比如”application/json”，扩展名如”json”，也可以是以逗号分隔的列表或者数组。当为列表或数组时将返回最佳匹配。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Accept: text/html
+req.accepts('html');
+// =&gt; "html"
+
+// Accept: text/*, application/json
+req.accepts('html');
+// =&gt; "html"
+req.accepts('text/html');
+// =&gt; "text/html"
+req.accepts('json, text');
+// =&gt; "json"
+req.accepts('application/json');
+// =&gt; "application/json"
+
+// Accept: text/*, application/json
+req.accepts('image/png');
+req.accepts('png');
+// =&gt; undefined
+
+// Accept: text/*;q=.5, application/json
+req.accepts(['html', 'json']);
+req.accepts('html, json');
+// =&gt; "json" 如有任何问题或者疑问，请参阅accepts附加文档。
+</code></pre></div></div>
+
+<h3 id="reqacceptscharsetcharset">req.acceptsCharset(charset)</h3>
+
+<p>检查给定的字符集是否可以支持。
+如有任何问题或者疑问，请参阅accepts附加文档。</p>
+
+<h3 id="reqacceptslanguagelang">req.acceptsLanguage(lang)</h3>
+
+<p>检查给定的lang是否支持。
+如有任何问题或者疑问，请参阅accepts附加文档。</p>
+
+<h3 id="reqistype">req.is(type)</h3>
+
+<p>检查传入请求字符串是否包含了”Content-Type”头字段，并且给出匹配的mine类型。
+	// With Content-Type: text/html; charset=utf-8
+	req.is(‘html’);
+	req.is(‘text/html’);
+	req.is(‘text/*’);
+	// =&gt; true</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// When Content-Type is application/json
+req.is('json');
+req.is('application/json');
+req.is('application/*');
+// =&gt; true
+
+req.is('html');
+// =&gt; false 如有任何问题或者疑问，请参阅type-is附加文档。
+</code></pre></div></div>
+
+<h3 id="reqip">req.ip</h3>
+<p>返回远程地址，或者当信任代理已启用时返回代理地址。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>req.ip
+// =&gt; "127.0.0.1"
+</code></pre></div></div>
+
+<h3 id="reqips">req.ips</h3>
+
+<p>当信任代理为true时，解析”X-Forwarded-For”ip地址列表返回一个数组，否则返回一个空数组。
+例如当值为”client, proxy1, proxy2”时你会获得[“client”, “proxy1”, “proxy2”]数组，其中”proxy2”是最远的下游地址。</p>
+
+<h3 id="reqpath">req.path</h3>
+<p>返回请求的URL路径名。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// example.com/users?sort=desc
+req.path
+// =&gt; "/users"
+</code></pre></div></div>
+
+<h3 id="reqfresh">req.fresh</h3>
+<p>检查请求是否刷新，通过对Last-Modified和/或ETag进行匹配，表明资源是不是最新的。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>req.fresh
+// =&gt; true 如有任何问题或者疑问，请参阅fresh附加文档。
+</code></pre></div></div>
+
+<h3 id="reqstale">req.stale</h3>
+<p>检查请求是否过期，如果Last-Modified和/或ETag不匹配，表有资源是过期的。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>req.stale
+// =&gt; true
+</code></pre></div></div>
+
+<h3 id="reqxhr">req.xhr</h3>
+<p>检查请求头里是否包含”X-Requested-With”字段并且值为”XMLHttpRequest”(jQuery等)。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>req.xhr
+// =&gt; true
+</code></pre></div></div>
+
+<h3 id="reqprotocol">req.protocol</h3>
+<p>当使用TLS请求时返回”http”或”https”协议字符串。当信任路由设置为开启时”X-Forwarded-Proto”头字段将被信任。
+如果你正在运行一个支持https协议的反向代理，那么这个是支持的。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>req.protocol
+// =&gt; "http"
+</code></pre></div></div>
+
+<h3 id="reqsecure">req.secure</h3>
+<p>检查TLS连接是否建立。这是一个简写：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'https' == req.protocol;
+</code></pre></div></div>
+
+<h3 id="reqsubdomains">req.subdomains</h3>
+<p>返回子域数组。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Host: "tobi.ferrets.example.com"
+req.subdomains
+// =&gt; ["ferrets", "tobi"]
+</code></pre></div></div>
+
+<h3 id="reqoriginalurl">req.originalUrl</h3>
+<p>此属性很像req.url，但它保留了原始请求的url，允许你在做内部路由时自由重写req.url。
+例如app.use()中间件将重写req.url重新定义挂载点。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// GET /search?q=something
+req.originalUrl
+// =&gt; "/search?q=something"
+</code></pre></div></div>
+
+<h2 id="四response">四、Response</h2>
+
+<h3 id="resstatuscode">res.status(code)</h3>
+<p>res.statusCode=可链接节点的别名</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.status(404).sendfile('path/to/404.png');
+</code></pre></div></div>
+
+<h3 id="ressetfield-value">res.set(field, [value])</h3>
+<p>设置响应头内字段值，或者通过一个对象一次设置多个字段。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.set('Content-Type', 'text/plain');
+res.set({
+	 'Content-Type': 'text/plain',
+	 'Content-Length': '123',
+	 'ETag': '12345'
+}) res.header(field, [value])别名。
+</code></pre></div></div>
+
+<h3 id="resgetfield">res.get(field)</h3>
+<p>获取响应头内字段值，不区分大小写。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	res.get('Content-Type');
+	// =&gt; "text/plain"
+</code></pre></div></div>
+
+<h3 id="rescookiename-value-options">res.cookie(name, value, [options])</h3>
+<p>设置cookie名称和值，可以是字符串或者对象转换成的JSON。路径选项默认为”/”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	res.cookie('name', 'tobi', { domain: '.example.com', path: '/admin', secure: true });
+	res.cookie('rememberme', '1', { expires: new Date(Date.now() + 900000), httpOnly: true });
+</code></pre></div></div>
+
+<p>maxAge选项可以很方便的设置从当前时间开始以毫秒为单位的过期时间。下面的写法等同于上一个例子。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.cookie('rememberme', '1', { maxAge: 900000, httpOnly: true })
+</code></pre></div></div>
+
+<p>一个对象可以通过序列化成JSON传递，它由bodyParser()中间件自动解析。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.cookie('cart', { items: [1,2,3] });
+res.cookie('cart', { items: [1,2,3] }, { maxAge: 900000 }); 这种方法也支持签名cookie。添加一个简单的signed选项。 res.cookie()将隐藏传递给cookieParser(secret)对值签名。
+
+res.cookie('name', 'tobi', { signed: true });
+</code></pre></div></div>
+
+<p>然后你可以使用req.signedCookie来访问这个值。</p>
+
+<h3 id="resclearcookiename-options">res.clearCookie(name, [options])</h3>
+<p>删除cookie里面值。默认路径为”/”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.cookie('name', 'tobi', { path: '/admin' });
+res.clearCookie('name', { path: '/admin' });
+</code></pre></div></div>
+
+<h3 id="resredirectstatus-url">res.redirect([status], url)</h3>
+<p>重定向到给定的url，可选状态编码默认为302”Found”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.redirect('/foo/bar');
+res.redirect('http://example.com');
+res.redirect(301, 'http://example.com');
+res.redirect('../login');
+</code></pre></div></div>
+
+<p>Express支持几种形式的重定向，首先一个完整合格的URI重定向到不同的域名：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.redirect('http://google.com');
+</code></pre></div></div>
+
+<p>第二种形式是相对路径的重定向，例如你正在http://example.com/admin/post/new，
+接着重定向到/admin，你将会登录http://example.com/admin：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.redirect('/admin');
+</code></pre></div></div>
+
+<h3 id="reslocation">res.location</h3>
+<p>设置位置头</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.location('/foo/bar');
+res.location('foo/bar');
+res.location('http://example.com');
+res.location('../login');
+res.location('back'); 你可以使用res.redirect()相同的urls。 例如你的应用挂载在/blog下，使用下面的代码设置location头为/blog/admin：
+
+res.location('admin')
+</code></pre></div></div>
+
+<h3 id="rescharset">res.charset</h3>
+<p>分配字符集。默认的为“utf-8”.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.charset = 'value';
+res.send('&lt;p&gt;some html&lt;/p&gt;');
+// =&gt; Content-Type: text/html; charset=value
+</code></pre></div></div>
+
+<h3 id="ressendbodystatus-body">res.send([body|status], [body])</h3>
+<p>发送一个响应</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.send(new Buffer('whoop'));
+res.send({ some: 'json' });
+res.send('&lt;p&gt;some html&lt;/p&gt;');
+res.send(404, 'Sorry, we cannot find that!');
+res.send(500, { error: 'something blew up' });
+res.send(200);
+</code></pre></div></div>
+
+<p>此方法适用于执行大量的简单非流式的响应任务，例如在未提前定义和提供自动HEAD和HTTP缓存刷新支持的情况下自动设定Content-Length。 <br />
+当传入的内容为Buffer，那么Content-Type会被设置为”application/octet-stream”，除非预先定义如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.set('Content-Type', 'text/html');
+res.send(new Buffer('&lt;p&gt;some html&lt;/p&gt;')); 当发送字符串时Content-Type设置默认为"text/html"：
+
+res.send('&lt;p&gt;some html&lt;/p&gt;'); 当发送数组或者对象时Express将会转换成JSON格式：
+
+res.send({ user: 'tobi' })
+res.send([1,2,3])
+</code></pre></div></div>
+
+<p>最后如果返回的是一个数字，没有前面提到的任何一个响应体，Express会为你设置一个响应字符串。例如200将会响应文本”OK”，400响应”Not Found”等等。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.send(200)
+res.send(404)
+res.send(500)
+</code></pre></div></div>
+
+<h3 id="resjsonstatusbody-body">res.json([status|body], [body])</h3>
+<p>发送一个JSON响应，当返回对象或者数组时该方法与res.send()相同，然而它可以用来将非对象(null, undefined, 等等)转换成精准的JSON，尽管严格来说这些并不是有效的JSON。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.json(null)
+res.json({ user: 'tobi' })
+res.json(500, { error: 'message' })
+</code></pre></div></div>
+
+<h3 id="resjsonpstatusbody-body">res.jsonp([status|body], [body])</h3>
+<p>使用JSONP发送JSON响应。该方法与res.json()相同，但多了对JSONP回调的支持。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.jsonp(null)
+// =&gt; null
+	
+res.jsonp({ user: 'tobi' })
+// =&gt; { "user": "tobi" }
+	
+res.jsonp(500, { error: 'message' })
+// =&gt; { "error": "message" }
+</code></pre></div></div>
+
+<p>默认JSONP回调函数名是callback，但你可以通过修改jsonp callback name参数重新定义。以下是JSONP响应的一些例子：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// ?callback=foo
+res.jsonp({ user: 'tobi' })
+// =&gt; foo({ "user": "tobi" })
+
+app.set('jsonp callback name', 'cb');
+
+// ?cb=foo
+res.jsonp(500, { error: 'message' })
+// =&gt; foo({ "error": "message" })
+</code></pre></div></div>
+
+<h3 id="restypetype">res.type(type)</h3>
+<p>设置Content-Type类型为mime查找的类型，或者当”/”存在时Content-Type被简单的设置成该类型。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.type('.html');
+res.type('html');
+res.type('json');
+res.type('application/json');
+res.type('png');
+</code></pre></div></div>
+
+<h3 id="resformatobject">res.format(object)</h3>
+<p>执行请求时存在请求Accept头上下文转换。该方法使用req.accepted，这是一个按可接受类型重要性排序的数组，否则第一个回调函数被调用。当没有匹配的回调函数执行时服务器返回406 “Not Acceptable”，或者调用默认的回调函数。</p>
+
+<p>设置Content-Type为你选择一个回调函数，但你可以在回调函数中使用res.set()或者res.type()等修改。</p>
+
+<p>下例当Accept头字段设置成”application/json”或”/json”时响应{ “message”: “hey” }，但如果设置成”/*“时将会响应”hey”。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.format({
+  'text/plain': function(){
+    res.send('hey');
+  },
+
+  'text/html': function(){
+    res.send('&lt;p&gt;hey&lt;/p&gt;');
+  },
+
+  'application/json': function(){
+    res.send({ message: 'hey' });
+  }
+});
+</code></pre></div></div>
+
+<p>除了规范化的MIME类型你还可以使用扩展名映射这些类型，提供一个冗长实施：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.format({
+  text: function(){
+    res.send('hey');
+  },
+
+  html: function(){
+    res.send('&lt;p&gt;hey&lt;/p&gt;');
+  },
+
+  json: function(){
+    res.send({ message: 'hey' });
+  }
+});
+</code></pre></div></div>
+
+<h3 id="resattachmentfilename">res.attachment([filename])</h3>
+<p>设置Content——disposition头字段为“attachment”。如果给定一个文件名，那么Content-Type将会通过res.type()自动设置成基于扩展名的类型，Content-Disposition的”filename=”参数同时也被设置。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>res.attachment();  
+// Content-Disposition: attachment
+		
+res.attachment('path/to/logo.png');  
+// Content-Disposition: attachment;   filename="logo.png"  
+// Content-Type: image/png
+</code></pre></div></div>
+
+<h3 id="ressendfilepath-options-fn">res.sendfile(path, [options], [fn])</h3>
+<p>传输文件到给定的路径。<br />
+自动设置默认基于文件扩展名的Content-Type响应头。当传输发生错误时fn(err)回调函数被调用。<br />
+选项：</p>
+
+<blockquote>
+  <ul>
+    <li>maxAge 以毫秒为单位默认为0</li>
+    <li>root 相对文件名根目录</li>
+  </ul>
+</blockquote>
+
+<p>在下例中该方法为文件服务提供细粒度支持：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>		app.get('/user/:uid/photos/:file', function(req, res){
+		  var uid = req.params.uid
+		    , file = req.params.file;
+		
+		  req.user.mayViewFilesFrom(uid, function(yes){
+		    if (yes) {
+		      res.sendfile('/uploads/' + uid + '/' + file);
+		    } else {
+		      res.send(403, 'Sorry! you cant see that.');
+		    }
+		  });
+		});
+</code></pre></div></div>
+
+<h3 id="resdownloadpath-filename-fn">res.download(path, [filename], [fn])</h3>
+<p>传输路径中的文件作为附件，通常浏览器会提醒用户下载。Content-Disposition “filename=”参数，也就是显示在浏览器对话框的默认文件名，你也可以提供一个自定义文件名。</p>
+
+<p>当传输完成或者中途发生错误时将会调用fn回调函数，该方法使用res.sendfile()来传输文件。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	res.download('/report-12345.pdf');
+	
+	res.download('/report-12345.pdf', 'report.pdf');
+	
+	res.download('/report-12345.pdf', 'report.pdf', function(err){
+	  if (err) {
+	    // handle error, keep in mind the response may be partially-sent
+	    // so check res.headersSent
+	  } else {
+	    // decrement a download credit etc
+	  }
+	});
+</code></pre></div></div>
+
+<h3 id="reslinkslinks">res.links(links)</h3>
+<p>加入给定的链接来填充”Link”响应头字段。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	res.links({
+	  next: 'http://api.example.com/users?page=2',
+	  last: 'http://api.example.com/users?page=5'
+	}); 处理后  
+
+	Link: &amp;lt;http://api.example.com/users?page=2&amp;gt;; rel="next", 
+	      &amp;lt;http://api.example.com/users?page=5&amp;gt;; rel="last"
+</code></pre></div></div>
+
+<h3 id="reslocals">res.locals</h3>
+<p>响应本地化变量作用域为request，因此只适用于在该request/response周期内呈现的视图，如果有的话。其实该API跟app.locals是等同的。<br />
+这个对象适用于的request级别的信息，例如request路径，用户认证，用户设置等。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	app.use(function(req, res, next){
+	  res.locals.user = req.user;
+	  res.locals.authenticated = ! req.user.anonymous;
+	  next();
+	});
+</code></pre></div></div>
+
+<h3 id="resrenderview-locals-callback">res.render(view, [locals], callback)</h3>
+<p>渲染一个视图，同时向回调函数传递渲染后的字符串。发生错误时内部调用next(err)。回调函数传入可能发生的错误以及渲染后的页面，这样就不会自动执行响应了。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	res.render('index', function(err, html){
+	  // ...
+	});
+	
+	res.render('user', { name: 'Tobi' }, function(err, html){
+	  // ...
+	});
+</code></pre></div></div>
+
+<h2 id="五middleware">五、Middleware</h2>
+
+<h3 id="basicauth">basicAuth()</h3>
+<p>基本身份验证的中间件，在req.user里添加用户名<br />
+用户名字和密码的例子：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.basicAuth('username', 'password'));   校验回调： 
+ 
+app.use(express.basicAuth(function(user, pass){
+	 return 'tj' == user &amp;&amp; 'wahoo' == pass;
+}));
+</code></pre></div></div>
+
+<p>异步校验接受参数fn(err, user), 下面的例子req.user 将会作为user对象传递.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(connect.basicAuth(function(user, pass, fn){
+	 User.authenticate({ user: user, pass: pass }, fn);
+}))
+</code></pre></div></div>
+
+<h3 id="bodyparser">bodyParser()</h3>
+<p>支持 JSON, urlencoded和multipart requests的请求体解析中间件。 这个中间件是json(), urlencoded(),和multipart() 这几个中间件的简单封装</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.bodyParser());
+// 等同于:
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.multipart());
+</code></pre></div></div>
+
+<p>从安全上考虑，如果你的应用程序不需要文件上传功能，最好关闭它。我们只使用我们需要的中间件。例如：我们不使用bodyParser、multipart() 这两个中间件。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.json());
+app.use(express.urlencoded());
+</code></pre></div></div>
+
+<h3 id="compress">compress()</h3>
+<p>通过gzip / deflate压缩响应数据. 这个中间件应该放置在所有的中间件最前面以保证所有的返回都是被压缩的</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.logger());
+app.use(express.compress());
+app.use(express.methodOverride());
+app.use(express.bodyParser());
+</code></pre></div></div>
+
+<h3 id="cookieparser">cookieParser()</h3>
+<p>解析请求头里的Cookie, 并用cookie名字的键值对形式放在 req.cookies 你也可以通过传递一个secret 字符串激活签名了的cookie</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.cookieParser());
+app.use(express.cookieParser('some secret'));
+</code></pre></div></div>
+
+<h3 id="cookiesession">cookieSession()</h3>
+<p>提供一个以cookie为基础的sessions, 设置在req.session里。 这个中间件有以下几个<br />
+选项:</p>
+<blockquote>
+  <ul>
+    <li>key cookie 的名字，默认是 connect.sess</li>
+    <li>secret 防止篡改</li>
+    <li>cookie session cookie 设置, 默认是 { path: ‘/’, httpOnly: true, maxAge: null }</li>
+    <li>proxy 当设置安全cookies时信任反向代理 (通过 “x-forwarded-proto”)</li>
+  </ul>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.cookieSession()); 清掉一个cookie, 只需要在响应前把null赋值给session:
+
+req.session = null
+</code></pre></div></div>
+
+<h3 id="csrf">csrf()</h3>
+<p>CSRF防护中间件<br />
+默认情况下这个中间件会产生一个名为”_csrf”的标志，这个标志应该添加到那些需要服务器更改的请求里，可以放在一个表单的隐藏域，请求参数等。这个标志可以通过 req.csrfToken()方法进行校验。</p>
+
+<p>bodyParser() 中间件产生的 req.body , query()产生的req.query,请求头里的”X-CSRF-Token”是默认的 value 函数检查的项</p>
+
+<p>这个中间件需要session支持，因此它的代码应该放在session()之后.</p>
+
+<h3 id="directory">directory()</h3>
+<p>文件夹服务中间件，用 path 提供服务。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.use(express.directory('public'))
+app.use(express.static('public'))
+</code></pre></div></div>
+
+<p>这个中间件接收如下参数：</p>
+
+<blockquote>
+  <ul>
+    <li>hidden 显示隐藏文件，默认是false</li>
+    <li>icon 显示图标，默认值是false</li>
+    <li>filter 在文件上应用这些过滤函数，默认值是false</li>
+  </ul>
+</blockquote>
+
+:ET

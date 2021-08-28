@@ -1,0 +1,338 @@
+I"�(<h1 id="less简述">LESS简述</h1>
+
+<hr />
+<h2 id="什么是less">什么是LESS</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Less 是一门 CSS 预处理语言,它扩展了 CSS 语言,增加了变量、Mixin、函数等特性。
+</code></pre></div></div>
+
+<h2 id="变量">变量</h2>
+
+<ol>
+  <li>书写形式： @变量名 例如：@fjore,@var</li>
+  <li>
+    <p>可用变量名定义为变量即变量名作为变量的值</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @fnord:"I am fnord";@var:"fnord";
+ 则 @@var 输出"I am fnord";
+</code></pre></div>    </div>
+  </li>
+  <li>LESS中的变量为完全的‘常量’，所以只能定义一次</li>
+  <li>
+    <p>@arguments 变量:@arguments包含了所有传递进来的参数</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  .box-shadow (@x: 0, @y: 0, @blur: 1px, @color: #000) {
+    box-shadow: @arguments;
+    -moz-box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="混合">混合</h2>
+<ol>
+  <li>定义： 定义一些通用的属性集为一个class,然后在另一个class中去调用这些属性</li>
+  <li>
+    <p>形式：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .bordered {border-top: dotted 1px black;  
+   	border-bottom: solid 2px black;  
+ }  
+          	
+ #menu a {  
+   	color: #111;  
+  	 .bordered;  
+ }   a标签就会包含.bordered的属性   通用属性要定义为Class属性  
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="带参数的混合">带参数的混合</h2>
+<ol>
+  <li>定义:像函数一样定义一个带参数的属性集合:</li>
+  <li>
+    <p>形式：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .border-radius (@radius) {  
+	    border-radius: @radius;  
+     -moz-border-radius: @radius;  
+     -webkit-border-radius: @radius;  
+  }  
+</code></pre></div>    </div>
+
+    <p>调用：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> #header {  
+   	.border-radius(4px);  
+ }  
+ .button {
+  	 .border-radius(6px);  
+ } 3.默认值的形参：  
+
+ .border-radius (@radius: 5px) {
+   border-radius: @radius;
+   -moz-border-radius: @radius;
+   -webkit-border-radius: @radius;
+ }  调用时  
+
+ #header {
+   .border-radius;//不带参数默认5px;  
+ } 4.定义不带参数属性集合,如果你想隐藏这个属性集合，不让它暴露到CSS中去，但是你还想在其他的属性集合中引用
+	
+ .wrap () {
+   text-wrap: wrap;
+   white-space: pre-wrap;
+   white-space: -moz-pre-wrap;
+   word-wrap: break-word;
+ } **即在类名后加括号，不加括号会被认为是一般类的属性集合，编译css时会显示在css文件中；**
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="模式匹配">模式匹配</h2>
+<ol>
+  <li>定义：有些情况下，我们想根据传入的参数来改变混合的默认呈现</li>
+  <li>
+    <p>形式：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .mixin (dark, @color) {
+   color: darken(@color, 10%);
+ }
+ .mixin (light, @color) {
+   color: lighten(@color, 10%);
+ }
+ .mixin (@_, @color) {
+   display: block;
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>只有被匹配的混合才会被使用。变量可以匹配任意的传入值，而变量以外的固定值就仅仅匹配与其相等的传入值。</li>
+  <li>
+    <p>也可以匹配多个参数：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .mixin (@a) {
+   color: @a;
+ }
+ .mixin (@a, @b) {
+   color: fade(@a, @b);
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="导引">导引</h2>
+<ol>
+  <li>根据表达式进行匹配，而非根据值和参数匹配时；when关键字用以定义一个导引序列。</li>
+  <li>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.mixin (@a) when (lightness(@a) &gt;= 50%) {
+  background-color: black;
+}
+.mixin (@a) when (lightness(@a) &lt; 50%) {
+  background-color: white;
+}
+.mixin (@a) {
+  color: @a;
+}
+</code></pre></div>    </div>
+  </li>
+  <li>导引中可用的全部比较运算有： &gt; &gt;= = =&lt; &lt;。此外，关键字true只表示布尔真值，除去关键字true以外的值都被视示布尔假：</li>
+  <li>导引序列使用逗号‘,’—分割，当且仅当所有条件都符合时，才会被视为匹配成功。<br />
+例：.mixin (@a) when (@a &gt; 10), (@a &lt; -10) { … }</li>
+  <li>想基于值的类型进行匹配，我们就可以使用is*函式：<br />
+.mixin (@a, @b: 0) when (isnumber(@b)) { … }；<br />
+常见的检测函式：
+iscolor<br />
+isnumber<br />
+isstring<br />
+iskeyword<br />
+isurl<br />
+ispixel<br />
+ispercentage<br />
+isem</li>
+  <li>在导引序列中可以使用and关键字实现与条件；使用not关键字实现或条件</li>
+</ol>
+
+<h2 id="嵌套规则">嵌套规则</h2>
+<ol>
+  <li>
+    <p>LESS 可以让我们以嵌套的方式编写层叠样式</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	#header { color: black; }
+ #header .navigation {
+  			font-size: 12px;
+ }
+ #header .logo { 
+     width: 300px; 
+ }
+ #header .logo:hover {
+     text-decoration: none;
+ } 可写成：
+ #header {
+   color: black;
+	
+   .navigation {
+     font-size: 12px;
+   }
+   .logo {
+     width: 300px;
+     &amp;:hover { text-decoration: none }
+   }
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>注意 &amp; 符号的使用—如果你想写串联选择器，而不是写后代选择器，就可以用到&amp;了. 这点对伪类尤其有用如 :hover 和 :focus.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> .bordered {
+   &amp;.float {
+     float: left; 
+   }
+   .top {
+     margin: 5px; 
+   }
+ } 会输出：
+
+ .bordered.float {
+   float: left;  
+ }
+ .bordered .top {
+   margin: 5px;
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>串联选择器与后代选择器的区别：</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 串联选择器：作用在同一个标签上
+	
+ &lt;div class=”a” id ="qq"&gt;&lt;span&gt;look at the color&lt;/span&gt;&lt;/div&gt;
+	
+ css: #qq.a{
+	
+ ….
+	
+ }
+
+ 后代选择器：作用在不同标签上
+	
+ &lt;div  id ="qq"&gt;&lt;span class=”a”&gt;look at the color&lt;/span&gt;&lt;/div&gt;
+	
+ css: #qq .a{
+	
+ }
+
+ 注意#qq .a 之前有空格
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="运算">运算</h2>
+<p>1.任何数字、颜色或者变量都可以参与运算</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@base: 5%;
+@filler: @base * 2;
+@other: @base + @filler;
+
+color: #888 / 4;
+background-color: @base-color + #111;
+height: 100% / 2 + @filler;
+</code></pre></div></div>
+
+<h2 id="命名空间">命名空间</h2>
+<p>1.命名空间与混合的区别
+	混合类似于 类选择器 以.开头
+    命名空间  以   # 开头</p>
+
+<p>2.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#bundle {
+  .button () {
+    display: block;
+    border: 1px solid black;
+    background-color: grey;
+    &amp;:hover { background-color: white }
+  }
+  .tab { ... }
+  .citation { ... }
+} 使用时
+
+#header a {
+  color: orange;
+  #bundle &gt; .button;
+}
+</code></pre></div></div>
+
+<h2 id="作用域">作用域</h2>
+<ol>
+  <li>
+    <p>LESS 中的作用域跟其他编程语言非常类似，首先会从本地查找变量或者混合模块，如果没找到的话会去父级作用域中查找，直到找到为止.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @var: red;
+	
+ #page {
+   @var: white;
+   #header {
+     color: @var; // white
+   }
+ }
+	
+ #footer {
+   color: @var; // red  
+ }
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="避免编译">避免编译</h2>
+<ol>
+  <li>有时候我们需要输出一些不正确的CSS语法或者使用一些 LESS不认识的专有语法.</li>
+</ol>
+
+<p>要输出这样的值我们可以在字符串前加上一个 ~ ：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	.class {
+	  filter: ~"ms:alwaysHasItsOwnSyntax.For.Stuff()";
+	} 我们可以将要避免编译的值用 “”包含起来，输出结果为:
+
+
+.class {
+  filter: ms:alwaysHasItsOwnSyntax.For.Stuff();
+}
+</code></pre></div></div>
+
+<h2 id="注释">注释</h2>
+<p>CSS 形式的注释在 LESS 中是依然保留的:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* Hello, I'm a CSS-style comment */
+.class { color: black } LESS 同样也支持双斜线的注释, 但是编译成 CSS 的时候自动过滤掉:
+
+// Hi, I'm a silent comment, I won't show up in your CSS
+.class { color: white }
+</code></pre></div></div>
+
+<h2 id="字符串插值">字符串插值</h2>
+<p>变量可以用类似ruby和php的方式嵌入到字符串中，像@{name}这样的结构:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@base-url: "http://assets.fnord.com";
+background-image: url("@{base-url}/images/bg.png");
+</code></pre></div></div>
+
+<h2 id="javascript-表达式">JavaScript 表达式</h2>
+<p>JavaScript 表达式也可以在.less 文件中使用. 可以通过反引号的方式使用:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@var: `"hello".toUpperCase() + '!'`; 输出:
+
+@var: "HELLO!"; 注意你也可以同时使用字符串插值和避免编译:
+
+@str: "hello";
+@var: ~`"@{str}".toUpperCase() + '!'`; 输出:
+
+@var: HELLO!; 它也可以访问JavaScript环境:
+	
+@height: `document.body.clientHeight`; 如果你想将一个JavaScript字符串解析成16进制的颜色值, 你可以使用 color 函数:
+
+@color: color(`window.colors.baseColor`);
+@darkcolor: darken(@color, 10%);
+</code></pre></div></div>
+:ET

@@ -1,0 +1,350 @@
+I"�L<p><code class="language-plaintext highlighter-rouge">Apache Commons</code>的主要目的就是，创建和维护一个可重用的java组件库集合。这样Apache社区的开发者，就可以使用相同的基础组件库来开发不同的Apache项目了。</p>
+
+<p>而<code class="language-plaintext highlighter-rouge">Apache Commons</code>的开发者们，将尽量减少这些组件对其他外部库的影响，来确保这些组件可以很容易地进行部署。另外，这些组件将尽可能地保证接口稳定，以便Apache用户（包括Apache项目）可以实现这些组件，而不必担心未来发生变化。</p>
+
+<p>本文将介绍Commons系列中的CLI组件库。</p>
+
+<h3 id="一commons-cli-概述">一、Commons CLI 概述</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Apache Commons CLI</code> 库提供API，可以帮助程序去解析传递给程序的命令行参数。他也可以打印帮助信息，来说明可以运用于命令行的有效参数。</p>
+
+<p>CLI库支持不同格式的选项：</p>
+
+<ol>
+  <li>POSIX格式的选项（比如：<code class="language-plaintext highlighter-rouge">tar -zxvf foo.tar.gz</code>）</li>
+  <li>GNU格式的长参数选项（比如：<code class="language-plaintext highlighter-rouge">du --human-readable --max-depth=1</code>）</li>
+  <li>Java格式的属性（比如：<code class="language-plaintext highlighter-rouge">java -Djava.awt.headless=true -Djava.net.useSystemProxies=true Foo</code>）</li>
+  <li>带值的单选项（比如：<code class="language-plaintext highlighter-rouge">gcc -O2 foo.c</code>）</li>
+  <li>单<code class="language-plaintext highlighter-rouge">-</code>号的长参数选项（比如：<code class="language-plaintext highlighter-rouge">ant -projecthelp</code>）</li>
+</ol>
+
+<p>CLI库可以提供的帮助信息，类似如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: ls
+ -A,--almost-all          do not list implied . and ..
+ -a,--all                 do not hide entries starting with .
+ -B,--ignore-backups      do not list implied entried ending with ~
+ -b,--escape              print octal escapes for nongraphic characters
+    --block-size &lt;SIZE&gt;   use SIZE-byte blocks
+ -c                       with -lt: sort by, and show, ctime (time of last
+                          modification of file status information) with
+                          -l:show ctime and sort by name otherwise: sort
+                          by ctime
+ -C                       list entries by columns
+</code></pre></div></div>
+
+<h3 id="二commons-cli-下载">二、Commons CLI 下载</h3>
+
+<p>截止本文撰写时，CLI的最新发布版本为<code class="language-plaintext highlighter-rouge">1.2</code>。</p>
+
+<p>官方下载地址：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://commons.apache.org/proper/commons-cli/download_cli.cgi
+</code></pre></div></div>
+
+<p>源码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn checkout http://svn.apache.org/repos/asf/commons/proper/cli/trunk/ commons-cli
+</code></pre></div></div>
+
+<p>在Maven工程中添加依赖：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;dependency&gt;
+	&lt;groupId&gt;commons-cli&lt;/groupId&gt;
+	&lt;artifactId&gt;commons-cli&lt;/artifactId&gt;
+	&lt;version&gt;1.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></div></div>
+
+<h3 id="三使用场景">三、使用场景</h3>
+
+<h3 id="31-布尔选项">3.1 布尔选项</h3>
+
+<p>布尔选项是命令行最常见的选项，作为开关使用，不带参数。如果命令行中存在该选项，那么选项值就为<code class="language-plaintext highlighter-rouge">true</code>，否则其值为<code class="language-plaintext highlighter-rouge">false</code>。</p>
+
+<p>举例，如果程序需要布尔选项<code class="language-plaintext highlighter-rouge">-t</code>,代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// create Options object
+Options options = new Options();
+
+// add t option
+options.addOption("t", false, "display current time");
+</code></pre></div></div>
+
+<p>如上，必须创建<code class="language-plaintext highlighter-rouge">Options</code>选项，然后为其添加<code class="language-plaintext highlighter-rouge">Option</code>对象。</p>
+
+<p>上例中，<code class="language-plaintext highlighter-rouge">addOption</code>方法有三个参数：第一个参数类型为<code class="language-plaintext highlighter-rouge">String</code>，给出参数的名字；第二个参数类型为<code class="language-plaintext highlighter-rouge">boolean</code>，用来标记该选项是否需要参数,在上面例子中，布尔选项不需要参数，所以设置为<code class="language-plaintext highlighter-rouge">false</code>；第三个参数是选项的描述信息，该描述信息在打印命令行帮助信息时，会显示出来。</p>
+
+<p>另外，<code class="language-plaintext highlighter-rouge">addOption</code>还存在一个四个参数的调用方式：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>addOption(String opt, String longOpt, boolean hasArg, String description)
+</code></pre></div></div>
+
+<p>在这里，多了一个长选项参数，在后面的例子中，我们可以看到具体的使用。</p>
+
+<h3 id="32-解析命令行参数">3.2 解析命令行参数</h3>
+
+<p><code class="language-plaintext highlighter-rouge">CommandLineParser</code>提供的方法<code class="language-plaintext highlighter-rouge">parse</code>，就是用来解析命令行中的参数。接口<code class="language-plaintext highlighter-rouge">CommandLineParser</code>存在多种实现类，比如<code class="language-plaintext highlighter-rouge">BasicParser</code>、<code class="language-plaintext highlighter-rouge">PosixParser</code>和<code class="language-plaintext highlighter-rouge">GnuParser</code>，可以根据实际需求选择使用.</p>
+
+<p>其中，<code class="language-plaintext highlighter-rouge">PosixParser</code>与<code class="language-plaintext highlighter-rouge">GnuParser</code>，顾名思义，其区别在于，前者把形如<code class="language-plaintext highlighter-rouge">-log</code>的选项作为三个选项(<code class="language-plaintext highlighter-rouge">l</code>、<code class="language-plaintext highlighter-rouge">o</code>和<code class="language-plaintext highlighter-rouge">g</code>)处理，而后者作为一个选项处理。</p>
+
+<p>具体代码，参考如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CommandLineParser parser = new GnuParser();
+CommandLine cmd = parser.parse( options, args);
+</code></pre></div></div>
+
+<p>如果，我们要检查命令行中<code class="language-plaintext highlighter-rouge">t</code>选项是否被列出，可以使用<code class="language-plaintext highlighter-rouge">hasOption</code>方法。例如：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if(cmd.hasOption("t")) {
+    // 存在t选项的处理
+}
+else {
+    // 不存在t选项的处理
+}
+</code></pre></div></div>
+
+<h3 id="32-带参数选项">3.2 带参数选项</h3>
+
+<p>除了布尔选项外，还有些选项是需要参数的。比如<code class="language-plaintext highlighter-rouge">c</code>选项需要参数，那么可以如下设置：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// add c option
+options.addOption("c", true, "country code");
+</code></pre></div></div>
+
+<p>并且，可以通过<code class="language-plaintext highlighter-rouge">getOptionValue</code>方法，获取命令行传入的参数：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// get c option value
+String countryCode = cmd.getOptionValue("c");
+
+if(countryCode == null) {
+    // print default date
+}
+else {
+    // print date for country specified by countryCode
+}
+</code></pre></div></div>
+
+<h3 id="33-ant命令行实例">3.3 Ant命令行实例</h3>
+
+<p>在这里，我们使用一个被普遍使用的java应用程序Ant来解释如果使用CLI库的。</p>
+
+<h4 id="331-先看看ant的命令帮助">3.3.1 先看看Ant的命令帮助</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ant [options] [target [target2 [target3] ...]]
+  Options: 
+  -help                  print this message
+  -projecthelp           print project help information
+  -version               print the version information and exit
+  -quiet                 be extra quiet
+  -verbose               be extra verbose
+  -debug                 print debugging information
+  -emacs                 produce logging information without adornments
+  -logfile &lt;file&gt;        use given file for log
+  -logger &lt;classname&gt;    the class which is to perform logging
+  -listener &lt;classname&gt;  add an instance of class as a project listener
+  -buildfile &lt;file&gt;      use given buildfile
+  -D&lt;property&gt;=&lt;value&gt;   use value for given property
+  -find &lt;file&gt;           search for buildfile towards the root of the
+                         filesystem and use it
+</code></pre></div></div>
+
+<h4 id="332-创建布尔选项">3.3.2 创建布尔选项</h4>
+
+<p>为了代码清晰，在这里我们使用<code class="language-plaintext highlighter-rouge">Option</code>的构造方法来创建。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Option help = new Option( "help", "print this message" );
+Option projecthelp = new Option( "projecthelp", "print project help information" );
+Option version = new Option( "version", "print the version information and exit" );
+Option quiet = new Option( "quiet", "be extra quiet" );
+Option verbose = new Option( "verbose", "be extra verbose" );
+Option debug = new Option( "debug", "print debugging information" );
+Option emacs = new Option( "emacs",
+                           "produce logging information without adornments" );
+</code></pre></div></div>
+
+<h4 id="333-创建带参数的选项">3.3.3 创建带参数的选项</h4>
+
+<p>我们使用<code class="language-plaintext highlighter-rouge">OptionBuilder</code>来创建：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Option logfile   = OptionBuilder.withArgName( "file" )
+                                .hasArg()
+                                .withDescription(  "use given file for log" )
+                                .create( "logfile" );
+
+Option logger    = OptionBuilder.withArgName( "classname" )
+                                .hasArg()
+                                .withDescription( "the class which it to perform "
+                                                  + "logging" )
+                                .create( "logger" );
+
+Option listener  = OptionBuilder.withArgName( "classname" )
+                                .hasArg()
+                                .withDescription( "add an instance of class as "
+                                                  + "a project listener" )
+                                .create( "listener"); 
+
+Option buildfile = OptionBuilder.withArgName( "file" )
+                                .hasArg()
+                                .withDescription(  "use given buildfile" )
+                                .create( "buildfile");
+
+Option find      = OptionBuilder.withArgName( "file" )
+                                .hasArg()
+                                .withDescription( "search for buildfile towards the "
+                                                  + "root of the filesystem and use it" )
+                                .create( "find" );
+</code></pre></div></div>
+
+<h4 id="334-创建java属性选项">3.3.4 创建java属性选项</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Option property  = OptionBuilder.withArgName( "property=value" )
+                                .hasArgs(2)
+                                .withValueSeparator()
+                                .withDescription( "use value for given property" )
+                                .create( "D" );
+</code></pre></div></div>
+
+<h4 id="335-创建options">3.3.5 创建Options</h4>
+
+<p>上面已经创建了每个选项，下面我们需要创建<code class="language-plaintext highlighter-rouge">Options</code>，然后继续使用<code class="language-plaintext highlighter-rouge">addOption</code>方法，向其中添加每个选项，代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Options options = new Options();
+
+options.addOption( help );
+options.addOption( projecthelp );
+options.addOption( version );
+options.addOption( quiet );
+options.addOption( verbose );
+options.addOption( debug );
+options.addOption( emacs );
+options.addOption( logfile );
+options.addOption( logger );
+options.addOption( listener );
+options.addOption( buildfile );
+options.addOption( find );
+options.addOption( property );
+</code></pre></div></div>
+
+<p>**说明：可以通过<code class="language-plaintext highlighter-rouge">Option</code>的<code class="language-plaintext highlighter-rouge">setRequired</code>方法来设置，选项是否为必输项，默认不是必输项。 **</p>
+
+<h4 id="336-解析命令行参数">3.3.6 解析命令行参数</h4>
+
+<p>我们需要创建一个<code class="language-plaintext highlighter-rouge">CommandLineParser</code>，并用它根据之前设置的<code class="language-plaintext highlighter-rouge">Options</code>来解析命令行参数，代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static void main( String[] args ) {
+    // create the parser
+    CommandLineParser parser = new GnuParser();
+    try {
+        // parse the command line arguments
+        CommandLine line = parser.parse( options, args );
+    }
+    catch( ParseException exp ) {
+        // oops, something went wrong
+        System.err.println( "Parsing failed.  Reason: " + exp.getMessage() );
+    }
+}
+</code></pre></div></div>
+
+<h4 id="337-获取命令行参数">3.3.7 获取命令行参数</h4>
+
+<p>使用<code class="language-plaintext highlighter-rouge">hasOption</code>方法来检查命令行是否传入选项，使用<code class="language-plaintext highlighter-rouge">getOptionValue</code>来获取传入的参数值。</p>
+
+<p>代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// has the buildfile argument been passed?
+if( line.hasOption( "buildfile" ) ) {
+    // initialise the member variable
+    this.buildfile = line.getOptionValue( "buildfile" );
+}
+</code></pre></div></div>
+
+<h4 id="338-设置程序用例帮助信息">3.3.8 设置程序用例/帮助信息</h4>
+
+<p>CLI库还可以根据<code class="language-plaintext highlighter-rouge">Options</code>来自动显示程序的用例/帮助信息。代码如下：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// automatically generate the help statement
+HelpFormatter formatter = new HelpFormatter();
+formatter.printHelp( "ant", options, true );
+</code></pre></div></div>
+
+<p>执行后生成下面信息：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>usage: ant
+-D &lt;property=value&gt;     use value for given property
+-buildfile &lt;file&gt;       use given buildfile
+-debug                  print debugging information
+-emacs                  produce logging information without adornments
+-file &lt;file&gt;            search for buildfile towards the root of the
+                        filesystem and use it
+-help                   print this message
+-listener &lt;classname&gt;   add an instance of class as a project listener
+-logger &lt;classname&gt;     the class which it to perform logging
+-projecthelp            print project help information
+-quiet                  be extra quiet
+-verbose                be extra verbose
+-version                print the version information and exit
+</code></pre></div></div>
+
+<h3 id="34-再来一个ls实例">3.4 再来一个<code class="language-plaintext highlighter-rouge">ls</code>实例</h3>
+
+<p>下面是帮助信息：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuSUX nor --sort.
+
+-a, --all                  do not hide entries starting with .
+-A, --almost-all           do not list implied . and ..
+-b, --escape               print octal escapes for nongraphic characters
+    --block-size=SIZE      use SIZE-byte blocks
+-B, --ignore-backups       do not list implied entries ending with ~
+-c                         with -lt: sort by, and show, ctime (time of last
+                           modification of file status information)
+                           with -l: show ctime and sort by name
+                           otherwise: sort by ctime
+-C                         list entries by columns
+</code></pre></div></div>
+
+<p>下面是代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// create the command line parser
+CommandLineParser parser = new GnuParser();
+
+// create the Options
+Options options = new Options();
+options.addOption( "a", "all", false, "do not hide entries starting with ." );
+options.addOption( "A", "almost-all", false, "do not list implied . and .." );
+options.addOption( "b", "escape", false, "print octal escapes for nongraphic "
+                                         + "characters" );
+options.addOption( OptionBuilder.withLongOpt( "block-size" )
+                                .withDescription( "use SIZE-byte blocks" )
+                                .hasArg()
+                                .withArgName("SIZE")
+                                .create() );
+options.addOption( "B", "ignore-backups", false, "do not list implied entried "
+                                                 + "ending with ~");
+options.addOption( "c", false, "with -lt: sort by, and show, ctime (time of last " 
+                               + "modification of file status information) with "
+                               + "-l:show ctime and sort by name otherwise: sort "
+                               + "by ctime" );
+options.addOption( "C", false, "list entries by columns" );
+
+String[] args = new String[]{ "--block-size=10" };
+
+try {
+    // parse the command line arguments
+    CommandLine line = parser.parse( options, args );
+
+    // validate that block-size has been set
+    if( line.hasOption( "block-size" ) ) {
+        // print the value of block-size
+        System.out.println( line.getOptionValue( "block-size" ) );
+    }
+}
+catch( ParseException exp ) {
+    System.out.println( "Unexpected exception:" + exp.getMessage() );
+}
+</code></pre></div></div>
+
+:ET
