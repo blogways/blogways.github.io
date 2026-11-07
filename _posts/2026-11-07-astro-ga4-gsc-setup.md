@@ -16,7 +16,7 @@ description: 纯静态 Astro 工具站怎么上统计和 SEO？GA4 直接注入 
 | 4 | [部署上线与线上验证](#deploy) |
 | 5 | [GA4 与 GSC 的关系](#compare) |
 
-接前一篇[《源码私有、站点公开——GitHub双组织部署静态站》]({% post_url 2026-11-07-github-pages-dual-org-deploy %})，站已经用 `sample-app.com` 跑起来了，源码在私有组织 `example-dev`、构建产物推到公开组织 `example-pages` 的 Pages。接下来要解决两件事：
+接前一篇[《源码私有、站点公开——GitHub双组织部署静态站》]({% post_url 2026-11-06-github-pages-dual-org-deploy %})，站已经用 `sample-app.com` 跑起来了，源码在私有组织 `example-dev`、构建产物推到公开组织 `example-pages` 的 Pages。接下来要解决两件事：
 
 * **GA4**——统计「用户在站上做什么」
 * **Search Console**——搞清楚「Google 怎么看你的站」
