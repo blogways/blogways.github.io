@@ -1,0 +1,37 @@
+{% comment %}
+Garrul comments — one thread per post.
+
+Slug = YYYYMMDD-<ascii-safe-slug>.
+Garrul's SLUG_RE is /^[a-zA-Z0-9_\-./]{1,200}$/ (no colon, no CJK), and a
+slash would break its /feed/:slug single-segment route, so:
+  - slugify 'ascii' drops non-ASCII (CJK, full-width punctuation)
+  - slugify 'default' then drops ASCII punctuation ((), +, ., etc.)
+  - the post date prefix keeps slug-siblings (two "git" posts) and
+    CJK-only titles unique.
+Set `comments: false` in a post's front matter to opt that post out.
+{% endcomment %}
+{% if site.garrul.api and page.comments != false %}
+{% assign garrul_safe = page.slug | slugify: 'ascii' | slugify: 'default' %}
+{% assign garrul_date = page.date | date: '%Y%m%d' %}
+{% if garrul_safe == '' %}
+  {% assign garrul_slug = garrul_date %}
+{% else %}
+  {% assign garrul_slug = garrul_date | append: '-' | append: garrul_safe %}
+{% endif %}
+<section class="garrul-comments" style="margin-top:24px">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title">评论</h3></div>
+    <div class="panel-body">
+      <div id="garrul"
+        data-slug="{{ garrul_slug }}"
+        data-api="{{ site.garrul.api }}"
+        data-lang="zh-Hant"
+        data-title="{{ page.title | xml_escape }}"
+        data-url="{{ page.url | absolute_url }}"
+        data-published="{{ page.date | date_to_xmlschema }}"
+      ></div>
+      <script src="{{ site.garrul.api }}/embed.js" defer></script>
+    </div>
+  </div>
+</section>
+{% endif %}

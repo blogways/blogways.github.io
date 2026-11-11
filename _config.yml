@@ -2,6 +2,8 @@ markdown: kramdown
 highlighter: rouge
 #permalink: /blog/:categories/:year/:month/:day/:title.html
 permalink: /blog/:year/:month/:day/:title.html
+# Canonical origin — used by absolute_url in the Garrul comment include.
+url: "https://www.blogways.net"
 
 #_Plugins
 safe: false
@@ -20,3 +22,6 @@ leancloud:
 google_analytics:
   enable: true
   measurement_id: G-5Y1QB2X4X9
+# Garrul comment widget (self-hosted on Cloudflare Workers)
+garrul:
+  api: "https://garrul.tangz97.workers.dev"
