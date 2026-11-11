@@ -19,6 +19,35 @@ Set `comments: false` in a post's front matter to opt that post out.
   {% assign garrul_slug = garrul_date | append: '-' | append: garrul_safe %}
 {% endif %}
 <section class="garrul-comments" style="margin-top:24px">
+  {% comment %}
+  Garrul renders in a Shadow DOM, so --garrul-* custom properties on the host
+  element are the only theming surface. Values below are the site's Bootstrap 3
+  palette: info cyan accent, link blue, #ddd borders, 4px radii, 14px body.
+  data-theme="light" pins off the widget's built-in dark palette — this blog is
+  light-only, so a dark OS must not produce a dark thread inside a white panel.
+  {% endcomment %}
+  <style>
+    .garrul-comments #garrul {
+      --garrul-font: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "微软雅黑", sans-serif;
+      --garrul-font-size: 14px;
+      --garrul-fg: #333;
+      --garrul-muted: #959595;
+      --garrul-border: #ddd;
+      --garrul-radius: 4px;
+      --garrul-accent: #5bc0de;
+      --garrul-accent-hover: #31b0d5;
+      --garrul-link: #337ab7;
+      --garrul-error: #a94442;
+      --garrul-notice: #31708f;
+      --garrul-badge-bg: #d9edf7;
+      --garrul-badge-fg: #31708f;
+      --garrul-surface: #f5f5f5;
+      --garrul-hover: #f3f3f3;
+      --garrul-skel: #e7e7e7;
+      --garrul-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+      --garrul-bg: transparent;
+    }
+  </style>
   <div class="panel panel-default">
     <div class="panel-heading"><h3 class="panel-title">评论</h3></div>
     <div class="panel-body">
@@ -29,6 +58,7 @@ Set `comments: false` in a post's front matter to opt that post out.
         data-title="{{ page.title | xml_escape }}"
         data-url="{{ page.url | absolute_url }}"
         data-published="{{ page.date | date_to_xmlschema }}"
+        data-theme="light"
       ></div>
       <script src="{{ site.garrul.api }}/embed.js" defer></script>
     </div>
