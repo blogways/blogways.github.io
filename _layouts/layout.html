@@ -15,6 +15,16 @@
     <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
     <script>AV.initialize("{{site.leancloud.app_id}}", "{{site.leancloud.app_key}}");</script>
     <script src="/js/leancloud-analytics.js"></script>
+    {% if site.google_analytics.enable and site.google_analytics.measurement_id %}
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics.measurement_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ site.google_analytics.measurement_id }}');
+    </script>
+    {% endif %}
 </head>
 <body>
     <!-- {% include leancloud-analytics.html %} -->
