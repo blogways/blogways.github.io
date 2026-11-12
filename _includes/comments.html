@@ -25,6 +25,10 @@ Set `comments: false` in a post's front matter to opt that post out.
   palette: info cyan accent, link blue, #ddd borders, 4px radii, 14px body.
   data-theme="light" pins off the widget's built-in dark palette — this blog is
   light-only, so a dark OS must not produce a dark thread inside a white panel.
+
+  data-lang is deliberately absent: Garrul forwards this page's
+  <html lang="zh-CN"> as a hint and selects its reviewed zh-Hans table, so the
+  comment box follows the article language without a second source of truth.
   {% endcomment %}
   <style>
     .garrul-comments #garrul {
@@ -54,7 +58,6 @@ Set `comments: false` in a post's front matter to opt that post out.
       <div id="garrul"
         data-slug="{{ garrul_slug }}"
         data-api="{{ site.garrul.api }}"
-        data-lang="zh-Hant"
         data-title="{{ page.title | xml_escape }}"
         data-url="{{ page.url | absolute_url }}"
         data-published="{{ page.date | date_to_xmlschema }}"
